@@ -11,15 +11,17 @@ const UserProfile = ({
   match,
   getUserById,
 }) => {
-  if (match.params.userid && !user.details[match.params.userid]) {
+  if (match.params.userid && !user.details[match.params.userid] && !user.errorMessage) {
+    console.log('getting user', match.params.userid);
     getUserById(match.params.userid);
   }
   console.log('user:', user);
   console.log('match:', match);
-  // console.log('auth:', auth, !!auth);
+  console.log('auth:', auth, ':', !!auth);
   const selectedUser = (match.params.userid)
     ? user.details[match.params.userid]
     : user.current;
+  console.log('selectedUser:', selectedUser, ':', !!selectedUser);
   const authMessage = (auth) // remove after testing
     ? (
       <div className="ui message success">
@@ -57,15 +59,13 @@ const UserProfile = ({
     )
     : <div>loading profile...</div>;
   return (
-    <div>
-      <div className="ui segment">
-        {displayProfile}
-        {authMessage}
-        {(user.errorMessage)
-          ? <div className="ui error message">{`Error: ${user.errorMessage} Please try again.`}</div>
-          : null
-        }
-      </div>
+    <div className="ui segment">
+      {displayProfile}
+      {authMessage}
+      {(user.errorMessage)
+        ? <div className="ui error message">{`Error: ${user.errorMessage}`}</div>
+        : null
+      }
     </div>
   );
 };

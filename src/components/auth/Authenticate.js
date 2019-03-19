@@ -101,11 +101,11 @@ const formikAuthenticate = withFormik({
     const route = location.pathname.slice(1);
     if (route === 'signup') {
       signup(values, () => {
-        history.push('/profile');
+        history.push('/me');
       });
     } else {
       login(values, () => {
-        history.push('/profile');
+        history.push('/');
       });
     }
     setTimeout(() => { // timeout to check functionality when server is localhost!

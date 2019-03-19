@@ -1,14 +1,15 @@
 import { AUTH_USER, AUTH_ERROR } from '../actions/types';
 
 const INITIAL_STATE = {
-  authenticated: localStorage.getItem('redux-auth-token'), // empty if not logged in, JWT token if logged in
+  authenticated: localStorage.getItem('omapfolder-auth-token'), // empty if not logged in, JWT token if logged in
   errorMessage: '', // empty unless an error occurs
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_USER:
-      // console.log(action.payload);
+      // console.log('AUTH_USER with:', action.payload);
+      // console.log('auth:', state);
       return { ...state, authenticated: action.payload };
     case AUTH_ERROR:
       // console.log(action.payload);
