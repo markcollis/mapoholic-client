@@ -11,11 +11,11 @@ import {
 
 const INITIAL_STATE = {
   current: null, // matches auth token in localStorage
-  list: null, // replaced each time API is queried
   details: {}, // all user records viewed, key is userId
-  errorMessage: '', // empty unless an error occurs
-  searchField: '', // contents of search box in UserFilter
   toDisplay: '', // userId of user to display in UserDetails
+  list: null, // replaced each time API is queried
+  searchField: '', // contents of search box in UserFilter
+  errorMessage: '', // empty unless an error occurs
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

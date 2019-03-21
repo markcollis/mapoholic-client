@@ -6,52 +6,91 @@ import UserFilter from './UserFilter';
 import UserList from './UserList';
 import UserDetails from './UserDetails';
 import UserRecent from './UserRecent';
-import { getUserByIdAction } from '../../actions';
+import {
+  getUserByIdAction,
+  setUserSearchFieldAction,
+  getUserListAction,
+  selectUserToDisplayAction,
+} from '../../actions';
 /* eslint no-underscore-dangle: 0 */
-
 
 class UserView extends Component {
   static propTypes = {
     user: PropTypes.objectOf(PropTypes.any).isRequired,
     getUserById: PropTypes.func.isRequired,
+    setUserSearchField: PropTypes.func.isRequired,
+    getUserList: PropTypes.func.isRequired,
+    selectUserToDisplay: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    console.log('UserView mounted.');
+    // console.log('UserView mounted.');
+    const { user, getUserList, setUserSearchField } = this.props;
+    if (!user.list) getUserList();
+    if (user.searchField !== '') setUserSearchField({ target: { value: '' } });
   }
 
   render() {
-    const { user, getUserById } = this.props;
     const {
-      toDisplay,
-      details,
-      errorMessage,
+      user,
+      getUserById,
+      getUserList,
+      setUserSearchField,
+      selectUserToDisplay,
+    } = this.props;
+    const {
       current,
+      details,
+      toDisplay,
+      list,
+      searchField,
+      errorMessage,
     } = user;
+
+    const userListArray = (list)
+      ? list.slice(0, -1).filter((eachUser) => {
+        return eachUser.displayName.toLowerCase().includes(searchField.toLowerCase());
+      })
+      : [];
+    // console.log('searchField', searchField);
+    let isPending = false;
     if (toDisplay && !details[toDisplay] && !errorMessage) {
-      console.log('getting user details for:', toDisplay);
-      getUserById(toDisplay);
+      // console.log('getting user details for:', toDisplay);
+      isPending = true;
+      setTimeout(() => getUserById(toDisplay, () => {
+        isPending = false;
+      }), 2000); // simulate network delay
+      // getUserById(toDisplay);
     }
     const isAdmin = (current && current.role === 'admin');
     const isSelf = (current && current._id === toDisplay);
-    console.log('isAdmin:', isAdmin, 'isSelf:', isSelf);
+    // console.log('isAdmin:', isAdmin, 'isSelf:', isSelf);
     const showOptional = (isAdmin || isSelf);
-
+    const renderError = (user.errorMessage)
+      ? (
+        <div className="sixteen wide column">
+          <div className="ui error message">{`Error: ${user.errorMessage}`}</div>
+        </div>
+      )
+      : null;
     const userToDisplay = details[toDisplay] || {};
     return (
-      <div className="ui grid">
-        {(user.errorMessage)
-          ? <div className="ui error message">{`Error: ${user.errorMessage}`}</div>
-          : null
-        }
+      <div className="ui vertically padded stackable grid">
+        {renderError}
         <div className="seven wide column">
-          <div />
-          <UserFilter />
-          <UserList />
+          <UserFilter
+            searchField={searchField}
+            setUserSearchField={setUserSearchField}
+            getUserList={getUserList}
+          />
+          <UserList users={userListArray} selectUserToDisplay={selectUserToDisplay} />
         </div>
         <div className="nine wide column">
-          <div />
-          <UserDetails userToDisplay={userToDisplay} showOptional={showOptional} />
+          <UserDetails
+            userToDisplay={userToDisplay}
+            showOptional={showOptional}
+            isPending={isPending}
+          />
           <UserRecent />
         </div>
       </div>
@@ -62,5 +101,12 @@ class UserView extends Component {
 const mapStateToProps = ({ user }) => {
   return { user };
 };
+const mapDispatchToProps = {
+  getUserById: getUserByIdAction,
+  // getUserById: (toDisplay, callback) => dispatch(getUserByIdAction(toDisplay, callback)),
+  setUserSearchField: event => setUserSearchFieldAction(event.target.value),
+  getUserList: getUserListAction,
+  selectUserToDisplay: selectUserToDisplayAction,
+};
 
-export default connect(mapStateToProps, { getUserById: getUserByIdAction })(UserView);
+export default connect(mapStateToProps, mapDispatchToProps)(UserView);

@@ -32,3 +32,28 @@
   height: 80px;
   margin-right: 1.5em;
 }
+
+.collapse .show {
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+  transition: max-height 500ms cubic-bezier(.525,.66,.495,1.4);
+}
+.collapse .hide {
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+  transition: max-height 500ms cubic-bezier(.525,.66,.495,1.4);
+}
+
+/* Remove outline for non-keyboard :focus */
+*:focus:not(.focus-visible) {
+  outline: none;
+}
+
+/* Optional: Customize .focus-visible */
+.focus-visible {
+  outline-color: lightgreen;
+}

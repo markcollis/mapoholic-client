@@ -35,26 +35,30 @@ class Authenticate extends Component {
     const buttonText = (route === 'signup') ? 'Sign up' : 'Log in';
     return (
       <Form className="ui warning form" noValidate>
-        <label htmlFor="email">
+        <div className="field">
+          <label htmlFor="email">
           Email
-          <Field
-            type="email"
-            name="email"
-            placeholder="Enter email address"
-            autoComplete="off"
-          />
-          { touched.email && errors.email && <div className="ui warning message">{errors.email}</div> }
-        </label>
-        <label htmlFor="password">
+            <Field
+              type="email"
+              name="email"
+              placeholder="Enter email address"
+              autoComplete="off"
+            />
+            { touched.email && errors.email && <div className="ui warning message">{errors.email}</div> }
+          </label>
+        </div>
+        <div className="field">
+          <label htmlFor="password">
           Password
-          <Field
-            type="password"
-            name="password"
-            placeholder="Enter password"
-            autoComplete="off"
-          />
-          { touched.password && errors.password && <div className="ui warning message">{errors.password}</div> }
-        </label>
+            <Field
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              autoComplete="off"
+            />
+            { touched.password && errors.password && <div className="ui warning message">{errors.password}</div> }
+          </label>
+        </div>
         <button type="submit" className="ui button primary" disabled={isSubmitting}>{buttonText}</button>
       </Form>
     );
@@ -100,17 +104,22 @@ const formikAuthenticate = withFormik({
     } = props;
     const route = location.pathname.slice(1);
     if (route === 'signup') {
-      signup(values, () => {
-        history.push('/me');
-      });
+      setTimeout(() => signup(values, (didSucceed) => {
+        if (didSucceed) {
+          history.push('/me');
+        } else {
+          setSubmitting(false);
+        }
+      }), 2000); // simulate network delay
     } else {
-      login(values, () => {
-        history.push('/');
-      });
+      setTimeout(() => login(values, (didSucceed) => {
+        if (didSucceed) {
+          history.push('/mymaps');
+        } else {
+          setSubmitting(false);
+        }
+      }), 2000); // simulate network delay
     }
-    setTimeout(() => { // timeout to check functionality when server is localhost!
-      setSubmitting(false);
-    }, 1000);
   },
 });
 

@@ -11,8 +11,9 @@ const Header = ({
   getCurrentUser,
 }) => {
   if (auth && !currentUser) { // check here because Header is always rendered
-    console.log('No current user found in state!');
-    getCurrentUser();
+    // console.log('No current user found in state, get details corresponding to auth token.');
+    setTimeout(() => getCurrentUser(), 2000); // simulate network delay
+    // getCurrentUser();
   }
   const userDetails = (currentUser)
     ? `logged in as: ${currentUser.displayName}`
@@ -84,11 +85,16 @@ const Header = ({
     );
   }
   return (
-    <div className="ui menu secondary pointing">
-      <Link to="/" className={(isHome) ? 'active blue item' : 'item'}><i className="icon home" /></Link>
-      <Link to="/signup" className={(isSignup) ? 'active blue item' : 'item'}>Sign Up</Link>
-      <Link to="/login" className={(isLogin) ? 'active blue item' : 'item'}>Log In</Link>
-      <Link to="/users" className={(isUsers) ? 'active blue item' : 'item'}>User List</Link>
+    <div>
+      <div className="ui menu secondary pointing">
+        <Link to="/" className={(isHome) ? 'active blue item' : 'item'}><i className="icon home" /></Link>
+        <Link to="/events" className={(isEventsGroup) ? 'active blue item' : 'item'}>Browse Public Maps</Link>
+        <div className="right menu">
+          <Link to="/signup" className={(isSignup) ? 'active blue item' : 'item'}>Sign Up</Link>
+          <Link to="/login" className={(isLogin) ? 'active blue item' : 'item'}>Log In</Link>
+        </div>
+      </div>
+      {eventsSubMenu}
     </div>
   );
 };

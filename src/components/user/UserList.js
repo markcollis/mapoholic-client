@@ -1,81 +1,52 @@
 import React from 'react';
-import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getUserListAction, selectUserToDisplayAction } from '../../actions';
-import noAvatar from '../../no-avatar.png';
+import UserListItem from './UserListItem';
+import Collapse from '../Collapse';
 
-const UserList = ({
-  auth,
-  user,
-  getUserList,
-  selectUserToDisplay,
-}) => {
-  console.log('user:', user);
-  console.log('auth:', auth, ':', !!auth);
-  if (!user.list) {
-    getUserList();
-  }
-  const usersToDisplay = (user.list)
-    ? (
-      <div className="ui divided unstackable items">
-        {user.list.slice(0, -1).map((userDetails) => {
-          return (
-            <div className="item" key={userDetails.user_id} onClick={() => selectUserToDisplay(userDetails.user_id)}>
-              <img className="user-list-avatar" alt="avatar" src={userDetails.profileImage || noAvatar} />
-              <div className="content">
-                <div className="header">
-                  <p>{userDetails.displayName}</p>
-                </div>
-                <div className="description">
-                  <p>{userDetails.fullName}</p>
-                  {(userDetails.memberOf && userDetails.memberOf.length > 0)
-                    ? (
-                      <div>
-                        {userDetails.memberOf.map((club) => {
-                          return <div className="ui label">{club}</div>;
-                        })}
-                        {(userDetails.role === 'admin') ? <div className="ui label">Adminstrator</div> : null}
-                        {(userDetails.role === 'guest') ? <div className="ui label">Guest</div> : null}
-                      </div>
-                    )
-                    : null}
-                </div>
-              </div>
-            </div>
-          );
-        })}
+const UserList = ({ users, selectUserToDisplay }) => {
+  if (users.length === 0) {
+    return (
+      <div className="ui segment">
+        <div className="ui message warning">{'Sorry, there aren\'t any matching users to display!'}</div>
       </div>
-    )
-    : null;
+    );
+  }
+  // const testError = false;
+  // if (testError) {
+  //   throw new Error('Noooooo!');
+  // }
+  const usersArray = users.map((user) => {
+    const { user_id: userId } = user;
+    // console.log('userId', userId);
+    return (
+      // <div key={userId}>{userId}</div>
+      <UserListItem key={userId} user={user} selectUserToDisplay={selectUserToDisplay} />
+    );
+  });
   return (
     <div className="ui segment">
-      <h3>User List</h3>
-      {usersToDisplay}
-      {(user.errorMessage)
-        ? <div className="ui error message">{`Error: ${user.errorMessage}`}</div>
-        : null
-      }
-      {JSON.stringify(user.list, null, 2)}
+      <Collapse title="User list">
+        <div className="ui link cards">
+          {usersArray}
+        </div>
+      </Collapse>
     </div>
   );
 };
+// <h3>User List</h3>
+// <div>
+// <div className="ui link cards">
+// {usersArray}
+// </div>
+// </div>
 
 UserList.propTypes = {
-  auth: PropTypes.string,
-  user: PropTypes.objectOf(PropTypes.any).isRequired,
-  getUserList: PropTypes.func.isRequired,
+  users: PropTypes.arrayOf(PropTypes.object),
   selectUserToDisplay: PropTypes.func.isRequired,
 };
 UserList.defaultProps = {
-  auth: '',
+  users: [],
 };
 
-const mapStateToProps = ({ auth, user }) => {
-  return { auth: auth.authenticated, user };
-};
-
-export default connect(mapStateToProps, {
-  getUserList: getUserListAction,
-  selectUserToDisplay: selectUserToDisplayAction,
-})(UserList);
+export default UserList;

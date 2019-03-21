@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Collapse from '../Collapse';
 import forest from '../../silhouette.jpg';
 import noAvatar from '../../no-avatar.png';
-/* eslint no-underscore-dangle: 0 */
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
-const UserDetails = ({ userToDisplay, showOptional }) => {
+const UserDetails = ({ userToDisplay, showOptional, isPending }) => {
+  // console.log('isPending:', isPending);
   // console.log('user:', userToDisplay);
+  if (isPending) {
+    return (
+      <div className="ui segment">
+        <div className="ui active inline centered text loader">Loading user details...</div>
+      </div>
+    );
+  }
   if (!userToDisplay._id) {
     return (
       <div className="ui segment">
@@ -16,6 +25,7 @@ const UserDetails = ({ userToDisplay, showOptional }) => {
   const optionalItems = (showOptional)
     ? (
       <div>
+        <button type="button" className="ui primary button tiny right floated">Edit user profile</button>
         <div className="item">{`User type: ${userToDisplay.role}`}</div>
         <div className="item">{`Profile visibility: ${userToDisplay.visibility}`}</div>
       </div>
@@ -65,7 +75,9 @@ const UserDetails = ({ userToDisplay, showOptional }) => {
   );
   return (
     <div className="ui segment">
-      {displayProfile}
+      <Collapse title="User profile">
+        {displayProfile}
+      </Collapse>
     </div>
   );
 };
@@ -73,10 +85,12 @@ const UserDetails = ({ userToDisplay, showOptional }) => {
 UserDetails.propTypes = {
   userToDisplay: PropTypes.objectOf(PropTypes.any),
   showOptional: PropTypes.bool,
+  isPending: PropTypes.bool,
 };
 UserDetails.defaultProps = {
   userToDisplay: {},
   showOptional: false,
+  isPending: false,
 };
 
 export default UserDetails;

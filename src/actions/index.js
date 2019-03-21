@@ -59,9 +59,10 @@ export const signupAction = (formValues, callback) => async (dispatch) => {
     const response = await axios.post(`${OMAPFOLDER_SERVER}/users`, formValues);
     dispatch({ type: AUTH_USER, payload: response.data.token });
     localStorage.setItem('omapfolder-auth-token', response.data.token);
-    callback();
+    callback(true);
   } catch (err) {
     handleError(AUTH_ERROR)(err, dispatch);
+    callback(false);
   }
 };
 
@@ -72,13 +73,14 @@ export const loginAction = (formValues, callback) => async (dispatch) => {
     const response = await axios.post(`${OMAPFOLDER_SERVER}/login`, formValues);
     dispatch({ type: AUTH_USER, payload: response.data.token });
     localStorage.setItem('omapfolder-auth-token', response.data.token);
-    callback();
+    callback(true);
   } catch (err) {
     if (!err.response) {
       dispatch({ type: AUTH_ERROR, payload: 'No response from server.' });
     } else {
       dispatch({ type: AUTH_ERROR, payload: 'Login failed.' }); // no error in response
     }
+    callback(false);
   }
 };
 

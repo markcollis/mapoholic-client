@@ -1,10 +1,16 @@
 import React from 'react';
+import Collapse from '../Collapse';
 
 const UserRecent = () => {
   return (
     <div className="ui segment">
-      <h3>UserRecent component</h3>
-      <p>Populate with a summary of recent activity (i.e. most recent maps, possibly comments?)</p>
+      <div className="ui items">
+        <Collapse title="Recent activity">
+          <div>
+          Populate later with a summary of recent activity (i.e. most recent maps, possibly comments?)
+          </div>
+        </Collapse>
+      </div>
     </div>
   );
 };
