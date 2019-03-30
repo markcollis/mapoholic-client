@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import Collapse from '../Collapse';
 import forest from '../../silhouette.jpg';
 import noAvatar from '../../no-avatar.png';
+import { OMAPFOLDER_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const UserDetails = ({ userToDisplay, showOptional, isPending }) => {
-  // console.log('isPending:', isPending);
-  // console.log('user:', userToDisplay);
   if (isPending) {
     return (
       <div className="ui segment">
@@ -37,7 +36,12 @@ const UserDetails = ({ userToDisplay, showOptional, isPending }) => {
         <div />
         <img className="profile-forest" alt="forest" src={forest} />
         <div>
-          <img className="profile-image" alt="avatar" src={userToDisplay.profileImage || noAvatar} />
+          <img
+            className="profile-image"
+            alt="avatar"
+            src={(userToDisplay.profileImage) ? `${OMAPFOLDER_SERVER}/${userToDisplay.profileImage}` : noAvatar}
+          />
+
           <h3>{userToDisplay.displayName}</h3>
           {(userToDisplay.fullName !== userToDisplay.displayName)
             ? <div>{userToDisplay.fullName}</div>

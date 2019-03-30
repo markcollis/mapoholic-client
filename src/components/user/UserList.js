@@ -12,34 +12,22 @@ const UserList = ({ users, selectUserToDisplay }) => {
       </div>
     );
   }
-  // const testError = false;
-  // if (testError) {
-  //   throw new Error('Noooooo!');
-  // }
   const usersArray = users.map((user) => {
     const { user_id: userId } = user;
-    // console.log('userId', userId);
     return (
-      // <div key={userId}>{userId}</div>
       <UserListItem key={userId} user={user} selectUserToDisplay={selectUserToDisplay} />
     );
   });
   return (
     <div className="ui segment">
       <Collapse title="User list">
-        <div className="ui link cards">
+        <div className="ui link cards" style={{ marginTop: 0, marginBottom: 0 }}>
           {usersArray}
         </div>
       </Collapse>
     </div>
   );
 };
-// <h3>User List</h3>
-// <div>
-// <div className="ui link cards">
-// {usersArray}
-// </div>
-// </div>
 
 UserList.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object),

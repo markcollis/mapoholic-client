@@ -25,9 +25,9 @@ class UserView extends Component {
 
   componentDidMount() {
     // console.log('UserView mounted.');
-    const { user, getUserList, setUserSearchField } = this.props;
+    const { user, getUserList } = this.props;
     if (!user.list) getUserList();
-    if (user.searchField !== '') setUserSearchField({ target: { value: '' } });
+    // if (user.searchField !== '') setUserSearchField({ target: { value: '' } });
   }
 
   render() {
@@ -47,9 +47,11 @@ class UserView extends Component {
       errorMessage,
     } = user;
 
+    // need to consider reducing the number shown if there are many many users...
     const userListArray = (list)
       ? list.slice(0, -1).filter((eachUser) => {
-        return eachUser.displayName.toLowerCase().includes(searchField.toLowerCase());
+        return eachUser.displayName.toLowerCase().includes(searchField.toLowerCase())
+          || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase());
       })
       : [];
     // console.log('searchField', searchField);
@@ -83,7 +85,10 @@ class UserView extends Component {
             setUserSearchField={setUserSearchField}
             getUserList={getUserList}
           />
-          <UserList users={userListArray} selectUserToDisplay={selectUserToDisplay} />
+          <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
+            <UserList users={userListArray} selectUserToDisplay={selectUserToDisplay} />
+          </div>
+          <UserRecent />
         </div>
         <div className="nine wide column">
           <UserDetails
@@ -91,7 +96,7 @@ class UserView extends Component {
             showOptional={showOptional}
             isPending={isPending}
           />
-          <UserRecent />
+          <UserRecent userId={toDisplay} />
         </div>
       </div>
     );

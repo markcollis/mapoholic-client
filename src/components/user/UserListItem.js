@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import noAvatar from '../../no-avatar.png';
+import { OMAPFOLDER_SERVER } from '../../config';
 
 const UserListItem = ({ user, selectUserToDisplay }) => {
   const {
@@ -10,19 +11,22 @@ const UserListItem = ({ user, selectUserToDisplay }) => {
     fullName,
     memberOf,
     role,
-    joined,
   } = user;
   // console.log(user);
   return (
     <div
-      className="card"
+      className="ui fluid card"
       role="button"
       onClick={() => selectUserToDisplay(userId)}
       onKeyPress={() => selectUserToDisplay(userId)}
       tabIndex="0"
     >
       <div className="content">
-        <img className="left floated ui tiny image" alt="avatar" src={profileImage || noAvatar} />
+        <img
+          className="left floated ui tiny image"
+          alt="avatar"
+          src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
+        />
         <div className="header">
           {displayName}
         </div>
@@ -39,13 +43,15 @@ const UserListItem = ({ user, selectUserToDisplay }) => {
             : null}
         </div>
       </div>
-      <div className="extra content">
-        {(role === 'admin') ? <div className="ui tag label green">Adminstrator</div> : null}
-        {(role === 'guest') ? <div className="ui tag label green">Guest</div> : null}
-        <span className="right floated">
-          {`Joined in ${joined.slice(0, 4)}`}
-        </span>
-      </div>
+      {(role === 'admin' || role === 'guest')
+        ? (
+          <div className="extra content">
+            <div className="right floated">
+              {(role === 'admin') ? 'Adminstrator' : 'Guest'}
+            </div>
+          </div>
+        )
+        : null}
     </div>
   );
 };

@@ -17,58 +17,57 @@ class Collapse extends Component {
     this.state = {
       hideContent: false,
       contentHeight: null,
-      maxContentHeight: null,
+      propsChanged: true,
     };
     this.contentRef = React.createRef();
   }
 
   componentDidMount() {
-    // console.log('component mounted');
-    // not very elegant but height is unreliable otherwise...
-    setTimeout(() => this.setState({
-      contentHeight: this.contentRef.current.clientHeight,
-      maxContentHeight: this.contentRef.current.clientHeight,
-    }), 100);
-    // this.setState({ contentHeight: this.contentRef.current.clientHeight });
+    setTimeout(() => {
+      this.setState({ propsChanged: false, contentHeight: this.contentRef.current.clientHeight });
+    }, 200);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log('height on update:', this.contentRef.current.clientHeight);
-  //   console.log('prevProps:', prevProps);
-  //   // console.log('hidden height on update:', this.hiddenRef.current.clientHeight);
-  // }
+  componentWillReceiveProps() {
+    // console.log('will receive props');
+    this.setState({ propsChanged: true });
+  }
+
+  componentDidUpdate() {
+    const { propsChanged } = this.state;
+    // const { title } = this.props;
+    // if (title === 'User list') {
+    //   console.log('propsChanged:', propsChanged, 'height:', this.contentRef.current.clientHeight);
+    // }
+    if (propsChanged) {
+      this.setState({ propsChanged: false, contentHeight: this.contentRef.current.clientHeight });
+    }
+  }
 
   swapVisibility(e) {
-    const { contentHeight, maxContentHeight } = this.state;
-    const currentHeight = this.contentRef.current.clientHeight;
-    // console.log('heights (content max current):', contentHeight, maxContentHeight, currentHeight);
     e.preventDefault();
-    const { hideContent } = this.state;
+    // const { title } = this.props;
+    const { hideContent, contentHeight } = this.state;
+    const currentHeight = this.contentRef.current.clientHeight;
+    // if (title === 'User list') {
+    //   console.log('heights (content, current):', contentHeight, currentHeight);
+    // }
     this.setState({ hideContent: !hideContent });
     if (!hideContent) {
       if (currentHeight !== contentHeight) {
-        if (currentHeight > maxContentHeight) {
-          this.setState({ contentHeight: currentHeight, maxContentHeight: currentHeight });
-        } else {
-          this.setState({ contentHeight: maxContentHeight });
-        }
+        this.setState({ contentHeight: currentHeight });
       }
     }
-    // if (!hideContent) {
-    //   this.setState({ contentHeight: this.contentRef.current.clientHeight });
-    // }
-    // console.log('height:', this.contentRef.current.clientHeight);
   }
 
   render() {
-    // if (this.contentRef.current) {
-    //   this.setState({ contentHeight: this.contentRef.current.clientHeight });
-    // }
-    // this.setState({ contentHeight: this.contentRef.current.clientHeight });
     const { title, children } = this.props;
-    const { hideContent, contentHeight } = this.state;
+    const { hideContent, contentHeight, propsChanged } = this.state;
+    // if (title === 'User list') {
+    //   console.log('propsChanged:', propsChanged);
+    // }
     const currentHeight = `${(hideContent) ? 0 : contentHeight}px`;
-    // console.log('hideContent:', hideContent, title);
+    const contentStyle = (propsChanged) ? { visibility: 'hidden', maxHeight: '' } : { maxHeight: currentHeight };
     return (
       <div className="collapse">
         <div
@@ -80,7 +79,7 @@ class Collapse extends Component {
           <span className="ui header">{title}</span>
           {(hideContent) ? <i className="icon dropdown" /> : null}
         </div>
-        <div ref={this.contentRef} style={{ maxHeight: currentHeight }} className={(hideContent) ? 'hide' : 'show'}>
+        <div ref={this.contentRef} style={contentStyle} className={(hideContent) ? 'hide' : 'show'}>
           <div className="ui divider" />
           {children}
           <div />

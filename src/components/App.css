@@ -1,8 +1,8 @@
+/* settings for demo map component */
 .leaflet-container {
   height: 300px;
   width: 600px;
 }
-
 .maplabel {
   color: red;
   background-color: transparent;
@@ -11,11 +11,11 @@
   padding: 0;
 }
 
+/* control appearance of images in UserDetails component */
 .profile-forest {
   z-index: 0;
   width: 100%;
 }
-
 .profile-image {
   width: 150px;
   height: 150px;
@@ -27,12 +27,18 @@
   padding: 5px;
 }
 
+/* control appearance of avatars in UserList component */
 .user-list-avatar {
   width: 80px;
   height: 80px;
   margin-right: 1.5em;
 }
 
+.card-list { /* set margins to avoid clipping when inside a Collapse component */
+  margin: 0 0.1em 0 0.1em !important;
+}
+
+/* define smooth collapse and expand effects */
 .collapse .show {
   padding-left: 0.1em;
   padding-right: 0.1em;
