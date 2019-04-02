@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noAvatar from '../../no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 
-const UserListItem = ({ user, selectUserToDisplay }) => {
+const UserListItem = ({ user, selectUserToDisplay, setUserViewMode }) => {
   const {
     user_id: userId,
     profileImage,
@@ -15,10 +15,16 @@ const UserListItem = ({ user, selectUserToDisplay }) => {
   // console.log(user);
   return (
     <div
-      className="ui fluid card"
+      className="ui centered card"
       role="button"
-      onClick={() => selectUserToDisplay(userId)}
-      onKeyPress={() => selectUserToDisplay(userId)}
+      onClick={() => {
+        selectUserToDisplay(userId);
+        setUserViewMode('view');
+      }}
+      onKeyPress={() => {
+        selectUserToDisplay(userId);
+        setUserViewMode('view');
+      }}
       tabIndex="0"
     >
       <div className="content">
@@ -59,6 +65,7 @@ const UserListItem = ({ user, selectUserToDisplay }) => {
 UserListItem.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
   selectUserToDisplay: PropTypes.func.isRequired,
+  setUserViewMode: PropTypes.func.isRequired,
 };
 
 export default UserListItem;

@@ -35,4 +35,15 @@ export const countryOptions = [ // limited set of IOF member countries for now
   { value: 'USA', label: 'USA: United States of America' },
 ];
 
-export const someOtherOptions = [];
+export const roleOptions = [
+  { value: 'admin', label: 'Administrator' },
+  { value: 'guest', label: 'Guest' },
+  { value: 'standard', label: 'Standard' },
+];
+
+export const visibilityOptions = [
+  { value: 'public', label: 'public' },
+  { value: 'all', label: 'all' },
+  { value: 'club', label: 'club' },
+  { value: 'private', label: 'private' },
+];

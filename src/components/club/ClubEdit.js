@@ -20,11 +20,10 @@ class ClubEdit extends Component {
     userList: PropTypes.arrayOf(PropTypes.object),
     getUserList: PropTypes.func,
     viewMode: PropTypes.string.isRequired,
-    selectedClub: PropTypes.objectOf(PropTypes.any),
+    setClubViewMode: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    selectedClub: {},
     isAdmin: false,
     userList: [],
     getUserList: () => {},
@@ -53,13 +52,14 @@ class ClubEdit extends Component {
       isSubmitting,
       isAdmin,
       userList,
+      setClubViewMode,
     } = this.props;
     const buttonText = (viewMode === 'add') ? 'Create' : 'Update';
-    console.log('userList:', userList);
+    // console.log('userList:', userList);
     const ownerOptions = userList.map((user) => {
       return { value: user.user_id, label: user.displayName };
     });
-    console.log('ownerOptions', ownerOptions);
+    // console.log('ownerOptions', ownerOptions);
     return (
       <Form className="ui warning form" noValidate>
         <div className="field">
@@ -130,12 +130,19 @@ class ClubEdit extends Component {
           : null
         }
         <button type="submit" className="ui button primary" disabled={isSubmitting}>{buttonText}</button>
+        <button
+          type="button"
+          className="ui button right floated"
+          onClick={() => setClubViewMode('view')}
+        >
+        Cancel
+        </button>
       </Form>
     );
   }
 
   render() {
-    const { viewMode, selectedClub } = this.props;
+    const { viewMode } = this.props;
     // console.log(viewMode, selectedClub);
     const headerText = (viewMode === 'add')
       ? 'Create Club'
@@ -143,12 +150,12 @@ class ClubEdit extends Component {
     return (
       <div className="ui segment">
         <h3 className="header">{headerText}</h3>
-        {(viewMode === 'edit') ? `${selectedClub._id}, ${selectedClub.orisId}` : null}
         {this.renderForm()}
       </div>
     );
   }
 }
+// {(viewMode === 'edit') ? `${selectedClub._id}, ${selectedClub.orisId}` : null}
 
 const formikClubEdit = withFormik({
   mapPropsToValues({ selectedClub, viewMode }) {

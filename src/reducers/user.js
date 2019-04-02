@@ -1,20 +1,33 @@
 import {
   AUTH_USER,
-  USER_GET_CURRENT,
-  USER_GET_BY_ID,
-  USER_GET_LIST,
+  USER_GOT_LIST,
+  USER_GOT_CURRENT,
+  USER_GOT_BY_ID,
+  USER_GOT_EVENTS,
+  USER_UPDATED,
+  USER_POSTED_IMAGE,
+  USER_CHANGED_PASSWORD,
+  USER_DELETED,
+  USER_DELETED_IMAGE,
   USER_ERROR,
   USER_CHANGE_SEARCH_FIELD,
+  USER_CHANGE_VIEW_MODE,
+  USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
+  USER_SELECT_USER_EVENT,
 } from '../actions/types';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 const INITIAL_STATE = {
-  current: null, // matches auth token in localStorage
-  details: {}, // all user records viewed, key is userId
-  toDisplay: '', // userId of user to display in UserDetails
-  list: null, // replaced each time API is queried
   searchField: '', // contents of search box in UserFilter
+  list: null, // replaced each time API is queried
+  current: null, // matches auth token in localStorage
+  viewMode: 'none', // configuration of right column: none, view, edit, delete
+  viewModeSelf: 'view', // configuration of own profile page: view, edit, delete
+  details: {}, // all user records viewed, key is userId
+  selectedUserId: '', // userId of user to display in UserDetails
+  eventLists: {}, // all event list records viewed, key is userId
+  selectedEvent: '', // selected event to show details of (eventId)
   errorMessage: '', // empty unless an error occurs
 };
 
@@ -22,11 +35,15 @@ const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_USER:
       // console.log('AUTH_USER payload:', action.payload);
-      // if (action.payload === '') { // clear user state on logout
       return INITIAL_STATE; // clear on login or logout
-      // }
-      // return { ...state };
-    case USER_GET_CURRENT:
+    case USER_GOT_LIST:
+      // console.log('USER_GOT_LIST payload:', action.payload);
+      return {
+        ...state,
+        list: action.payload,
+        errorMessage: '',
+      };
+    case USER_GOT_CURRENT:
       // console.log('USER_GET_CURRENT payload:', action.payload);
       return {
         ...state,
@@ -34,18 +51,61 @@ const userReducer = (state = INITIAL_STATE, action) => {
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
       };
-    case USER_GET_BY_ID:
-      // console.log('USER_GET_BY_ID payload:', action.payload);
+    case USER_GOT_BY_ID:
+      // console.log('USER_GOT_BY_ID payload:', action.payload);
+      return {
+        ...state,
+        current: (state.current._id === action.payload._id) ? action.payload : { ...state.current },
+        details: { ...state.details, [action.payload._id]: action.payload },
+        errorMessage: '',
+      };
+    case USER_GOT_EVENTS:
+      // console.log('USER_GOT_EVENTS payload:', action.payload);
+      return {
+        ...state,
+        eventLists: { ...state.eventLists, [action.payload.userId]: action.payload.eventList },
+        errorMessage: '',
+      };
+    case USER_UPDATED:
+      // console.log('USER_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
       };
-    case USER_GET_LIST:
-      // console.log('USER_GET_LIST payload:', action.payload);
+    case USER_POSTED_IMAGE:
+      // console.log('USER_POSTED_IMAGE payload:', action.payload);
       return {
         ...state,
-        list: action.payload,
+        details: {
+          ...state.details,
+          [action.payload.userId]: {
+            ...state.details[action.payload.userId], profileImage: action.payload.profileImage,
+          },
+        },
+        errorMessage: '',
+      };
+    case USER_CHANGED_PASSWORD:
+      // console.log('USER_CHANGED_PASSWORD payload:', action.payload);
+      return state;
+    case USER_DELETED:
+    // console.log('USER_DELETED payload:', action.payload);
+      return {
+        ...state,
+        details: { ...state.details, [action.payload._id]: null },
+        selectedUserId: '',
+        errorMessage: '',
+      };
+    case USER_DELETED_IMAGE:
+    // console.log('USER_DELETED_IMAGE payload:', action.payload);
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          [action.payload]: {
+            ...state.details[action.payload], profileImage: '',
+          },
+        },
         errorMessage: '',
       };
     case USER_ERROR:
@@ -54,9 +114,18 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case USER_CHANGE_SEARCH_FIELD:
       // console.log('USER_CHANGE_SEARCH_FIELD payload:', action.payload);
       return { ...state, searchField: action.payload };
+    case USER_CHANGE_VIEW_MODE:
+      // console.log('USER_CHANGE_VIEW_MODE payload:', action.payload);
+      return { ...state, viewMode: action.payload };
+    case USER_CHANGE_VIEW_MODE_SELF:
+      // console.log('USER_CHANGE_VIEW_MODE_SELF payload:', action.payload);
+      return { ...state, viewModeSelf: action.payload };
     case USER_SELECT_USER:
       // console.log('USER_SELECT_USER payload:', action.payload);
-      return { ...state, toDisplay: action.payload };
+      return { ...state, selectedUserId: action.payload };
+    case USER_SELECT_USER_EVENT:
+      // console.log('USER_SELECT_USER_EVENT payload:', action.payload);
+      return { ...state, selectedEvent: action.payload };
     default:
       return state;
   }

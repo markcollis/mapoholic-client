@@ -15,12 +15,21 @@ import {
   CLUB_SELECT_CLUB,
   CLUB_SELECT_CLUB_MEMBER,
   CLUB_SELECT_CLUB_EVENT,
-  USER_GET_CURRENT,
-  USER_GET_BY_ID,
-  USER_GET_LIST,
+  USER_GOT_LIST,
+  USER_GOT_CURRENT,
+  USER_GOT_BY_ID,
+  USER_GOT_EVENTS,
+  USER_UPDATED,
+  USER_POSTED_IMAGE,
+  USER_CHANGED_PASSWORD,
+  USER_DELETED,
+  USER_DELETED_IMAGE,
   USER_ERROR,
   USER_CHANGE_SEARCH_FIELD,
+  USER_CHANGE_VIEW_MODE,
+  USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
+  USER_SELECT_USER_EVENT,
 } from './types';
 import { OMAPFOLDER_SERVER } from '../config';
 
@@ -29,6 +38,30 @@ import { OMAPFOLDER_SERVER } from '../config';
 export const logoutAction = () => {
   localStorage.removeItem('omapfolder-auth-token');
   return { type: AUTH_USER, payload: '' };
+};
+// change user view mode
+export const setUserViewModeAction = (mode) => {
+  const validModes = ['none', 'view', 'edit', 'delete'];
+  if (validModes.includes(mode)) {
+    return ({
+      type: USER_CHANGE_VIEW_MODE,
+      payload: mode,
+    });
+  }
+  console.log('Warning: Invalid user view mode! There\'s a typo somewhere', mode);
+  return null;
+};
+// change user view mode for own profile
+export const setUserViewModeSelfAction = (mode) => {
+  const validModes = ['view', 'edit', 'delete'];
+  if (validModes.includes(mode)) {
+    return ({
+      type: USER_CHANGE_VIEW_MODE_SELF,
+      payload: mode,
+    });
+  }
+  console.log('Warning: Invalid user view mode! There\'s a typo somewhere', mode);
+  return null;
 };
 // track changes to the user search field
 export const setUserSearchFieldAction = text => ({
@@ -40,6 +73,11 @@ export const selectUserToDisplayAction = userId => ({
   type: USER_SELECT_USER,
   payload: userId,
 });
+// select an event attended by a user to show further information (event details + maps)
+export const selectUserEventAction = eventId => ({
+  type: USER_SELECT_USER_EVENT,
+  payload: eventId,
+});
 // change club view mode
 export const setClubViewModeAction = (mode) => {
   const validModes = ['none', 'view', 'add', 'edit', 'delete'];
@@ -49,7 +87,7 @@ export const setClubViewModeAction = (mode) => {
       payload: mode,
     });
   }
-  console.log('Warning: Invalid view mode! There\'s a typo somewhere', mode);
+  // console.log('Warning: Invalid club view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // track changes to the club search field
@@ -129,13 +167,48 @@ export const loginAction = (formValues, callback) => async (dispatch) => {
   }
 };
 
-
 // reset password of specified user
 // app.post('/users/:id/password', requireAuth, Authentication.passwordChange);
+export const changePasswordAction = (userId, formValues, callback) => async (dispatch) => {
+  // console.log('changePasswordAction called.');
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/password`, formValues, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    // console.log('response:', response.data);
+    dispatch({ type: USER_CHANGED_PASSWORD, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(USER_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // upload profile image for specified user
 // app.post('/users/:id/profileImage', requireAuth, Users.validateProfileImagePermission,
 // images.uploadImage.single('upload'), Users.postProfileImage, images.errorHandler);
+export const postProfileImageAction = (userId, formData, callback) => async (dispatch) => {
+  console.log('postProfileImageAction called.');
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, formData, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    console.log('response:', response.data);
+    dispatch({
+      type: USER_POSTED_IMAGE,
+      payload: {
+        userId,
+        profileImage: response.data,
+      },
+    });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(USER_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // retrieve a list of all users (ids) matching specified criteria
 // app.get('/users', requireAuth, Users.getUserList);
@@ -154,7 +227,7 @@ export const getUserListAction = (searchCriteria, callback) => async (dispatch) 
     } else {
       response = await axios.get(`${OMAPFOLDER_SERVER}/users/public${queryString}`);
     }
-    dispatch({ type: USER_GET_LIST, payload: [...response.data, queryString] });
+    dispatch({ type: USER_GOT_LIST, payload: [...response.data, queryString] });
     if (callback) callback(true);
   } catch (err) {
     handleError(USER_ERROR)(err, dispatch);
@@ -173,7 +246,7 @@ export const getCurrentUserAction = callback => async (dispatch) => {
       headers: { Authorization: `bearer ${token}` },
     });
     // console.log('response:', response.data);
-    dispatch({ type: USER_GET_CURRENT, payload: response.data });
+    dispatch({ type: USER_GOT_CURRENT, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
     handleError(USER_ERROR)(err, dispatch);
@@ -200,7 +273,7 @@ export const getUserByIdAction = (userId, callback) => async (dispatch) => {
       response = await axios.get(`${OMAPFOLDER_SERVER}/users/public/${userId}`);
     }
     // console.log('response:', response.data);
-    dispatch({ type: USER_GET_BY_ID, payload: response.data });
+    dispatch({ type: USER_GOT_BY_ID, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
     handleError(USER_ERROR)(err, dispatch);
@@ -208,14 +281,91 @@ export const getUserByIdAction = (userId, callback) => async (dispatch) => {
   }
 };
 
+// get a list of events attended by the specified user (need to check when maps are present!)
+export const getUserEventsAction = (userId, callback) => async (dispatch) => {
+  if (!userId) {
+    dispatch({ type: USER_ERROR, payload: 'No user specified.' });
+  } else {
+    const queryString = toQueryString({ runners: userId });
+    // console.log('getUserEventsAction called.');
+    try {
+      const token = localStorage.getItem('omapfolder-auth-token');
+      let response;
+      if (token) {
+        response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
+          headers: { Authorization: `bearer ${token}` },
+        });
+      } else {
+        response = await axios.get(`${OMAPFOLDER_SERVER}/events/public${queryString}`);
+      }
+      dispatch({
+        type: USER_GOT_EVENTS,
+        payload: {
+          userId,
+          eventList: response.data,
+        },
+      });
+      if (callback) callback(true);
+    } catch (err) {
+      handleError(USER_ERROR)(err, dispatch);
+      if (callback) callback(false);
+    }
+  }
+};
+
 // update the specified user (multiple amendment not supported)
 // app.patch('/users/:id', requireAuth, Users.updateUser);
+export const updateUserAction = (userId, formValues, callback) => async (dispatch) => {
+  // console.log('updateUserAction called.');
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.patch(`${OMAPFOLDER_SERVER}/users/${userId}`, formValues, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    // console.log('response:', response.data);
+    dispatch({ type: USER_UPDATED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(USER_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // delete the specified user (multiple deletion not supported)
 // app.delete('/users/:id', requireAuth, Users.deleteUser);
+export const deleteUserAction = (userId, callback) => async (dispatch) => {
+  // console.log('deleteUserAction called.');
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}`, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    // console.log('response:', response.data);
+    dispatch({ type: USER_DELETED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(USER_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // delete profile image of the specified user
 // app.delete('/users/:id/profileImage', requireAuth, Users.deleteProfileImage)
+export const deleteProfileImageAction = (userId, callback) => async (dispatch) => {
+  console.log('deleteProfileImageAction called.');
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    console.log('response:', response.data);
+    dispatch({ type: USER_DELETED_IMAGE, payload: userId });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(USER_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // retrieve a list of all clubs (ids) matching specified criteria
 // app.get('/clubs', publicRoute, Clubs.getClubList);

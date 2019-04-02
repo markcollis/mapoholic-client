@@ -10,7 +10,7 @@ import ClubEvents from './ClubEvents';
 import ClubEdit from './ClubEdit';
 import ClubDelete from './ClubDelete';
 import UserDetails from '../user/UserDetails';
-import UserRecent from '../user/UserRecent';
+import UserEvents from '../user/UserEvents';
 import {
   setClubSearchFieldAction,
   setClubViewModeAction,
@@ -78,7 +78,7 @@ class ClubView extends Component {
             showOptional={showOptional}
             isPending={isPending}
           />
-          <UserRecent userId={selectedMember} />
+          <UserEvents userId={selectedMember} />
         </div>
       );
     }
@@ -130,8 +130,8 @@ class ClubView extends Component {
     // console.log('viewMode:', viewMode);
     // console.log('selectedClubId:', selectedClubId);
     // console.log('club.details:', details);
-    console.log('current:', current);
-    console.log('selectedClub:', selectedClub);
+    // console.log('current:', current);
+    // console.log('selectedClub:', selectedClub);
     const isAdmin = (current && current.role === 'admin');
     const isOwner = (current && selectedClub
       && current._id.toString() === selectedClub.owner._id.toString());

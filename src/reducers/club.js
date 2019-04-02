@@ -20,8 +20,8 @@ const INITIAL_STATE = {
   searchField: '', // contents of search box in ClubFilter
   list: null, // replaced each time API is queried, also populates corresponding details
   viewMode: 'none', // configuration of right column: none, view, add, edit, delete
-  selectedClubId: '', // clubId of club to display in ClubDetails
   details: {}, // all club records viewed, key is clubId
+  selectedClubId: '', // clubId of club to display in ClubDetails
   memberLists: {}, // all member list records viewed, key is clubId
   selectedMember: '', // selected club member to show details of (userId)
   eventLists: {}, // all event list records viewed, key is clubId
@@ -58,7 +58,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case CLUB_CREATED:
-      console.log('CLUB_CREATED payload:', action.payload);
+      // console.log('CLUB_CREATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -66,7 +66,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case CLUB_UPDATED:
-      console.log('CLUB_UPDATED payload:', action.payload);
+      // console.log('CLUB_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -77,6 +77,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
+        selectedClubId: '',
         errorMessage: '',
       };
     case CLUB_GOT_MEMBERS:

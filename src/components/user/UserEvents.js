@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Collapse from '../Collapse';
 
-const ClubEvents = ({ eventsList, selectClubEvent }) => {
+const UserEvents = ({ eventsList, selectUserEvent }) => {
   if (eventsList.length === 0) {
     return null;
   }
 
-  const clubEventsArray = eventsList.map((eachEvent) => {
+  const userEventsArray = eventsList.map((eachEvent) => {
     const {
       _id: eventId,
       name,
@@ -18,15 +18,14 @@ const ClubEvents = ({ eventsList, selectClubEvent }) => {
       totalRunners,
       orisId,
     } = eachEvent;
-    // console.log('event:', eachEvent);
     const typesTags = types.concat(tags);
     return (
       <div
         key={eventId}
         className="ui card fluid"
         role="button"
-        onClick={() => selectClubEvent(eventId)}
-        onKeyPress={() => selectClubEvent(eventId)}
+        onClick={() => selectUserEvent(eventId)}
+        onKeyPress={() => selectUserEvent(eventId)}
         tabIndex="0"
       >
         <div className="content">
@@ -65,19 +64,19 @@ const ClubEvents = ({ eventsList, selectClubEvent }) => {
     <div className="ui segment">
       <Collapse title="Events">
         <div className="ui link cards card-list">
-          {clubEventsArray}
+          {userEventsArray}
         </div>
       </Collapse>
     </div>
   );
 };
 
-ClubEvents.propTypes = {
+UserEvents.propTypes = {
   eventsList: PropTypes.arrayOf(PropTypes.object),
-  selectClubEvent: PropTypes.func.isRequired,
+  selectUserEvent: PropTypes.func.isRequired,
 };
-ClubEvents.defaultProps = {
+UserEvents.defaultProps = {
   eventsList: [],
 };
 
-export default ClubEvents;
+export default UserEvents;

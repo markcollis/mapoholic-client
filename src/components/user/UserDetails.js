@@ -6,27 +6,48 @@ import noAvatar from '../../no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
-const UserDetails = ({ userToDisplay, showOptional, isPending }) => {
-  if (isPending) {
+const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
+  if (!selectedUser._id) {
     return (
       <div className="ui segment">
         <div className="ui active inline centered text loader">Loading user details...</div>
       </div>
     );
   }
-  if (!userToDisplay._id) {
-    return (
-      <div className="ui segment">
-        <p>Select a user from the list to show their full profile here</p>
-      </div>
-    );
-  }
-  const optionalItems = (showOptional)
+  const {
+    _id: userId,
+    about,
+    createdAt,
+    displayName,
+    email,
+    fullName,
+    location,
+    memberOf,
+    orisId,
+    profileImage,
+    regNumber,
+    role,
+    updatedAt,
+    visibility,
+  } = selectedUser;
+  const optionalItems = (showOptional) // shown only to self/admin
     ? (
       <div>
-        <button type="button" className="ui primary button tiny right floated">Edit user profile</button>
-        <div className="item">{`User type: ${userToDisplay.role}`}</div>
-        <div className="item">{`Profile visibility: ${userToDisplay.visibility}`}</div>
+        <hr className="divider" />
+        <div className="item">{`User type: ${role}`}</div>
+        <div className="item">{`Profile visibility: ${visibility}`}</div>
+        <div className="item">{`Internal ID: ${userId}`}</div>
+        {(orisId)
+          ? <div>{`ORIS ID: ${orisId}`}</div>
+          : null}
+        <div className="item">{`Last updated: ${updatedAt.slice(0, 10)}`}</div>
+        <hr className="divider" />
+        <button type="button" className="ui red tiny button right floated" onClick={() => setUserViewMode('delete')}>
+          Delete user
+        </button>
+        <button type="button" className="ui primary tiny button" onClick={() => setUserViewMode('edit')}>
+          Edit user details
+        </button>
       </div>
     )
     : null;
@@ -39,16 +60,16 @@ const UserDetails = ({ userToDisplay, showOptional, isPending }) => {
           <img
             className="profile-image"
             alt="avatar"
-            src={(userToDisplay.profileImage) ? `${OMAPFOLDER_SERVER}/${userToDisplay.profileImage}` : noAvatar}
+            src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
           />
 
-          <h3>{userToDisplay.displayName}</h3>
-          {(userToDisplay.fullName !== userToDisplay.displayName)
-            ? <div>{userToDisplay.fullName}</div>
+          <h3>{displayName}</h3>
+          {(fullName !== displayName)
+            ? <div>{fullName}</div>
             : null}
-          {(userToDisplay.memberOf.length > 0)
+          {(memberOf.length > 0)
             ? (
-              <div>{`(${userToDisplay.memberOf.map(club => club.shortName).join(', ')})`}</div>
+              <div>{`(${memberOf.map(club => club.shortName).join(', ')})`}</div>
             )
             : null
           }
@@ -57,21 +78,30 @@ const UserDetails = ({ userToDisplay, showOptional, isPending }) => {
       <br />
       <div>
         <div className="ui list">
-          <p className="item">{userToDisplay.about}</p>
-          {(userToDisplay.location)
+          <p className="item">{about}</p>
+          {(location && location !== '')
             ? (
               <div className="item">
                 <i className="marker icon" />
-                {userToDisplay.location}
+                {location}
               </div>
             )
             : null
           }
           <div className="item">
             <i className="mail icon" />
-            {userToDisplay.email}
+            {email}
           </div>
-          <div className="item">{`Joined: ${userToDisplay.createdAt.slice(0, 10)}`}</div>
+          {(regNumber && regNumber !== '')
+            ? (
+              <div className="item">
+                <i className="compass outline icon" />
+                {regNumber}
+              </div>
+            )
+            : null
+          }
+          <div className="item">{`Joined: ${createdAt.slice(0, 10)}`}</div>
           {optionalItems}
         </div>
       </div>
@@ -87,14 +117,13 @@ const UserDetails = ({ userToDisplay, showOptional, isPending }) => {
 };
 
 UserDetails.propTypes = {
-  userToDisplay: PropTypes.objectOf(PropTypes.any),
+  selectedUser: PropTypes.objectOf(PropTypes.any),
   showOptional: PropTypes.bool,
-  isPending: PropTypes.bool,
+  setUserViewMode: PropTypes.func.isRequired,
 };
 UserDetails.defaultProps = {
-  userToDisplay: {},
+  selectedUser: {},
   showOptional: false,
-  isPending: false,
 };
 
 export default UserDetails;

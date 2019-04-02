@@ -1,47 +1,191 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Collapse from '../Collapse';
 import UserFilter from './UserFilter';
 import UserList from './UserList';
 import UserDetails from './UserDetails';
-import UserRecent from './UserRecent';
+import UserEvents from './UserEvents';
+import UserEdit from './UserEdit';
+import UserDelete from './UserDelete';
 import {
-  getUserByIdAction,
+  setUserViewModeAction,
   setUserSearchFieldAction,
-  getUserListAction,
   selectUserToDisplayAction,
+  selectUserEventAction,
+  changePasswordAction,
+  postProfileImageAction,
+  getUserListAction,
+  getUserByIdAction,
+  getUserEventsAction,
+  updateUserAction,
+  deleteUserAction,
+  deleteProfileImageAction,
+  getClubListAction,
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
 class UserView extends Component {
   static propTypes = {
+    club: PropTypes.objectOf(PropTypes.any).isRequired,
     user: PropTypes.objectOf(PropTypes.any).isRequired,
-    getUserById: PropTypes.func.isRequired,
+    getClubList: PropTypes.func.isRequired,
+    setUserViewMode: PropTypes.func.isRequired,
     setUserSearchField: PropTypes.func.isRequired,
-    getUserList: PropTypes.func.isRequired,
     selectUserToDisplay: PropTypes.func.isRequired,
+    selectUserEvent: PropTypes.func.isRequired,
+    changePassword: PropTypes.func.isRequired,
+    postProfileImage: PropTypes.func.isRequired,
+    getUserList: PropTypes.func.isRequired,
+    getUserById: PropTypes.func.isRequired,
+    getUserEvents: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
+    deleteProfileImage: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
     // console.log('UserView mounted.');
     const { user, getUserList } = this.props;
     if (!user.list) getUserList();
-    // if (user.searchField !== '') setUserSearchField({ target: { value: '' } });
+  }
+
+  // show extra details if an event is selected
+  renderUserEvent() {
+    const { user } = this.props;
+    const { selectedEvent } = user;
+    if (selectedEvent !== '') {
+      return (
+        <div className="ui segment">
+          <Collapse title="Event Details">
+            <h3>{selectedEvent}</h3>
+            <p>Update later when event components are defined</p>
+          </Collapse>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  renderRightColumn() {
+    const {
+      club,
+      user,
+      getClubList,
+      getUserEvents,
+      getUserList,
+      getUserById,
+      selectUserToDisplay,
+      selectUserEvent,
+      setUserViewMode,
+      updateUser,
+      changePassword,
+      postProfileImage,
+      deleteUser,
+      deleteProfileImage,
+    } = this.props;
+    const {
+      list,
+      current,
+      viewMode,
+      details,
+      selectedUserId,
+      eventLists,
+      errorMessage,
+    } = user;
+    const { list: clubListRaw } = club;
+    const clubList = (clubListRaw) ? clubListRaw.slice(0, -1) : [];
+
+    if (selectedUserId && !details[selectedUserId] && !errorMessage) {
+      setTimeout(() => getUserById(selectedUserId), 2000); // simulate network delay
+    }
+    const isAdmin = (current && current.role === 'admin');
+    const isSelf = (current && current._id === selectedUserId);
+    // console.log('isAdmin:', isAdmin, 'isSelf:', isSelf);
+    const showOptional = (isAdmin || isSelf);
+    const selectedUser = details[selectedUserId];
+
+    console.log('viewMode:', viewMode);
+    console.log('current:', current);
+    console.log('selectedUserId:', selectedUserId);
+    console.log('selectedUser:', selectedUser);
+    console.log('eventLists:', eventLists);
+    if (selectedUser && !eventLists[selectedUser._id]) {
+      getUserEvents(selectedUser._id);
+    }
+    const eventsList = (selectedUser && eventLists[selectedUser._id])
+      ? eventLists[selectedUser._id]
+      : [];
+    console.log('eventsList:', eventsList);
+
+    switch (viewMode) {
+      case 'none':
+        return (
+          <div className="nine wide column">
+            <div className="ui segment">
+              <p>Select a user from the list to show further details here</p>
+            </div>
+          </div>
+        );
+      case 'view':
+        return (
+          <div className="nine wide column">
+            <UserDetails
+              selectedUser={selectedUser || {}}
+              showOptional={showOptional}
+              setUserViewMode={setUserViewMode}
+            />
+            <UserEvents eventsList={eventsList} selectUserEvent={selectUserEvent} />
+            {this.renderUserEvent()}
+          </div>
+        );
+      case 'edit':
+        return (
+          <div className="nine wide column">
+            <UserEdit
+              isAdmin={isAdmin}
+              selectedUser={selectedUser}
+              updateUser={updateUser}
+              setUserViewMode={setUserViewMode}
+              selectUserToDisplay={selectUserToDisplay}
+              getUserList={getUserList}
+              getUserById={getUserById}
+              userList={(list) ? list.slice(0, -1) : []}
+              changePassword={changePassword}
+              postProfileImage={postProfileImage}
+              deleteProfileImage={deleteProfileImage}
+              clubList={clubList}
+              getClubList={getClubList}
+            />
+            <UserEvents eventsList={eventsList} selectUserEvent={selectUserEvent} />
+            {this.renderUserEvent()}
+          </div>
+        );
+      case 'delete':
+        return (
+          <div className="nine wide column">
+            <UserDelete
+              selectedUser={selectedUser}
+              deleteUser={deleteUser}
+              setUserViewMode={setUserViewMode}
+              getUserList={getUserList}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
   }
 
   render() {
     const {
       user,
-      getUserById,
       getUserList,
       setUserSearchField,
+      setUserViewMode,
       selectUserToDisplay,
     } = this.props;
     const {
-      current,
-      details,
-      toDisplay,
       list,
       searchField,
       errorMessage,
@@ -50,32 +194,22 @@ class UserView extends Component {
     // need to consider reducing the number shown if there are many many users...
     const userListArray = (list)
       ? list.slice(0, -1).filter((eachUser) => {
-        return eachUser.displayName.toLowerCase().includes(searchField.toLowerCase())
-          || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase());
+        return (eachUser.displayName.toLowerCase().includes(searchField.toLowerCase())
+          || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase()));
       })
       : [];
-    // console.log('searchField', searchField);
-    let isPending = false;
-    if (toDisplay && !details[toDisplay] && !errorMessage) {
-      // console.log('getting user details for:', toDisplay);
-      isPending = true;
-      setTimeout(() => getUserById(toDisplay, () => {
-        isPending = false;
-      }), 2000); // simulate network delay
-      // getUserById(toDisplay);
+
+    if (errorMessage) {
+      console.log('Error:', errorMessage);
     }
-    const isAdmin = (current && current.role === 'admin');
-    const isSelf = (current && current._id === toDisplay);
-    // console.log('isAdmin:', isAdmin, 'isSelf:', isSelf);
-    const showOptional = (isAdmin || isSelf);
-    const renderError = (user.errorMessage)
+    const renderError = (errorMessage)
       ? (
         <div className="sixteen wide column">
-          <div className="ui error message">{`Error: ${user.errorMessage}`}</div>
+          {(errorMessage) ? <div className="ui error message">{`Error: ${errorMessage}`}</div> : null}
         </div>
       )
       : null;
-    const userToDisplay = details[toDisplay] || {};
+
     return (
       <div className="ui vertically padded stackable grid">
         {renderError}
@@ -86,32 +220,36 @@ class UserView extends Component {
             getUserList={getUserList}
           />
           <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
-            <UserList users={userListArray} selectUserToDisplay={selectUserToDisplay} />
+            <UserList
+              users={userListArray}
+              selectUserToDisplay={selectUserToDisplay}
+              setUserViewMode={setUserViewMode}
+            />
           </div>
-          <UserRecent />
         </div>
-        <div className="nine wide column">
-          <UserDetails
-            userToDisplay={userToDisplay}
-            showOptional={showOptional}
-            isPending={isPending}
-          />
-          <UserRecent userId={toDisplay} />
-        </div>
+        {this.renderRightColumn()}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ user }) => {
-  return { user };
+const mapStateToProps = ({ user, club }) => {
+  return { user, club };
 };
 const mapDispatchToProps = {
-  getUserById: getUserByIdAction,
-  // getUserById: (toDisplay, callback) => dispatch(getUserByIdAction(toDisplay, callback)),
   setUserSearchField: event => setUserSearchFieldAction(event.target.value),
-  getUserList: getUserListAction,
+  setUserViewMode: setUserViewModeAction,
   selectUserToDisplay: selectUserToDisplayAction,
+  selectUserEvent: selectUserEventAction,
+  changePassword: changePasswordAction,
+  postProfileImage: postProfileImageAction,
+  getUserList: getUserListAction,
+  getUserById: getUserByIdAction,
+  getUserEvents: getUserEventsAction,
+  updateUser: updateUserAction,
+  deleteUser: deleteUserAction,
+  deleteProfileImage: deleteProfileImageAction,
+  getClubList: getClubListAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserView);
