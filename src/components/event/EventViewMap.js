@@ -1,9 +1,9 @@
 import React from 'react';
 
-const EventView = () => {
+const EventViewMap = () => {
   return (
-    <div className="ui segment">EventView component</div>
+    <div className="ui segment">EventViewMap component</div>
   );
 };
 
-export default EventView;
+export default EventViewMap;

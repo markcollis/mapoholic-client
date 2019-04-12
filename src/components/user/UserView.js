@@ -97,7 +97,7 @@ class UserView extends Component {
     const clubList = (clubListRaw) ? clubListRaw.slice(0, -1) : [];
 
     if (selectedUserId && !details[selectedUserId] && !errorMessage) {
-      setTimeout(() => getUserById(selectedUserId), 2000); // simulate network delay
+      setTimeout(() => getUserById(selectedUserId), 1000); // simulate network delay
     }
     const isAdmin = (current && current.role === 'admin');
     const isSelf = (current && current._id === selectedUserId);
@@ -105,18 +105,18 @@ class UserView extends Component {
     const showOptional = (isAdmin || isSelf);
     const selectedUser = details[selectedUserId];
 
-    console.log('viewMode:', viewMode);
-    console.log('current:', current);
-    console.log('selectedUserId:', selectedUserId);
-    console.log('selectedUser:', selectedUser);
-    console.log('eventLists:', eventLists);
+    // console.log('viewMode:', viewMode);
+    // console.log('current:', current);
+    // console.log('selectedUserId:', selectedUserId);
+    // console.log('selectedUser:', selectedUser);
+    // console.log('eventLists:', eventLists);
     if (selectedUser && !eventLists[selectedUser._id]) {
       getUserEvents(selectedUser._id);
     }
     const eventsList = (selectedUser && eventLists[selectedUser._id])
       ? eventLists[selectedUser._id]
       : [];
-    console.log('eventsList:', eventsList);
+    // console.log('eventsList:', eventsList);
 
     switch (viewMode) {
       case 'none':
@@ -190,7 +190,7 @@ class UserView extends Component {
       searchField,
       errorMessage,
     } = user;
-
+    // console.log('list of users:', list);
     // need to consider reducing the number shown if there are many many users...
     const userListArray = (list)
       ? list.slice(0, -1).filter((eachUser) => {

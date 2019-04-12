@@ -55,61 +55,77 @@ const MyProfile = ({
   const eventsList = (current && eventLists[current._id])
     ? eventLists[current._id]
     : [];
+  const rightColumn = (
+    <div className="seven wide column">
+      {(eventsList.length === 0)
+        ? <div className="ui warning message">You have not added any events yet.</div>
+        : <UserEvents eventsList={eventsList} selectUserEvent={selectUserEvent} />
+      }
+      {(selectedEvent !== '')
+        ? (
+          <div className="ui segment">
+            <Collapse title="Event Details">
+              <h3>{selectedEvent}</h3>
+              <p>Update later when event components are defined</p>
+            </Collapse>
+          </div>
+        )
+        : null}
+      {(errorMessage)
+        ? <div className="ui error message">{`Error: ${errorMessage}`}</div>
+        : null
+      }
+    </div>
+  );
 
   switch (viewModeSelf) {
     case 'view':
       return (
-        <div>
-          <UserDetails
-            selectedUser={current || {}}
-            setUserViewMode={setUserViewModeSelf}
-            showOptional
-          />
-          <UserEvents eventsList={eventsList} selectUserEvent={selectUserEvent} />
-          {(selectedEvent !== '')
-            ? (
-              <div className="ui segment">
-                <Collapse title="Event Details">
-                  <h3>{selectedEvent}</h3>
-                  <p>Update later when event components are defined</p>
-                </Collapse>
-              </div>
-            )
-            : null}
-          {(errorMessage)
-            ? <div className="ui error message">{`Error: ${errorMessage}`}</div>
-            : null
-          }
+        <div className="ui vertically padded stackable grid">
+          <div className="nine wide column">
+            <UserDetails
+              selectedUser={current || {}}
+              setUserViewMode={setUserViewModeSelf}
+              showOptional
+            />
+          </div>
+          {rightColumn}
         </div>
       );
     case 'edit':
       return (
-        <div className="ui segment">
-          <UserEdit
-            changePassword={changePassword}
-            clubList={clubList}
-            deleteProfileImage={deleteProfileImage}
-            getClubList={getClubList}
-            getUserById={getUserById}
-            getUserList={getUserList}
-            isAdmin={isAdmin}
-            postProfileImage={postProfileImage}
-            selectedUser={current}
-            setUserViewMode={setUserViewModeSelf}
-            updateUser={updateUser}
-            userList={(list) ? list.slice(0, -1) : []}
-          />
+        <div className="ui vertically padded stackable grid">
+          <div className="nine wide column">
+            <UserEdit
+              changePassword={changePassword}
+              clubList={clubList}
+              deleteProfileImage={deleteProfileImage}
+              getClubList={getClubList}
+              getUserById={getUserById}
+              getUserList={getUserList}
+              isAdmin={isAdmin}
+              postProfileImage={postProfileImage}
+              selectedUser={current}
+              setUserViewMode={setUserViewModeSelf}
+              updateUser={updateUser}
+              userList={(list) ? list.slice(0, -1) : []}
+            />
+          </div>
+          {rightColumn}
         </div>
       );
     case 'delete':
       return (
-        <div className="ui segment">
-          <UserDelete
-            deleteUser={deleteUser}
-            getUserList={getUserList}
-            selectedUser={current}
-            setUserViewMode={setUserViewModeSelf}
-          />
+        <div className="ui vertically padded stackable grid">
+          <div className="nine wide column">
+            <UserDelete
+              deleteUser={deleteUser}
+              getUserList={getUserList}
+              selectedUser={current}
+              setUserViewMode={setUserViewModeSelf}
+            />
+          </div>
+          {rightColumn}
         </div>
       );
     default:

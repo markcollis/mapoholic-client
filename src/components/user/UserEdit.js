@@ -6,7 +6,6 @@ import Select from 'react-select';
 import { roleOptions, visibilityOptions } from '../data';
 import noAvatar from '../../no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
-import UserChangeEmail from './UserChangeEmail';
 import UserChangePassword from './UserChangePassword';
 import UserEditProfileImage from './UserEditProfileImage';
 /* eslint no-underscore-dangle: 0 */
@@ -36,7 +35,6 @@ class UserEdit extends Component {
   };
 
   state = {
-    showUpdateEmail: false,
     showUpdatePassword: false,
     showUpdateProfileImage: false,
   };
@@ -44,20 +42,6 @@ class UserEdit extends Component {
   componentDidMount() {
     const { clubList, getClubList } = this.props;
     if (clubList.length === 0) getClubList();
-  }
-
-  renderUpdateEmail() {
-    const { selectedUser } = this.props;
-    return (
-      <div>
-        <div>{`UpdateEmail for ${selectedUser.email}`}</div>
-        <UserChangeEmail
-          user={selectedUser}
-          hide={() => this.setState({ showUpdateEmail: false })}
-        />
-        <hr className="divider" />
-      </div>
-    );
   }
 
   renderUpdatePassword() {
@@ -79,7 +63,6 @@ class UserEdit extends Component {
     const { selectedUser, postProfileImage, deleteProfileImage } = this.props;
     return (
       <div>
-        <div>{`UpdateProfileImage for ${selectedUser.email}`}</div>
         <UserEditProfileImage
           user={selectedUser}
           hide={() => this.setState({ showUpdateProfileImage: false })}
@@ -111,6 +94,16 @@ class UserEdit extends Component {
     // console.log('memberOfOptions', memberOfOptions);
     return (
       <Form className="ui warning form" noValidate>
+        <div className="field">
+          <label htmlFor="email">
+          Email address
+            <Field
+              name="email"
+              autoComplete="off"
+            />
+            { touched.email && errors.email && <div className="ui warning message">{errors.email}</div> }
+          </label>
+        </div>
         <div className="fields">
           <div className="eight wide field">
             <label htmlFor="displayName">
@@ -219,10 +212,10 @@ class UserEdit extends Component {
             : null
           }
         </div>
-        <button type="submit" className="ui button primary" disabled={isSubmitting}>Update</button>
+        <button type="submit" className="ui tiny button primary" disabled={isSubmitting}>Update</button>
         <button
           type="button"
-          className="ui button right floated"
+          className="ui tiny button right floated"
           onClick={() => setUserViewMode('view')}
         >
         Cancel
@@ -233,32 +226,30 @@ class UserEdit extends Component {
 
   render() {
     const { selectedUser, isAdmin } = this.props;
-    const { _id: userId, email, profileImage } = selectedUser;
+    const {
+      _id: userId,
+      displayName,
+      email,
+      profileImage,
+    } = selectedUser;
     const { showUpdateEmail, showUpdatePassword, showUpdateProfileImage } = this.state;
     return (
       <div className="ui segment">
         <h3 className="header">Edit User Details</h3>
         <hr className="divider" />
         <div className="ui grid">
-          <div className="eleven wide column">
-            <h4 className="header">Registered email address:</h4>
+          <div className="ten wide column">
+            <h3 className="header">{displayName}</h3>
             <p className="content">{email}</p>
-            <button
-              type="button"
-              className={(showUpdateEmail) ? 'ui tiny button disabled' : 'ui primary tiny button'}
-              onClick={() => this.setState({ showUpdateEmail: true })}
-            >
-            New Email
-            </button>
             <button
               type="button"
               className={(showUpdatePassword) ? 'ui tiny button disabled' : 'ui primary tiny button'}
               onClick={() => this.setState({ showUpdatePassword: true })}
             >
-            New Password
+            Change Password
             </button>
           </div>
-          <div className="five wide column">
+          <div className="six wide column">
             <div
               role="button"
               className={(showUpdateProfileImage) ? 'ui small image disabled' : 'ui small image'}
@@ -267,7 +258,7 @@ class UserEdit extends Component {
               tabIndex="0"
             >
               <div className="ui right corner label blue">
-                <i className="file image outline icon" />
+                <i className="sync icon" />
               </div>
               <img
                 alt="avatar"
@@ -295,6 +286,7 @@ class UserEdit extends Component {
 const formikUserEdit = withFormik({
   mapPropsToValues({ selectedUser }) {
     return {
+      email: selectedUser.email,
       displayName: selectedUser.displayName,
       fullName: selectedUser.fullName || '',
       memberOf: selectedUser.memberOf.map((club) => {
@@ -311,6 +303,7 @@ const formikUserEdit = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
+    email: Yup.string().required().email('This is not a valid email address.'),
     displayName: Yup.string().required(),
     fullName: Yup.string(),
     memberOf: Yup.array().of(

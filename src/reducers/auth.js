@@ -10,7 +10,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case AUTH_USER:
       // console.log('AUTH_USER with:', action.payload);
       // console.log('auth:', state);
-      return { ...state, authenticated: action.payload };
+      return { ...state, authenticated: action.payload, errorMessage: '' };
     case AUTH_ERROR:
       // console.log(action.payload);
       return { ...state, errorMessage: action.payload };

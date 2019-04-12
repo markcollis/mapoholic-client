@@ -23,7 +23,7 @@ const UserFilter = ({
           <div className="ui divider" />
           <div className="ui form">
             <button type="button" className="ui tiny button" onClick={() => getUserList()}>
-              Refresh user list
+              Refresh list
             </button>
           </div>
         </Collapse>

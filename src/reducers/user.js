@@ -77,9 +77,20 @@ const userReducer = (state = INITIAL_STATE, action) => {
       // console.log('USER_POSTED_IMAGE payload:', action.payload);
       return {
         ...state,
+        list: [...state.list].map((user) => {
+          if (user.user_id && user.user_id === action.payload.userId) {
+            return { ...user, profileImage: action.payload.profileImage };
+          }
+          return user;
+        }),
+        current: (state.current._id === action.payload.userId)
+          // ? { ...state.current, profileImage: '' }
+          ? { ...state.current, profileImage: action.payload.profileImage }
+          : { ...state.current },
         details: {
           ...state.details,
           [action.payload.userId]: {
+            // ...state.details[action.payload.userId], profileImage: '',
             ...state.details[action.payload.userId], profileImage: action.payload.profileImage,
           },
         },
@@ -100,6 +111,15 @@ const userReducer = (state = INITIAL_STATE, action) => {
     // console.log('USER_DELETED_IMAGE payload:', action.payload);
       return {
         ...state,
+        list: [...state.list].map((user) => {
+          if (user.user_id && user.user_id === action.payload) {
+            return { ...user, profileImage: '' };
+          }
+          return user;
+        }),
+        current: (state.current._id === action.payload)
+          ? { ...state.current, profileImage: '' }
+          : { ...state.current },
         details: {
           ...state.details,
           [action.payload]: {

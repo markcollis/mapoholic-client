@@ -59,6 +59,22 @@ class Authenticate extends Component {
             { touched.password && errors.password && <div className="ui warning message">{errors.password}</div> }
           </label>
         </div>
+        {(route === 'signup')
+          ? (
+            <div className="field">
+              <label htmlFor="displayName">
+                User name
+                <Field
+                  name="displayName"
+                  placeholder="Enter user name (your email address will be used if left blank)"
+                  autoComplete="off"
+                />
+                { touched.displayName && errors.displayName && <div className="ui warning message">{errors.displayName}</div> }
+              </label>
+            </div>
+          )
+          : null
+        }
         <button type="submit" className="ui button primary" disabled={isSubmitting}>{buttonText}</button>
       </Form>
     );
@@ -81,10 +97,11 @@ class Authenticate extends Component {
 }
 
 const formikAuthenticate = withFormik({
-  mapPropsToValues({ email }) {
+  mapPropsToValues({ email, displayName }) {
     return {
       email: email || '', // can set a value to pass in as a prop, if we ever want to
       password: '', // don't ever want to pass THIS in as a prop...
+      displayName: displayName || '',
     };
   },
   validationSchema: Yup.object().shape({
@@ -94,6 +111,7 @@ const formikAuthenticate = withFormik({
     password: Yup.string()
       .min(8, 'Your password must be at least 8 characters long.')
       .required('A password is required.'),
+    displayName: Yup.string(),
   }),
   handleSubmit(values, { props, setSubmitting }) {
     const {

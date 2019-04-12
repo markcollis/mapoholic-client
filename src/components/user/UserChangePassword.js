@@ -27,10 +27,10 @@ const UserChangePassword = ({
           </label>
           { touched.newPassword && errors.newPassword && <p className="ui negative message">{errors.newPassword}</p> }
         </div>
-        <button type="submit" className="ui button primary">Submit</button>
+        <button type="submit" className="ui tiny button primary">Submit</button>
         <button
           type="button"
-          className="ui button"
+          className="ui tiny button"
           onClick={() => hide()}
         >
         Cancel

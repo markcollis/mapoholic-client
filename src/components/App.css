@@ -11,6 +11,20 @@
   padding: 0;
 }
 
+.event-details .label {
+  margin-right: 0.3em !important;
+}
+
+/* float right (initially intended for labels) */
+.floatedright {
+  float: right;
+}
+
+/* level position of current user with avatar in Header component */
+.header-current-user {
+  padding-bottom: 0.3em !important;
+}
+
 /* control appearance of images in UserDetails component */
 .profile-forest {
   z-index: 0;
@@ -34,7 +48,34 @@
   margin-right: 1.5em;
 }
 
-.card-list { /* set margins to avoid clipping when inside a Collapse component */
+/* manage appearance of FileDropzone component */
+.filedropzone {
+  align-items: center;
+  background-color: white;
+  border: 0.15em dashed rgba(34,36,38,0.15);
+  border-radius: 0.5em;
+  box-shadow: 0 3px 6px 0 #ddd;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1em;
+  padding: 2em;
+  text-align: center;
+}
+.filedropzone input {
+  display: none;
+}
+.filedropzone img {
+  max-height: 20em;
+  max-width: 20em;
+}
+.highlighted {
+  background-color: #ddd;
+}
+
+/* set margins to avoid clipping when inside a Collapse component */
+.card-list {
   margin: 0 0.1em 0 0.1em !important;
 }
 

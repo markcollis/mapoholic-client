@@ -9,6 +9,7 @@ const Welcome = ({ auth }) => {
       <div className="ui segment">
         <h3 className="header">Welcome back!</h3>
         <p>You are still logged in.</p>
+        <p>To add: recently added maps, own maps, new events, new users, etc.</p>
       </div>
     );
   }
