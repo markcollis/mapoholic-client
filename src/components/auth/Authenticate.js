@@ -128,7 +128,7 @@ const formikAuthenticate = withFormik({
         } else {
           setSubmitting(false);
         }
-      }), 2000); // simulate network delay
+      }), 1000); // simulate network delay
     } else {
       setTimeout(() => login(values, (didSucceed) => {
         if (didSucceed) {
@@ -136,7 +136,7 @@ const formikAuthenticate = withFormik({
         } else {
           setSubmitting(false);
         }
-      }), 2000); // simulate network delay
+      }), 1000); // simulate network delay
     }
   },
 });

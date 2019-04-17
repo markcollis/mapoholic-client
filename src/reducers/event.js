@@ -21,6 +21,7 @@ import {
   EVENT_ERROR,
   EVENT_CHANGE_SEARCH_FIELD,
   EVENT_CHANGE_VIEW_EVENT,
+  EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
   EVENT_CHANGE_VIEW_COURSE_MAP,
   EVENT_CHANGE_VIEW_COMMENT,
@@ -34,16 +35,18 @@ import {
 const INITIAL_STATE = {
   searchField: '', // contents of search box in EventFilter
   eventMode: 'none', // none, view, add, edit, delete
-  runnerMode: 'none', // none, view, add, edit, delete
-  courseMapMode: 'none', // none, view, edit [add/delete functions included in edit]
-  commentMode: 'none', // none, view, add, edit, delete
+  eventLinkMode: 'view', // view, add, edit, delete
+  runnerMode: 'view', // view, edit, delete
+  courseMapMode: 'view', // view, edit [add/delete functions included in edit]
+  commentMode: 'view', // view, add, edit, delete
   list: null, // replaced each time API is queried, also populates corresponding details
   linkList: null, // replaced each time API is queried
-  linkListDetails: {}, // all link list records downloaded/updated
+  linkDetails: {}, // all link list records downloaded/updated
   orisList: null, // replaced each time API is queried, list specific to current user
   details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
   selectedEventDetails: '', // eventId of event to show details of in list/map view
   selectedEventDisplay: '', // eventId of event to display maps for (can browse events without reset)
+  selectedEventLink: '', // eventLinkId of event link to edit or delete
   selectedRunner: '', // userId of runner to display maps for
   selectedMap: '', // mapId of map to display
   errorMessage: '', // empty unless an error occurs
@@ -72,7 +75,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         linkList: action.payload,
-        linkListDetails: newDetails,
+        linkDetails: newDetails,
         errorMessage: '',
       };
     }
@@ -102,7 +105,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       // console.log('EVENT_LINK_CREATED payload:', action.payload);
       return {
         ...state,
-        linkListDetails: { ...state.linkListDetails, [action.payload._id]: action.payload },
+        linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
         errorMessage: '',
       };
     case EVENT_RUNNER_ADDED:
@@ -112,21 +115,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
       };
-    // case EVENT_UPDATED:
-    //   // console.log('EVENT_UPDATED payload:', action.payload);
-    //   return {
-    //     ...state,
-    //     details: { ...state.details, [action.payload._id]: action.payload },
-    //     errorMessage: '',
-    //   };
-    // case EVENT_DELETED:
-    //   // console.log('EVENT_DELETED payload:', action.payload);
-    //   return {
-    //     ...state,
-    //     details: { ...state.details, [action.payload._id]: null },
-    //     selectedClubId: '',
-    //     errorMessage: '',
-    //   };
     case EVENT_ERROR:
       // console.log('EVENT_ERROR payload:', action.payload);
       return { ...state, errorMessage: action.payload };
@@ -136,6 +124,13 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_CHANGE_VIEW_EVENT:
       // console.log('EVENT_CHANGE_VIEW_EVENT payload:', action.payload);
       return { ...state, eventMode: action.payload };
+    case EVENT_CHANGE_VIEW_EVENT_LINK:
+      // console.log('EVENT_CHANGE_VIEW_EVENT_LINK payload:', action.payload);
+      return {
+        ...state,
+        eventLinkMode: action.payload.mode,
+        selectedEventLink: action.payload.target,
+      };
     case EVENT_CHANGE_VIEW_RUNNER:
       // console.log('EVENT_CHANGE_VIEW_RUNNER payload:', action.payload);
       return { ...state, runnerMode: action.payload };
@@ -158,12 +153,38 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       // console.log('EVENT_SELECT_MAP payload:', action.payload);
       return { ...state, selectedMap: action.payload };
     case EVENT_MAP_UPLOADED: // to do
-    case EVENT_UPDATED: // to do
-    case EVENT_RUNNER_UPDATED: // to do
-    case EVENT_LINK_UPDATED: // to do
-    case EVENT_DELETED: // to do
-    case EVENT_LINK_DELETED: // to do
     case EVENT_MAP_DELETED: // to do
+    case EVENT_UPDATED:
+    case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
+      // console.log('EVENT_UPDATED payload:', action.payload);
+      return {
+        ...state,
+        details: { ...state.details, [action.payload._id]: action.payload },
+        errorMessage: '',
+      };
+    case EVENT_LINK_UPDATED:
+      // console.log('EVENT_LINK_UPDATED payload:', action.payload);
+      return {
+        ...state,
+        linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
+        errorMessage: '',
+      };
+    case EVENT_DELETED:
+      // console.log('EVENT_DELETED payload:', action.payload);
+      return {
+        ...state,
+        details: { ...state.details, [action.payload._id]: null },
+        selectedEventDetails: '',
+        errorMessage: '',
+      };
+    case EVENT_LINK_DELETED:
+      // console.log('EVENT_LINK_DELETED payload:', action.payload);
+      return {
+        ...state,
+        linkDetails: { ...state.linkDetails, [action.payload._id]: null },
+        selectedEventLink: '',
+        errorMessage: '',
+      };
     default:
       return state;
   }

@@ -1,0 +1,98 @@
+{
+  "List view": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        57
+      ],
+      [
+        "src/components/Header.js",
+        71
+      ]
+    ]
+  },
+  "Map view": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        60
+      ],
+      [
+        "src/components/Header.js",
+        74
+      ]
+    ]
+  },
+  "Map View": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        86
+      ]
+    ]
+  },
+  "My Maps": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        89
+      ]
+    ]
+  },
+  "Events": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        92
+      ]
+    ]
+  },
+  "Users": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        95
+      ]
+    ]
+  },
+  "Clubs": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        98
+      ]
+    ]
+  },
+  "Log Out": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        103
+      ]
+    ]
+  },
+  "Browse Public Maps": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        117
+      ]
+    ]
+  },
+  "Sign Up": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        121
+      ]
+    ]
+  },
+  "Log In": {
+    "origin": [
+      [
+        "src/components/Header.js",
+        124
+      ]
+    ]
+  }
+}

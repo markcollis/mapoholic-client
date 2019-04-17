@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@lingui/react": "^2.7.4",
     "axios": "^0.18.0",
     "babel-loader": "8.0.4",
+    "date-fns": "2.0.0-alpha.27",
     "dotenv": "^7.0.0",
     "focus-visible": "^4.1.5",
     "formik": "^1.5.0",
     "leaflet": "^1.4.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.1",
+    "react-datepicker": "^2.4.0",
     "react-dom": "^16.8.1",
     "react-leaflet": "^2.2.0",
     "react-redux": "^6.0.0",
@@ -25,7 +28,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "add-locale": "lingui add-locale",
+    "extract": "lingui extract",
+    "compile": "lingui compile"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +43,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@lingui/cli": "^2.7.4",
+    "@lingui/macro": "^2.7.4",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",
     "eslint-config-airbnb": "^17.1.0",

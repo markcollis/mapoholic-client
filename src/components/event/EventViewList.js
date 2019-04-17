@@ -7,6 +7,7 @@ import EventList from './EventList';
 import EventDetails from './EventDetails';
 import EventRunners from './EventRunners';
 import EventLinked from './EventLinked';
+import EventLinkedManage from './EventLinkedManage';
 import EventEdit from './EventEdit';
 import EventDelete from './EventDelete';
 // import EventRunnerAdd from './EventRunnerAdd';
@@ -15,6 +16,7 @@ import EventDelete from './EventDelete';
 
 import {
   getClubListAction,
+  getUserListAction,
   createEventAction,
   createEventLinkAction,
   addEventRunnerAction,
@@ -23,24 +25,33 @@ import {
   getEventLinkListAction,
   getEventListOrisAction,
   getEventByIdAction,
+  updateEventAction,
+  // updateEventRunnerAction,
+  updateEventLinkAction,
+  deleteEventAction,
+  deleteEventLinkAction,
   setEventSearchFieldAction,
   setEventViewModeEventAction,
-  setEventViewModeRunnerAction,
+  setEventViewModeEventLinkAction,
+  // setEventViewModeRunnerAction,
   // setEventViewModeCourseMapAction,
   // setEventViewModeCommentAction,
   selectEventForDetailsAction,
   selectEventToDisplayAction,
   selectRunnerToDisplayAction,
   // selectMapToDisplayAction,
+  cancelEventErrorAction,
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
 class EventViewList extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,
+    config: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
     user: PropTypes.objectOf(PropTypes.any).isRequired,
     getClubList: PropTypes.func.isRequired,
+    getUserList: PropTypes.func.isRequired,
     createEvent: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
     addEventRunner: PropTypes.func.isRequired,
@@ -49,28 +60,39 @@ class EventViewList extends Component {
     getEventLinkList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
+    updateEvent: PropTypes.func.isRequired,
+    // updateEventRunner: PropTypes.func.isRequired,
+    updateEventLink: PropTypes.func.isRequired,
+    deleteEvent: PropTypes.func.isRequired,
+    deleteEventLink: PropTypes.func.isRequired,
     setEventSearchField: PropTypes.func.isRequired,
     setEventViewModeEvent: PropTypes.func.isRequired,
-    setEventViewModeRunner: PropTypes.func.isRequired,
+    setEventViewModeEventLink: PropTypes.func.isRequired,
+    // setEventViewModeRunner: PropTypes.func.isRequired,
     // setEventViewModeCourseMap: PropTypes.func.isRequired,
     // setEventViewModeComment: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
     // selectMapToDisplay: PropTypes.func.isRequired,
+    cancelEventError: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
     const {
       club,
+      user,
       oevent,
       getClubList,
       getEventList,
       getEventLinkList,
+      getUserList,
     } = this.props;
     const { list: clubList } = club;
+    const { list: userList } = user;
     const { list, linkList } = oevent;
     if (!clubList) getClubList();
+    if (!userList) getUserList();
     if (!list) getEventList();
     if (!linkList) getEventLinkList();
   }
@@ -117,32 +139,47 @@ class EventViewList extends Component {
   renderRightColumn() {
     const {
       club,
+      config,
       user,
       oevent,
+      addEventRunner,
+      createEvent,
+      createEventOris,
+      createEventLink,
       getEventList,
+      getEventListOris,
+      getEventLinkList,
       getEventById,
+      updateEvent,
+      updateEventLink,
+      deleteEvent,
+      deleteEventLink,
       setEventViewModeEvent,
-      setEventViewModeRunner,
+      setEventViewModeEventLink,
       selectEventForDetails,
       selectEventToDisplay,
       selectRunnerToDisplay,
     } = this.props;
     const {
-      // searchField,
-      // eventView,
       eventMode,
+      eventLinkMode,
       runnerMode,
       list,
       details,
       linkList,
-      linkListDetails,
+      linkDetails,
+      selectedEventLink,
       selectedEventDetails,
+      selectedEventDisplay,
       errorMessage,
     } = oevent;
-    const { current } = user;
-    const { details: clubDetails } = club;
+    const { current, list: userList } = user;
+    const { language } = config;
+    console.log('userList:', userList);
+    const currentUserId = (current) ? current._id.toString() : null;
+    const { details: clubDetails, list: clubList } = club;
     console.log('oevent:', oevent);
-    console.log('current:', current);
+    // console.log('current:', current);
     if (selectedEventDetails && !details[selectedEventDetails] && !errorMessage) {
       setTimeout(() => getEventById(selectedEventDetails), 1000); // simulate network delay
     }
@@ -151,16 +188,66 @@ class EventViewList extends Component {
     const runnerList = (selectedEvent.runners)
       ? selectedEvent.runners.map(runner => runner.user.toString())
       : [];
-    console.log('runnerList:', runnerList);
+    // console.log('runnerList:', runnerList);
     const organisingClubs = (selectedEvent.organisedBy)
       ? selectedEvent.organisedBy.map(organisingClub => clubDetails[organisingClub._id])
       : [];
-    console.log('organisingClubs:', organisingClubs);
+    // console.log('organisingClubs:', organisingClubs);
     const isAdmin = (current && current.role === 'admin');
     const isRunner = (current && selectedEvent
-      && runnerList.includes(current._id.toString()));
+      && runnerList.includes(currentUserId));
     const canEdit = (isAdmin || isRunner);
-    console.log('isAdmin, isRunner, canEdit:', isAdmin, isRunner, canEdit);
+    // console.log('isAdmin, isRunner, canEdit:', isAdmin, isRunner, canEdit);
+
+    const renderEventRunners = (
+      <EventRunners
+        currentUserId={currentUserId}
+        selectedEvent={selectedEvent}
+        runnerMode={runnerMode}
+        addEventRunner={addEventRunner}
+        selectEventToDisplay={selectEventToDisplay}
+        selectRunnerToDisplay={selectRunnerToDisplay}
+      />
+    );
+
+    const renderEventLinked = (selectedEvent.linkedTo && selectedEvent.linkedTo.length > 0)
+      ? (
+        <div>
+          {selectedEvent.linkedTo.map((link) => {
+            return (
+              <EventLinked
+                key={link._id}
+                isAdmin={isAdmin}
+                canEdit={canEdit}
+                eventLinkMode={eventLinkMode}
+                selectedEvent={selectedEvent}
+                link={link}
+                linkDetails={linkDetails}
+                selectEventForDetails={selectEventForDetails}
+                setEventViewModeEvent={setEventViewModeEvent}
+                setEventViewModeEventLink={setEventViewModeEventLink}
+              />
+            );
+          })}
+        </div>
+      )
+      : null;
+
+    const renderEventLinkedManage = (
+      <EventLinkedManage
+        eventLinkMode={eventLinkMode}
+        selectedEvent={selectedEvent}
+        selectedEventLink={selectedEventLink}
+        eventList={list}
+        linkList={linkList}
+        linkDetails={linkDetails}
+        createEventLink={createEventLink}
+        updateEventLink={updateEventLink}
+        deleteEventLink={deleteEventLink}
+        setEventViewModeEvent={setEventViewModeEvent}
+        setEventViewModeEventLink={setEventViewModeEventLink}
+      />
+    );
 
     switch (eventMode) {
       case 'none':
@@ -180,54 +267,54 @@ class EventViewList extends Component {
               canEdit={canEdit}
               setEventViewModeEvent={setEventViewModeEvent}
             />
-            <EventRunners
-              selectedEvent={selectedEvent}
-              runnerMode={runnerMode}
-              setEventViewModeRunner={setEventViewModeRunner}
-              selectEventToDisplay={selectEventToDisplay}
-              selectRunnerToDisplay={selectRunnerToDisplay}
-            />
-            <EventLinked
-              linkList={linkList}
-              linkListDetails={linkListDetails}
-              selectEventForDetails={selectEventForDetails}
-            />
+            {renderEventRunners}
+            {renderEventLinked}
+            {renderEventLinkedManage}
           </div>
         );
       case 'edit':
         return (
           <div className="eight wide column">
             <EventEdit // same form component handles both create and update
+              language={language}
               isAdmin={isAdmin}
+              eventMode={eventMode}
               selectedEvent={selectedEvent}
-              /* updateEvent={updateEvent} */
-              /* setEventViewModeEvent={setEventViewModeEvent} */
-              /* selectEventToDisplay={selectEventToDisplay} */
+              updateEvent={updateEvent}
+              setEventViewModeEvent={setEventViewModeEvent}
               getEventList={getEventList}
               eventList={(list) ? list.slice(0, -1) : []}
+              eventLinkList={(linkList) ? linkList.slice(0, -1) : []}
+              userList={(userList) ? userList.slice(0, -1) : []}
+              clubList={(clubList) ? clubList.slice(0, -1) : []}
             />
-            <EventRunners
-              runnerMode={runnerMode}
-            />
-            <EventLinked />
+            {renderEventRunners}
+            {renderEventLinked}
+            {renderEventLinkedManage}
           </div>
         );
       case 'add':
         return (
           <div className="eight wide column">
             <EventEdit // same form component handles both create and update
+              language={language}
               isAdmin={isAdmin}
+              eventMode={eventMode}
               selectedEvent={selectedEvent}
-              /* createEvent={createEvent} */
-              /* setEventViewModeEvent={setEventViewModeEvent} */
-              /* selectEventToDisplay={selectEventToDisplay} */
+              createEvent={createEvent}
+              createEventOris={createEventOris}
+              getEventListOris={getEventListOris}
+              setEventViewModeEvent={setEventViewModeEvent}
+              selectEventForDetails={selectEventForDetails}
+              selectEventToDisplay={selectEventToDisplay}
               getEventList={getEventList}
               eventList={(list) ? list.slice(0, -1) : []}
+              eventLinkList={(linkList) ? linkList.slice(0, -1) : []}
+              clubList={(clubList) ? clubList.slice(0, -1) : []}
             />
-            <EventRunners
-              runnerMode={runnerMode}
-            />
-            <EventLinked />
+            {renderEventRunners}
+            {renderEventLinked}
+            {renderEventLinkedManage}
           </div>
         );
       case 'delete':
@@ -235,13 +322,17 @@ class EventViewList extends Component {
           <div className="eight wide column">
             <EventDelete
               selectedEvent={selectedEvent}
-              /* deleteEvent={deleteEvent} */
-              /* setEventViewModeEvent={setEventViewModeEvent} */
+              selectedEventDisplay={selectedEventDisplay}
+              deleteEvent={deleteEvent}
+              getEventList={getEventList}
+              getEventLinkList={getEventLinkList}
+              setEventViewModeEvent={setEventViewModeEvent}
+              selectEventForDetails={selectEventForDetails}
+              selectEventToDisplay={selectEventToDisplay}
             />
-            <EventRunners
-              runnerMode={runnerMode}
-            />
-            <EventLinked />
+            {renderEventRunners}
+            {renderEventLinked}
+            {renderEventLinkedManage}
           </div>
         );
       default:
@@ -256,6 +347,7 @@ class EventViewList extends Component {
       setEventSearchField,
       setEventViewModeEvent,
       selectEventForDetails,
+      cancelEventError,
     } = this.props;
     const {
       searchField,
@@ -270,7 +362,20 @@ class EventViewList extends Component {
     const renderError = (errorMessage)
       ? (
         <div className="sixteen wide column">
-          {(errorMessage) ? <div className="ui error message">{`Error: ${errorMessage}`}</div> : null}
+          {(errorMessage)
+            ? (
+              <div className="ui error message">
+                <i
+                  role="button"
+                  className="close icon"
+                  onClick={() => cancelEventError()}
+                  onKeyPress={() => cancelEventError()}
+                  tabIndex="0"
+                />
+                {`Error: ${errorMessage}`}
+              </div>
+            )
+            : null}
         </div>
       )
       : null;
@@ -299,11 +404,22 @@ class EventViewList extends Component {
   }
 }
 
-const mapStateToProps = ({ club, user, oevent }) => {
-  return { club, user, oevent };
+const mapStateToProps = ({
+  club,
+  config,
+  user,
+  oevent,
+}) => {
+  return {
+    club,
+    config,
+    user,
+    oevent,
+  };
 };
 const mapDispatchToProps = {
   getClubList: getClubListAction,
+  getUserList: getUserListAction,
   createEvent: createEventAction,
   createEventLink: createEventLinkAction,
   addEventRunner: addEventRunnerAction,
@@ -312,15 +428,22 @@ const mapDispatchToProps = {
   getEventLinkList: getEventLinkListAction,
   getEventListOris: getEventListOrisAction,
   getEventById: getEventByIdAction,
+  updateEvent: updateEventAction,
+  // updateEventRunner: updateEventRunnerAction,
+  updateEventLink: updateEventLinkAction,
+  deleteEvent: deleteEventAction,
+  deleteEventLink: deleteEventLinkAction,
   setEventSearchField: event => setEventSearchFieldAction(event.target.value),
   setEventViewModeEvent: setEventViewModeEventAction,
-  setEventViewModeRunner: setEventViewModeRunnerAction,
+  setEventViewModeEventLink: setEventViewModeEventLinkAction,
+  // setEventViewModeRunner: setEventViewModeRunnerAction,
   // setEventViewModeCourseMap: setEventViewModeCourseMapAction,
   // setEventViewModeComment: setEventViewModeCommentAction,
   selectEventForDetails: selectEventForDetailsAction,
   selectEventToDisplay: selectEventToDisplayAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
   // selectMapToDisplay: selectMapToDisplayAction,
+  cancelEventError: cancelEventErrorAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventViewList);

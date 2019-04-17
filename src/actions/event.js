@@ -22,6 +22,7 @@ import {
   EVENT_ERROR,
   EVENT_CHANGE_SEARCH_FIELD,
   EVENT_CHANGE_VIEW_EVENT,
+  EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
   EVENT_CHANGE_VIEW_COURSE_MAP,
   EVENT_CHANGE_VIEW_COMMENT,
@@ -43,6 +44,18 @@ export const setEventViewModeEventAction = (mode) => {
     });
   }
   console.log('Warning: Invalid event/event view mode! There\'s a typo somewhere', mode);
+  return null;
+};
+// change event view mode (event link)
+export const setEventViewModeEventLinkAction = (mode, target = '') => {
+  const validModes = ['view', 'add', 'edit', 'delete'];
+  if (validModes.includes(mode)) {
+    return ({
+      type: EVENT_CHANGE_VIEW_EVENT_LINK,
+      payload: { mode, target },
+    });
+  }
+  console.log('Warning: Invalid event link view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // change event view mode (runner)
@@ -106,6 +119,11 @@ export const selectMapToDisplayAction = mapId => ({
   type: EVENT_SELECT_MAP,
   payload: mapId,
 });
+// cancel a displayed error message
+export const cancelEventErrorAction = () => ({
+  type: EVENT_ERROR,
+  payload: '',
+});
 
 // *** actions that are functions are enabled by redux-thunk middleware ***
 
@@ -167,12 +185,12 @@ export const createEventLinkAction = (formValues, callback) => async (dispatch) 
   }
 };
 
-// add user as a runner at the specified event (event.runners[] fields except maps)
+// add current user as a runner at the specified event
 // app.post('/events/:eventid/maps', requireAuth, Events.addEventRunner);
-export const addEventRunnerAction = (eventId, formValues, callback) => async (dispatch) => {
+export const addEventRunnerAction = (eventId, callback) => async (dispatch) => {
   try {
     const token = localStorage.getItem('omapfolder-auth-token');
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/${eventId}/maps`, formValues, {
+    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/${eventId}/maps`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_RUNNER_ADDED, payload: response.data });
@@ -204,7 +222,7 @@ export const addEventRunnerAction = (eventId, formValues, callback) => async (di
 export const createEventOrisAction = (orisEventId, callback) => async (dispatch) => {
   try {
     const token = localStorage.getItem('omapfolder-auth-token');
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/oris/${orisEventId}`, {
+    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/oris/${orisEventId}`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_CREATED, payload: response.data });
@@ -306,15 +324,56 @@ export const getEventByIdAction = (eventId, callback) => async (dispatch) => {
 
 // update the specified event (multiple amendment not supported)
 // app.patch('/events/:eventid', requireAuth, Events.updateEvent);
-
+export const updateEventAction = (eventId, formValues, callback) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/${eventId}`, formValues, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    dispatch({ type: EVENT_UPDATED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // update the specified runner and map data (multiple amendment not supported)
 // app.patch('/events/:eventid/maps/:userid', requireAuth, Events.updateEventRunner);
-
+export const updateEventRunnerAction = (
+  eventId,
+  userId,
+  formValues,
+  callback,
+) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}`, formValues, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    dispatch({ type: EVENT_RUNNER_UPDATED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // update the specified link between events (multiple amendment not supported)
 // app.patch('/events/links/:eventlinkid', requireAuth, Events.updateEventLink);
-
+export const updateEventLinkAction = (eventLinkId, formValues, callback) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/links/${eventLinkId}`, formValues, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    dispatch({ type: EVENT_LINK_UPDATED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // edit the specified comment (multiple amendment not supported)
 // app.patch('/events/:eventid/comments/:userid/:commentid', requireAuth, Events.updateComment);
@@ -323,14 +382,27 @@ export const getEventByIdAction = (eventId, callback) => async (dispatch) => {
 // delete the specified event (multiple delete not supported)
 // [will fail if other users have records attached to event, unless admin]
 // app.delete('/events/:eventid', requireAuth, Events.deleteEvent);
-
+export const deleteEventAction = (eventId, callback) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/${eventId}`, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    dispatch({ type: EVENT_DELETED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // delete the specified runner and map data (multiple deletion not supported)
 // app.delete('/events/:eventid/maps/:userid', requireAuth, Events.deleteEventRunner);
 // NOT DONE YET
 
 // delete the specified map (multiple deletion not supported)
-// app.delete('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?', requireAuth, Events.deleteMap);
+// app.delete('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?',
+// requireAuth, Events.deleteMap);
 
 
 // delete the specified link between events (multiple deletion not supported)
@@ -338,7 +410,19 @@ export const getEventByIdAction = (eventId, callback) => async (dispatch) => {
 // removal approach will be through editing the event to remove it from the linked set
 // *hence this route will be constrained to admin users only*
 // app.delete('/events/links/:eventlinkid', requireAuth, Events.deleteEventLink);
-
+export const deleteEventLinkAction = (eventLinkId, callback) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/links/${eventLinkId}`, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    dispatch({ type: EVENT_LINK_DELETED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // delete the specified comment (multiple deletion not supported)
 // app.delete('/events/:eventid/comments/:userid/:commentid', requireAuth, Events.deleteComment);
@@ -357,7 +441,8 @@ export const getEventByIdAction = (eventId, callback) => async (dispatch) => {
 //     formData.append('upload', file, file.name);
 //     console.log('formData:', formData);
 //     const token = localStorage.getItem('omapfolder-auth-token');
-//     const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, formData, {
+//     const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`,
+// formData, {
 //       headers: {
 //         Authorization: `bearer ${token}`,
 //         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,

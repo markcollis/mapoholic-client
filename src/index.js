@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
+// import { I18nProvider } from '@lingui/react';
 import 'focus-visible';
 
 import reducers from './reducers';
@@ -23,9 +24,12 @@ import MapView from './components/event/MapView';
 import UserView from './components/user/UserView';
 import ClubView from './components/club/ClubView';
 import MyProfile from './components/user/MyProfile';
+// import catalogCs from './locales/cs/messages';
+// import catalogEn from './locales/en/messages';
 
 // import Formik from './components/auth/FormikExample';
 
+// const catalogs = { cs: catalogCs, en: catalogEn };
 const store = createStore(
   reducers,
   {},

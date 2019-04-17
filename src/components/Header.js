@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getCurrentUserAction } from '../actions';
+import { Trans } from '@lingui/macro';
+import { getCurrentUserAction, setLanguageAction } from '../actions';
 import noAvatar from '../no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../config';
 
@@ -11,6 +12,7 @@ const Header = ({
   auth,
   currentUser,
   getCurrentUser,
+  setLanguage,
   currentMap,
 }) => {
   if (auth && !currentUser) { // check here because Header is always rendered
@@ -49,11 +51,34 @@ const Header = ({
   const isClubs = (location.pathname === '/clubs');
   const isCurrentUser = (location.pathname === '/me');
 
+  const selectLanguage = (
+    <div className="item">
+      <i
+        className="uk flag"
+        role="button"
+        onClick={() => setLanguage('en')}
+        onKeyPress={() => setLanguage('en')}
+        tabIndex="0"
+      />
+      <i
+        className="cz flag"
+        role="button"
+        onClick={() => setLanguage('cs')}
+        onKeyPress={() => setLanguage('cs')}
+        tabIndex="0"
+      />
+    </div>
+  );
+
   const myMapsSubMenu = (isMyMapsGroup)
     ? (
       <div className="ui top attached tabular menu">
-        <Link to="/mymaps" className={(isMyMapsList) ? 'active item' : 'item'}>List view</Link>
-        <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active item' : 'item'}>Map view</Link>
+        <Link to="/mymaps" className={(isMyMapsList) ? 'active item' : 'item'}>
+          <Trans>List view</Trans>
+        </Link>
+        <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active item' : 'item'}>
+          <Trans>Map view</Trans>
+        </Link>
         <Link to="/feature" className={(isFeature) ? 'active item' : 'item'}>Feature (Leaflet API test)</Link>
       </div>
     )
@@ -62,8 +87,12 @@ const Header = ({
   const eventsSubMenu = (isEventsGroup)
     ? (
       <div className="ui top attached tabular menu">
-        <Link to="/events" className={(isEventsList) ? 'active item' : 'item'}>List view</Link>
-        <Link to="/eventsmap" className={(isEventsMap) ? 'active item' : 'item'}>Map view</Link>
+        <Link to="/events" className={(isEventsList) ? 'active item' : 'item'}>
+          <Trans>List view</Trans>
+        </Link>
+        <Link to="/eventsmap" className={(isEventsMap) ? 'active item' : 'item'}>
+          <Trans>Map view</Trans>
+        </Link>
       </div>
     )
     : null;
@@ -73,14 +102,27 @@ const Header = ({
       <div>
         <div className="ui menu secondary pointing">
           <Link to="/" className={(isHome) ? 'active item' : 'item'}><i className="icon home" /></Link>
-          <Link to="/mapview" className={(isMaps) ? 'active blue item' : 'item'}>Map View</Link>
-          <Link to="/mymaps" className={(isMyMapsGroup) ? 'active blue item' : 'item'}>My Maps</Link>
-          <Link to="/events" className={(isEventsGroup) ? 'active blue item' : 'item'}>Events</Link>
-          <Link to="/users" className={(isUsers) ? 'active blue item' : 'item'}>Users</Link>
-          <Link to="/clubs" className={(isClubs) ? 'active blue item' : 'item'}>Clubs</Link>
+          <Link to="/mapview" className={(isMaps) ? 'active blue item' : 'item'}>
+            <Trans>Map View</Trans>
+          </Link>
+          <Link to="/mymaps" className={(isMyMapsGroup) ? 'active blue item' : 'item'}>
+            <Trans>My Maps</Trans>
+          </Link>
+          <Link to="/events" className={(isEventsGroup) ? 'active blue item' : 'item'}>
+            <Trans>Events</Trans>
+          </Link>
+          <Link to="/users" className={(isUsers) ? 'active blue item' : 'item'}>
+            <Trans>Users</Trans>
+          </Link>
+          <Link to="/clubs" className={(isClubs) ? 'active blue item' : 'item'}>
+            <Trans>Clubs</Trans>
+          </Link>
           <div className="right menu">
             <Link to="/me" className={(isCurrentUser) ? 'active blue item header-current-user' : 'item header-current-user'}>{userDetails}</Link>
-            <Link to="/logout" className="item right ">Log Out</Link>
+            <Link to="/logout" className="item right ">
+              <Trans>Log Out</Trans>
+            </Link>
+            {selectLanguage}
           </div>
         </div>
         {myMapsSubMenu}
@@ -92,10 +134,17 @@ const Header = ({
     <div>
       <div className="ui menu secondary pointing">
         <Link to="/" className={(isHome) ? 'active blue item' : 'item'}><i className="icon home" /></Link>
-        <Link to="/events" className={(isEventsGroup) ? 'active blue item' : 'item'}>Browse Public Maps</Link>
+        <Link to="/events" className={(isEventsGroup) ? 'active blue item' : 'item'}>
+          <Trans>Browse Public Maps</Trans>
+        </Link>
         <div className="right menu">
-          <Link to="/signup" className={(isSignup) ? 'active blue item' : 'item'}>Sign Up</Link>
-          <Link to="/login" className={(isLogin) ? 'active blue item' : 'item'}>Log In</Link>
+          <Link to="/signup" className={(isSignup) ? 'active blue item' : 'item'}>
+            <Trans>Sign Up</Trans>
+          </Link>
+          <Link to="/login" className={(isLogin) ? 'active blue item' : 'item'}>
+            <Trans>Log In</Trans>
+          </Link>
+          {selectLanguage}
         </div>
       </div>
       {eventsSubMenu}
@@ -108,6 +157,7 @@ Header.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   currentUser: PropTypes.objectOf(PropTypes.any),
   getCurrentUser: PropTypes.func.isRequired,
+  setLanguage: PropTypes.func.isRequired,
   currentMap: PropTypes.string,
 };
 Header.defaultProps = {
@@ -120,4 +170,7 @@ const mapStateToProps = ({ auth, user, oevent }) => {
   return { auth: auth.authenticated, currentUser: user.current, currentMap: oevent.selectedMap };
 };
 
-export default connect(mapStateToProps, { getCurrentUser: getCurrentUserAction })(Header);
+export default connect(mapStateToProps, {
+  getCurrentUser: getCurrentUserAction,
+  setLanguage: setLanguageAction,
+})(Header);
