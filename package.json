@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@lingui/macro": "^2.7.4",
     "@lingui/react": "^2.7.4",
     "axios": "^0.18.0",
     "babel-loader": "8.0.4",
@@ -45,7 +46,6 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@lingui/cli": "^2.7.4",
-    "@lingui/macro": "^2.7.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",

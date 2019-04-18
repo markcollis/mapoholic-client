@@ -3,11 +3,11 @@
     "origin": [
       [
         "src/components/Header.js",
-        57
+        77
       ],
       [
         "src/components/Header.js",
-        71
+        91
       ]
     ]
   },
@@ -15,19 +15,19 @@
     "origin": [
       [
         "src/components/Header.js",
-        60
+        80
       ],
       [
         "src/components/Header.js",
-        74
+        94
       ]
     ]
   },
-  "Map View": {
+  "Current Map": {
     "origin": [
       [
         "src/components/Header.js",
-        86
+        106
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        89
+        109
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        92
+        112
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        95
+        115
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        98
+        118
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        103
+        123
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        117
+        138
       ]
     ]
   },
@@ -83,7 +83,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        121
+        142
       ]
     ]
   },
@@ -91,7 +91,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        124
+        145
       ]
     ]
   }

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { I18n } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
 import Collapse from '../Collapse';
 
 const eventFilter = ({
@@ -9,22 +11,27 @@ const eventFilter = ({
   selectEventForDetails,
   getEventList,
 }) => {
+  const title = <Trans>Search for events</Trans>;
   return (
     <div className="ui segment">
       <div className="ui items">
-        <Collapse title="Search for events">
+        <Collapse title={title}>
           <div className="ui icon input fluid">
-            <input
-              type="search"
-              placeholder="Event search filter"
-              onChange={setEventSearchField}
-              value={searchField}
-            />
+            <I18n>
+              {({ i18n }) => (
+                <input
+                  type="search"
+                  placeholder={i18n._(t`Event search filter`)}
+                  onChange={setEventSearchField}
+                  value={searchField}
+                />
+              )}
+            </I18n>
             <i className="circular search icon" />
           </div>
           <div className="ui divider" />
           <button type="button" className="ui tiny button" onClick={() => getEventList()}>
-            Refresh list
+            <Trans>Refresh list</Trans>
           </button>
           <button
             type="button"
@@ -34,7 +41,7 @@ const eventFilter = ({
               setEventViewModeEvent('add');
             }}
           >
-            Add new event
+            <Trans>Add new event</Trans>
           </button>
         </Collapse>
       </div>

@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 import EventListItem from './EventListItem';
 import Collapse from '../Collapse';
 
-const EventList = ({ events, selectEventForDetails, setEventViewModeEvent }) => {
+const EventList = ({
+  language,
+  events,
+  selectEventForDetails,
+  setEventViewModeEvent,
+}) => {
+  const noMatchingEventsMessage = <Trans>{'Sorry, there aren\'t any matching events to display!'}</Trans>;
+  const title = <Trans>Event List</Trans>;
   if (events.length === 0) {
     return (
       <div className="ui segment">
-        <div className="ui message warning">{'Sorry, there aren\'t any matching events to display!'}</div>
+        <div className="ui message warning">{noMatchingEventsMessage}</div>
       </div>
     );
   }
@@ -20,6 +28,7 @@ const EventList = ({ events, selectEventForDetails, setEventViewModeEvent }) => 
       return (
         <EventListItem
           key={eventId}
+          language={language}
           oevent={oevent}
           selectEventForDetails={selectEventForDetails}
           setEventViewModeEvent={setEventViewModeEvent}
@@ -28,7 +37,7 @@ const EventList = ({ events, selectEventForDetails, setEventViewModeEvent }) => 
     });
   return (
     <div className="ui segment">
-      <Collapse title="Event list">
+      <Collapse title={title}>
         <div
           className="ui link cards card-list"
           role="button"

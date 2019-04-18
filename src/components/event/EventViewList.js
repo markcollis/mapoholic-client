@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
+
 // import Collapse from '../Collapse';
 import EventFilter from './EventFilter';
 import EventList from './EventList';
@@ -175,14 +177,17 @@ class EventViewList extends Component {
     } = oevent;
     const { current, list: userList } = user;
     const { language } = config;
-    console.log('userList:', userList);
+    // console.log('userList:', userList);
     const currentUserId = (current) ? current._id.toString() : null;
     const { details: clubDetails, list: clubList } = club;
     console.log('oevent:', oevent);
     // console.log('current:', current);
     if (selectedEventDetails && !details[selectedEventDetails] && !errorMessage) {
-      setTimeout(() => getEventById(selectedEventDetails), 1000); // simulate network delay
+      getEventById(selectedEventDetails);
     }
+    // if (selectedEventDetails && !details[selectedEventDetails] && !errorMessage) {
+    //   setTimeout(() => getEventById(selectedEventDetails), 1000); // simulate network delay
+    // }
     const selectedEvent = details[selectedEventDetails] || {};
     console.log('selectedEvent:', selectedEvent);
     const runnerList = (selectedEvent.runners)
@@ -254,7 +259,7 @@ class EventViewList extends Component {
         return (
           <div className="eight wide column">
             <div className="ui segment">
-              <p>Select an event from the list to show further details here</p>
+              <p><Trans>Select an event from the list to show further details here</Trans></p>
             </div>
           </div>
         );
@@ -342,6 +347,7 @@ class EventViewList extends Component {
 
   render() {
     const {
+      config,
       oevent,
       getEventList,
       setEventSearchField,
@@ -349,10 +355,8 @@ class EventViewList extends Component {
       selectEventForDetails,
       cancelEventError,
     } = this.props;
-    const {
-      searchField,
-      errorMessage,
-    } = oevent;
+    const { searchField, errorMessage } = oevent;
+    const { language } = config;
 
     // need to consider reducing the number shown if there are many many events...
     const eventListArray = this.createEventListArray();
@@ -392,6 +396,7 @@ class EventViewList extends Component {
           />
           <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
             <EventList
+              language={language}
               events={eventListArray}
               selectEventForDetails={selectEventForDetails}
               setEventViewModeEvent={setEventViewModeEvent}

@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 class Collapse extends Component {
   static propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.objectOf(PropTypes.any),
+    ]),
     children: PropTypes.node,
   };
 
@@ -35,10 +38,6 @@ class Collapse extends Component {
 
   componentDidUpdate() {
     const { propsChanged } = this.state;
-    // const { title } = this.props;
-    // if (title === 'User list') {
-    //   console.log('propsChanged:', propsChanged, 'height:', this.contentRef.current.clientHeight);
-    // }
     if (propsChanged) {
       this.setState({ propsChanged: false, contentHeight: this.contentRef.current.clientHeight });
     }
@@ -63,9 +62,6 @@ class Collapse extends Component {
   render() {
     const { title, children } = this.props;
     const { hideContent, contentHeight, propsChanged } = this.state;
-    // if (title === 'User list') {
-    //   console.log('propsChanged:', propsChanged);
-    // }
     const currentHeight = `${(hideContent) ? 0 : contentHeight}px`;
     const contentStyle = (propsChanged) ? { visibility: 'hidden', maxHeight: '' } : { maxHeight: currentHeight };
     return (

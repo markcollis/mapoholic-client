@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
+import { typesOptionsLocale } from '../data';
 
-const EventListItem = ({ oevent, selectEventForDetails, setEventViewModeEvent }) => {
+const EventListItem = ({
+  language,
+  oevent,
+  selectEventForDetails,
+  setEventViewModeEvent,
+}) => {
   const {
     _id: eventId,
     date,
@@ -19,6 +26,7 @@ const EventListItem = ({ oevent, selectEventForDetails, setEventViewModeEvent })
     .concat(date.slice(5, 7))
     .concat('/')
     .concat(date.slice(0, 4));
+  const typesOptions = typesOptionsLocale[language];
   const renderOrganisedBy = (organisedBy && organisedBy.length > 0)
     ? (
       <span>
@@ -33,7 +41,8 @@ const EventListItem = ({ oevent, selectEventForDetails, setEventViewModeEvent })
     ? (
       <span>
         {types.map((type) => {
-          return <div key={type} className="ui blue label">{type}</div>;
+          const matchingType = typesOptions.find(el => el.value === type);
+          return <div key={type} className="ui blue label">{matchingType.label}</div>;
         })}
       </span>
     )
@@ -49,7 +58,7 @@ const EventListItem = ({ oevent, selectEventForDetails, setEventViewModeEvent })
     : null;
   const renderTotalRunners = (totalRunners > 0)
     ? <span className="ui label circular floatedright">{totalRunners}</span>
-    : <span className="ui label floatedright">none</span>;
+    : <span className="ui label floatedright"><Trans>none</Trans></span>;
 
   return (
     <div
@@ -68,8 +77,14 @@ const EventListItem = ({ oevent, selectEventForDetails, setEventViewModeEvent })
       <div className="content">
         <div className="header">{`${reformattedDate} - ${name}`}</div>
         <div className="meta">
-          <div>{`Place: ${locPlace}, ${locCountry}`}</div>
-          <p>{`Map: ${mapName}`}</p>
+          <div>
+            <Trans>Place</Trans>
+            {`: ${locPlace}, ${locCountry}`}
+          </div>
+          <p>
+            <Trans>Map</Trans>
+            {`: ${mapName}`}
+          </p>
           {renderOrganisedBy}
           {renderTypes}
           {renderTags}
@@ -81,9 +96,13 @@ const EventListItem = ({ oevent, selectEventForDetails, setEventViewModeEvent })
 };
 
 EventListItem.propTypes = {
+  language: PropTypes.string,
   oevent: PropTypes.objectOf(PropTypes.any).isRequired,
   selectEventForDetails: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
+};
+EventListItem.defaultProps = {
+  language: 'en',
 };
 
 export default EventListItem;

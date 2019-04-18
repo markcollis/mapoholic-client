@@ -13,48 +13,228 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/Header.js:117
+#: src/components/event/EventFilter.js:44
+msgid "Add new event"
+msgstr "Add new event"
+
+#: src/components/event/EventEdit.js:312
+msgid "Address of event website"
+msgstr "Address of event website"
+
+#: src/components/Header.js:138
 msgid "Browse Public Maps"
 msgstr "Browse Public Maps"
 
-#: src/components/Header.js:98
+#: src/components/event/EventEdit.js:408
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/Header.js:118
 msgid "Clubs"
 msgstr "Clubs"
 
-#: src/components/Header.js:92
+#: src/components/event/EventEdit.js:342
+msgid "Clubs that event is organised by"
+msgstr "Clubs that event is organised by"
+
+#: src/components/event/EventEdit.js:188
+msgid "Country"
+msgstr "Country"
+
+#: src/components/event/EventEdit.js:106
+msgid "Create"
+msgstr "Create"
+
+#: src/components/event/EventEdit.js:417
+msgid "Create Event"
+msgstr "Create Event"
+
+#: src/components/Header.js:106
+msgid "Current Map"
+msgstr "Current Map"
+
+#: src/components/event/EventEdit.js:128
+msgid "Date"
+msgstr "Date"
+
+#: src/components/event/EventEdit.js:418
+msgid "Edit Event Details"
+msgstr "Edit Event Details"
+
+#: src/components/event/EventList.js:14
+msgid "Event List"
+msgstr "Event List"
+
+#: src/components/event/EventEdit.js:240
+msgid "Event location (latitude)"
+msgstr "Event location (latitude)"
+
+#: src/components/event/EventEdit.js:258
+msgid "Event location (longitude)"
+msgstr "Event location (longitude)"
+
+#: src/components/event/EventFilter.js:24
+msgid "Event search filter"
+msgstr "Event search filter"
+
+#: src/components/Header.js:112
 msgid "Events"
 msgstr "Events"
 
-#: src/components/Header.js:57
-#: src/components/Header.js:71
+#: src/components/event/EventEdit.js:361
+msgid "Groups of other events that this event is linked to"
+msgstr "Groups of other events that this event is linked to"
+
+#: src/components/event/EventEdit.js:232
+msgid "Latitude"
+msgstr "Latitude"
+
+#: src/components/event/EventEdit.js:327
+msgid "Link to event results"
+msgstr "Link to event results"
+
+#: src/components/event/EventEdit.js:356
+msgid "Linked to"
+msgstr "Linked to"
+
+#: src/components/Header.js:77
+#: src/components/Header.js:91
 msgid "List view"
 msgstr "List view"
 
-#: src/components/Header.js:124
+#: src/components/event/EventEdit.js:173
+msgid "Location"
+msgstr "Location"
+
+#: src/components/event/EventEdit.js:193
+msgid "Location (country)"
+msgstr "Location (country)"
+
+#: src/components/event/EventEdit.js:178
+msgid "Location of event (e.g. nearest town)"
+msgstr "Location of event (e.g. nearest town)"
+
+#: src/components/Header.js:145
 msgid "Log In"
 msgstr "Log In"
 
-#: src/components/Header.js:103
+#: src/components/Header.js:123
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/components/Header.js:86
-msgid "Map View"
-msgstr "Map View"
+#: src/components/event/EventEdit.js:250
+msgid "Longitude"
+msgstr "Longitude"
 
-#: src/components/Header.js:60
-#: src/components/Header.js:74
+#: src/components/event/EventListItem.js:85
+msgid "Map"
+msgstr "Map"
+
+#: src/components/Header.js:86
+#~ msgid "Map View"
+#~ msgstr "Map View"
+
+#: src/components/event/EventEdit.js:158
+msgid "Map name"
+msgstr "Map name"
+
+#: src/components/Header.js:80
+#: src/components/Header.js:94
 msgid "Map view"
 msgstr "Map view"
 
-#: src/components/Header.js:89
+#: src/components/Header.js:109
 msgid "My Maps"
 msgstr "My Maps"
 
-#: src/components/Header.js:121
+#: src/components/event/EventEdit.js:143
+msgid "Name"
+msgstr "Name"
+
+#: src/components/event/EventEdit.js:148
+msgid "Name of event (required)"
+msgstr "Name of event (required)"
+
+#: src/components/event/EventEdit.js:163
+msgid "Name of map used for event"
+msgstr "Name of map used for event"
+
+#: src/components/event/EventEdit.js:337
+msgid "Organised by"
+msgstr "Organised by"
+
+#: src/components/event/EventEdit.js:377
+msgid "Owner"
+msgstr "Owner"
+
+#: src/components/event/EventEdit.js:382
+msgid "Owner of event record in this database"
+msgstr "Owner of event record in this database"
+
+#: src/components/event/EventListItem.js:81
+msgid "Place"
+msgstr "Place"
+
+#: src/components/event/EventFilter.js:34
+msgid "Refresh list"
+msgstr "Refresh list"
+
+#: src/components/event/EventEdit.js:212
+msgid "Region(s) (customisable)"
+msgstr "Region(s) (customisable)"
+
+#: src/components/event/EventEdit.js:217
+msgid "Region(s) associated with event"
+msgstr "Region(s) associated with event"
+
+#: src/components/event/EventEdit.js:322
+msgid "Results"
+msgstr "Results"
+
+#: src/components/event/EventFilter.js:14
+msgid "Search for events"
+msgstr "Search for events"
+
+#: src/components/event/EventViewList.js:262
+msgid "Select an event from the list to show further details here"
+msgstr "Select an event from the list to show further details here"
+
+#: src/components/Header.js:142
 msgid "Sign Up"
 msgstr "Sign Up"
 
-#: src/components/Header.js:95
+#: src/components/event/EventList.js:13
+msgid "Sorry, there aren't any matching events to display!"
+msgstr "Sorry, there aren't any matching events to display!"
+
+#: src/components/event/EventEdit.js:288
+msgid "Tags (customisable)"
+msgstr "Tags (customisable)"
+
+#: src/components/event/EventEdit.js:293
+msgid "Tags for event"
+msgstr "Tags for event"
+
+#: src/components/event/EventEdit.js:274
+msgid "Type of event"
+msgstr "Type of event"
+
+#: src/components/event/EventEdit.js:269
+msgid "Type(s) of event"
+msgstr "Type(s) of event"
+
+#: src/components/event/EventEdit.js:106
+msgid "Update"
+msgstr "Update"
+
+#: src/components/Header.js:115
 msgid "Users"
 msgstr "Users"
+
+#: src/components/event/EventEdit.js:307
+msgid "Website"
+msgstr "Website"
+
+#: src/components/event/EventListItem.js:61
+msgid "none"
+msgstr "none"

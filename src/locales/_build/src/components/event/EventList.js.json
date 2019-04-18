@@ -1,0 +1,18 @@
+{
+  "Sorry, there aren't any matching events to display!": {
+    "origin": [
+      [
+        "src/components/event/EventList.js",
+        13
+      ]
+    ]
+  },
+  "Event List": {
+    "origin": [
+      [
+        "src/components/event/EventList.js",
+        14
+      ]
+    ]
+  }
+}

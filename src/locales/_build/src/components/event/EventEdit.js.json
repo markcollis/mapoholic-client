@@ -1,0 +1,274 @@
+{
+  "Create": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        106
+      ]
+    ]
+  },
+  "Update": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        106
+      ]
+    ]
+  },
+  "Date": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        128
+      ]
+    ]
+  },
+  "Name": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        143
+      ]
+    ]
+  },
+  "Name of event (required)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        148
+      ]
+    ]
+  },
+  "Map name": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        158
+      ]
+    ]
+  },
+  "Name of map used for event": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        163
+      ]
+    ]
+  },
+  "Location": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        173
+      ]
+    ]
+  },
+  "Location of event (e.g. nearest town)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        178
+      ]
+    ]
+  },
+  "Country": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        188
+      ]
+    ]
+  },
+  "Location (country)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        193
+      ]
+    ]
+  },
+  "Region(s) (customisable)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        212
+      ]
+    ]
+  },
+  "Region(s) associated with event": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        217
+      ]
+    ]
+  },
+  "Latitude": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        232
+      ]
+    ]
+  },
+  "Event location (latitude)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        240
+      ]
+    ]
+  },
+  "Longitude": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        250
+      ]
+    ]
+  },
+  "Event location (longitude)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        258
+      ]
+    ]
+  },
+  "Type(s) of event": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        269
+      ]
+    ]
+  },
+  "Type of event": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        274
+      ]
+    ]
+  },
+  "Tags (customisable)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        288
+      ]
+    ]
+  },
+  "Tags for event": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        293
+      ]
+    ]
+  },
+  "Website": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        307
+      ]
+    ]
+  },
+  "Address of event website": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        312
+      ]
+    ]
+  },
+  "Results": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        322
+      ]
+    ]
+  },
+  "Link to event results": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        327
+      ]
+    ]
+  },
+  "Organised by": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        337
+      ]
+    ]
+  },
+  "Clubs that event is organised by": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        342
+      ]
+    ]
+  },
+  "Linked to": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        356
+      ]
+    ]
+  },
+  "Groups of other events that this event is linked to": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        361
+      ]
+    ]
+  },
+  "Owner": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        377
+      ]
+    ]
+  },
+  "Owner of event record in this database": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        382
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        408
+      ]
+    ]
+  },
+  "Create Event": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        417
+      ]
+    ]
+  },
+  "Edit Event Details": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        418
+      ]
+    ]
+  }
+}

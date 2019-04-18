@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { I18n } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
@@ -8,7 +10,7 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import enGB from 'date-fns/locale/en-GB';
 import cs from '../../common/cs';
-import { countryOptions, regionOptionSets, typesOptions } from '../data';
+import { countryOptionsLocale, regionOptionSets, typesOptionsLocale } from '../data';
 import { dateToDateString, dateStringToDate } from '../../common/conversions';
 
 registerLocale('cs', cs);
@@ -73,18 +75,8 @@ class EventEdit extends Component {
       ? selectedEvent.tags.map((tag) => {
         return { value: tag, label: tag };
       })
-      : [{ value: 'updated', label: 'updated' }];
-    console.log('newTagsOptions:', newTagsOptions);
+      : [{ value: 'default', label: 'default set to be defined' }];
     this.setState({ tagsOptions: newTagsOptions });
-    // if (selectedEvent && selectedEvent.tags && selectedEvent.tags.length > 0) {
-    //   this.setState({
-    //     tagsOptions: selectedEvent.tags.map((tag) => {
-    //       return { value: tag, label: tag };
-    //     }),
-    //   });
-    // }
-    console.log('cs locale:', cs);
-    console.log('en locale:', enGB);
   }
 
   componentDidUpdate(prevProps) {
@@ -111,29 +103,29 @@ class EventEdit extends Component {
       eventLinkList,
       setEventViewModeEvent,
     } = this.props;
-    const buttonText = (eventMode === 'add') ? 'Create' : 'Update';
+    const buttonText = (eventMode === 'add') ? <Trans>Create</Trans> : <Trans>Update</Trans>;
     const ownerOptions = (userList.length > 0)
       ? userList.map((user) => {
         return { value: user.user_id, label: user.displayName };
       })
       : [{ value: null, label: 'no users in list' }];
-    console.log('ownerOptions', ownerOptions);
+    // console.log('ownerOptions', ownerOptions);
     const organisedByOptions = clubList.map((club) => {
       return { value: club._id, label: club.shortName };
     });
-    console.log('organisedByOptions:', organisedByOptions);
+    // console.log('organisedByOptions:', organisedByOptions);
     const linkedToOptions = eventLinkList.map((link) => {
       return { value: link._id, label: link.displayName };
     });
-    console.log('linkedToOptions:', linkedToOptions);
-    console.log('values:', values);
-    console.log('tagsOptions:', tagsOptions);
+    // console.log('linkedToOptions:', linkedToOptions);
+    // console.log('values:', values);
+    // console.log('tagsOptions:', tagsOptions);
 
     return (
       <Form className="ui warning form" noValidate>
         <div className="field">
           <label htmlFor="date">
-            Date
+            <Trans>Date</Trans>
             <div>
               <DatePicker
                 locale={language}
@@ -148,175 +140,233 @@ class EventEdit extends Component {
         </div>
         <div className="field">
           <label htmlFor="name">
-          Name
-            <Field
-              name="name"
-              placeholder="Name of event (required)"
-              autoComplete="off"
-            />
+            <Trans>Name</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  name="name"
+                  placeholder={i18n._(t`Name of event (required)`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
             { touched.name && errors.name && <div className="ui warning message">{errors.name}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="mapName">
-          Map name
-            <Field
-              name="mapName"
-              placeholder="Name of map used for event"
-              autoComplete="off"
-            />
+            <Trans>Map name</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  name="mapName"
+                  placeholder={i18n._(t`Name of map used for event`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
             { touched.mapName && errors.mapName && <div className="ui warning message">{errors.mapName}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="locPlace">
-          Location
-            <Field
-              name="locPlace"
-              placeholder="Location of event (e.g. nearest town)"
-              autoComplete="off"
-            />
+            <Trans>Location</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  name="locPlace"
+                  placeholder={i18n._(t`Location of event (e.g. nearest town)`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
             { touched.locPlace && errors.locPlace && <div className="ui warning message">{errors.locPlace}</div> }
           </label>
         </div>
         <div className="field">
-          <label htmlFor="locRegions">
-          Region(s)
-            <Select
-              id="locRegions"
-              placeholder="Region(s) associated with event"
-              options={regionOptions}
-              isMulti
-              onChange={value => setFieldValue('locRegions', value)}
-              onBlur={() => setFieldTouched('locRegions', true)}
-              value={values.locRegions}
-            />
-            { touched.locRegions && errors.locRegions && <div className="ui warning message">{errors.locRegions}</div> }
+          <label htmlFor="locCountry">
+            <Trans>Country</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Select
+                  id="locCountry"
+                  placeholder={i18n._(t`Location (country)`)}
+                  isClearable
+                  options={countryOptionsLocale[language]}
+                  onChange={(value) => {
+                    setFieldValue('locCountry', value);
+                    // console.log('regionOptionSets[value]', regionOptionSets[value]);
+                    // console.log('value', value);
+                    this.setState({ regionOptions: regionOptionSets[value.value] });
+                  }}
+                  onBlur={() => setFieldTouched('locCountry', true)}
+                  value={values.locCountry}
+                />
+              )}
+            </I18n>
+            { touched.locCountry && errors.locCountry && <div className="ui warning message">{errors.locCountry}</div> }
           </label>
         </div>
         <div className="field">
-          <label htmlFor="locCountry">
-          Country
-            <Select
-              id="locCountry"
-              placeholder="Location (country)"
-              isClearable
-              options={countryOptions}
-              onChange={(value) => {
-                setFieldValue('locCountry', value);
-                // console.log('regionOptionSets[value]', regionOptionSets[value]);
-                // console.log('value', value);
-                this.setState({ regionOptions: regionOptionSets[value.value] });
-              }}
-              onBlur={() => setFieldTouched('locCountry', true)}
-              value={values.locCountry}
-            />
-            { touched.locCountry && errors.locCountry && <div className="ui warning message">{errors.locCountry}</div> }
+          <label htmlFor="locRegions">
+            <Trans>Region(s) (customisable)</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <CreatableSelect
+                  id="locRegions"
+                  placeholder={i18n._(t`Region(s) associated with event`)}
+                  options={regionOptions}
+                  isMulti
+                  onChange={value => setFieldValue('locRegions', value)}
+                  onBlur={() => setFieldTouched('locRegions', true)}
+                  value={values.locRegions}
+                />
+              )}
+            </I18n>
+            { touched.locRegions && errors.locRegions && <div className="ui warning message">{errors.locRegions}</div> }
           </label>
         </div>
         <div className="fields">
           <div className="eight wide field">
             <label htmlFor="locLat">
-            Latitude
-              <Field
-                name="locLat"
-                placeholder="Event location (latitude)"
-                autoComplete="off"
-              />
+              <Trans>Latitude</Trans>
+              <I18n>
+                {({ i18n }) => (
+                  <Field
+                    name="locLat"
+                    type="number"
+                    min="-90"
+                    max="90"
+                    placeholder={i18n._(t`Event location (latitude)`)}
+                    autoComplete="off"
+                  />
+                )}
+              </I18n>
               { touched.locLat && errors.locLat && <div className="ui warning message">{errors.locLat}</div> }
             </label>
           </div>
           <div className="eight wide field">
             <label htmlFor="locLong">
-            Longitude
-              <Field
-                name="locLong"
-                placeholder="Event location (longitude)"
-                autoComplete="off"
-              />
+              <Trans>Longitude</Trans>
+              <I18n>
+                {({ i18n }) => (
+                  <Field
+                    name="locLong"
+                    type="number"
+                    min="-180"
+                    max="180"
+                    placeholder={i18n._(t`Event location (longitude)`)}
+                    autoComplete="off"
+                  />
+                )}
+              </I18n>
               { touched.locLong && errors.locLong && <div className="ui warning message">{errors.locLong}</div> }
             </label>
           </div>
         </div>
         <div className="field">
           <label htmlFor="types">
-          Type of event
-            <Select
-              id="types"
-              placeholder="Type of event"
-              options={typesOptions}
-              isMulti
-              onChange={value => setFieldValue('types', value)}
-              onBlur={() => setFieldTouched('types', true)}
-              value={values.types}
-            />
+            <Trans>Type(s) of event</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Select
+                  id="types"
+                  placeholder={i18n._(t`Type of event`)}
+                  options={typesOptionsLocale[language]}
+                  isMulti
+                  onChange={value => setFieldValue('types', value)}
+                  onBlur={() => setFieldTouched('types', true)}
+                  value={values.types}
+                />
+              )}
+            </I18n>
             { touched.types && errors.types && <div className="ui warning message">{errors.types}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="tags">
-          Tags (customisable)
-            <CreatableSelect
-              id="tags"
-              placeholder="Tags for event"
-              options={tagsOptions}
-              isMulti
-              onChange={value => setFieldValue('tags', value)}
-              onBlur={() => setFieldTouched('tags', true)}
-              value={values.tags}
-            />
+            <Trans>Tags (customisable)</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <CreatableSelect
+                  id="tags"
+                  placeholder={i18n._(t`Tags for event`)}
+                  options={tagsOptions}
+                  isMulti
+                  onChange={value => setFieldValue('tags', value)}
+                  onBlur={() => setFieldTouched('tags', true)}
+                  value={values.tags}
+                />
+              )}
+            </I18n>
             { touched.tags && errors.tags && <div className="ui warning message">{errors.tags}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="website">
-          Website
-            <Field
-              name="website"
-              placeholder="Address of event website"
-              autoComplete="off"
-            />
+            <Trans>Website</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  name="website"
+                  placeholder={i18n._(t`Address of event website`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
             { touched.website && errors.website && <div className="ui warning message">{errors.website}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="results">
-          Results
-            <Field
-              name="results"
-              placeholder="Link to event results"
-              autoComplete="off"
-            />
+            <Trans>Results</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  name="results"
+                  placeholder={i18n._(t`Link to event results`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
             { touched.results && errors.results && <div className="ui warning message">{errors.results}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="organisedBy">
-          Organised by
-            <Select
-              id="organisedBy"
-              placeholder="Clubs that event is organised by"
-              options={organisedByOptions}
-              isMulti
-              onChange={value => setFieldValue('organisedBy', value)}
-              onBlur={() => setFieldTouched('organisedBy', true)}
-              value={values.organisedBy}
-            />
+            <Trans>Organised by</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Select
+                  id="organisedBy"
+                  placeholder={i18n._(t`Clubs that event is organised by`)}
+                  options={organisedByOptions}
+                  isMulti
+                  onChange={value => setFieldValue('organisedBy', value)}
+                  onBlur={() => setFieldTouched('organisedBy', true)}
+                  value={values.organisedBy}
+                />
+              )}
+            </I18n>
             { touched.organisedBy && errors.organisedBy && <div className="ui warning message">{errors.organisedBy}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="linkedTo">
-          Linked to
-            <Select
-              id="linkedTo"
-              placeholder="Groups of other events that this event is linked to"
-              options={linkedToOptions}
-              isMulti
-              onChange={value => setFieldValue('linkedTo', value)}
-              onBlur={() => setFieldTouched('linkedTo', true)}
-              value={values.linkedTo}
-            />
+            <Trans>Linked to</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Select
+                  id="linkedTo"
+                  placeholder={i18n._(t`Groups of other events that this event is linked to`)}
+                  options={linkedToOptions}
+                  isMulti
+                  onChange={value => setFieldValue('linkedTo', value)}
+                  onBlur={() => setFieldTouched('linkedTo', true)}
+                  value={values.linkedTo}
+                />
+              )}
+            </I18n>
             { touched.linkedTo && errors.linkedTo && <div className="ui warning message">{errors.linkedTo}</div> }
           </label>
         </div>
@@ -324,15 +374,19 @@ class EventEdit extends Component {
           ? (
             <div className="field">
               <label htmlFor="owner">
-              Owner
-                <Select
-                  id="owner"
-                  placeholder="Owner of event record in this database"
-                  options={ownerOptions}
-                  onChange={value => setFieldValue('owner', value)}
-                  onBlur={() => setFieldTouched('owner', true)}
-                  value={values.owner}
-                />
+                <Trans>Owner</Trans>
+                <I18n>
+                  {({ i18n }) => (
+                    <Select
+                      id="owner"
+                      placeholder={i18n._(t`Owner of event record in this database`)}
+                      options={ownerOptions}
+                      onChange={value => setFieldValue('owner', value)}
+                      onBlur={() => setFieldTouched('owner', true)}
+                      value={values.owner}
+                    />
+                  )}
+                </I18n>
                 { touched.owner && errors.owner && <div className="ui warning message">{errors.owner}</div> }
               </label>
             </div>
@@ -351,7 +405,7 @@ class EventEdit extends Component {
             }
           }}
         >
-        Cancel
+          <Trans>Cancel</Trans>
         </button>
       </Form>
     );
@@ -360,8 +414,8 @@ class EventEdit extends Component {
   render() {
     const { eventMode } = this.props;
     const headerText = (eventMode === 'add')
-      ? 'Create Event'
-      : 'Edit Event Details';
+      ? <Trans>Create Event</Trans>
+      : <Trans>Edit Event Details</Trans>;
     return (
       <div className="ui segment">
         <h3 className="header">{headerText}</h3>
@@ -372,7 +426,7 @@ class EventEdit extends Component {
 }
 
 const formikEventEdit = withFormik({
-  mapPropsToValues({ selectedEvent, eventMode }) {
+  mapPropsToValues({ selectedEvent, eventMode, language }) {
     if (eventMode === 'edit' && selectedEvent) {
       return {
         owner: { value: selectedEvent.owner._id, label: selectedEvent.owner.displayName },
@@ -388,7 +442,9 @@ const formikEventEdit = withFormik({
           // console.log('selectedRegion in mapPropsToValues', selectedRegion);
           return selectedRegion;
         }) || [],
-        locCountry: countryOptions.filter(el => el.value === selectedEvent.locCountry) || null,
+        locCountry: countryOptionsLocale[language].filter((el) => {
+          return el.value === selectedEvent.locCountry;
+        }) || null,
         locLat: selectedEvent.locLat || '',
         locLong: selectedEvent.locLong || '',
         types: selectedEvent.types.map((type) => {
@@ -430,11 +486,15 @@ const formikEventEdit = withFormik({
       linkedTo: [],
     };
   },
-  // validationSchema: Yup.object().shape({
-  //   shortName: Yup.string().required('You must provide the club\'s abbreviation or short name.'),
-  //   fullName: Yup.string().required('You must provide the club\'s full name.'),
-  //   website: Yup.string().url('You must provide a valid URL (including http(s)://).'),
-  // }),
+  validationSchema: Yup.object().shape({
+    name: Yup.string().required('You must provide a name for the event.'),
+    mapName: Yup.string(),
+    locPlace: Yup.string(),
+    locLat: Yup.number().moreThan(-90, 'Not a valid latitude (<-90°)').lessThan(90, 'Not a valid latitude (>90°)'),
+    locLong: Yup.number().moreThan(-180, 'Not a valid longitude (<-180°)').lessThan(180, 'Not a valid longitude (>180°)'),
+    website: Yup.string().url('You must provide a valid URL (including http(s)://).'),
+    results: Yup.string().url('You must provide a valid URL (including http(s)://).'),
+  }),
   handleSubmit(values, { props, setSubmitting }) {
     const {
       eventMode,
@@ -464,23 +524,23 @@ const formikEventEdit = withFormik({
       : [];
     valuesToSubmit.date = dateToDateString(values.date);
     if (values.owner) valuesToSubmit.owner = values.owner.value;
-    console.log('valuesToSubmit:', valuesToSubmit);
+    // console.log('valuesToSubmit:', valuesToSubmit);
     if (eventMode === 'add') {
-      setTimeout(() => createEvent(valuesToSubmit, (didSucceed) => {
+      createEvent(valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           getEventList(null, () => setEventViewModeEvent('view'));
         } else {
           setSubmitting(false);
         }
-      }), 1000); // simulate network delay
+      });
     } else {
-      setTimeout(() => updateEvent(selectedEvent._id, valuesToSubmit, (didSucceed) => {
+      updateEvent(selectedEvent._id, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           getEventList(null, () => setEventViewModeEvent('view'));
         } else {
           setSubmitting(false);
         }
-      }), 1000); // simulate network delay
+      });
     }
   },
 })(EventEdit);

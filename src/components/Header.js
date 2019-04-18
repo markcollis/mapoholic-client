@@ -103,7 +103,7 @@ const Header = ({
         <div className="ui menu secondary pointing">
           <Link to="/" className={(isHome) ? 'active item' : 'item'}><i className="icon home" /></Link>
           <Link to="/mapview" className={(isMaps) ? 'active blue item' : 'item'}>
-            <Trans>Map View</Trans>
+            <Trans>Current Map</Trans>
           </Link>
           <Link to="/mymaps" className={(isMyMapsGroup) ? 'active blue item' : 'item'}>
             <Trans>My Maps</Trans>

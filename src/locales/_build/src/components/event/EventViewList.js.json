@@ -1,0 +1,10 @@
+{
+  "Select an event from the list to show further details here": {
+    "origin": [
+      [
+        "src/components/event/EventViewList.js",
+        262
+      ]
+    ]
+  }
+}

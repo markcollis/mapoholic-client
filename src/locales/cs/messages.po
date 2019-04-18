@@ -13,48 +13,224 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/Header.js:117
+#: src/components/event/EventFilter.js:44
+msgid "Add new event"
+msgstr "Přidat nový závod"
+
+#: src/components/event/EventEdit.js:312
+msgid "Address of event website"
+msgstr "Webová stránka závodu"
+
+#: src/components/Header.js:138
 msgid "Browse Public Maps"
 msgstr "Veřejné mapy"
 
-#: src/components/Header.js:98
+#: src/components/event/EventEdit.js:408
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: src/components/Header.js:118
 msgid "Clubs"
 msgstr "Klubů"
 
-#: src/components/Header.js:92
+#: src/components/event/EventEdit.js:342
+msgid "Clubs that event is organised by"
+msgstr "Pořadatené kluby"
+
+#: src/components/event/EventEdit.js:188
+msgid "Country"
+msgstr "Země"
+
+#: src/components/event/EventEdit.js:106
+msgid "Create"
+msgstr "Vytvořit"
+
+#: src/components/event/EventEdit.js:417
+msgid "Create Event"
+msgstr "Vytvořit závod"
+
+#: src/components/Header.js:106
+msgid "Current Map"
+msgstr "Aktuální mapa"
+
+#: src/components/event/EventEdit.js:128
+msgid "Date"
+msgstr "Datum"
+
+#: src/components/event/EventEdit.js:418
+msgid "Edit Event Details"
+msgstr "Upravit detaily závodu"
+
+#: src/components/event/EventList.js:14
+msgid "Event List"
+msgstr "Seznam závodů"
+
+#: src/components/event/EventEdit.js:240
+msgid "Event location (latitude)"
+msgstr "Místo (zeměpisná šířka)"
+
+#: src/components/event/EventEdit.js:258
+msgid "Event location (longitude)"
+msgstr "Místo (zeměpisná délka)"
+
+#: src/components/event/EventFilter.js:24
+msgid "Event search filter"
+msgstr "Filtr vyhledávání závodů"
+
+#: src/components/Header.js:112
 msgid "Events"
 msgstr "Závody"
 
-#: src/components/Header.js:57
-#: src/components/Header.js:71
-msgid "List view"
-msgstr "Seznam"
+#: src/components/event/EventEdit.js:361
+msgid "Groups of other events that this event is linked to"
+msgstr "Skupiny ostatných spojených závodů"
 
-#: src/components/Header.js:124
+#: src/components/event/EventEdit.js:232
+msgid "Latitude"
+msgstr "Zeměpisná šířka"
+
+#: src/components/event/EventEdit.js:327
+msgid "Link to event results"
+msgstr "Webová adresa výsledek"
+
+#: src/components/event/EventEdit.js:356
+msgid "Linked to"
+msgstr "Spojené závody"
+
+#: src/components/Header.js:77
+#: src/components/Header.js:91
+msgid "List view"
+msgstr "Seznamový pohled"
+
+#: src/components/event/EventEdit.js:173
+msgid "Location"
+msgstr "Místo"
+
+#: src/components/event/EventEdit.js:193
+msgid "Location (country)"
+msgstr "Místo (země)"
+
+#: src/components/event/EventEdit.js:178
+msgid "Location of event (e.g. nearest town)"
+msgstr "Místo konání"
+
+#: src/components/Header.js:145
 msgid "Log In"
 msgstr "Přihlásit se"
 
-#: src/components/Header.js:103
+#: src/components/Header.js:123
 msgid "Log Out"
 msgstr "Odhlásit se"
 
-#: src/components/Header.js:86
-msgid "Map View"
-msgstr "Mapy"
+#: src/components/event/EventEdit.js:250
+msgid "Longitude"
+msgstr "Zeměpisná délka"
 
-#: src/components/Header.js:60
-#: src/components/Header.js:74
-msgid "Map view"
+#: src/components/event/EventListItem.js:85
+msgid "Map"
 msgstr "Mapa"
 
-#: src/components/Header.js:89
+#: src/components/event/EventEdit.js:158
+msgid "Map name"
+msgstr "Název mapy"
+
+#: src/components/Header.js:80
+#: src/components/Header.js:94
+msgid "Map view"
+msgstr "Mapový pohled"
+
+#: src/components/Header.js:109
 msgid "My Maps"
 msgstr "Moje mapy"
 
-#: src/components/Header.js:121
+#: src/components/event/EventEdit.js:143
+msgid "Name"
+msgstr "Název"
+
+#: src/components/event/EventEdit.js:148
+msgid "Name of event (required)"
+msgstr "Název závodu (potřebný)"
+
+#: src/components/event/EventEdit.js:163
+msgid "Name of map used for event"
+msgstr "Název mapy použité pro závod"
+
+#: src/components/event/EventEdit.js:337
+msgid "Organised by"
+msgstr "Pořadatel"
+
+#: src/components/event/EventEdit.js:377
+msgid "Owner"
+msgstr "Vlastník"
+
+#: src/components/event/EventEdit.js:382
+msgid "Owner of event record in this database"
+msgstr "Vlastník záznamu v databázi"
+
+#: src/components/event/EventListItem.js:81
+msgid "Place"
+msgstr "Místo"
+
+#: src/components/event/EventFilter.js:34
+msgid "Refresh list"
+msgstr "Obnovit seznam"
+
+#: src/components/event/EventEdit.js:212
+msgid "Region(s) (customisable)"
+msgstr "Regiony"
+
+#: src/components/event/EventEdit.js:217
+msgid "Region(s) associated with event"
+msgstr "Regiony pro závod"
+
+#: src/components/event/EventEdit.js:322
+msgid "Results"
+msgstr "Výsledky"
+
+#: src/components/event/EventFilter.js:14
+msgid "Search for events"
+msgstr "Hledat závody"
+
+#: src/components/event/EventViewList.js:262
+msgid "Select an event from the list to show further details here"
+msgstr "Vybrujte závod z seznamu aby viděl detaily"
+
+#: src/components/Header.js:142
 msgid "Sign Up"
 msgstr "Zaregistrovat se"
 
-#: src/components/Header.js:95
+#: src/components/event/EventList.js:13
+msgid "Sorry, there aren't any matching events to display!"
+msgstr "Omlouvám se, ale nejsou žádné závody zobrazit!"
+
+#: src/components/event/EventEdit.js:288
+msgid "Tags (customisable)"
+msgstr "Značky (přizpůsobitelné)"
+
+#: src/components/event/EventEdit.js:293
+msgid "Tags for event"
+msgstr "Značky pro závod"
+
+#: src/components/event/EventEdit.js:274
+msgid "Type of event"
+msgstr "Disciplína"
+
+#: src/components/event/EventEdit.js:269
+msgid "Type(s) of event"
+msgstr "Disciplíny"
+
+#: src/components/event/EventEdit.js:106
+msgid "Update"
+msgstr "Aktualizovat"
+
+#: src/components/Header.js:115
 msgid "Users"
 msgstr "Uživatelů"
+
+#: src/components/event/EventEdit.js:307
+msgid "Website"
+msgstr "Webová stránka"
+
+#: src/components/event/EventListItem.js:61
+msgid "none"
+msgstr "nikdo"

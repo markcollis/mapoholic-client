@@ -1,0 +1,34 @@
+{
+  "Search for events": {
+    "origin": [
+      [
+        "src/components/event/EventFilter.js",
+        14
+      ]
+    ]
+  },
+  "Event search filter": {
+    "origin": [
+      [
+        "src/components/event/EventFilter.js",
+        24
+      ]
+    ]
+  },
+  "Refresh list": {
+    "origin": [
+      [
+        "src/components/event/EventFilter.js",
+        34
+      ]
+    ]
+  },
+  "Add new event": {
+    "origin": [
+      [
+        "src/components/event/EventFilter.js",
+        44
+      ]
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "none": {
+    "origin": [
+      [
+        "src/components/event/EventListItem.js",
+        61
+      ]
+    ]
+  },
+  "Place": {
+    "origin": [
+      [
+        "src/components/event/EventListItem.js",
+        81
+      ]
+    ]
+  },
+  "Map": {
+    "origin": [
+      [
+        "src/components/event/EventListItem.js",
+        85
+      ]
+    ]
+  }
+}
