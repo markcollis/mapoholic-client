@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { Trans } from '@lingui/macro';
 import Collapse from '../Collapse';
 import EventRunnersItem from './EventRunnersItem';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
@@ -50,13 +51,13 @@ const EventRunners = ({
           });
         }}
       >
-        Add yourself as a runner
+        <Trans>Add yourself as a runner</Trans>
       </button>
     );
-
+  const title = <Trans>Runners at event</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title="Event runners">
+      <Collapse title={title}>
         <div className="ui link cards card-list">
           {runnersArray}
         </div>

@@ -1,0 +1,74 @@
+{
+  "Loading event details...": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        19
+      ]
+    ]
+  },
+  "Owner: {0}": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        45
+      ]
+    ]
+  },
+  "Created: {0}": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        49
+      ]
+    ]
+  },
+  "Last updated: {0}": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        50
+      ]
+    ]
+  },
+  "Delete event": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        53
+      ]
+    ]
+  },
+  "Edit event details": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        56
+      ]
+    ]
+  },
+  "Event website": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        166
+      ]
+    ]
+  },
+  "Results": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        178
+      ]
+    ]
+  },
+  "Event details": {
+    "origin": [
+      [
+        "src/components/event/EventDetails.js",
+        192
+      ]
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 
 const EventDelete = ({
   selectedEvent,
@@ -11,21 +12,23 @@ const EventDelete = ({
   selectEventForDetails,
   selectEventToDisplay,
 }) => {
-  // console.log('selectedEvent:', selectedEvent);
   if (!selectedEvent) return null;
   const { _id: eventId, name, date } = selectedEvent;
   return (
     <div className="ui segment">
-      <h3>Delete Event</h3>
+      <h3><Trans>{`Delete Event: ${name} (${date})`}</Trans></h3>
       <p>
-      Note: Deletion is only permitted if there are no runners at the event, or the user attempting
-      to delete is the only runner. Deleting an event also removes all references in linked events.
+        <Trans>
+        Note: Deletion is only permitted if there are no runners at the event,
+        or the user attempting to delete is the only runner. Deleting an event
+        also removes all references in linked events.
+        </Trans>
       </p>
       <button
         type="button"
         className="ui red button"
         onClick={() => {
-          setTimeout(() => deleteEvent(eventId, (didSucceed) => {
+          deleteEvent(eventId, (didSucceed) => {
             if (didSucceed) {
               getEventList(null, () => {
                 setEventViewModeEvent('none');
@@ -34,17 +37,17 @@ const EventDelete = ({
                 if (eventId === selectedEventDisplay) selectEventToDisplay('');
               });
             }
-          }), 1000); // simulate network delay
+          });
         }}
       >
-        {`Delete ${name} (${date})?`}
+        <Trans>Delete Event?</Trans>
       </button>
       <button
         type="button"
         className="ui button right floated"
         onClick={() => setEventViewModeEvent('view')}
       >
-      Cancel
+        <Trans>Cancel</Trans>
       </button>
     </div>
   );

@@ -64,11 +64,13 @@ const EventList = ({
 
 EventList.propTypes = {
   events: PropTypes.arrayOf(PropTypes.object),
+  language: PropTypes.string,
   selectEventForDetails: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
 };
 EventList.defaultProps = {
   events: [],
+  language: 'en',
 };
 
 export default EventList;

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 // import { withRouter } from 'react-router-dom';
 import Collapse from '../Collapse';
 import EventLinkedAdd from './EventLinkedAdd';
@@ -21,8 +22,8 @@ const EventLinkedManage = ({
   setEventViewModeEventLink,
 }) => {
   const { _id: eventId } = selectedEvent;
-  console.log('selectedEvent:', selectedEvent);
-  console.log('selectedEventLink:', selectedEventLink);
+  // console.log('selectedEvent:', selectedEvent);
+  // console.log('selectedEventLink:', selectedEventLink);
   if (!eventId) return null;
 
   const renderAddButton = (
@@ -31,60 +32,53 @@ const EventLinkedManage = ({
       className="ui tiny primary right floated button"
       onClick={() => setEventViewModeEventLink('add')}
     >
-      Add a new link between events
+      <Trans>Add a new link between events</Trans>
     </button>
   );
+  const title = {
+    view: <Trans>Manage linked events</Trans>,
+    add: <Trans>Add new event link</Trans>,
+    edit: <Trans>Edit event link</Trans>,
+    delete: <Trans>Delete event link</Trans>,
+  };
 
-  switch (eventLinkMode) {
-    case 'add':
-      return (
-        <div className="ui segment">
-          <Collapse title="Manage linked events">
+  return (
+    <div className="ui segment">
+      <Collapse title={title[eventLinkMode]}>
+        {eventLinkMode === 'view' ? renderAddButton : null}
+        {eventLinkMode === 'add'
+          ? (
             <EventLinkedAdd
-              eventList={eventList}
-              linkList={linkList}
-              linkDetails={linkDetails}
-              setEventViewModeEventLink={setEventViewModeEventLink}
               createEventLink={createEventLink}
+              eventList={eventList}
+              linkDetails={linkDetails}
+              linkList={linkList}
+              setEventViewModeEventLink={setEventViewModeEventLink}
             />
-          </Collapse>
-        </div>
-      );
-    case 'edit':
-      return (
-        <div className="ui segment">
-          <Collapse title="Manage linked events">
+          )
+          : null}
+        {eventLinkMode === 'edit'
+          ? (
             <EventLinkedEdit
               setEventViewModeEventLink={setEventViewModeEventLink}
               selectedEventLink={selectedEventLink}
               linkDetails={linkDetails}
               updateEventLink={updateEventLink}
             />
-          </Collapse>
-        </div>
-      );
-    case 'delete':
-      return (
-        <div className="ui segment">
-          <Collapse title="Manage linked events">
+          )
+          : null}
+        {eventLinkMode === 'delete'
+          ? (
             <EventLinkedDelete
               setEventViewModeEventLink={setEventViewModeEventLink}
               selectedEventLink={selectedEventLink}
               deleteEventLink={deleteEventLink}
             />
-          </Collapse>
-        </div>
-      );
-    case 'view':
-    default:
-      return (
-        <div className="ui segment">
-          <Collapse title="Manage linked events">
-            {renderAddButton}
-          </Collapse>
-        </div>
-      );
-  }
+          )
+          : null}
+      </Collapse>
+    </div>
+  );
 };
 // {JSON.stringify(linkListDetails[linkId], null, 2)}
 

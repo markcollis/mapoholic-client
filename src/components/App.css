@@ -1,7 +1,7 @@
 /* settings for demo map component */
 .leaflet-container {
-  height: 300px;
-  width: 600px;
+  height: 400px;
+  width: 800px;
 }
 .maplabel {
   color: red;

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
-// import Collapse from '../Collapse';
 import EventFilter from './EventFilter';
 import EventList from './EventList';
 import EventDetails from './EventDetails';
@@ -12,9 +11,6 @@ import EventLinked from './EventLinked';
 import EventLinkedManage from './EventLinkedManage';
 import EventEdit from './EventEdit';
 import EventDelete from './EventDelete';
-// import EventRunnerAdd from './EventRunnerAdd';
-// import EventRunnerEdit from './EventRunnerEdit';
-// import EventRunnerDelete from './EventRunnerDelete';
 
 import {
   getClubListAction,
@@ -46,6 +42,8 @@ import {
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
+import { testOrisList } from '../data';
+
 class EventViewList extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -60,7 +58,7 @@ class EventViewList extends Component {
     createEventOris: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
-    getEventListOris: PropTypes.func.isRequired,
+    // getEventListOris: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     // updateEventRunner: PropTypes.func.isRequired,
@@ -149,7 +147,6 @@ class EventViewList extends Component {
       createEventOris,
       createEventLink,
       getEventList,
-      getEventListOris,
       getEventLinkList,
       getEventById,
       updateEvent,
@@ -170,11 +167,13 @@ class EventViewList extends Component {
       details,
       linkList,
       linkDetails,
+      // orisList,
       selectedEventLink,
       selectedEventDetails,
       selectedEventDisplay,
       errorMessage,
     } = oevent;
+    const orisList = testOrisList;
     const { current, list: userList } = user;
     const { language } = config;
     // console.log('userList:', userList);
@@ -267,9 +266,10 @@ class EventViewList extends Component {
         return (
           <div className="eight wide column">
             <EventDetails
-              selectedEvent={selectedEvent}
-              organisingClubs={organisingClubs}
               canEdit={canEdit}
+              language={language}
+              organisingClubs={organisingClubs}
+              selectedEvent={selectedEvent}
               setEventViewModeEvent={setEventViewModeEvent}
             />
             {renderEventRunners}
@@ -299,6 +299,7 @@ class EventViewList extends Component {
           </div>
         );
       case 'add':
+        console.log('orisList prop for EventEdit:', orisList);
         return (
           <div className="eight wide column">
             <EventEdit // same form component handles both create and update
@@ -308,7 +309,6 @@ class EventViewList extends Component {
               selectedEvent={selectedEvent}
               createEvent={createEvent}
               createEventOris={createEventOris}
-              getEventListOris={getEventListOris}
               setEventViewModeEvent={setEventViewModeEvent}
               selectEventForDetails={selectEventForDetails}
               selectEventToDisplay={selectEventToDisplay}
@@ -316,6 +316,7 @@ class EventViewList extends Component {
               eventList={(list) ? list.slice(0, -1) : []}
               eventLinkList={(linkList) ? linkList.slice(0, -1) : []}
               clubList={(clubList) ? clubList.slice(0, -1) : []}
+              orisList={orisList || []}
             />
             {renderEventRunners}
             {renderEventLinked}
@@ -349,14 +350,21 @@ class EventViewList extends Component {
     const {
       config,
       oevent,
+      // user,
       getEventList,
+      // getEventListOris,
       setEventSearchField,
       setEventViewModeEvent,
       selectEventForDetails,
       cancelEventError,
     } = this.props;
     const { searchField, errorMessage } = oevent;
+    // const { searchField, errorMessage, orisList } = oevent;
     const { language } = config;
+    // const { current } = user;
+
+    // populate ORIS event list when rendered with a current user for the first time
+    // if (!orisList && current && current.orisId !== '') getEventListOris();
 
     // need to consider reducing the number shown if there are many many events...
     const eventListArray = this.createEventListArray();

@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
+import { typesOptionsLocale } from '../data';
+
 import Collapse from '../Collapse';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventDetails = ({
-  selectedEvent,
-  organisingClubs,
   canEdit,
+  language,
+  organisingClubs,
+  selectedEvent,
   setEventViewModeEvent,
 }) => {
   if (!selectedEvent._id) {
     return (
       <div className="ui segment">
-        <div className="ui active inline centered text loader">Loading event details...</div>
+        <div className="ui active inline centered text loader"><Trans>Loading event details...</Trans></div>
       </div>
     );
   }
@@ -38,18 +42,18 @@ const EventDetails = ({
     ? (
       <div>
         <hr className="divider" />
-        <div className="">{`Owner: ${owner.displayName}`}</div>
+        <div className=""><Trans>{`Owner: ${owner.displayName}`}</Trans></div>
         {(orisId)
           ? <div>{`ORIS ID: ${orisId}`}</div>
           : null}
-        <div className="item">{`Created: ${createdAt.slice(0, 10)}`}</div>
-        <div className="item">{`Last updated: ${updatedAt.slice(0, 10)}`}</div>
+        <div className="item"><Trans>{`Created: ${createdAt.slice(0, 10)}`}</Trans></div>
+        <div className="item"><Trans>{`Last updated: ${updatedAt.slice(0, 10)}`}</Trans></div>
         <hr className="divider" />
         <button type="button" className="ui red tiny button right floated" onClick={() => setEventViewModeEvent('delete')}>
-          Delete event
+          <Trans>Delete event</Trans>
         </button>
         <button type="button" className="ui primary tiny button" onClick={() => setEventViewModeEvent('edit')}>
-          Edit event details
+          <Trans>Edit event details</Trans>
         </button>
       </div>
     )
@@ -59,11 +63,13 @@ const EventDetails = ({
     .concat(date.slice(5, 7))
     .concat('/')
     .concat(date.slice(0, 4));
+  const typesOptions = typesOptionsLocale[language];
   const renderTypes = (types && types.length > 0)
     ? (
       <span>
         {types.map((type) => {
-          return <div key={type} className="ui blue label">{type}</div>;
+          const matchingType = typesOptions.find(el => el.value === type);
+          return <div key={type} className="ui blue label">{matchingType.label}</div>;
         })}
       </span>
     )
@@ -156,7 +162,9 @@ const EventDetails = ({
             <div className="item">
               <i className="linkify icon" />
               <div className="content">
-                <a href={website} target="_blank" rel="noopener noreferrer">Event website</a>
+                <a href={website} target="_blank" rel="noopener noreferrer">
+                  <Trans>Event website</Trans>
+                </a>
               </div>
             </div>
           )
@@ -166,7 +174,9 @@ const EventDetails = ({
             <div className="item">
               <i className="linkify icon" />
               <div className="content">
-                <a href={results} target="_blank" rel="noopener noreferrer">Results</a>
+                <a href={results} target="_blank" rel="noopener noreferrer">
+                  <Trans>Results</Trans>
+                </a>
               </div>
             </div>
           )
@@ -179,9 +189,10 @@ const EventDetails = ({
       </div>
     </div>
   );
+  const title = <Trans>Event details</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title="Event details">
+      <Collapse title={title}>
         {displayEventDetails}
       </Collapse>
     </div>
@@ -189,15 +200,17 @@ const EventDetails = ({
 };
 
 EventDetails.propTypes = {
-  selectedEvent: PropTypes.objectOf(PropTypes.any),
-  organisingClubs: PropTypes.arrayOf(PropTypes.any),
   canEdit: PropTypes.bool,
+  language: PropTypes.string,
+  organisingClubs: PropTypes.arrayOf(PropTypes.any),
+  selectedEvent: PropTypes.objectOf(PropTypes.any),
   setEventViewModeEvent: PropTypes.func.isRequired,
 };
 EventDetails.defaultProps = {
-  selectedEvent: {},
-  organisingClubs: [],
   canEdit: false,
+  language: 'en',
+  organisingClubs: [],
+  selectedEvent: {},
 };
 
 export default EventDetails;

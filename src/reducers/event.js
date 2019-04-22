@@ -113,6 +113,14 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
+        list: state.list.map((listedEvent) => {
+          if (listedEvent._id === action.payload._id) {
+            const updatedEvent = listedEvent;
+            updatedEvent.totalRunners = listedEvent.totalRunners + 1;
+            return updatedEvent;
+          }
+          return listedEvent;
+        }),
         errorMessage: '',
       };
     case EVENT_ERROR:

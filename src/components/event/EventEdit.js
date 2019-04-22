@@ -35,6 +35,7 @@ class EventEdit extends Component {
     clubList: PropTypes.arrayOf(PropTypes.object),
     eventList: PropTypes.arrayOf(PropTypes.object),
     eventLinkList: PropTypes.arrayOf(PropTypes.object),
+    orisList: PropTypes.arrayOf(PropTypes.object),
     selectedEvent: PropTypes.objectOf(PropTypes.any),
     resetForm: PropTypes.func.isRequired,
     setFieldValue: PropTypes.func.isRequired,
@@ -51,23 +52,33 @@ class EventEdit extends Component {
     eventList: [],
     eventLinkList: [],
     clubList: [],
+    orisList: [],
     selectedEvent: {},
     getEventList: () => {},
   };
 
   state = {
+    // countryOptions: [],
+    orisOptions: [],
     regionOptions: [],
     tagsOptions: [{ value: 'default', label: 'default' }],
+    // typesOptions: [],
   };
 
   componentDidMount() {
     const {
       eventList,
-      getEventList,
       eventMode,
+      // language,
+      getEventList,
+      orisList,
       selectedEvent,
     } = this.props;
     if (eventList && eventList.length === 0 && eventMode === 'edit') getEventList();
+    // this.setState({
+    //   countryOptions: countryOptionsLocale[language],
+    //   typesOptions: typesOptionsLocale[language],
+    // });
     if (selectedEvent && selectedEvent.locCountry) {
       this.setState({ regionOptions: regionOptionSets[selectedEvent.locCountry] });
     }
@@ -77,17 +88,59 @@ class EventEdit extends Component {
       })
       : [{ value: 'default', label: 'default set to be defined' }];
     this.setState({ tagsOptions: newTagsOptions });
+    if (orisList && orisList.length > 0) {
+      const populatedOrisOptions = orisList
+        .filter(orisEvent => !orisEvent.includedEvents) // remove multi-day
+        .filter(orisEvent => orisEvent.date < dateToDateString(new Date())) // remove future
+        .sort((a, b) => { // sort so most recent are listed first
+          return (a.date < b.date) ? 0 : -1;
+        })
+        .map((orisEvent) => {
+          const { orisEventId, name, date } = orisEvent;
+          const value = orisEventId;
+          const label = `${orisEventId}: ${name} (${date})`;
+          return { value, label };
+        });
+      this.setState({ orisOptions: populatedOrisOptions });
+    }
+    // if (eventMode === 'add') {
+    //   console.log('checking for ORIS events now');
+    //   getEventListOris((success) => {
+    //     if (success) {
+    //       const { orisList } = this.props;
+    //       console.log('current props:', this.props);
+    //       console.log('oris event list:', orisList);
+    //       if (orisList.length > 0) {
+    //         const populatedOrisOptions = orisList.map((orisEvent) => {
+    //           const value = orisEvent.orisEventId;
+    //           const label = `${orisEvent.name} (${orisEvent.date})`;
+    //           return { value, label };
+    //         });
+    //         this.setState({ orisOptions: populatedOrisOptions });
+    //       }
+    //     }
+    //   });
+    // }
   }
 
   componentDidUpdate(prevProps) {
-    const { eventMode, resetForm } = this.props;
+    const {
+      eventMode,
+      // language,
+      resetForm,
+    } = this.props;
     if (prevProps.eventMode === 'edit' && eventMode === 'add') {
       resetForm();
     }
   }
 
   renderForm() {
-    const { regionOptions, tagsOptions } = this.state;
+    const {
+      orisOptions,
+      regionOptions,
+      tagsOptions,
+    } = this.state;
+    // console.log('state:', this.state);
     const {
       language,
       eventMode,
@@ -120,256 +173,299 @@ class EventEdit extends Component {
     // console.log('linkedToOptions:', linkedToOptions);
     // console.log('values:', values);
     // console.log('tagsOptions:', tagsOptions);
+    const countryOptions = countryOptionsLocale[language];
+    const typesOptions = typesOptionsLocale[language];
+    // const orisOptions = [{ value: 'test', label: 'test' }];
 
     return (
       <Form className="ui warning form" noValidate>
-        <div className="field">
-          <label htmlFor="date">
-            <Trans>Date</Trans>
-            <div>
-              <DatePicker
-                locale={language}
-                name="date"
-                selected={values.date}
-                onChange={value => setFieldValue('date', value)}
-                onBlur={() => setFieldTouched('date', true)}
-              />
+        {(eventMode === 'add')
+          ? (
+            <div className="field">
+              <label htmlFor="orisId">
+                <Trans>Create event using ORIS data</Trans>
+                <I18n>
+                  {({ i18n }) => (
+                    <CreatableSelect
+                      id="orisId"
+                      isClearable
+                      placeholder={i18n._(t`Enter ORIS event ID or select from your recent events`)}
+                      options={orisOptions}
+                      onChange={(value) => {
+                        setFieldValue('orisId', value);
+                        setFieldValue('name', value ? value.value : '');
+                      }}
+                      onBlur={() => setFieldTouched('orisId', true)}
+                      value={values.orisId}
+                    />
+                  )}
+                </I18n>
+                { touched.orisId && errors.orisId && <div className="ui warning message">{errors.orisId}</div> }
+              </label>
             </div>
-            { touched.date && errors.date && <div className="ui warning message">{errors.date}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="name">
-            <Trans>Name</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Field
-                  name="name"
-                  placeholder={i18n._(t`Name of event (required)`)}
-                  autoComplete="off"
-                />
-              )}
-            </I18n>
-            { touched.name && errors.name && <div className="ui warning message">{errors.name}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="mapName">
-            <Trans>Map name</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Field
-                  name="mapName"
-                  placeholder={i18n._(t`Name of map used for event`)}
-                  autoComplete="off"
-                />
-              )}
-            </I18n>
-            { touched.mapName && errors.mapName && <div className="ui warning message">{errors.mapName}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="locPlace">
-            <Trans>Location</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Field
-                  name="locPlace"
-                  placeholder={i18n._(t`Location of event (e.g. nearest town)`)}
-                  autoComplete="off"
-                />
-              )}
-            </I18n>
-            { touched.locPlace && errors.locPlace && <div className="ui warning message">{errors.locPlace}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="locCountry">
-            <Trans>Country</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Select
-                  id="locCountry"
-                  placeholder={i18n._(t`Location (country)`)}
-                  isClearable
-                  options={countryOptionsLocale[language]}
-                  onChange={(value) => {
-                    setFieldValue('locCountry', value);
-                    // console.log('regionOptionSets[value]', regionOptionSets[value]);
-                    // console.log('value', value);
-                    this.setState({ regionOptions: regionOptionSets[value.value] });
-                  }}
-                  onBlur={() => setFieldTouched('locCountry', true)}
-                  value={values.locCountry}
-                />
-              )}
-            </I18n>
-            { touched.locCountry && errors.locCountry && <div className="ui warning message">{errors.locCountry}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="locRegions">
-            <Trans>Region(s) (customisable)</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <CreatableSelect
-                  id="locRegions"
-                  placeholder={i18n._(t`Region(s) associated with event`)}
-                  options={regionOptions}
-                  isMulti
-                  onChange={value => setFieldValue('locRegions', value)}
-                  onBlur={() => setFieldTouched('locRegions', true)}
-                  value={values.locRegions}
-                />
-              )}
-            </I18n>
-            { touched.locRegions && errors.locRegions && <div className="ui warning message">{errors.locRegions}</div> }
-          </label>
-        </div>
-        <div className="fields">
-          <div className="eight wide field">
-            <label htmlFor="locLat">
-              <Trans>Latitude</Trans>
-              <I18n>
-                {({ i18n }) => (
-                  <Field
-                    name="locLat"
-                    type="number"
-                    min="-90"
-                    max="90"
-                    placeholder={i18n._(t`Event location (latitude)`)}
-                    autoComplete="off"
-                  />
-                )}
-              </I18n>
-              { touched.locLat && errors.locLat && <div className="ui warning message">{errors.locLat}</div> }
-            </label>
-          </div>
-          <div className="eight wide field">
-            <label htmlFor="locLong">
-              <Trans>Longitude</Trans>
-              <I18n>
-                {({ i18n }) => (
-                  <Field
-                    name="locLong"
-                    type="number"
-                    min="-180"
-                    max="180"
-                    placeholder={i18n._(t`Event location (longitude)`)}
-                    autoComplete="off"
-                  />
-                )}
-              </I18n>
-              { touched.locLong && errors.locLong && <div className="ui warning message">{errors.locLong}</div> }
-            </label>
-          </div>
-        </div>
-        <div className="field">
-          <label htmlFor="types">
-            <Trans>Type(s) of event</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Select
-                  id="types"
-                  placeholder={i18n._(t`Type of event`)}
-                  options={typesOptionsLocale[language]}
-                  isMulti
-                  onChange={value => setFieldValue('types', value)}
-                  onBlur={() => setFieldTouched('types', true)}
-                  value={values.types}
-                />
-              )}
-            </I18n>
-            { touched.types && errors.types && <div className="ui warning message">{errors.types}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="tags">
-            <Trans>Tags (customisable)</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <CreatableSelect
-                  id="tags"
-                  placeholder={i18n._(t`Tags for event`)}
-                  options={tagsOptions}
-                  isMulti
-                  onChange={value => setFieldValue('tags', value)}
-                  onBlur={() => setFieldTouched('tags', true)}
-                  value={values.tags}
-                />
-              )}
-            </I18n>
-            { touched.tags && errors.tags && <div className="ui warning message">{errors.tags}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="website">
-            <Trans>Website</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Field
-                  name="website"
-                  placeholder={i18n._(t`Address of event website`)}
-                  autoComplete="off"
-                />
-              )}
-            </I18n>
-            { touched.website && errors.website && <div className="ui warning message">{errors.website}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="results">
-            <Trans>Results</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Field
-                  name="results"
-                  placeholder={i18n._(t`Link to event results`)}
-                  autoComplete="off"
-                />
-              )}
-            </I18n>
-            { touched.results && errors.results && <div className="ui warning message">{errors.results}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="organisedBy">
-            <Trans>Organised by</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Select
-                  id="organisedBy"
-                  placeholder={i18n._(t`Clubs that event is organised by`)}
-                  options={organisedByOptions}
-                  isMulti
-                  onChange={value => setFieldValue('organisedBy', value)}
-                  onBlur={() => setFieldTouched('organisedBy', true)}
-                  value={values.organisedBy}
-                />
-              )}
-            </I18n>
-            { touched.organisedBy && errors.organisedBy && <div className="ui warning message">{errors.organisedBy}</div> }
-          </label>
-        </div>
-        <div className="field">
-          <label htmlFor="linkedTo">
-            <Trans>Linked to</Trans>
-            <I18n>
-              {({ i18n }) => (
-                <Select
-                  id="linkedTo"
-                  placeholder={i18n._(t`Groups of other events that this event is linked to`)}
-                  options={linkedToOptions}
-                  isMulti
-                  onChange={value => setFieldValue('linkedTo', value)}
-                  onBlur={() => setFieldTouched('linkedTo', true)}
-                  value={values.linkedTo}
-                />
-              )}
-            </I18n>
-            { touched.linkedTo && errors.linkedTo && <div className="ui warning message">{errors.linkedTo}</div> }
-          </label>
-        </div>
+          )
+          : null
+        }
+        { (values.orisId)
+          ? null
+          : (
+            <div>
+              <div className="field">
+                <label htmlFor="date">
+                  <Trans>Date</Trans>
+                  <div>
+                    <DatePicker
+                      locale={language}
+                      name="date"
+                      selected={values.date}
+                      onChange={value => setFieldValue('date', value)}
+                      onBlur={() => setFieldTouched('date', true)}
+                    />
+                  </div>
+                  { touched.date && errors.date && <div className="ui warning message">{errors.date}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="name">
+                  <Trans>Name</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Field
+                        name="name"
+                        placeholder={i18n._(t`Name of event (required)`)}
+                        autoComplete="off"
+                      />
+                    )}
+                  </I18n>
+                  { touched.name && errors.name && <div className="ui warning message">{errors.name}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="mapName">
+                  <Trans>Map name</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Field
+                        name="mapName"
+                        placeholder={i18n._(t`Name of map used for event`)}
+                        autoComplete="off"
+                      />
+                    )}
+                  </I18n>
+                  { touched.mapName && errors.mapName && <div className="ui warning message">{errors.mapName}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="locPlace">
+                  <Trans>Location</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Field
+                        name="locPlace"
+                        placeholder={i18n._(t`Location of event (e.g. nearest town)`)}
+                        autoComplete="off"
+                      />
+                    )}
+                  </I18n>
+                  { touched.locPlace && errors.locPlace && <div className="ui warning message">{errors.locPlace}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="locCountry">
+                  <Trans>Country</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Select
+                        id="locCountry"
+                        placeholder={i18n._(t`Location (country)`)}
+                        isClearable
+                        options={countryOptionsLocale[language]}
+                        onChange={(value) => {
+                          setFieldValue('locCountry', value);
+                          // console.log('regionOptionSets[value]', regionOptionSets[value]);
+                          // console.log('value', value);
+                          if (value) {
+                            this.setState({ regionOptions: regionOptionSets[value.value] });
+                          }
+                        }}
+                        onBlur={() => setFieldTouched('locCountry', true)}
+                        value={(values.locCountry)
+                          ? countryOptions.find(el => el.value === values.locCountry.value)
+                          : null}
+                      />
+                    )}
+                  </I18n>
+                  { touched.locCountry && errors.locCountry && <div className="ui warning message">{errors.locCountry}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="locRegions">
+                  <Trans>Region(s) (customisable)</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <CreatableSelect
+                        id="locRegions"
+                        placeholder={i18n._(t`Region(s) associated with event`)}
+                        options={regionOptions}
+                        isClearable
+                        isMulti
+                        onChange={value => setFieldValue('locRegions', value)}
+                        onBlur={() => setFieldTouched('locRegions', true)}
+                        value={values.locRegions}
+                      />
+                    )}
+                  </I18n>
+                  { touched.locRegions && errors.locRegions && <div className="ui warning message">{errors.locRegions}</div> }
+                </label>
+              </div>
+              <div className="fields">
+                <div className="eight wide field">
+                  <label htmlFor="locLat">
+                    <Trans>Latitude</Trans>
+                    <I18n>
+                      {({ i18n }) => (
+                        <Field
+                          name="locLat"
+                          type="number"
+                          min="-90"
+                          max="90"
+                          placeholder={i18n._(t`Event location (latitude)`)}
+                          autoComplete="off"
+                        />
+                      )}
+                    </I18n>
+                    { touched.locLat && errors.locLat && <div className="ui warning message">{errors.locLat}</div> }
+                  </label>
+                </div>
+                <div className="eight wide field">
+                  <label htmlFor="locLong">
+                    <Trans>Longitude</Trans>
+                    <I18n>
+                      {({ i18n }) => (
+                        <Field
+                          name="locLong"
+                          type="number"
+                          min="-180"
+                          max="180"
+                          placeholder={i18n._(t`Event location (longitude)`)}
+                          autoComplete="off"
+                        />
+                      )}
+                    </I18n>
+                    { touched.locLong && errors.locLong && <div className="ui warning message">{errors.locLong}</div> }
+                  </label>
+                </div>
+              </div>
+              <div className="field">
+                <label htmlFor="types">
+                  <Trans>Type(s) of event</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Select
+                        id="types"
+                        placeholder={i18n._(t`Type of event`)}
+                        options={typesOptionsLocale[language]}
+                        isMulti
+                        onChange={value => setFieldValue('types', value)}
+                        onBlur={() => setFieldTouched('types', true)}
+                        value={values.types.map((type) => {
+                          return typesOptions.find(el => el.value === type.value);
+                        })}
+                      />
+                    )}
+                  </I18n>
+                  { touched.types && errors.types && <div className="ui warning message">{errors.types}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="tags">
+                  <Trans>Tags (customisable)</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <CreatableSelect
+                        id="tags"
+                        placeholder={i18n._(t`Tags for event`)}
+                        options={tagsOptions}
+                        isMulti
+                        onChange={value => setFieldValue('tags', value)}
+                        onBlur={() => setFieldTouched('tags', true)}
+                        value={values.tags}
+                      />
+                    )}
+                  </I18n>
+                  { touched.tags && errors.tags && <div className="ui warning message">{errors.tags}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="website">
+                  <Trans>Website</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Field
+                        name="website"
+                        placeholder={i18n._(t`Address of event website`)}
+                        autoComplete="off"
+                      />
+                    )}
+                  </I18n>
+                  { touched.website && errors.website && <div className="ui warning message">{errors.website}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="results">
+                  <Trans>Results</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Field
+                        name="results"
+                        placeholder={i18n._(t`Link to event results`)}
+                        autoComplete="off"
+                      />
+                    )}
+                  </I18n>
+                  { touched.results && errors.results && <div className="ui warning message">{errors.results}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="organisedBy">
+                  <Trans>Organised by</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Select
+                        id="organisedBy"
+                        placeholder={i18n._(t`Clubs that event is organised by`)}
+                        options={organisedByOptions}
+                        isMulti
+                        onChange={value => setFieldValue('organisedBy', value)}
+                        onBlur={() => setFieldTouched('organisedBy', true)}
+                        value={values.organisedBy}
+                      />
+                    )}
+                  </I18n>
+                  { touched.organisedBy && errors.organisedBy && <div className="ui warning message">{errors.organisedBy}</div> }
+                </label>
+              </div>
+              <div className="field">
+                <label htmlFor="linkedTo">
+                  <Trans>Linked to</Trans>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Select
+                        id="linkedTo"
+                        placeholder={i18n._(t`Groups of other events that this event is linked to`)}
+                        options={linkedToOptions}
+                        isMulti
+                        onChange={value => setFieldValue('linkedTo', value)}
+                        onBlur={() => setFieldTouched('linkedTo', true)}
+                        value={values.linkedTo}
+                      />
+                    )}
+                  </I18n>
+                  { touched.linkedTo && errors.linkedTo && <div className="ui warning message">{errors.linkedTo}</div> }
+                </label>
+              </div>
+            </div>
+          )}
         {(eventMode === 'edit' && isAdmin)
           ? (
             <div className="field">
@@ -428,6 +524,9 @@ class EventEdit extends Component {
 const formikEventEdit = withFormik({
   mapPropsToValues({ selectedEvent, eventMode, language }) {
     if (eventMode === 'edit' && selectedEvent) {
+      // console.log('initialised:', countryOptionsLocale[language].filter((el) => {
+      //   return el.value === selectedEvent.locCountry;
+      // }) || null);
       return {
         owner: { value: selectedEvent.owner._id, label: selectedEvent.owner.displayName },
         date: dateStringToDate(selectedEvent.date),
@@ -442,13 +541,13 @@ const formikEventEdit = withFormik({
           // console.log('selectedRegion in mapPropsToValues', selectedRegion);
           return selectedRegion;
         }) || [],
-        locCountry: countryOptionsLocale[language].filter((el) => {
+        locCountry: countryOptionsLocale[language].find((el) => {
           return el.value === selectedEvent.locCountry;
         }) || null,
         locLat: selectedEvent.locLat || '',
         locLong: selectedEvent.locLong || '',
         types: selectedEvent.types.map((type) => {
-          return { value: type, label: type };
+          return typesOptionsLocale[language].find(el => el.value === type);
         }) || [],
         tags: selectedEvent.tags.map((tag) => {
           return { value: tag, label: tag };
@@ -470,6 +569,7 @@ const formikEventEdit = withFormik({
       };
     }
     return {
+      orisId: null,
       date: new Date(),
       name: '',
       mapName: '',
@@ -499,6 +599,7 @@ const formikEventEdit = withFormik({
     const {
       eventMode,
       createEvent,
+      createEventOris,
       updateEvent,
       setEventViewModeEvent,
       selectedEvent,
@@ -526,13 +627,23 @@ const formikEventEdit = withFormik({
     if (values.owner) valuesToSubmit.owner = values.owner.value;
     // console.log('valuesToSubmit:', valuesToSubmit);
     if (eventMode === 'add') {
-      createEvent(valuesToSubmit, (didSucceed) => {
-        if (didSucceed) {
-          getEventList(null, () => setEventViewModeEvent('view'));
-        } else {
-          setSubmitting(false);
-        }
-      });
+      if (values.orisId) {
+        createEventOris(values.orisId.value, (didSucceed) => {
+          if (didSucceed) {
+            getEventList(null, () => setEventViewModeEvent('view'));
+          } else {
+            setSubmitting(false);
+          }
+        });
+      } else {
+        createEvent(valuesToSubmit, (didSucceed) => {
+          if (didSucceed) {
+            getEventList(null, () => setEventViewModeEvent('view'));
+          } else {
+            setSubmitting(false);
+          }
+        });
+      }
     } else {
       updateEvent(selectedEvent._id, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
