@@ -18,6 +18,7 @@ import {
   createEventAction,
   createEventLinkAction,
   addEventRunnerAction,
+  addEventRunnerOrisAction,
   createEventOrisAction,
   getEventListAction,
   getEventLinkListAction,
@@ -55,6 +56,7 @@ class EventViewMap extends Component {
     createEvent: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
     addEventRunner: PropTypes.func.isRequired,
+    addEventRunnerOris: PropTypes.func.isRequired,
     createEventOris: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
@@ -65,6 +67,7 @@ class EventViewMap extends Component {
     updateEventLink: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
+    clearEventSearchField: PropTypes.func.isRequired,
     setEventSearchField: PropTypes.func.isRequired,
     setEventViewModeEvent: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
@@ -88,6 +91,7 @@ class EventViewMap extends Component {
       getEventLinkList,
       getUserList,
     } = this.props;
+    console.log('EventViewMap mounted - oevent:', oevent);
     const { list: clubList } = club;
     const { list: userList } = user;
     const { list, linkList } = oevent;
@@ -143,6 +147,7 @@ class EventViewMap extends Component {
       user,
       oevent,
       addEventRunner,
+      addEventRunnerOris,
       createEvent,
       createEventOris,
       getEventList,
@@ -172,7 +177,7 @@ class EventViewMap extends Component {
     // console.log('userList:', userList);
     const currentUserId = (current) ? current._id.toString() : null;
     const { details: clubDetails, list: clubList } = club;
-    console.log('oevent:', oevent);
+    // console.log('oevent:', oevent);
     // console.log('current:', current);
     if (selectedEventDetails && !details[selectedEventDetails] && !errorMessage) {
       getEventById(selectedEventDetails);
@@ -181,7 +186,7 @@ class EventViewMap extends Component {
     //   setTimeout(() => getEventById(selectedEventDetails), 1000); // simulate network delay
     // }
     const selectedEvent = details[selectedEventDetails] || {};
-    console.log('selectedEvent:', selectedEvent);
+    // console.log('selectedEvent:', selectedEvent);
     const runnerList = (selectedEvent.runners)
       ? selectedEvent.runners.map(runner => runner.user.toString())
       : [];
@@ -202,6 +207,7 @@ class EventViewMap extends Component {
         selectedEvent={selectedEvent}
         runnerMode={runnerMode}
         addEventRunner={addEventRunner}
+        addEventRunnerOris={addEventRunnerOris}
         selectEventToDisplay={selectEventToDisplay}
         selectRunnerToDisplay={selectRunnerToDisplay}
       />
@@ -212,7 +218,7 @@ class EventViewMap extends Component {
         return (
           <div className="eight wide column">
             <div className="ui segment">
-              <p><Trans>Select an event from the map to show further details here</Trans></p>
+              <p><Trans>Select an event on the map to show further details here</Trans></p>
             </div>
           </div>
         );
@@ -249,7 +255,7 @@ class EventViewMap extends Component {
           </div>
         );
       case 'add':
-        console.log('orisList prop for EventEdit:', orisList);
+        // console.log('orisList prop for EventEdit:', orisList);
         return (
           <div className="eight wide column">
             <EventEdit // same form component handles both create and update
@@ -300,6 +306,7 @@ class EventViewMap extends Component {
       getEventList,
       oevent,
       selectEventForDetails,
+      clearEventSearchField,
       setEventSearchField,
       setEventViewModeEvent,
       setEventViewModeEventLink,
@@ -395,6 +402,7 @@ class EventViewMap extends Component {
         <div className="eight wide column">
           <EventFilter
             searchField={searchField}
+            clearEventSearchField={clearEventSearchField}
             setEventSearchField={setEventSearchField}
             setEventViewModeEvent={setEventViewModeEvent}
             getEventList={getEventList}
@@ -440,6 +448,7 @@ const mapDispatchToProps = {
   createEvent: createEventAction,
   createEventLink: createEventLinkAction,
   addEventRunner: addEventRunnerAction,
+  addEventRunnerOris: addEventRunnerOrisAction,
   createEventOris: createEventOrisAction,
   getEventList: getEventListAction,
   getEventLinkList: getEventLinkListAction,
@@ -450,6 +459,7 @@ const mapDispatchToProps = {
   updateEventLink: updateEventLinkAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
+  clearEventSearchField: () => setEventSearchFieldAction(''),
   setEventSearchField: event => setEventSearchFieldAction(event.target.value),
   setEventViewModeEvent: setEventViewModeEventAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,

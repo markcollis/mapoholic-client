@@ -21,3 +21,13 @@ export const dateStringToDate = (dateString) => {
   // console.log('date:', date);
   return date;
 };
+
+// convert YYYY-MM-DD to DD/MM/YYYY
+export const reformatDate = (dateString) => {
+  const reformattedDate = dateString.slice(8)
+    .concat('/')
+    .concat(dateString.slice(5, 7))
+    .concat('/')
+    .concat(dateString.slice(0, 4));
+  return reformattedDate;
+};

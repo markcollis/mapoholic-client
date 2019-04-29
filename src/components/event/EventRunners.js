@@ -8,14 +8,16 @@ import EventRunnersItem from './EventRunnersItem';
 
 const EventRunners = ({
   currentUserId,
+  currentUserOrisId,
   selectedEvent,
   addEventRunner,
+  addEventRunnerOris,
   selectEventToDisplay,
   selectRunnerToDisplay,
   history,
 }) => {
   if (!selectedEvent._id) return null;
-  const { _id: eventId, runners } = selectedEvent;
+  const { _id: eventId, runners, orisId } = selectedEvent;
   const isCurrentRunner = runners.some(runner => runner.user._id === currentUserId);
   const runnersArray = [...runners]
     .sort((a, b) => {
@@ -35,6 +37,7 @@ const EventRunners = ({
       );
     });
 
+  const useOrisToAdd = orisId && orisId !== '' && currentUserOrisId && currentUserOrisId !== '';
   const renderEventRunnerAdd = (isCurrentRunner)
     ? null
     : (
@@ -42,13 +45,23 @@ const EventRunners = ({
         type="button"
         className="ui tiny primary right floated button"
         onClick={() => {
-          addEventRunner(eventId, (successful) => {
-            if (successful) {
-              selectEventToDisplay(eventId);
-              selectRunnerToDisplay(currentUserId);
-              history.push('/mapview');
-            }
-          });
+          if (useOrisToAdd) {
+            addEventRunnerOris(eventId, (successful) => {
+              if (successful) {
+                selectEventToDisplay(eventId);
+                selectRunnerToDisplay(currentUserId);
+                history.push('/mapview');
+              }
+            });
+          } else {
+            addEventRunner(eventId, (successful) => {
+              if (successful) {
+                selectEventToDisplay(eventId);
+                selectRunnerToDisplay(currentUserId);
+                history.push('/mapview');
+              }
+            });
+          }
         }}
       >
         <Trans>Add yourself as a runner</Trans>
@@ -69,14 +82,17 @@ const EventRunners = ({
 
 EventRunners.propTypes = {
   currentUserId: PropTypes.string,
+  currentUserOrisId: PropTypes.string,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   addEventRunner: PropTypes.func.isRequired,
+  addEventRunnerOris: PropTypes.func.isRequired,
   selectEventToDisplay: PropTypes.func.isRequired,
   selectRunnerToDisplay: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 EventRunners.defaultProps = {
   currentUserId: null,
+  currentUserOrisId: null,
   selectedEvent: {},
 };
 

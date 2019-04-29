@@ -4,191 +4,188 @@ import PropTypes from 'prop-types';
 import {
   Map,
   Marker,
-  Popup,
+  // Popup,
   Rectangle,
   TileLayer,
   Tooltip,
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
+import { reformatDate } from '../../common/conversions';
 
 const osmTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const osmAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 // const stamenTonerTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 // const stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-const mapCenter = [50.08, 14.42];
+// const mapCenter = [];
 
 class EventMap extends Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
     this.state = {
-      rectangleCoords: [],
-      zoomLevel: 13,
+      mapBounds: [[50, 14], [50.2, 14.2]],
+      // mapCenter: [50.08, 14.42],
+      mapZoomLevel: undefined,
     };
   }
 
   componentDidMount() {
-    // const { events, selectEventForDetails, setEventViewModeEvent } = this.props;
-    // console.log('events:', events);
-    // const mapCentres = events
-    //   .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
-    //   .map((eventDetails) => {
-    //     return [eventDetails.locLat, eventDetails.locLong];
-    //   });
-    // console.log('mapCentres:', mapCentres);
-    // const leafletMap = this.mapRef.current.leafletElement;
-    // const { rectangleCoords } = this.state;
-    // console.log('Current zoom level: ', leafletMap.getZoom());
-    // console.log('Current rectangles: ', rectangleCoords);
+    const { events } = this.props;
+    // console.log('Event Map mounted - events:', events);
+    const eventBounds = events
+      .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
+      .map((eventDetails) => {
+        const {
+          locLat,
+          locLong,
+        } = eventDetails;
+        return [locLat, locLong];
+      });
+    // console.log('eventBounds:', eventBounds);
+    if (eventBounds.length > 0) {
+      const mapBounds = eventBounds.reduce((acc, val) => {
+        const low = [
+          (val[0] < acc[0][0]) ? val[0] : acc[0][0],
+          (val[1] < acc[0][1]) ? val[1] : acc[0][1],
+        ];
+        const high = [
+          (val[0] > acc[1][0]) ? val[0] : acc[1][0],
+          (val[1] > acc[1][1]) ? val[1] : acc[1][1],
+        ];
+        return [low, high];
+      }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
+        [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
+      // console.log('mapBounds:', mapBounds);
+      this.setState({ mapBounds });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { events } = this.props;
+    if (events !== prevProps.events) {
+      // console.log('Event Map updated - events:', events);
+      const eventBounds = events
+        .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
+        .map((eventDetails) => {
+          const {
+            locLat,
+            locLong,
+          } = eventDetails;
+          return [locLat, locLong];
+        });
+      // console.log('eventBounds:', eventBounds);
+      if (eventBounds.length > 0) {
+        const mapBounds = eventBounds.reduce((acc, val) => {
+          const low = [
+            (val[0] < acc[0][0]) ? val[0] : acc[0][0],
+            (val[1] < acc[0][1]) ? val[1] : acc[0][1],
+          ];
+          const high = [
+            (val[0] > acc[1][0]) ? val[0] : acc[1][0],
+            (val[1] > acc[1][1]) ? val[1] : acc[1][1],
+          ];
+          return [low, high];
+        }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
+          [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
+        // console.log('mapBounds:', mapBounds);
+        /* eslint react/no-did-update-set-state: 0 */
+        this.setState({ mapBounds }); // safe to use due to prevProps check
+      }
+    }
   }
 
   handleZoomEnd = () => {
     const leafletMap = this.mapRef.current.leafletElement;
     // console.log('Zoom level changed to: ', leafletMap.getZoom());
-    this.setState({ zoomLevel: leafletMap.getZoom() });
+    this.setState({ mapZoomLevel: leafletMap.getZoom() });
   }
 
-  handleButtonClick = () => {
-    // console.log('button clicked');
-    const { rectangleCoords } = this.state;
-    const coordsToAdd = this.generateRectangleCoords(10);
-    const newBounds = [[50.085, 14.395], [50.098, 14.427]]; // city centre map
-    const newRectangleCoords = [...rectangleCoords, ...coordsToAdd, newBounds];
-    // const newRectangleCoords = [newBounds];
-    this.setState({ rectangleCoords: newRectangleCoords });
-  }
-
-  generateRectangleCoords = (number, x = 50, y = 14.3) => {
-    const coordSet = [];
-    for (let i = 0; i < number; i += 1) {
-      const xLow = x + Number(Math.random().toFixed(3) / 10);
-      const yLow = y + Number(Math.random().toFixed(3) / 10);
-      const xHigh = xLow + 0.01 + Number(Math.random().toFixed(2) / 100);
-      const yHigh = yLow + 0.01 + Number(Math.random().toFixed(2) / 100);
-      coordSet.push([[xLow, yLow], [xHigh, yHigh]]);
-    }
-    return coordSet;
-  }
-
-  renderMapLocations = () => {
-    if (!this.mapRef.current) return null;
-    const { events } = this.props;
-    const leafletMap = this.mapRef.current.leafletElement;
-    const currentZoom = leafletMap.getZoom();
-    // const { events, selectEventForDetails, setEventViewModeEvent } = this.props;
-    // console.log('events:', events);
-    return events
-      .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
-      .map((eventDetails) => {
-        const {
-          _id: eventId,
-          locLat,
-          locLong,
-          name,
-          date,
-        } = eventDetails;
-        const markerPos = [locLat, locLong];
-        const coords = [[locLat - 0.01, locLong - 0.01], [locLat + 0.01, locLong + 0.01]];
-        if (currentZoom < 11) {
+  renderMapLocations = (events) => {
+    const { mapZoomLevel } = this.state;
+    const { selectEventForDetails, setEventViewModeEvent } = this.props;
+    return (
+      events
+        .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
+        .map((eventDetails) => {
+          const {
+            _id: eventId,
+            locLat,
+            locLong,
+            locCornerSW,
+            locCornerNE,
+            name,
+            date,
+          } = eventDetails;
+          const flagMarkerPos = [locLat, locLong];
+          const rectangleMarkerPos = [
+            (locCornerSW[0] + locCornerNE[0]) / 2,
+            (locCornerSW[1] + locCornerNE[1]) / 2,
+          ];
+          const rectangleBounds = [locCornerSW, locCornerNE];
+          // const coords = [[locLat - 0.01, locLong - 0.01], [locLat + 0.01, locLong + 0.01]];
+          if (!mapZoomLevel || mapZoomLevel < 12 || locCornerSW.length === 0) {
+            return (
+              <Marker
+                key={eventId}
+                position={flagMarkerPos}
+                opacity={0.8}
+                icon={iconFlag}
+                onClick={() => {
+                  selectEventForDetails(eventId);
+                  setEventViewModeEvent('view');
+                }}
+              >
+                <Tooltip direction="center" offset={[0, 30]} className="event-map-flag-tooltip">
+                  <div>{name}</div>
+                  <div>{reformatDate(date)}</div>
+                </Tooltip>
+              </Marker>
+            );
+          }
+          // console.log('rectangleMarkerPos:', rectangleMarkerPos);
+          // console.log('rectangleBounds:', rectangleBounds);
           return (
-            <Marker key={eventId} position={markerPos} opacity={0.8} icon={iconFlag}>
-              <Tooltip direction="center" offset={[0, -20]} className="maplabel">
-                {`${name} (${date}) ${currentZoom}`}
-              </Tooltip>
-            </Marker>
+            <div key={eventId}>
+              <Rectangle
+                bounds={rectangleBounds}
+                color="blue"
+                onClick={() => {
+                  selectEventForDetails(eventId);
+                  setEventViewModeEvent('view');
+                }}
+              />
+              <Marker
+                position={rectangleMarkerPos}
+                opacity={0}
+                icon={iconFlag}
+              >
+                <Tooltip direction="center" permanent className="event-map-box-tooltip">
+                  <div>{name}</div>
+                  <div>{reformatDate(date)}</div>
+                </Tooltip>
+              </Marker>
+            </div>
           );
-        }
-        return (
-          <div key={eventId}>
-            <Rectangle
-              bounds={coords}
-              color="red"
-            />
-            <Marker position={markerPos} opacity={0} icon={iconFlag}>
-              <Tooltip direction="center" permanent offset={[0, -20]} className="maplabel">
-                {`${name} (${date}) ${currentZoom}`}
-              </Tooltip>
-            </Marker>
-          </div>
-        );
-      // [eventDetails.locLat, eventDetails.locLong];
-      });
-  }
-
-  renderRectangles = () => {
-    const { rectangleCoords } = this.state;
-    // console.log('rectangleCoords: ', rectangleCoords);
-    if (!this.mapRef.current || rectangleCoords.length === 0) return null;
-
-    const leafletMap = this.mapRef.current.leafletElement;
-    // console.log('leafletMap: ', leafletMap);
-    const currentZoom = leafletMap.getZoom();
-    // const point = leafletMap.project([50.085, 14.395]);
-    // const newPoint = { x: point.x, y: point.y + 50 };
-    // const newCoord = leafletMap.unproject(newPoint);
-    const rectangleSet = rectangleCoords.map((coords) => {
-      const markerLong = (coords[0][1] + coords[1][1]) / 2;
-      const markerPos = [coords[0][0], markerLong];
-      // console.log('markerPos ', markerPos);
-      if (currentZoom < 11) {
-        return (
-          <Marker key={coords[0][0]} position={markerPos} opacity={0.8} icon={iconFlag}>
-            <Tooltip direction="center" offset={[0, -20]} className="maplabel">
-              Map name
-              {currentZoom}
-            </Tooltip>
-          </Marker>
-        );
-      }
-      return (
-        <div key={coords[0][0]}>
-          <Rectangle
-            bounds={coords}
-            color="red"
-          />
-          <Marker position={markerPos} opacity={0} icon={iconFlag}>
-            <Tooltip direction="center" permanent offset={[0, -20]} className="maplabel">
-              Map name
-              {currentZoom}
-            </Tooltip>
-          </Marker>
-        </div>
-      );
-    });
-    return rectangleSet;
+        })
+    );
   }
 
   render() {
-    const { zoomLevel } = this.state;
-    const homePosition = [50.0657, 14.3982];
+    // const mapBoundsDefault = [[50, 14], [50.5, 14.5]];
+    // console.log('current zoom:', this.state.mapZoomLevel);
+    const { events } = this.props;
+    const { mapBounds } = this.state;
+    // console.log('mapBounds', mapBounds);
     return (
-      <div className="test-map ui segment">
-        <h3 className="header">{'Look, it\'s a map!'}</h3>
+      <div className="ui segment">
         <Map
           ref={this.mapRef}
-          center={mapCenter}
-          zoom={zoomLevel}
+          bounds={mapBounds}
           onZoomEnd={this.handleZoomEnd}
         >
           <TileLayer attribution={osmAttr} url={osmTiles} />
-          <Marker position={homePosition} icon={iconFlag}>
-            <Popup>
-              Home!
-            </Popup>
-          </Marker>
-          {this.renderRectangles()}
-          {this.renderMapLocations()}
+          {this.renderMapLocations(events)}
         </Map>
-        <div>
-          <p />
-          <button
-            type="button"
-            className="ui button primary"
-            onClick={this.handleButtonClick}
-          >
-          Draw some boxes
-          </button>
-        </div>
       </div>
     );
   }

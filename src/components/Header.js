@@ -8,18 +8,15 @@ import noAvatar from '../no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../config';
 
 const Header = ({
-  location,
   auth,
   currentUser,
   getCurrentUser,
+  location,
   setLanguage,
-  currentMap,
+  selectedEventDisplay,
+  selectedRunner,
 }) => {
-  if (auth && !currentUser) { // check here because Header is always rendered
-    // console.log('No current user found in state, get details corresponding to auth token.');
-    setTimeout(() => getCurrentUser(), 1000); // simulate network delay
-    // getCurrentUser();
-  }
+  if (auth && !currentUser) getCurrentUser();
 
   const userDetails = (currentUser)
     ? (
@@ -33,9 +30,6 @@ const Header = ({
       </div>
     )
     : '...';
-  // const userDetails = (currentUser)
-  //   ? `${avatar} logged in as: ${currentUser.displayName}`
-  //   : '...';
   const isHome = (location.pathname === '/');
   const isSignup = (location.pathname === '/signup');
   const isLogin = (location.pathname === '/login');
@@ -46,7 +40,7 @@ const Header = ({
   const isEventsList = (location.pathname === '/events');
   const isEventsMap = (location.pathname === '/eventsmap');
   const isEventsGroup = isEventsList || isEventsMap;
-  const isMaps = (location.pathname === '/maps');
+  const isMapView = (location.pathname === '/mapview');
   const isUsers = (location.pathname === '/users');
   const isClubs = (location.pathname === '/clubs');
   const isCurrentUser = (location.pathname === '/me');
@@ -102,9 +96,13 @@ const Header = ({
       <div>
         <div className="ui menu secondary pointing">
           <Link to="/" className={(isHome) ? 'active item' : 'item'}><i className="icon home" /></Link>
-          <Link to="/mapview" className={(isMaps) ? 'active blue item' : 'item'}>
-            <Trans>Current Map</Trans>
-          </Link>
+          {(selectedEventDisplay && selectedRunner)
+            ? (
+              <Link to="/mapview" className={(isMapView) ? 'active blue item' : 'item'}>
+                <Trans>Current Map</Trans>
+              </Link>
+            )
+            : null}
           <Link to="/mymaps" className={(isMyMapsGroup) ? 'active blue item' : 'item'}>
             <Trans>My Maps</Trans>
           </Link>
@@ -158,16 +156,23 @@ Header.propTypes = {
   currentUser: PropTypes.objectOf(PropTypes.any),
   getCurrentUser: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
-  currentMap: PropTypes.string,
+  selectedRunner: PropTypes.string,
+  selectedEventDisplay: PropTypes.string,
 };
 Header.defaultProps = {
   auth: '',
   currentUser: null,
-  currentMap: '',
+  selectedRunner: '',
+  selectedEventDisplay: '',
 };
 
 const mapStateToProps = ({ auth, user, oevent }) => {
-  return { auth: auth.authenticated, currentUser: user.current, currentMap: oevent.selectedMap };
+  return {
+    auth: auth.authenticated,
+    currentUser: user.current,
+    selectedRunner: oevent.selectedRunner,
+    selectedEventDisplay: oevent.selectedEventDisplay,
+  };
 };
 
 export default connect(mapStateToProps, {

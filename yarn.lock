@@ -6732,6 +6732,11 @@ memoize-one@^5.0.0:
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.2.tgz#6aba5276856d72fb44ead3efab86432f94ba203d"
   integrity sha512-o7lldN4fs/axqctc03NF+PMhd2veRrWeJ2n2GjEzUPBD4F9rmNg4A+bQCACIzwjHJEXuYv4aFFMaH35KZfHUrw==
 
+memoize-one@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.0.4.tgz#005928aced5c43d890a4dfab18ca908b0ec92cbc"
+  integrity sha512-P0z5IeAH6qHHGkJIXWw0xC2HNEgkx/9uWWBQw64FJj3/ol14VYdfVGWWr0fXfjhhv3TKVIqUq65os6O4GUNksA==
+
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
@@ -8971,6 +8976,13 @@ react-transition-group@^2.2.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
+
+react-viewer@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/react-viewer/-/react-viewer-2.8.1.tgz#f479f88c5d051b3440982d4ffca7c80fed6b66e0"
+  integrity sha512-hQVgmpYKuvpwivvZWKuMVndNQbTkoRV6ZUvx4pJ4eupV599Tl+X46thfpF02+iNwOhWHh3Zm3re8P3bVEKEedg==
+  dependencies:
+    classnames "^2.2.5"
 
 react@^16.8.1:
   version "16.8.1"

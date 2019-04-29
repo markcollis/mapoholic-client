@@ -6,6 +6,7 @@ import Collapse from '../Collapse';
 
 const eventFilter = ({
   searchField,
+  clearEventSearchField,
   setEventSearchField,
   setEventViewModeEvent,
   selectEventForDetails,
@@ -27,7 +28,13 @@ const eventFilter = ({
                 />
               )}
             </I18n>
-            <i className="circular search icon" />
+            <i
+              role="button"
+              className="close icon link"
+              onClick={clearEventSearchField}
+              onKeyPress={clearEventSearchField}
+              tabIndex="0"
+            />
           </div>
           <div className="ui divider" />
           <button type="button" className="ui tiny button" onClick={() => getEventList()}>
@@ -51,6 +58,7 @@ const eventFilter = ({
 
 eventFilter.propTypes = {
   searchField: PropTypes.string.isRequired,
+  clearEventSearchField: PropTypes.func.isRequired,
   setEventSearchField: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
   selectEventForDetails: PropTypes.func.isRequired,

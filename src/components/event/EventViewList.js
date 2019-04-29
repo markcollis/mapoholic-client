@@ -18,6 +18,7 @@ import {
   createEventAction,
   createEventLinkAction,
   addEventRunnerAction,
+  addEventRunnerOrisAction,
   createEventOrisAction,
   getEventListAction,
   getEventLinkListAction,
@@ -55,6 +56,7 @@ class EventViewList extends Component {
     createEvent: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
     addEventRunner: PropTypes.func.isRequired,
+    addEventRunnerOris: PropTypes.func.isRequired,
     createEventOris: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
@@ -65,6 +67,7 @@ class EventViewList extends Component {
     updateEventLink: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
+    clearEventSearchField: PropTypes.func.isRequired,
     setEventSearchField: PropTypes.func.isRequired,
     setEventViewModeEvent: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
@@ -143,6 +146,7 @@ class EventViewList extends Component {
       user,
       oevent,
       addEventRunner,
+      addEventRunnerOris,
       createEvent,
       createEventOris,
       createEventLink,
@@ -178,6 +182,7 @@ class EventViewList extends Component {
     const { language } = config;
     // console.log('userList:', userList);
     const currentUserId = (current) ? current._id.toString() : null;
+    const currentUserOrisId = (current) ? current.orisId : null;
     const { details: clubDetails, list: clubList } = club;
     console.log('oevent:', oevent);
     // console.log('current:', current);
@@ -206,9 +211,11 @@ class EventViewList extends Component {
     const renderEventRunners = (
       <EventRunners
         currentUserId={currentUserId}
+        currentUserOrisId={currentUserOrisId}
         selectedEvent={selectedEvent}
         runnerMode={runnerMode}
         addEventRunner={addEventRunner}
+        addEventRunnerOris={addEventRunnerOris}
         selectEventToDisplay={selectEventToDisplay}
         selectRunnerToDisplay={selectRunnerToDisplay}
       />
@@ -353,6 +360,7 @@ class EventViewList extends Component {
       // user,
       getEventList,
       // getEventListOris,
+      clearEventSearchField,
       setEventSearchField,
       setEventViewModeEvent,
       selectEventForDetails,
@@ -397,6 +405,7 @@ class EventViewList extends Component {
         <div className="eight wide column">
           <EventFilter
             searchField={searchField}
+            clearEventSearchField={clearEventSearchField}
             setEventSearchField={setEventSearchField}
             setEventViewModeEvent={setEventViewModeEvent}
             getEventList={getEventList}
@@ -436,6 +445,7 @@ const mapDispatchToProps = {
   createEvent: createEventAction,
   createEventLink: createEventLinkAction,
   addEventRunner: addEventRunnerAction,
+  addEventRunnerOris: addEventRunnerOrisAction,
   createEventOris: createEventOrisAction,
   getEventList: getEventListAction,
   getEventLinkList: getEventLinkListAction,
@@ -446,6 +456,7 @@ const mapDispatchToProps = {
   updateEventLink: updateEventLinkAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
+  clearEventSearchField: () => setEventSearchFieldAction(''),
   setEventSearchField: event => setEventSearchFieldAction(event.target.value),
   setEventViewModeEvent: setEventViewModeEventAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,

@@ -201,6 +201,22 @@ export const addEventRunnerAction = (eventId, callback) => async (dispatch) => {
     if (callback) callback(false);
   }
 };
+// app.post('/events/:eventid/oris', requireAuth, Events.orisAddEventRunner);
+// *** autopopulate fields from ORIS for current user then call addEventRunner ***
+export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/${eventId}/oris`, null, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    dispatch({ type: EVENT_RUNNER_ADDED, payload: response.data });
+    // console.log('callback', callback);
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // upload a scanned map to the specified event for user :userid
 // :maptype is either course or route

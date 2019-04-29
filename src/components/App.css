@@ -1,15 +1,35 @@
 /* settings for demo map component */
 .leaflet-container {
   height: 400px;
-  width: 800px;
+  width: 100%;
 }
-.maplabel {
-  color: red;
-  background-color: transparent;
+.event-map-box-tooltip {
+  background-color: white;
   border: none;
   box-shadow: none;
-  padding: 0;
+  color: blue;
+  padding: 5px;
+  text-align: center;
 }
+.event-map-flag-tooltip {
+  text-align: center;
+}
+
+/* settings for EventCourseMap */
+.course-map-container {
+  height: 600px;
+  width: 100%;
+  overflow: hidden;
+}
+.event-course-map-canvas {
+  overflow: hidden;
+  height: 550px;
+}
+.event-course-map-toolbar {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
 
 .event-runners-item .label {
   margin-right: 0.3em !important;
