@@ -160,8 +160,37 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_SELECT_MAP:
       // console.log('EVENT_SELECT_MAP payload:', action.payload);
       return { ...state, selectedMap: action.payload };
-    case EVENT_MAP_UPLOADED: // to do
-    case EVENT_MAP_DELETED: // to do
+    case EVENT_MAP_DELETED: // same as uploaded, refresh event details record
+    case EVENT_MAP_UPLOADED: {
+      console.log('EVENT_MAP_UPLOADED payload:', action.payload);
+      const { parameters, updatedEvent } = action.payload;
+      const {
+        eventId,
+        userId,
+        // mapType,
+        // mapTitle,
+      } = parameters;
+      const updatedEventDetails = state.details[eventId];
+      updatedEventDetails.locCornerNE = updatedEvent.locCornerNE;
+      updatedEventDetails.locCornerSW = updatedEvent.locCornerSW;
+      updatedEventDetails.locLat = updatedEvent.locLat;
+      updatedEventDetails.locLong = updatedEvent.locLong;
+      const updatedMaps = updatedEvent.runners.find(runner => runner.user === userId).maps;
+      updatedEventDetails.runners = state.details[eventId].runners.map((runner) => {
+        if (runner.user._id === userId) {
+          return { ...runner, maps: updatedMaps };
+        }
+        return runner;
+      });
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          [eventId]: updatedEventDetails,
+        },
+        errorMessage: '',
+      };
+    }
     case EVENT_UPDATED:
     case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
       // console.log('EVENT_UPDATED payload:', action.payload);

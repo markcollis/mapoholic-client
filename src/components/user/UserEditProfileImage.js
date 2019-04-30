@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 import FileDropzone from '../FileDropzone';
 
 class UserEditProfileImage extends Component {
@@ -14,7 +15,7 @@ class UserEditProfileImage extends Component {
     fileToUpload: null,
   };
 
-  onUploadSelected() {
+  onUploadSelected = () => {
     const { user, postProfileImage, hide } = this.props;
     const { _id: userId } = user;
     const { fileToUpload } = this.state;
@@ -31,32 +32,45 @@ class UserEditProfileImage extends Component {
       deleteProfileImage,
     } = this.props;
     const { _id: userId } = user;
+    const dropzoneIcon = <i className="image big icon" />;
+    const dropzoneText = (
+      <div>
+        <Trans>
+          Select your file (drag and drop or click to open file dialogue).
+          The file must be a JPEG or PNG image, maximum size 1MB.
+        </Trans>
+      </div>
+    );
     return (
       <div>
-        <h3 className="header">Add or change user profile image</h3>
+        <h3 className="header"><Trans>Add or change user profile image</Trans></h3>
         <div>
-          <FileDropzone onFileAdded={file => this.setState({ fileToUpload: file })} />
+          <FileDropzone
+            onFileAdded={file => this.setState({ fileToUpload: file })}
+            icon={dropzoneIcon}
+            text={dropzoneText}
+          />
         </div>
         <button
           type="button"
           className="ui tiny primary button"
           onClick={() => this.onUploadSelected()}
         >
-        Upload selected
+          <Trans>Upload selected</Trans>
         </button>
         <button
           type="button"
           className="ui tiny negative button"
           onClick={() => deleteProfileImage(userId)}
         >
-        Delete current
+          <Trans>Delete current</Trans>
         </button>
         <button
           type="button"
           className="ui right floated tiny button"
           onClick={() => hide()}
         >
-        Cancel
+          <Trans>Cancel</Trans>
         </button>
       </div>
     );

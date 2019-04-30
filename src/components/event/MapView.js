@@ -8,7 +8,7 @@ import EventRunners from './EventRunners';
 import EventRunnerDetails from './EventRunnerDetails';
 import EventRunnerEdit from './EventRunnerEdit';
 import EventRunnerDelete from './EventRunnerDelete';
-import EventCourseMap from './EventCourseMap';
+import EventMapViewer from './EventMapViewer';
 import EventDetails from './EventDetails';
 import EventEdit from './EventEdit';
 import EventDelete from './EventDelete';
@@ -28,11 +28,13 @@ import {
   createEventLinkAction,
   deleteEventAction,
   deleteEventLinkAction,
+  deleteMapAction,
   getClubListAction,
   getEventByIdAction,
   getEventLinkListAction,
   getEventListAction,
   getUserListAction,
+  postMapAction,
   selectEventForDetailsAction,
   selectEventToDisplayAction,
   selectMapToDisplayAction,
@@ -56,11 +58,13 @@ class MapView extends Component {
     createEventLink: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
+    deleteMap: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
+    postMap: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
     selectMapToDisplay: PropTypes.func.isRequired,
@@ -134,7 +138,7 @@ class MapView extends Component {
   });
 
   // render EventRunners component
-  renderEventRunners() {
+  renderEventRunners = () => {
     const {
       oevent,
       user,
@@ -163,7 +167,7 @@ class MapView extends Component {
   }
 
   // render EventRunnerDetails, EventRunnerEdit or EventRunnerDelete components as required
-  renderEventRunnerDetails() { // new, to do now
+  renderEventRunnerDetails = () => { // new, to do now
     const {
       oevent,
     } = this.props;
@@ -188,7 +192,7 @@ class MapView extends Component {
   }
 
   // render EventDetails, EventEdit or EventDelete components as required by eventMode
-  renderEventDetails() {
+  renderEventDetails = () => {
     const {
       club,
       config,
@@ -271,7 +275,7 @@ class MapView extends Component {
   }
 
   // render EventLinked components as required plus EventLinkedManage
-  renderLinkedEvents() {
+  renderLinkedEvents = () => {
     const {
       oevent,
       user,
@@ -337,7 +341,7 @@ class MapView extends Component {
   }
 
   // render EventComments component (self-contained with add/edit/delete)
-  renderEventComments() {
+  renderEventComments = () => {
     const {
       oevent,
     } = this.props;
@@ -355,11 +359,13 @@ class MapView extends Component {
     );
   }
 
-  // render EventCourseMap component (self-contained with add/replace/delete maps)
-  renderEventCourseMap() { // new
+  // render EventMapViewer component (self-contained with add/replace/delete maps)
+  renderEventMapViewer = () => { // new
     const {
       oevent,
       selectMapToDisplay,
+      postMap,
+      deleteMap,
     } = this.props;
     const {
       details,
@@ -369,18 +375,20 @@ class MapView extends Component {
     } = oevent;
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay);
     return (
-      <EventCourseMap
+      <EventMapViewer
         selectedEvent={selectedEvent}
         selectedRunner={selectedRunner}
         selectedMap={selectedMap}
         selectMapToDisplay={selectMapToDisplay}
+        postMap={postMap}
+        deleteMap={deleteMap}
       />
     );
   }
 
   // render EventResults component (self-contained with add/edit/delete)
   // *** consider whether add/edit might need wider screen? ***
-  renderEventResults() { // simple viewer done, not editable
+  renderEventResults = () => { // simple viewer done, not editable
     const {
       oevent,
     } = this.props;
@@ -398,7 +406,7 @@ class MapView extends Component {
     );
   }
 
-  renderError() {
+  renderError = () => {
     const { oevent, cancelEventError } = this.props;
     const { errorMessage } = oevent;
     if (!errorMessage) return null;
@@ -443,7 +451,7 @@ class MapView extends Component {
           {this.renderEventRunners()}
         </div>
         <div className="sixteen wide column">
-          {this.renderEventCourseMap()}
+          {this.renderEventMapViewer()}
         </div>
         <div className="eight wide column">
           {this.renderEventDetails()}
@@ -483,11 +491,13 @@ const mapDispatchToProps = {
   createEventLink: createEventLinkAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
+  deleteMap: deleteMapAction,
   getClubList: getClubListAction,
   getEventById: getEventByIdAction,
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getUserList: getUserListAction,
+  postMap: postMapAction,
   selectEventForDetails: selectEventForDetailsAction,
   selectEventToDisplay: selectEventToDisplayAction,
   selectMapToDisplay: selectMapToDisplayAction,

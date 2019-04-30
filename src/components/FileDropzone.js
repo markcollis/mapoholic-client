@@ -5,10 +5,14 @@ class FileDropzone extends Component {
   static propTypes = {
     onFileAdded: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
+    icon: PropTypes.objectOf(PropTypes.any),
+    text: PropTypes.objectOf(PropTypes.any),
   };
 
   static defaultProps = {
     disabled: false,
+    icon: null,
+    text: null,
   };
 
   state = {
@@ -16,23 +20,24 @@ class FileDropzone extends Component {
     currentFile: null,
   };
 
-  constructor(props) {
-    super(props);
-    this.fileRef = React.createRef();
-  }
+  fileRef = React.createRef();
 
+  // constructor(props) {
+  //   super(props);
+  //   this.fileRef = React.createRef();
+  // }
 
-  onDragOver(e) {
+  onDragOver = (e) => {
     const { disabled } = this.props;
     e.preventDefault();
     if (!disabled) this.setState({ highlighted: true });
   }
 
-  onDragLeave() {
+  onDragLeave = () => {
     this.setState({ highlighted: false });
   }
 
-  onDrop(e) {
+  onDrop = (e) => {
     const { disabled, onFileAdded } = this.props;
     e.preventDefault();
     if (!disabled) {
@@ -42,12 +47,12 @@ class FileDropzone extends Component {
     }
   }
 
-  openFileDialogue() {
+  openFileDialogue = () => {
     const { disabled } = this.props;
     if (!disabled) this.fileRef.current.click();
   }
 
-  handleFileAdded(e) {
+  handleFileAdded = (e) => {
     const { disabled, onFileAdded } = this.props;
     if (!disabled) {
       const file = e.target.files[0];
@@ -58,7 +63,7 @@ class FileDropzone extends Component {
   }
 
   render() {
-    const { disabled } = this.props;
+    const { disabled, icon, text } = this.props;
     const { highlighted, currentFile } = this.state;
     return (
       <div
@@ -82,11 +87,8 @@ class FileDropzone extends Component {
           ? <img src={URL.createObjectURL(currentFile)} alt="preview" />
           : (
             <div>
-              <i className="image big icon" />
-              <div>
-              Select your file (drag and drop or click to open file dialogue).
-              The file must be a JPEG or PNG image, maximum size 1MB.
-              </div>
+              {icon}
+              {text}
             </div>
           )
         }

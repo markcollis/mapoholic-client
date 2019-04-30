@@ -32,6 +32,7 @@ import {
   EVENT_SELECT_MAP,
 } from './types';
 import { OMAPFOLDER_SERVER } from '../config';
+/* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
 
 // Local Actions
 // change event view mode (events)
@@ -224,7 +225,48 @@ export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch) 
 // app.post('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?', requireAuth,
 //   Events.validateMapUploadPermission, images.uploadMap.single('upload'),
 //   Events.postMap, images.errorHandler);
-
+export const postMapAction = (parameters, file, callback) => async (dispatch) => {
+  console.log('postMapAction called.');
+  console.log('file submitted:', file);
+  const {
+    eventId,
+    userId,
+    mapType,
+    mapTitle,
+  } = parameters;
+  try {
+    const validMapType = (mapType === 'course') || (mapType === 'route');
+    if (!eventId || !userId || !validMapType) throw new Error('invalid parameters');
+    // const now = new Date();
+    // console.log('now', now.getTime());
+    const formData = new FormData();
+    formData.append('upload', file, file.name);
+    // console.log('formData:', formData);
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.post(
+      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : null}`,
+      formData,
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+          'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+        },
+      },
+    );
+    console.log('response:', response.data);
+    dispatch({
+      type: EVENT_MAP_UPLOADED,
+      payload: {
+        parameters,
+        updatedEvent: response.data,
+      },
+    });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // Post a new comment against the specified user's map in this event
 // app.post('/events/:eventid/comments/:userid', requireAuth, Events.postComment);
@@ -419,7 +461,38 @@ export const deleteEventAction = (eventId, callback) => async (dispatch) => {
 // delete the specified map (multiple deletion not supported)
 // app.delete('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?',
 // requireAuth, Events.deleteMap);
-
+export const deleteMapAction = (parameters, callback) => async (dispatch) => {
+  console.log('deleteMapAction called.');
+  const {
+    eventId,
+    userId,
+    mapType,
+    mapTitle,
+  } = parameters;
+  try {
+    const validMapType = (mapType === 'course') || (mapType === 'route');
+    if (!eventId || !userId || !validMapType) throw new Error('invalid parameters');
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.delete(
+      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : null}`,
+      {
+        headers: { Authorization: `bearer ${token}` },
+      },
+    );
+    // console.log('response:', response.data);
+    dispatch({
+      type: EVENT_MAP_DELETED,
+      payload: {
+        parameters,
+        updatedEvent: response.data,
+      },
+    });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // delete the specified link between events (multiple deletion not supported)
 // NOTE: not expected to be used except for administrative tidying - the normal
@@ -443,159 +516,3 @@ export const deleteEventLinkAction = (eventLinkId, callback) => async (dispatch)
 // delete the specified comment (multiple deletion not supported)
 // app.delete('/events/:eventid/comments/:userid/:commentid', requireAuth, Events.deleteComment);
 // NOT DONE YET
-
-// // upload profile image for specified user
-// // app.post('/users/:id/profileImage', requireAuth, Users.validateProfileImagePermission,
-// // images.uploadImage.single('upload'), Users.postProfileImage, images.errorHandler);
-// export const postProfileImageAction = (userId, file, callback) => async (dispatch) => {
-//   console.log('postProfileImageAction called.');
-//   console.log('file submitted:', file);
-//   try {
-//     const now = new Date();
-//     console.log('now', now.getTime());
-//     const formData = new FormData();
-//     formData.append('upload', file, file.name);
-//     console.log('formData:', formData);
-//     const token = localStorage.getItem('omapfolder-auth-token');
-//     const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`,
-// formData, {
-//       headers: {
-//         Authorization: `bearer ${token}`,
-//         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-//       },
-//     });
-//     console.log('response:', response.data);
-//     dispatch({
-//       type: USER_POSTED_IMAGE,
-//       payload: {
-//         userId,
-//         profileImage: `${response.data}?${now.getTime()}`,
-//       },
-//     });
-//     if (callback) callback(true);
-//   } catch (err) {
-//     handleError(USER_ERROR)(err, dispatch);
-//     if (callback) callback(false);
-//   }
-// };
-//
-//
-// // delete profile image of the specified user
-// // app.delete('/users/:id/profileImage', requireAuth, Users.deleteProfileImage)
-// export const deleteProfileImageAction = (userId, callback) => async (dispatch) => {
-//   console.log('deleteProfileImageAction called.');
-//   try {
-//     const token = localStorage.getItem('omapfolder-auth-token');
-//     const response = await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, {
-//       headers: { Authorization: `bearer ${token}` },
-//     });
-//     console.log('response:', response.data);
-//     dispatch({ type: USER_DELETED_IMAGE, payload: userId });
-//     if (callback) callback(true);
-//   } catch (err) {
-//     handleError(USER_ERROR)(err, dispatch);
-//     if (callback) callback(false);
-//   }
-// };
-//
-//
-//
-//
-// // get a list of users that are members of the specified club
-// export const getClubMembersAction = (clubId, callback) => async (dispatch) => {
-//   if (!clubId) {
-//     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
-//   } else {
-//     const queryString = toQueryString({ memberOf: clubId });
-//     // console.log('getClubMembersAction called.');
-//     try {
-//       const token = localStorage.getItem('omapfolder-auth-token');
-//       // console.log('token:', token);
-//       let response;
-//       if (token) {
-//         response = await axios.get(`${OMAPFOLDER_SERVER}/users${queryString}`, {
-//           headers: { Authorization: `bearer ${token}` },
-//         });
-//       } else {
-//         response = await axios.get(`${OMAPFOLDER_SERVER}/users/public${queryString}`);
-//       }
-//       dispatch({
-//         type: CLUB_GOT_MEMBERS,
-//         payload: {
-//           clubId,
-//           memberList: response.data,
-//         },
-//       });
-//       if (callback) callback(true);
-//     } catch (err) {
-//       handleError(CLUB_ERROR)(err, dispatch);
-//       if (callback) callback(false);
-//     }
-//   }
-// };
-//
-// // get a list of events organised by the specified club
-// export const getClubEventsAction = (clubId, callback) => async (dispatch) => {
-//   if (!clubId) {
-//     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
-//   } else {
-//     const queryString = toQueryString({ organisedBy: clubId });
-//     // console.log('getClubEventsAction called.');
-//     try {
-//       const token = localStorage.getItem('omapfolder-auth-token');
-//       // console.log('token:', token);
-//       let response;
-//       if (token) {
-//         response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
-//           headers: { Authorization: `bearer ${token}` },
-//         });
-//       } else {
-//         response = await axios.get(`${OMAPFOLDER_SERVER}/events/public${queryString}`);
-//       }
-//       dispatch({
-//         type: CLUB_GOT_EVENTS,
-//         payload: {
-//           clubId,
-//           eventList: response.data,
-//         },
-//       });
-//       if (callback) callback(true);
-//     } catch (err) {
-//       handleError(CLUB_ERROR)(err, dispatch);
-//       if (callback) callback(false);
-//     }
-//   }
-// };
-//
-// // update the specified club (multiple amendment not supported)
-// // try to populate ORIS if abbreviation changes and looks Czech
-// // app.patch('/clubs/:id', requireAuth, Clubs.updateClub);
-// export const updateClubAction = (clubId, formValues, callback) => async (dispatch) => {
-//   try {
-//     const token = localStorage.getItem('omapfolder-auth-token');
-//     const response = await axios.patch(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, formValues, {
-//       headers: { Authorization: `bearer ${token}` },
-//     });
-//     dispatch({ type: CLUB_UPDATED, payload: response.data });
-//     if (callback) callback(true);
-//   } catch (err) {
-//     handleError(CLUB_ERROR)(err, dispatch);
-//     if (callback) callback(false);
-//   }
-// };
-//
-// // delete the specified club (multiple deletion not supported)
-// // app.delete('/clubs/:id', requireAuth, Clubs.deleteClub);
-// export const deleteClubAction = (clubId, callback) => async (dispatch) => {
-//   try {
-//     const token = localStorage.getItem('omapfolder-auth-token');
-//     const response = await axios.delete(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, {
-//       headers: { Authorization: `bearer ${token}` },
-//     });
-//     dispatch({ type: CLUB_DELETED, payload: response.data });
-//     if (callback) callback(true);
-//   } catch (err) {
-//     handleError(CLUB_ERROR)(err, dispatch);
-//     if (callback) callback(false);
-//   }
-// };

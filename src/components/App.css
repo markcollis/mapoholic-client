@@ -22,12 +22,13 @@
   overflow: hidden;
 }
 .event-course-map-canvas {
+  margin-top: 5px;
   overflow: hidden;
-  height: 550px;
+  height: 555px;
 }
 .event-course-map-toolbar {
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 
@@ -88,7 +89,7 @@
   flex-direction: column;
   justify-content: center;
   margin: 1em;
-  padding: 2em;
+  padding: 1.5em;
   text-align: center;
 }
 .filedropzone input {
