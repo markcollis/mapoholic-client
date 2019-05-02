@@ -1,0 +1,42 @@
+{
+  "Select your file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 1MB.": {
+    "origin": [
+      [
+        "src/components/user/UserEditProfileImage.js",
+        38
+      ]
+    ]
+  },
+  "Add or change user profile image": {
+    "origin": [
+      [
+        "src/components/user/UserEditProfileImage.js",
+        46
+      ]
+    ]
+  },
+  "Upload selected": {
+    "origin": [
+      [
+        "src/components/user/UserEditProfileImage.js",
+        59
+      ]
+    ]
+  },
+  "Delete current": {
+    "origin": [
+      [
+        "src/components/user/UserEditProfileImage.js",
+        66
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/user/UserEditProfileImage.js",
+        73
+      ]
+    ]
+  }
+}

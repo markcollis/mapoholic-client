@@ -1,0 +1,10 @@
+{
+  "Select an event on the map to show further details here": {
+    "origin": [
+      [
+        "src/components/event/EventViewMap.js",
+        221
+      ]
+    ]
+  }
+}

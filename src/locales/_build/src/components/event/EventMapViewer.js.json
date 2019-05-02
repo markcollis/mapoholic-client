@@ -1,0 +1,34 @@
+{
+  "Return to map view": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewer.js",
+        156
+      ]
+    ]
+  },
+  "Add or Delete maps": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewer.js",
+        157
+      ]
+    ]
+  },
+  "no maps found": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewer.js",
+        193
+      ]
+    ]
+  },
+  "Map Viewer": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewer.js",
+        225
+      ]
+    ]
+  }
+}

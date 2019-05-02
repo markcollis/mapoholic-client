@@ -10,6 +10,7 @@ class EventMapViewerEdit extends Component {
     eventId: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
     mapTitle: PropTypes.string,
+    mapTitleList: PropTypes.arrayOf(PropTypes.string),
     courseImg: PropTypes.string,
     routeImg: PropTypes.string,
     postMap: PropTypes.func.isRequired,
@@ -19,6 +20,7 @@ class EventMapViewerEdit extends Component {
 
   static defaultProps = {
     mapTitle: null,
+    mapTitleList: [],
     courseImg: null,
     routeImg: null,
   };
@@ -45,15 +47,11 @@ class EventMapViewerEdit extends Component {
     const {
       eventId,
       userId,
-      // mapId,
-      // courseImg,
-      // routeImg,
       postMap,
-      // mapImageArray,
       updateMapImageArray,
     } = this.props;
-    console.log('upload course map');
-    const { courseMapToUpload, mapTitleToUpload } = this.state;
+    // console.log('upload course map');
+    const { courseMapToUpload, mapTitleToUpload, mapTitleEditable } = this.state;
     if (courseMapToUpload) {
       const parameters = {
         eventId,
@@ -64,43 +62,89 @@ class EventMapViewerEdit extends Component {
       postMap(parameters, courseMapToUpload, (successful) => {
         if (successful) {
           updateMapImageArray();
-          this.setState({ changesMade: true });
-          console.log('course map upload successful');
+          this.setState({ changesMade: true, courseMapToUpload: null });
+          if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
+          // console.log('course map upload successful');
         } else {
-          console.log('course map upload failed');
+          // console.log('course map upload failed');
         }
       });
     }
   }
 
-  onDeleteCourseMap = () => {
-    console.log('delete course map');
+  onDeleteMap = (mapType) => {
+    const {
+      eventId,
+      userId,
+      deleteMap,
+      courseImg,
+      routeImg,
+      updateMapImageArray,
+    } = this.props;
+    // console.log(`delete ${mapType} map`);
+    const { mapTitleToUpload } = this.state;
+    const parameters = {
+      eventId,
+      userId,
+      mapType,
+      mapTitle: mapTitleToUpload,
+    };
+    const willUnmount = (mapType === 'course' && !routeImg)
+      || (mapType === 'route' && !courseImg);
+    deleteMap(parameters, (successful) => {
+      if (successful) {
+        updateMapImageArray();
+        if (!willUnmount) this.setState({ changesMade: true });
+        // console.log(`${mapType} map delete successful`);
+      } else {
+        // console.log(`${mapType} map delete failed`);
+      }
+    });
   }
 
   onUploadRouteMap = () => {
-    console.log('upload route map');
-  }
-
-  onDeleteRouteMap = () => {
-    console.log('delete route map');
+    const {
+      eventId,
+      userId,
+      postMap,
+      updateMapImageArray,
+    } = this.props;
+    // console.log('upload route map');
+    const { routeMapToUpload, mapTitleToUpload, mapTitleEditable } = this.state;
+    if (routeMapToUpload) {
+      const parameters = {
+        eventId,
+        userId,
+        mapType: 'route',
+        mapTitle: mapTitleToUpload,
+      };
+      postMap(parameters, routeMapToUpload, (successful) => {
+        if (successful) {
+          updateMapImageArray();
+          this.setState({ changesMade: true, routeMapToUpload: null });
+          if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
+          // console.log('route map upload successful');
+        } else {
+          // console.log('route map upload failed');
+        }
+      });
+    }
   }
 
   render() {
-    console.log('props in EventMapViewerEdit:', this.props);
-    console.log('state in EventMapViewerEdit:', this.state);
+    // console.log('props in EventMapViewerEdit:', this.props);
+    // console.log('state in EventMapViewerEdit:', this.state);
     const {
-    //   eventId,
-    //   userId,
-    //   mapTitle,
+      mapTitleList,
       courseImg,
       routeImg,
-    //   postMap,
-    //   deleteMap,
-    //   updateMapImageArray,
     } = this.props;
     const { mapTitleToUpload, mapTitleEditable, changesMade } = this.state;
+    const mapTitleIsDuplicate = (mapTitleEditable && mapTitleList.includes(mapTitleToUpload));
     const now = new Date();
     const srcSuffix = (changesMade) ? `?${now.getTime()}` : ''; // to force reload on change
+    // edge case - not applied if a map is completely deleted then one of the same name added
+    // from the default empty component
     const courseThumbnail = (courseImg)
       ? courseImg.slice(0, -4).concat('-thumb').concat(courseImg.slice(-4))
       : null;
@@ -123,11 +167,10 @@ class EventMapViewerEdit extends Component {
           <Trans>no map yet</Trans>
         </div>
       );
-    // console.log('courseThumbnail:', courseThumbnail);
     const renderMapTitle = (mapTitleEditable)
       ? (
         <div className="ui form">
-          <div className="field four wide">
+          <div className={(mapTitleIsDuplicate) ? 'field four wide error' : 'field four wide'}>
             <label htmlFor="title">
               <Trans>Map title</Trans>
               <I18n>
@@ -143,6 +186,9 @@ class EventMapViewerEdit extends Component {
                 )}
               </I18n>
             </label>
+            {(mapTitleIsDuplicate)
+              ? <div className="ui negative message"><Trans>Duplicate map title</Trans></div>
+              : null}
           </div>
         </div>
       )
@@ -184,7 +230,7 @@ class EventMapViewerEdit extends Component {
             <div className="column three wide">
               <button
                 type="button"
-                className="ui tiny primary button fluid"
+                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
                 onClick={() => this.onUploadCourseMap()}
               >
                 <Trans>Upload selected</Trans>
@@ -192,8 +238,8 @@ class EventMapViewerEdit extends Component {
               <p />
               <button
                 type="button"
-                className="ui tiny negative button fluid"
-                onClick={() => this.onDeleteCourseMap()}
+                className={`ui tiny negative button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+                onClick={() => this.onDeleteMap('course')}
               >
                 <Trans>Delete current</Trans>
               </button>
@@ -214,7 +260,7 @@ class EventMapViewerEdit extends Component {
             <div className="column three wide">
               <button
                 type="button"
-                className="ui tiny primary button fluid"
+                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
                 onClick={() => this.onUploadRouteMap()}
               >
                 <Trans>Upload selected</Trans>
@@ -222,8 +268,8 @@ class EventMapViewerEdit extends Component {
               <p />
               <button
                 type="button"
-                className="ui tiny negative button fluid"
-                onClick={() => this.onDeleteRouteMap()}
+                className={`ui tiny negative button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+                onClick={() => this.onDeleteMap('route')}
               >
                 <Trans>Delete current</Trans>
               </button>
@@ -236,69 +282,3 @@ class EventMapViewerEdit extends Component {
 }
 
 export default EventMapViewerEdit;
-
-// <div className="ui three column grid">
-//   <div className="column four wide">
-//     <div className="ui field">
-//       <label htmlFor="title">
-//         <Trans>Map title</Trans>
-//         <I18n>
-//           {({ i18n }) => (
-//             <input
-//               name="title"
-//               type="text"
-//               placeholder={i18n._(t`Title for map (e.g. "Part 1")`)}
-//               autoComplete="off"
-//               value={mapTitleToUpload}
-//               onChange={e => this.setState({ mapTitleToUpload: e.target.value })}
-//             />
-//           )}
-//         </I18n>
-//       </label>
-//     </div>
-//   </div>
-//   <div className="column six wide">
-//     <img src={`${OMAPFOLDER_SERVER}/${courseThumbnail}`} alt="course thumbnail" />
-//     <FileDropzone
-//       onFileAdded={file => this.setState({ courseMapToUpload: file })}
-//       icon={dropzoneIcon}
-//       text={dropzoneTextCourse}
-//     />
-//     <button
-//       type="button"
-//       className="ui tiny primary button"
-//       onClick={() => this.onUploadCourseMap()}
-//     >
-//       <Trans>Upload selected</Trans>
-//     </button>
-//     <button
-//       type="button"
-//       className="ui tiny negative button right floated"
-//       onClick={() => this.onDeleteCourseMap()}
-//     >
-//       <Trans>Delete current</Trans>
-//     </button>
-//   </div>
-//   <div className="column six wide">
-//     <img src={`${OMAPFOLDER_SERVER}/${routeThumbnail}`} alt="route thumbnail" />
-//     <FileDropzone
-//       onFileAdded={file => this.setState({ routeMapToUpload: file })}
-//       icon={dropzoneIcon}
-//       text={dropzoneTextRoute}
-//     />
-//     <button
-//       type="button"
-//       className="ui tiny primary button"
-//       onClick={() => this.onUploadRouteMap()}
-//     >
-//       <Trans>Upload selected</Trans>
-//     </button>
-//     <button
-//       type="button"
-//       className="ui tiny negative button"
-//       onClick={() => this.onDeleteRouteMap()}
-//     >
-//       <Trans>Delete current</Trans>
-//     </button>
-//   </div>
-// </div>

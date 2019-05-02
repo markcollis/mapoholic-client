@@ -3,11 +3,11 @@
     "origin": [
       [
         "src/components/Header.js",
-        77
+        71
       ],
       [
         "src/components/Header.js",
-        91
+        85
       ]
     ]
   },
@@ -15,11 +15,11 @@
     "origin": [
       [
         "src/components/Header.js",
-        80
+        74
       ],
       [
         "src/components/Header.js",
-        94
+        88
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        106
+        102
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        109
+        107
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        112
+        110
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        115
+        113
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        118
+        116
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        123
+        121
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        138
+        136
       ]
     ]
   },
@@ -83,7 +83,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        142
+        140
       ]
     ]
   },
@@ -91,7 +91,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        145
+        143
       ]
     ]
   }

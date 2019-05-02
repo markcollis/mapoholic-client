@@ -1,0 +1,18 @@
+{
+  "Sorry, there are no results to display.": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        71
+      ]
+    ]
+  },
+  "Results": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        72
+      ]
+    ]
+  }
+}

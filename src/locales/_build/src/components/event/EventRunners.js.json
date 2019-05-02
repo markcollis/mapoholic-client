@@ -1,0 +1,18 @@
+{
+  "Add yourself as a runner": {
+    "origin": [
+      [
+        "src/components/event/EventRunners.js",
+        67
+      ]
+    ]
+  },
+  "Runners at event": {
+    "origin": [
+      [
+        "src/components/event/EventRunners.js",
+        70
+      ]
+    ]
+  }
+}

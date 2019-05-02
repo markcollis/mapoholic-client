@@ -1,0 +1,10 @@
+{
+  "Sorry, no event is selected.": {
+    "origin": [
+      [
+        "src/components/event/MapView.js",
+        229
+      ]
+    ]
+  }
+}

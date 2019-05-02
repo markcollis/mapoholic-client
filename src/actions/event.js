@@ -244,7 +244,7 @@ export const postMapAction = (parameters, file, callback) => async (dispatch) =>
     // console.log('formData:', formData);
     const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(
-      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : null}`,
+      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
       formData,
       {
         headers: {
@@ -474,12 +474,12 @@ export const deleteMapAction = (parameters, callback) => async (dispatch) => {
     if (!eventId || !userId || !validMapType) throw new Error('invalid parameters');
     const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(
-      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : null}`,
+      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
       {
         headers: { Authorization: `bearer ${token}` },
       },
     );
-    // console.log('response:', response.data);
+    console.log('response:', response.data);
     dispatch({
       type: EVENT_MAP_DELETED,
       payload: {

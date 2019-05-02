@@ -35,9 +35,7 @@ class EventMapViewer extends Component {
   }
 
   componentDidMount() {
-    // console.log('this.mapRef in componentDidMount:', this.mapRef);
     this.setState({
-      // mapContainer: this.mapRef.current,
       mapContainerWidth: this.mapRef.current.offsetWidth,
       mapContainerHeight: this.mapRef.current.offsetHeight,
     });
@@ -80,7 +78,7 @@ class EventMapViewer extends Component {
     const hasMaps = runnerData && runnerData.maps.length > 0;
     const now = new Date();
     const srcSuffix = (update) ? `?${now.getTime()}` : ''; // to force reload on change
-    let hasVisible = false;
+    let hasVisibleMap = false;
     const mapImages = (hasMaps)
       ? runnerData.maps.map((map) => {
         const {
@@ -89,8 +87,6 @@ class EventMapViewer extends Component {
           course,
           route,
         } = map;
-        const isVisible = (selectedMap === mapId.toString());
-        hasVisible = hasVisible || isVisible;
         const defaultPreferType = 'Course'; // consider making a config option later?
         const hasCourseMap = (course && course !== '');
         const hasRouteMap = (route && route !== '');
@@ -101,6 +97,8 @@ class EventMapViewer extends Component {
             empty: true,
           };
         }
+        const isVisibleMap = (selectedMap === mapId.toString());
+        hasVisibleMap = hasVisibleMap || isVisibleMap;
         const preferType = ((defaultPreferType === 'Course' && hasCourseMap)
           || (defaultPreferType === 'Route' && !hasRouteMap)) ? 'Course' : 'Route';
         return {
@@ -115,19 +113,14 @@ class EventMapViewer extends Component {
         };
       })
       : [];
-    if (hasMaps && !hasVisible && !update) {
+    if (hasMaps && !hasVisibleMap) {
       selectMapToDisplay(mapImages[0].mapId);
     }
-    console.log('new mapImageArray:', mapImages);
+    // console.log('new mapImageArray:', mapImages);
     this.setState({ mapImageArray: mapImages });
   }
 
-  // updateMapImageArray = (newMapImageArray) => { // for children to use
-  //   this.setState({ mapImageArray: newMapImageArray });
-  // }
-
   handleSelectMapImage = (mapId) => {
-    // console.log('mapId in handleSelectMapImage:', mapId);
     const { selectMapToDisplay } = this.props;
     selectMapToDisplay(mapId);
   }
@@ -149,6 +142,7 @@ class EventMapViewer extends Component {
       deleteMap,
     } = this.props;
     const hasMaps = (mapImageArray.length > 0);
+    const mapTitleList = (hasMaps) ? mapImageArray.map(mapImage => mapImage.title) : [];
 
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>
@@ -165,12 +159,10 @@ class EventMapViewer extends Component {
       </button>
     );
 
-    const renderTabs = (hasMaps)
+    const renderTabs = (mapImageArray.length > 1)
       ? mapImageArray.map((mapImage) => {
         const { mapId, title } = mapImage;
-        const visible = (selectedMap === mapId && !showMapViewerDetails);
-        // console.log('selected, mapId:', selectedMap, mapId);
-        // console.log('visible:', visible);
+        const visible = (selectedMap === mapId);
         return (
           <div
             key={mapId}
@@ -184,6 +176,9 @@ class EventMapViewer extends Component {
           </div>
         );
       })
+      : null;
+    const renderTabsOrNoMaps = (hasMaps)
+      ? renderTabs
       : <div className="item"><Trans>no maps found</Trans></div>;
     const renderMaps = (hasMaps)
       ? mapImageArray.map((mapImage) => {
@@ -205,29 +200,19 @@ class EventMapViewer extends Component {
         <EventMapViewerDetails
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
+          mapTitleList={mapTitleList}
           postMap={postMap}
           deleteMap={deleteMap}
           updateMapImageArray={() => this.createMapImageArray(true)}
         />
       </div>
     );
-    // const renderMapViewerDetails = (showMapViewerDetails)
-    //   ? (
-    //     <EventMapViewerDetails
-    //       selectedEvent={selectedEvent}
-    //       selectedRunner={selectedRunner}
-    //       postMap={postMap}
-    //       deleteMap={deleteMap}
-    //       updateMapImageArray={() => this.createMapImageArray(true)}
-    //     />
-    //   )
-    //   : null;
-
+    const showMapContainer = (mapContainerHeight > 0 && (showMapViewerDetails || !hasMaps));
     return (
       <div className="ui segment">
         <div className="ui top attached tabular menu">
           <div className="item"><h3><Trans>Map Viewer</Trans></h3></div>
-          {renderTabs}
+          {renderTabsOrNoMaps}
           <div className="right menu">
             <div className="item">
               {renderAddDeleteButton}
@@ -237,7 +222,7 @@ class EventMapViewer extends Component {
         <div
           className="course-map-container"
           ref={this.mapRef}
-          style={(mapContainerHeight > 0 && showMapViewerDetails) ? { display: 'none' } : {}}
+          style={(showMapContainer) ? { display: 'none' } : {}}
         >
           {renderMaps}
         </div>

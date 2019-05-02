@@ -168,7 +168,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         eventId,
         userId,
         // mapType,
-        // mapTitle,
+        mapTitle,
       } = parameters;
       const updatedEventDetails = state.details[eventId];
       updatedEventDetails.locCornerNE = updatedEvent.locCornerNE;
@@ -176,6 +176,9 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       updatedEventDetails.locLat = updatedEvent.locLat;
       updatedEventDetails.locLong = updatedEvent.locLong;
       const updatedMaps = updatedEvent.runners.find(runner => runner.user === userId).maps;
+      const updatedMap = updatedMaps.find(map => map.title === mapTitle);
+      const updatedMapId = (updatedMap) ? updatedMap._id : '';
+      // const updatedMapId = updatedMaps.find(map => map.title === mapTitle)._id;
       updatedEventDetails.runners = state.details[eventId].runners.map((runner) => {
         if (runner.user._id === userId) {
           return { ...runner, maps: updatedMaps };
@@ -188,6 +191,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
           ...state.details,
           [eventId]: updatedEventDetails,
         },
+        selectedMap: updatedMapId,
         errorMessage: '',
       };
     }

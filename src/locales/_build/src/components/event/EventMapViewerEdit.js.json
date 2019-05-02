@@ -1,0 +1,94 @@
+{
+  "no map yet": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        180
+      ],
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        191
+      ]
+    ]
+  },
+  "Map title": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        200
+      ]
+    ]
+  },
+  "Title for map (e.g. \"Part 1\")": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        206
+      ]
+    ]
+  },
+  "Duplicate map title": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        215
+      ]
+    ]
+  },
+  "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB.": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        224
+      ]
+    ]
+  },
+  "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB.": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        232
+      ]
+    ]
+  },
+  "Course": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        244
+      ]
+    ]
+  },
+  "Upload selected": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        261
+      ],
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        291
+      ]
+    ]
+  },
+  "Delete current": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        269
+      ],
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        299
+      ]
+    ]
+  },
+  "Route": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        274
+      ]
+    ]
+  }
+}

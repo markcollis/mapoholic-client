@@ -1,0 +1,26 @@
+{
+  "Sorry, there are no maps to display.": {
+    "origin": [
+      [
+        "src/components/event/EventCourseMap.js",
+        538
+      ]
+    ]
+  },
+  "Map Viewer": {
+    "origin": [
+      [
+        "src/components/event/EventCourseMap.js",
+        546
+      ]
+    ]
+  },
+  "Add or Delete maps": {
+    "origin": [
+      [
+        "src/components/event/EventCourseMap.js",
+        567
+      ]
+    ]
+  }
+}

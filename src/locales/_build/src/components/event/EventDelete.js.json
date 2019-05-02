@@ -1,5 +1,5 @@
 {
-  "Delete Event": {
+  "Delete Event: {name} ({date})": {
     "origin": [
       [
         "src/components/event/EventDelete.js",
@@ -15,7 +15,7 @@
       ]
     ]
   },
-  "Delete {name} ({date})?": {
+  "Delete Event?": {
     "origin": [
       [
         "src/components/event/EventDelete.js",

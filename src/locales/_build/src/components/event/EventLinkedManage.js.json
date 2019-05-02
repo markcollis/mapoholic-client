@@ -1,0 +1,42 @@
+{
+  "Add a new link between events": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedManage.js",
+        35
+      ]
+    ]
+  },
+  "Manage linked events": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedManage.js",
+        39
+      ]
+    ]
+  },
+  "Add new event link": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedManage.js",
+        40
+      ]
+    ]
+  },
+  "Edit event link": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedManage.js",
+        41
+      ]
+    ]
+  },
+  "Delete event link": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedManage.js",
+        42
+      ]
+    ]
+  }
+}
