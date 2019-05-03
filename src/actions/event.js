@@ -24,7 +24,6 @@ import {
   EVENT_CHANGE_VIEW_EVENT,
   EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_CHANGE_VIEW_COURSE_MAP,
   EVENT_CHANGE_VIEW_COMMENT,
   EVENT_SELECT_EVENT_DETAILS,
   EVENT_SELECT_EVENT_DISPLAY,
@@ -44,7 +43,7 @@ export const setEventViewModeEventAction = (mode) => {
       payload: mode,
     });
   }
-  console.log('Warning: Invalid event/event view mode! There\'s a typo somewhere', mode);
+  // console.log('Warning: Invalid event/event view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // change event view mode (event link)
@@ -56,7 +55,7 @@ export const setEventViewModeEventLinkAction = (mode, target = '') => {
       payload: { mode, target },
     });
   }
-  console.log('Warning: Invalid event link view mode! There\'s a typo somewhere', mode);
+  // console.log('Warning: Invalid event link view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // change event view mode (runner)
@@ -68,19 +67,7 @@ export const setEventViewModeRunnerAction = (mode) => {
       payload: mode,
     });
   }
-  console.log('Warning: Invalid event/runner view mode! There\'s a typo somewhere', mode);
-  return null;
-};
-// change event view mode (coursemap)
-export const setEventViewModeCourseMapAction = (mode) => {
-  const validModes = ['view', 'edit'];
-  if (validModes.includes(mode)) {
-    return ({
-      type: EVENT_CHANGE_VIEW_COURSE_MAP,
-      payload: mode,
-    });
-  }
-  console.log('Warning: Invalid event/coursemap view mode! There\'s a typo somewhere', mode);
+  // console.log('Warning: Invalid event/runner view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // change event view mode (comment)
@@ -92,7 +79,7 @@ export const setEventViewModeCommentAction = (mode) => {
       payload: mode,
     });
   }
-  console.log('Warning: Invalid event/comment view mode! There\'s a typo somewhere', mode);
+  // console.log('Warning: Invalid event/comment view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // track changes to the event search field
@@ -221,13 +208,13 @@ export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch) 
 
 // upload a scanned map to the specified event for user :userid
 // :maptype is either course or route
-// :maptitle is the label to use for each part of multi-part maps (optional, default 'map')
+// :maptitle is the label to use for each part of multi-part maps (optional, default '')
 // app.post('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?', requireAuth,
 //   Events.validateMapUploadPermission, images.uploadMap.single('upload'),
 //   Events.postMap, images.errorHandler);
 export const postMapAction = (parameters, file, callback) => async (dispatch) => {
-  console.log('postMapAction called.');
-  console.log('file submitted:', file);
+  // console.log('postMapAction called.');
+  // console.log('file submitted:', file);
   const {
     eventId,
     userId,
@@ -253,7 +240,7 @@ export const postMapAction = (parameters, file, callback) => async (dispatch) =>
         },
       },
     );
-    console.log('response:', response.data);
+    // console.log('response:', response.data);
     dispatch({
       type: EVENT_MAP_UPLOADED,
       payload: {
@@ -462,7 +449,7 @@ export const deleteEventAction = (eventId, callback) => async (dispatch) => {
 // app.delete('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?',
 // requireAuth, Events.deleteMap);
 export const deleteMapAction = (parameters, callback) => async (dispatch) => {
-  console.log('deleteMapAction called.');
+  // console.log('deleteMapAction called.');
   const {
     eventId,
     userId,
@@ -479,7 +466,7 @@ export const deleteMapAction = (parameters, callback) => async (dispatch) => {
         headers: { Authorization: `bearer ${token}` },
       },
     );
-    console.log('response:', response.data);
+    // console.log('response:', response.data);
     dispatch({
       type: EVENT_MAP_DELETED,
       payload: {

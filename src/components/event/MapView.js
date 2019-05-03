@@ -19,9 +19,7 @@ import EventResults from './EventResults';
 
 import {
   // setEventViewModeCommentAction,
-  // setEventViewModeCourseMapAction,
   // setEventViewModeRunnerAction,
-  // updateEventRunnerAction,
   addEventRunnerAction,
   addEventRunnerOrisAction,
   cancelEventErrorAction,
@@ -43,6 +41,7 @@ import {
   setEventViewModeEventLinkAction,
   updateEventAction,
   updateEventLinkAction,
+  updateEventRunnerAction,
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
@@ -73,6 +72,7 @@ class MapView extends Component {
     setEventViewModeEventLink: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
+    updateEventRunner: PropTypes.func.isRequired,
   }
 
   // get summary data from API if not already available
@@ -360,12 +360,13 @@ class MapView extends Component {
   }
 
   // render EventMapViewer component (self-contained with add/replace/delete maps)
-  renderEventMapViewer = () => { // new
+  renderEventMapViewer = () => {
     const {
       oevent,
       selectMapToDisplay,
       postMap,
       deleteMap,
+      updateEventRunner,
     } = this.props;
     const {
       details,
@@ -373,7 +374,9 @@ class MapView extends Component {
       selectedRunner,
       selectedMap,
     } = oevent;
+
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay);
+
     return (
       <EventMapViewer
         selectedEvent={selectedEvent}
@@ -382,13 +385,14 @@ class MapView extends Component {
         selectMapToDisplay={selectMapToDisplay}
         postMap={postMap}
         deleteMap={deleteMap}
+        updateEventRunner={updateEventRunner}
       />
     );
   }
 
   // render EventResults component (self-contained with add/edit/delete)
   // *** consider whether add/edit might need wider screen? ***
-  renderEventResults = () => { // simple viewer done, not editable
+  renderEventResults = () => { // simple viewer done, not editable yet
     const {
       oevent,
     } = this.props;
@@ -480,11 +484,8 @@ const mapStateToProps = ({
   };
 };
 const mapDispatchToProps = {
-  // selectMapToDisplay: selectMapToDisplayAction,
   // setEventViewModeComment: setEventViewModeCommentAction,
-  // setEventViewModeCourseMap: setEventViewModeCourseMapAction,
   // setEventViewModeRunner: setEventViewModeRunnerAction,
-  // updateEventRunner: updateEventRunnerAction,
   addEventRunner: addEventRunnerAction,
   addEventRunnerOris: addEventRunnerOrisAction,
   cancelEventError: cancelEventErrorAction,
@@ -506,6 +507,7 @@ const mapDispatchToProps = {
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,
+  updateEventRunner: updateEventRunnerAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapView);

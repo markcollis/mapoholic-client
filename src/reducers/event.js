@@ -23,7 +23,6 @@ import {
   EVENT_CHANGE_VIEW_EVENT,
   EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_CHANGE_VIEW_COURSE_MAP,
   EVENT_CHANGE_VIEW_COMMENT,
   EVENT_SELECT_EVENT_DETAILS,
   EVENT_SELECT_EVENT_DISPLAY,
@@ -37,7 +36,6 @@ const INITIAL_STATE = {
   eventMode: 'none', // none, view, add, edit, delete
   eventLinkMode: 'view', // view, add, edit, delete
   runnerMode: 'view', // view, edit, delete
-  courseMapMode: 'view', // view, edit [add/delete functions included in edit]
   commentMode: 'view', // view, add, edit, delete
   list: null, // replaced each time API is queried, also populates corresponding details
   linkList: null, // replaced each time API is queried
@@ -142,9 +140,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_CHANGE_VIEW_RUNNER:
       // console.log('EVENT_CHANGE_VIEW_RUNNER payload:', action.payload);
       return { ...state, runnerMode: action.payload };
-    case EVENT_CHANGE_VIEW_COURSE_MAP:
-      // console.log('EVENT_CHANGE_VIEW_COURSE_MAP payload:', action.payload);
-      return { ...state, courseMapMode: action.payload };
     case EVENT_CHANGE_VIEW_COMMENT:
       // console.log('EVENT_CHANGE_VIEW_COMMENT payload:', action.payload);
       return { ...state, commentMode: action.payload };
@@ -162,7 +157,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       return { ...state, selectedMap: action.payload };
     case EVENT_MAP_DELETED: // same as uploaded, refresh event details record
     case EVENT_MAP_UPLOADED: {
-      console.log('EVENT_MAP_UPLOADED payload:', action.payload);
+      // console.log('EVENT_MAP_UPLOADED payload:', action.payload);
       const { parameters, updatedEvent } = action.payload;
       const {
         eventId,
@@ -197,7 +192,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     }
     case EVENT_UPDATED:
     case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
-      // console.log('EVENT_UPDATED payload:', action.payload);
+      console.log('EVENT_(RUNNER_)UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },

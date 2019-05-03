@@ -14,6 +14,7 @@ class EventMapViewer extends Component {
     selectMapToDisplay: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
+    updateEventRunner: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -22,17 +23,24 @@ class EventMapViewer extends Component {
     selectedMap: '',
   };
 
-  constructor(props) {
-    super(props);
-    this.mapRef = React.createRef();
-    this.state = {
-      // mapContainer: null,
-      mapContainerWidth: null,
-      mapContainerHeight: null,
-      mapImageArray: [],
-      showMapViewerDetails: false,
-    };
-  }
+  mapRef = React.createRef();
+
+  state = {
+    mapContainerWidth: null,
+    mapContainerHeight: null,
+    mapImageArray: [],
+    showMapViewerDetails: false,
+  };
+  // constructor(props) {
+  //   super(props);
+  //   this.mapRef = React.createRef();
+  //   this.state = {
+  //     mapContainerWidth: null,
+  //     mapContainerHeight: null,
+  //     mapImageArray: [],
+  //     showMapViewerDetails: false,
+  //   };
+  // }
 
   componentDidMount() {
     this.setState({
@@ -57,7 +65,7 @@ class EventMapViewer extends Component {
 
   handleResize = () => {
     const { showMapViewerDetails } = this.state;
-    if (!showMapViewerDetails) { // i.e. only when map container is visible!
+    if (!showMapViewerDetails) { // i.e. only when map container is visible
       this.setState({
         mapContainerWidth: this.mapRef.current.offsetWidth,
         mapContainerHeight: this.mapRef.current.offsetHeight,
@@ -126,8 +134,8 @@ class EventMapViewer extends Component {
   }
 
   render() {
-    console.log('this.props in render:', this.props);
-    console.log('this.state in render:', this.state);
+    console.log('this.props in EventMapViewer:', this.props);
+    console.log('this.state in EventMapViewer:', this.state);
     const {
       mapImageArray,
       showMapViewerDetails,
@@ -140,6 +148,7 @@ class EventMapViewer extends Component {
       selectedMap,
       postMap,
       deleteMap,
+      updateEventRunner,
     } = this.props;
     const hasMaps = (mapImageArray.length > 0);
     const mapTitleList = (hasMaps) ? mapImageArray.map(mapImage => mapImage.title) : [];
@@ -158,7 +167,6 @@ class EventMapViewer extends Component {
         {addDeleteTitle}
       </button>
     );
-
     const renderTabs = (mapImageArray.length > 1)
       ? mapImageArray.map((mapImage) => {
         const { mapId, title } = mapImage;
@@ -172,7 +180,7 @@ class EventMapViewer extends Component {
             onKeyPress={() => this.handleSelectMapImage(mapId)}
             tabIndex="0"
           >
-            {title}
+            {(title === '') ? 'untitled' : title}
           </div>
         );
       })
@@ -197,6 +205,7 @@ class EventMapViewer extends Component {
       : null;
     const renderMapViewerDetails = (
       <div style={(showMapViewerDetails) ? {} : { display: 'none' }}>
+        <p />
         <EventMapViewerDetails
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
@@ -204,6 +213,7 @@ class EventMapViewer extends Component {
           postMap={postMap}
           deleteMap={deleteMap}
           updateMapImageArray={() => this.createMapImageArray(true)}
+          updateEventRunner={updateEventRunner}
         />
       </div>
     );

@@ -11,6 +11,7 @@ const EventMapViewerDetails = ({
   postMap,
   deleteMap,
   updateMapImageArray,
+  updateEventRunner,
 }) => {
   const eventId = selectedEvent._id;
   const selectedRunnerMaps = (eventId)
@@ -30,12 +31,14 @@ const EventMapViewerDetails = ({
         key={title}
         eventId={eventId}
         userId={selectedRunner}
+        selectedRunnerMaps={selectedRunnerMaps}
         mapTitle={title}
         courseImg={course}
         routeImg={route}
         postMap={postMap}
         deleteMap={deleteMap}
         updateMapImageArray={updateMapImageArray}
+        updateEventRunner={updateEventRunner}
       />
     );
   });
@@ -68,6 +71,7 @@ EventMapViewerDetails.propTypes = {
   postMap: PropTypes.func.isRequired,
   deleteMap: PropTypes.func.isRequired,
   updateMapImageArray: PropTypes.func.isRequired,
+  updateEventRunner: PropTypes.func.isRequired,
 };
 EventMapViewerDetails.defaultProps = {
   mapTitleList: [],

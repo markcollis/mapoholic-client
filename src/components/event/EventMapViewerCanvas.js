@@ -20,7 +20,8 @@ class EventMapViewerCanvas extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { // detailed view state held locally, reset when component remounted
+      // could handle centrally in redux state, need to decide if this is important or not?
       activeType: '', // Course or Route
       width: 0,
       height: 0,
@@ -28,8 +29,8 @@ class EventMapViewerCanvas extends Component {
       left: null,
       rotate: 0,
       scale: 1,
-      imageWidth: 0,
-      imageHeight: 0,
+      // imageWidth: 0,
+      // imageHeight: 0,
       isLoading: false,
       mouseDownZoomIn: false,
       mouseDownZoomOut: false,
@@ -82,8 +83,8 @@ class EventMapViewerCanvas extends Component {
       left,
       top,
       centre: { x: left + width / 2, y: top + height / 2 },
-      imageWidth,
-      imageHeight,
+      // imageWidth,
+      // imageHeight,
       isLoading: false,
       rotate: 0,
       scale: 1,
@@ -101,8 +102,8 @@ class EventMapViewerCanvas extends Component {
       this.setState({
         activeType: '',
         isLoading: false,
-        imageWidth: 0,
-        imageHeight: 0,
+        // imageWidth: 0,
+        // imageHeight: 0,
       });
     } else {
       const activeType = type || mapImage.preferType;
@@ -121,8 +122,8 @@ class EventMapViewerCanvas extends Component {
           this.setState({
             activeType,
             isLoading: false,
-            imageWidth: 0,
-            imageHeight: 0,
+            // imageWidth: 0,
+            // imageHeight: 0,
           });
         };
       });
@@ -172,15 +173,6 @@ class EventMapViewerCanvas extends Component {
       y: top + height / 2,
     };
   };
-
-  // handleZoom = (change) => {
-  //   // const imageCentre = this.getImageCentre();
-  //   console.log('change:', change);
-  //   // console.log('imageCentre:', imageCentre);
-  //   const { scale } = this.state;
-  //   const newScale = scale * change;
-  //   this.setState({ scale: newScale });
-  // }
 
   rotate = () => {
     const {
@@ -234,19 +226,6 @@ class EventMapViewerCanvas extends Component {
     this.setState({ mouseDownRotateRight: false });
     this.rotateTrigger();
   }
-
-  // zoomIn = () => { // could improve by tracking centre of view
-  //   const { mouseDownZoomIn, scale, zoomScaleFactor } = this.state;
-  //   if (mouseDownZoomIn) {
-  //     this.setState({ scale: scale * zoomScaleFactor }, () => {
-  //       window.requestAnimationFrame(this.zoomIn);
-  //     });
-  //   }
-  // }
-
-  // zoomInTrigger = () => {
-  //   window.requestAnimationFrame(this.zoomIn);
-  // }
 
   zoom = () => { // could improve by tracking centre of view
     const {
@@ -305,19 +284,6 @@ class EventMapViewerCanvas extends Component {
     this.setState({ mouseDownZoomIn: false });
     this.zoomTrigger();
   }
-
-  // zoomOut = () => {
-  //   const { mouseDownZoomOut, scale, zoomScaleFactor } = this.state;
-  //   if (mouseDownZoomOut) {
-  //     this.setState({ scale: scale / zoomScaleFactor }, () => {
-  //       window.requestAnimationFrame(this.zoomOut);
-  //     });
-  //   }
-  // }
-
-  // zoomOutTrigger = () => {
-  //   window.requestAnimationFrame(this.zoomOut);
-  // }
 
   handleMouseDownZoomOut = () => {
     this.setState({
@@ -451,9 +417,7 @@ class EventMapViewerCanvas extends Component {
             imageSrc={mapImage[`src${activeType}`]}
             imageAlt={mapImage[`alt${activeType}`]}
             isLoading={isLoading}
-            // onResizeWindow={this.handleResizeWindow}
             onChangeImageState={this.handleChangeImageState}
-            // onCanvasMouseDown={() => {}}
           />
           {actionsToolbar}
         </div>
@@ -461,9 +425,6 @@ class EventMapViewerCanvas extends Component {
       : (
         <p><Trans>Sorry, there are no maps to display.</Trans></p>
       );
-    // const title = <Trans>Course Map</Trans>;
-    // <h3 className="header"><Trans>Course Map</Trans></h3>
-    // <p>{`There are ${mapImageArray.length} maps to display (${mapTitlesList}).`}</p>
     return (
       <div>
         {mapsToDisplay}

@@ -10,19 +10,21 @@ class EventMapViewerEdit extends Component {
     eventId: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
     mapTitle: PropTypes.string,
-    mapTitleList: PropTypes.arrayOf(PropTypes.string),
+    selectedRunnerMaps: PropTypes.arrayOf(PropTypes.object),
     courseImg: PropTypes.string,
     routeImg: PropTypes.string,
     postMap: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
     updateMapImageArray: PropTypes.func.isRequired,
+    updateEventRunner: PropTypes.func,
   };
 
   static defaultProps = {
     mapTitle: null,
-    mapTitleList: [],
+    selectedRunnerMaps: [],
     courseImg: null,
     routeImg: null,
+    updateEventRunner: () => {},
   };
 
   state = {
@@ -131,16 +133,56 @@ class EventMapViewerEdit extends Component {
     }
   }
 
+  onEditTitle = () => {
+    const { mapTitleEditable, mapTitleToUpload } = this.state;
+    if (!mapTitleEditable) this.setState({ mapTitleEditable: true });
+    const {
+      mapTitle,
+      eventId,
+      userId,
+      selectedRunnerMaps,
+      updateEventRunner,
+    } = this.props;
+    if (mapTitleEditable && (mapTitleToUpload !== mapTitle)) {
+      const newMaps = selectedRunnerMaps.map((map) => {
+        const newMap = map;
+        if (map.title === mapTitle) newMap.title = mapTitleToUpload;
+        return newMap;
+      });
+      console.log('newMaps', newMaps);
+      updateEventRunner(eventId, userId, { maps: newMaps }, (successful) => {
+        if (successful) {
+          console.log('successfully updated title');
+          // this.setState({ mapTitleEditable: false }); // no need, will unmount!
+        } else {
+          console.log('update failed');
+        }
+      });
+    }
+  }
+
+  onCancelEditTitle = () => {
+    const { mapTitle } = this.props;
+    this.setState({
+      mapTitleEditable: false,
+      mapTitleToUpload: mapTitle,
+    });
+  }
+
   render() {
     // console.log('props in EventMapViewerEdit:', this.props);
     // console.log('state in EventMapViewerEdit:', this.state);
     const {
-      mapTitleList,
+      mapTitle,
+      // mapTitleList,
+      selectedRunnerMaps,
       courseImg,
       routeImg,
     } = this.props;
     const { mapTitleToUpload, mapTitleEditable, changesMade } = this.state;
-    const mapTitleIsDuplicate = (mapTitleEditable && mapTitleList.includes(mapTitleToUpload));
+    const mapTitlesInUse = selectedRunnerMaps.map(map => map.title);
+    const mapTitleIsDuplicate = (mapTitleEditable && (mapTitleToUpload !== mapTitle)
+      && mapTitlesInUse.includes(mapTitleToUpload));
     const now = new Date();
     const srcSuffix = (changesMade) ? `?${now.getTime()}` : ''; // to force reload on change
     // edge case - not applied if a map is completely deleted then one of the same name added
@@ -170,7 +212,7 @@ class EventMapViewerEdit extends Component {
     const renderMapTitle = (mapTitleEditable)
       ? (
         <div className="ui form">
-          <div className={(mapTitleIsDuplicate) ? 'field four wide error' : 'field four wide'}>
+          <div className={(mapTitleIsDuplicate) ? 'field error' : 'field'}>
             <label htmlFor="title">
               <Trans>Map title</Trans>
               <I18n>
@@ -193,6 +235,35 @@ class EventMapViewerEdit extends Component {
         </div>
       )
       : <h4>{mapTitleToUpload}</h4>;
+    const editTitleButtonText = (mapTitleEditable)
+      ? <Trans>Confirm change</Trans>
+      : <Trans>Change title</Trans>;
+    const renderEditTitleButton = (mapTitle)
+      ? (
+        <button
+          className={`ui tiny button primary fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+          type="button"
+          onClick={() => this.onEditTitle()}
+        >
+          {editTitleButtonText}
+        </button>
+      )
+      : null;
+    const renderCancelEditTitleButton = (mapTitle && mapTitleEditable)
+      ? (
+        <div>
+          <p />
+          <button
+            className="ui tiny button fluid"
+            type="button"
+            onClick={() => this.onCancelEditTitle()}
+          >
+            <Trans>Cancel</Trans>
+          </button>
+        </div>
+      )
+      : null;
+
     const dropzoneIcon = <i className="image big icon" />;
     const dropzoneTextCourse = (
       <div>
@@ -213,8 +284,17 @@ class EventMapViewerEdit extends Component {
     return (
       <div>
         <hr className="divider" />
-        {renderMapTitle}
         <div className="ui four column grid middle aligned">
+          <div className="row">
+            <div className="column six wide">
+              {renderMapTitle}
+            </div>
+            <div className="column seven wide" />
+            <div className="column three wide">
+              {renderEditTitleButton}
+              {renderCancelEditTitleButton}
+            </div>
+          </div>
           <div className="row">
             <div className="column two wide"><Trans>Course</Trans></div>
             <div className="column four wide">
