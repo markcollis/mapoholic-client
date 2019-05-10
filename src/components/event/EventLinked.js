@@ -1,49 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 import Collapse from '../Collapse';
 import EventLinkedItem from './EventLinkedItem';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventLinked = ({
-  isAdmin,
   canEdit,
-  selectedEvent,
-  link,
   eventLinkMode,
+  isAdmin,
+  link,
   linkDetails,
+  selectedEvent,
   selectEventForDetails,
   setEventViewModeEvent,
   setEventViewModeEventLink,
 }) => {
+  // console.log('linkDetails:', linkDetails);
   const { _id: linkId, displayName } = link;
   const { _id: eventId } = selectedEvent;
-  // console.log('selectedEvent:', selectedEvent);
-  // console.log('linkId:', linkId);
-  if (!selectedEvent._id) return null;
+  if (!eventId) return null;
   if (!linkId) {
     return (
       <div className="ui segment">
-        <h3 className="header">Linked events</h3>
-        <p>This event is not currently linked to any others.</p>
+        <h3 className="header"><Trans>Linked events</Trans></h3>
+        <p><Trans>This event is not currently linked to any others.</Trans></p>
       </div>
     );
   }
   if (!linkDetails[linkId]) {
     return (
-      <div className="ui warning message">{`Event link details not found for ${linkId}`}</div>
+      <div className="ui warning message">
+        <Trans>{`Event link details not found for ${linkId}`}</Trans>
+      </div>
     );
   }
-  // console.log('includes', linkListDetails[linkId].includes);
-  const linkedEventArray = [...linkDetails[linkId].includes].map((linkedEvent) => {
+  const sortedLinkedEventArray = [...linkDetails[linkId].includes].sort((a, b) => {
+    if (a.date < b.date) return 1;
+    if (a.date > b.date) return -1;
+    return 0;
+  });
+  const linkedEventArrayToDisplay = sortedLinkedEventArray.map((linkedEvent) => {
     // console.log('linkedEvent in array generator:', linkedEvent);
+    const { _id: linkedEventId } = linkedEvent;
+    if (!linkedEventId) return null;
     return (
       <EventLinkedItem
-        key={linkedEvent._id}
+        key={linkedEventId}
         eventId={eventId}
         linkedEvent={linkedEvent}
+        selectEventForDetails={selectEventForDetails}
         setEventViewModeEvent={setEventViewModeEvent}
         setEventViewModeEventLink={setEventViewModeEventLink}
-        selectEventForDetails={selectEventForDetails}
       />
     );
   });
@@ -55,9 +62,9 @@ const EventLinked = ({
         className={(eventLinkMode === 'delete')
           ? 'ui red tiny button right floated disabled'
           : 'ui red tiny button right floated'}
-        onClick={() => setEventViewModeEventLink('delete')}
+        onClick={() => setEventViewModeEventLink('delete', linkId)}
       >
-      Delete link
+        <Trans>Delete link</Trans>
       </button>
     )
     : null;
@@ -71,19 +78,20 @@ const EventLinked = ({
           className={(eventLinkMode === 'edit')
             ? 'ui primary tiny button disabled'
             : 'ui primary tiny button'}
-          onClick={() => setEventViewModeEventLink('edit')}
+          onClick={() => setEventViewModeEventLink('edit', linkId)}
         >
-          Edit link details
+          <Trans>Edit link details</Trans>
         </button>
       </div>
     )
     : null;
+  const title = <Trans>{`Linked events: ${displayName}`}</Trans>;
 
   return (
     <div className="ui segment">
-      <Collapse title={`Linked events: ${displayName}`}>
+      <Collapse title={title}>
         <div className="ui link cards card-list">
-          {linkedEventArray}
+          {linkedEventArrayToDisplay}
         </div>
         {showEdit}
       </Collapse>
@@ -92,23 +100,23 @@ const EventLinked = ({
 };
 
 EventLinked.propTypes = {
-  isAdmin: PropTypes.bool,
   canEdit: PropTypes.bool,
   eventLinkMode: PropTypes.string,
-  selectedEvent: PropTypes.objectOf(PropTypes.any),
+  isAdmin: PropTypes.bool,
   link: PropTypes.objectOf(PropTypes.any),
   linkDetails: PropTypes.objectOf(PropTypes.any),
+  selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectEventForDetails: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
   setEventViewModeEventLink: PropTypes.func.isRequired,
 };
 EventLinked.defaultProps = {
-  isAdmin: false,
   canEdit: false,
   eventLinkMode: 'view',
-  selectedEvent: {},
+  isAdmin: false,
   link: {},
   linkDetails: {},
+  selectedEvent: {},
 };
 
 export default EventLinked;

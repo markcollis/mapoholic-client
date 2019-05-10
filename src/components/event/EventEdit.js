@@ -17,12 +17,11 @@ registerLocale('cs', cs);
 registerLocale('en', enGB);
 
 /* eslint no-underscore-dangle: 0 */
-// 00100300
 
 // createEventOris={createEventOris}
 // getEventListOris={getEventListOris}
 
-// renders form to submit credentials either for login or creating account
+// renders form to either create or edit an event record
 class EventEdit extends Component {
   static propTypes = {
     touched: PropTypes.objectOf(PropTypes.any).isRequired,

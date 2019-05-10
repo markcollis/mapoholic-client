@@ -1,0 +1,34 @@
+{
+  "Are you sure you want to delete \"{displayName}\"?": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedDelete.js",
+        28
+      ]
+    ]
+  },
+  "It links the following events:": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedDelete.js",
+        29
+      ]
+    ]
+  },
+  "Delete": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedDelete.js",
+        50
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedDelete.js",
+        57
+      ]
+    ]
+  }
+}

@@ -49,8 +49,9 @@ class ClubView extends Component {
   }
 
   componentDidMount() {
-    const { club, getClubList } = this.props;
+    const { club, getClubList, user } = this.props;
     if (!club.list) getClubList();
+    console.log('user:', user);
   }
 
   // show extra details if a club member is selected

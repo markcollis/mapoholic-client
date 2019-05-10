@@ -3,7 +3,23 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        35
+        156
+      ]
+    ]
+  },
+  "Hide event link list": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedManage.js",
+        167
+      ]
+    ]
+  },
+  "Show event link list": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedManage.js",
+        168
       ]
     ]
   },
@@ -11,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        39
+        190
       ]
     ]
   },
@@ -19,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        40
+        191
       ]
     ]
   },
@@ -27,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        41
+        192
       ]
     ]
   },
@@ -35,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        42
+        193
       ]
     ]
   }

@@ -5,21 +5,17 @@ import EventMapViewerEdit from './EventMapViewerEdit';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 const EventMapViewerDetails = ({
+  deleteMap,
+  postMap,
   selectedEvent,
   selectedRunner,
-  mapTitleList,
-  postMap,
-  deleteMap,
-  updateMapImageArray,
   updateEventRunner,
+  updateMapImageArray,
 }) => {
   const eventId = selectedEvent._id;
   const selectedRunnerMaps = (eventId)
     ? selectedEvent.runners.find(runner => runner.user._id === selectedRunner).maps
     : [];
-  // console.log('selectedEvent in EventMapViewerDetails:', selectedEvent);
-  // console.log('selectedRunner in EventMapViewerDetails:', selectedRunner);
-  // console.log('selectedRunnerMaps in EventMapViewerDetails:', selectedRunnerMaps);
   const mapViewerEditArray = selectedRunnerMaps.map((map) => {
     const {
       title,
@@ -29,16 +25,16 @@ const EventMapViewerDetails = ({
     return (
       <EventMapViewerEdit
         key={title}
-        eventId={eventId}
-        userId={selectedRunner}
-        selectedRunnerMaps={selectedRunnerMaps}
-        mapTitle={title}
         courseImg={course}
-        routeImg={route}
-        postMap={postMap}
         deleteMap={deleteMap}
-        updateMapImageArray={updateMapImageArray}
+        eventId={eventId}
+        mapTitle={title}
+        postMap={postMap}
+        routeImg={route}
+        selectedRunnerMaps={selectedRunnerMaps}
         updateEventRunner={updateEventRunner}
+        updateMapImageArray={updateMapImageArray}
+        userId={selectedRunner}
       />
     );
   });
@@ -46,12 +42,11 @@ const EventMapViewerDetails = ({
     mapViewerEditArray.push(
       <EventMapViewerEdit
         key="newMapToBeAdded"
-        eventId={eventId}
-        userId={selectedRunner}
-        mapTitleList={mapTitleList}
-        postMap={postMap}
         deleteMap={deleteMap}
+        eventId={eventId}
+        postMap={postMap}
         updateMapImageArray={updateMapImageArray}
+        userId={selectedRunner}
       />,
     );
   }
@@ -65,16 +60,12 @@ const EventMapViewerDetails = ({
 };
 
 EventMapViewerDetails.propTypes = {
+  deleteMap: PropTypes.func.isRequired,
+  postMap: PropTypes.func.isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedRunner: PropTypes.string.isRequired,
-  mapTitleList: PropTypes.arrayOf(PropTypes.string),
-  postMap: PropTypes.func.isRequired,
-  deleteMap: PropTypes.func.isRequired,
-  updateMapImageArray: PropTypes.func.isRequired,
   updateEventRunner: PropTypes.func.isRequired,
-};
-EventMapViewerDetails.defaultProps = {
-  mapTitleList: [],
+  updateMapImageArray: PropTypes.func.isRequired,
 };
 
 export default EventMapViewerDetails;

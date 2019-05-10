@@ -15,7 +15,7 @@ import {
   EVENT_LINK_UPDATED,
   // EVENT_COMMENT_UPDATED, // not yet implemented
   EVENT_DELETED,
-  // EVENT_RUNNER_DELETED, // not yet implemented
+  EVENT_RUNNER_DELETED, // not yet implemented on back end
   EVENT_MAP_DELETED,
   EVENT_LINK_DELETED,
   // EVENT_COMMENT_DELETED, // not yet implemented
@@ -48,7 +48,7 @@ export const setEventViewModeEventAction = (mode) => {
 };
 // change event view mode (event link)
 export const setEventViewModeEventLinkAction = (mode, target = '') => {
-  const validModes = ['view', 'add', 'edit', 'delete'];
+  const validModes = ['none', 'view', 'add', 'edit', 'delete'];
   if (validModes.includes(mode)) {
     return ({
       type: EVENT_CHANGE_VIEW_EVENT_LINK,
@@ -443,7 +443,20 @@ export const deleteEventAction = (eventId, callback) => async (dispatch) => {
 
 // delete the specified runner and map data (multiple deletion not supported)
 // app.delete('/events/:eventid/maps/:userid', requireAuth, Events.deleteEventRunner);
-// NOT DONE YET
+// NOT DONE YET - placeholder on front end
+export const deleteEventRunnerAction = (eventId, userId, callback) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}`, {
+      headers: { Authorization: `bearer ${token}` },
+    });
+    dispatch({ type: EVENT_RUNNER_DELETED, payload: response.data });
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // delete the specified map (multiple deletion not supported)
 // app.delete('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?',

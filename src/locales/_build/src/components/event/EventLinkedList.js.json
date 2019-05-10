@@ -1,0 +1,34 @@
+{
+  "Sorry, no event links found.": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedList.js",
+        11
+      ]
+    ]
+  },
+  "{eventCount, plural, one {# event} other {# events}}": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedList.js",
+        16
+      ]
+    ]
+  },
+  "Delete": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedList.js",
+        42
+      ]
+    ]
+  },
+  "Edit": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedList.js",
+        49
+      ]
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "Linked events": {
+    "origin": [
+      [
+        "src/components/event/EventLinked.js",
+        24
+      ]
+    ]
+  },
+  "This event is not currently linked to any others.": {
+    "origin": [
+      [
+        "src/components/event/EventLinked.js",
+        25
+      ]
+    ]
+  },
+  "Event link details not found for {linkId}": {
+    "origin": [
+      [
+        "src/components/event/EventLinked.js",
+        32
+      ]
+    ]
+  },
+  "Delete link": {
+    "origin": [
+      [
+        "src/components/event/EventLinked.js",
+        61
+      ]
+    ]
+  },
+  "Edit link details": {
+    "origin": [
+      [
+        "src/components/event/EventLinked.js",
+        77
+      ]
+    ]
+  },
+  "Linked events: {displayName}": {
+    "origin": [
+      [
+        "src/components/event/EventLinked.js",
+        82
+      ]
+    ]
+  }
+}

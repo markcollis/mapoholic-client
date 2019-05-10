@@ -38,7 +38,7 @@ const EventRunners = ({
     });
 
   const useOrisToAdd = orisId && orisId !== '' && currentUserOrisId && currentUserOrisId !== '';
-  const renderEventRunnerAdd = (isCurrentRunner)
+  const renderEventRunnerAdd = (isCurrentRunner || !currentUserId)
     ? null
     : (
       <button

@@ -4,7 +4,8 @@ import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 import Collapse from '../Collapse';
 
-const eventFilter = ({
+const EventFilter = ({
+  currentUser,
   searchField,
   clearEventSearchField,
   setEventSearchField,
@@ -40,23 +41,28 @@ const eventFilter = ({
           <button type="button" className="ui tiny button" onClick={() => getEventList()}>
             <Trans>Refresh list</Trans>
           </button>
-          <button
-            type="button"
-            className="ui tiny right floated button"
-            onClick={() => {
-              selectEventForDetails('');
-              setEventViewModeEvent('add');
-            }}
-          >
-            <Trans>Add new event</Trans>
-          </button>
+          {(currentUser)
+            ? (
+              <button
+                type="button"
+                className="ui tiny right floated button"
+                onClick={() => {
+                  selectEventForDetails('');
+                  setEventViewModeEvent('add');
+                }}
+              >
+                <Trans>Add new event</Trans>
+              </button>
+            )
+            : null}
         </Collapse>
       </div>
     </div>
   );
 };
 
-eventFilter.propTypes = {
+EventFilter.propTypes = {
+  currentUser: PropTypes.objectOf(PropTypes.any),
   searchField: PropTypes.string.isRequired,
   clearEventSearchField: PropTypes.func.isRequired,
   setEventSearchField: PropTypes.func.isRequired,
@@ -64,5 +70,8 @@ eventFilter.propTypes = {
   selectEventForDetails: PropTypes.func.isRequired,
   getEventList: PropTypes.func.isRequired,
 };
+EventFilter.defaultProps = {
+  currentUser: null,
+};
 
-export default eventFilter;
+export default EventFilter;

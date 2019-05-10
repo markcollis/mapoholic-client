@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/event/EventLinkedManage.js:35
+#: src/components/event/EventLinkedManage.js:156
 msgid "Add a new link between events"
 msgstr "Add a new link between events"
 
@@ -21,16 +21,15 @@ msgstr "Add a new link between events"
 msgid "Add new event"
 msgstr "Add new event"
 
-#: src/components/event/EventLinkedManage.js:40
+#: src/components/event/EventLinkedManage.js:191
 msgid "Add new event link"
 msgstr "Add new event link"
 
-#: src/components/event/EventCourseMap.js:567
-#: src/components/event/EventMapViewer.js:157
+#: src/components/event/EventMapViewer.js:154
 msgid "Add or Delete maps"
 msgstr "Add or Delete maps"
 
-#: src/components/event/EventMapViewerDetails.js:58
+#: src/components/event/EventMapViewerDetails.js:56
 msgid "Add or change maps"
 msgstr "Add or change maps"
 
@@ -42,25 +41,36 @@ msgstr "Add or change user profile image"
 msgid "Add yourself as a runner"
 msgstr "Add yourself as a runner"
 
-#: src/components/event/EventEdit.js:406
+#: src/components/event/EventEdit.js:405
 msgid "Address of event website"
 msgstr "Address of event website"
+
+#: src/components/event/EventLinkedDelete.js:28
+msgid "Are you sure you want to delete \"{displayName}\"?"
+msgstr "Are you sure you want to delete \"{displayName}\"?"
 
 #: src/components/Header.js:136
 msgid "Browse Public Maps"
 msgstr "Browse Public Maps"
 
 #: src/components/event/EventDelete.js:50
-#: src/components/event/EventEdit.js:504
+#: src/components/event/EventEdit.js:503
+#: src/components/event/EventLinkedDelete.js:57
+#: src/components/event/EventLinkedEdit.js:113
+#: src/components/event/EventMapViewerEdit.js:279
 #: src/components/user/UserEditProfileImage.js:73
 msgid "Cancel"
 msgstr "Cancel"
+
+#: src/components/event/EventMapViewerEdit.js:258
+msgid "Change title"
+msgstr "Change title"
 
 #: src/components/Header.js:116
 msgid "Clubs"
 msgstr "Clubs"
 
-#: src/components/event/EventEdit.js:436
+#: src/components/event/EventEdit.js:435
 msgid "Clubs that event is organised by"
 msgstr "Clubs that event is organised by"
 
@@ -68,23 +78,28 @@ msgstr "Clubs that event is organised by"
 msgid "Comments"
 msgstr "Comments"
 
-#: src/components/event/EventEdit.js:275
+#: src/components/event/EventMapViewerEdit.js:257
+msgid "Confirm change"
+msgstr "Confirm change"
+
+#: src/components/event/EventEdit.js:274
 msgid "Country"
 msgstr "Country"
 
-#: src/components/event/EventMapViewerEdit.js:244
+#: src/components/event/EventMapViewerEdit.js:317
 msgid "Course"
 msgstr "Course"
 
-#: src/components/event/EventEdit.js:159
+#: src/components/event/EventEdit.js:158
+#: src/components/event/EventLinkedEdit.js:50
 msgid "Create"
 msgstr "Create"
 
-#: src/components/event/EventEdit.js:513
+#: src/components/event/EventEdit.js:512
 msgid "Create Event"
 msgstr "Create Event"
 
-#: src/components/event/EventEdit.js:186
+#: src/components/event/EventEdit.js:185
 msgid "Create event using ORIS data"
 msgstr "Create event using ORIS data"
 
@@ -96,9 +111,14 @@ msgstr "Created: {0}"
 msgid "Current Map"
 msgstr "Current Map"
 
-#: src/components/event/EventEdit.js:215
+#: src/components/event/EventEdit.js:214
 msgid "Date"
 msgstr "Date"
+
+#: src/components/event/EventLinkedDelete.js:50
+#: src/components/event/EventLinkedList.js:42
+msgid "Delete"
+msgstr "Delete"
 
 #: src/components/event/EventDelete.js:19
 #~ msgid "Delete Event"
@@ -112,8 +132,8 @@ msgstr "Delete Event: {name} ({date})"
 msgid "Delete Event?"
 msgstr "Delete Event?"
 
-#: src/components/event/EventMapViewerEdit.js:269
-#: src/components/event/EventMapViewerEdit.js:299
+#: src/components/event/EventMapViewerEdit.js:343
+#: src/components/event/EventMapViewerEdit.js:374
 #: src/components/user/UserEditProfileImage.js:66
 msgid "Delete current"
 msgstr "Delete current"
@@ -122,19 +142,27 @@ msgstr "Delete current"
 msgid "Delete event"
 msgstr "Delete event"
 
-#: src/components/event/EventLinkedManage.js:42
+#: src/components/event/EventLinkedManage.js:193
 msgid "Delete event link"
 msgstr "Delete event link"
+
+#: src/components/event/EventLinked.js:61
+msgid "Delete link"
+msgstr "Delete link"
 
 #: src/components/event/EventDelete.js:43
 #~ msgid "Delete {name} ({date})?"
 #~ msgstr "Delete {name} ({date})?"
 
-#: src/components/event/EventMapViewerEdit.js:215
+#: src/components/event/EventMapViewerEdit.js:250
 msgid "Duplicate map title"
 msgstr "Duplicate map title"
 
-#: src/components/event/EventEdit.js:514
+#: src/components/event/EventLinkedList.js:49
+msgid "Edit"
+msgstr "Edit"
+
+#: src/components/event/EventEdit.js:513
 msgid "Edit Event Details"
 msgstr "Edit Event Details"
 
@@ -142,11 +170,15 @@ msgstr "Edit Event Details"
 msgid "Edit event details"
 msgstr "Edit event details"
 
-#: src/components/event/EventLinkedManage.js:41
+#: src/components/event/EventLinkedManage.js:192
 msgid "Edit event link"
 msgstr "Edit event link"
 
-#: src/components/event/EventEdit.js:192
+#: src/components/event/EventLinked.js:77
+msgid "Edit link details"
+msgstr "Edit link details"
+
+#: src/components/event/EventEdit.js:191
 msgid "Enter ORIS event ID or select from your recent events"
 msgstr "Enter ORIS event ID or select from your recent events"
 
@@ -158,11 +190,15 @@ msgstr "Event List"
 msgid "Event details"
 msgstr "Event details"
 
-#: src/components/event/EventEdit.js:332
+#: src/components/event/EventLinked.js:32
+msgid "Event link details not found for {linkId}"
+msgstr "Event link details not found for {linkId}"
+
+#: src/components/event/EventEdit.js:331
 msgid "Event location (latitude)"
 msgstr "Event location (latitude)"
 
-#: src/components/event/EventEdit.js:350
+#: src/components/event/EventEdit.js:349
 msgid "Event location (longitude)"
 msgstr "Event location (longitude)"
 
@@ -178,23 +214,47 @@ msgstr "Event website"
 msgid "Events"
 msgstr "Events"
 
-#: src/components/event/EventEdit.js:455
+#: src/components/event/EventLinkedEdit.js:87
+msgid "Events connected by this link"
+msgstr "Events connected by this link"
+
+#: src/components/event/EventLinkedEdit.js:82
+msgid "Events included"
+msgstr "Events included"
+
+#: src/components/event/EventEdit.js:454
 msgid "Groups of other events that this event is linked to"
 msgstr "Groups of other events that this event is linked to"
+
+#: src/components/event/EventLinkedManage.js:167
+msgid "Hide event link list"
+msgstr "Hide event link list"
+
+#: src/components/event/EventLinkedDelete.js:29
+msgid "It links the following events:"
+msgstr "It links the following events:"
 
 #: src/components/event/EventDetails.js:50
 msgid "Last updated: {0}"
 msgstr "Last updated: {0}"
 
-#: src/components/event/EventEdit.js:324
+#: src/components/event/EventEdit.js:323
 msgid "Latitude"
 msgstr "Latitude"
 
-#: src/components/event/EventEdit.js:421
+#: src/components/event/EventEdit.js:420
 msgid "Link to event results"
 msgstr "Link to event results"
 
-#: src/components/event/EventEdit.js:450
+#: src/components/event/EventLinked.js:24
+msgid "Linked events"
+msgstr "Linked events"
+
+#: src/components/event/EventLinked.js:82
+msgid "Linked events: {displayName}"
+msgstr "Linked events: {displayName}"
+
+#: src/components/event/EventEdit.js:449
 msgid "Linked to"
 msgstr "Linked to"
 
@@ -207,15 +267,15 @@ msgstr "List view"
 msgid "Loading event details..."
 msgstr "Loading event details..."
 
-#: src/components/event/EventEdit.js:260
+#: src/components/event/EventEdit.js:259
 msgid "Location"
 msgstr "Location"
 
-#: src/components/event/EventEdit.js:280
+#: src/components/event/EventEdit.js:279
 msgid "Location (country)"
 msgstr "Location (country)"
 
-#: src/components/event/EventEdit.js:265
+#: src/components/event/EventEdit.js:264
 msgid "Location of event (e.g. nearest town)"
 msgstr "Location of event (e.g. nearest town)"
 
@@ -227,11 +287,11 @@ msgstr "Log In"
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/components/event/EventEdit.js:342
+#: src/components/event/EventEdit.js:341
 msgid "Longitude"
 msgstr "Longitude"
 
-#: src/components/event/EventLinkedManage.js:39
+#: src/components/event/EventLinkedManage.js:190
 msgid "Manage linked events"
 msgstr "Manage linked events"
 
@@ -243,16 +303,15 @@ msgstr "Map"
 #~ msgid "Map View"
 #~ msgstr "Map View"
 
-#: src/components/event/EventCourseMap.js:546
-#: src/components/event/EventMapViewer.js:225
+#: src/components/event/EventMapViewer.js:219
 msgid "Map Viewer"
 msgstr "Map Viewer"
 
-#: src/components/event/EventEdit.js:245
+#: src/components/event/EventEdit.js:244
 msgid "Map name"
 msgstr "Map name"
 
-#: src/components/event/EventMapViewerEdit.js:200
+#: src/components/event/EventMapViewerEdit.js:235
 msgid "Map title"
 msgstr "Map title"
 
@@ -265,15 +324,20 @@ msgstr "Map view"
 msgid "My Maps"
 msgstr "My Maps"
 
-#: src/components/event/EventEdit.js:230
+#: src/components/event/EventEdit.js:229
+#: src/components/event/EventLinkedEdit.js:66
 msgid "Name"
 msgstr "Name"
 
-#: src/components/event/EventEdit.js:235
+#: src/components/event/EventEdit.js:234
 msgid "Name of event (required)"
 msgstr "Name of event (required)"
 
-#: src/components/event/EventEdit.js:250
+#: src/components/event/EventLinkedEdit.js:71
+msgid "Name of event link (required)"
+msgstr "Name of event link (required)"
+
+#: src/components/event/EventEdit.js:249
 msgid "Name of map used for event"
 msgstr "Name of map used for event"
 
@@ -281,15 +345,15 @@ msgstr "Name of map used for event"
 msgid "Note: Deletion is only permitted if there are no runners at the event, or the user attempting to delete is the only runner. Deleting an event also removes all references in linked events."
 msgstr "Note: Deletion is only permitted if there are no runners at the event, or the user attempting to delete is the only runner. Deleting an event also removes all references in linked events."
 
-#: src/components/event/EventEdit.js:431
+#: src/components/event/EventEdit.js:430
 msgid "Organised by"
 msgstr "Organised by"
 
-#: src/components/event/EventEdit.js:473
+#: src/components/event/EventEdit.js:472
 msgid "Owner"
 msgstr "Owner"
 
-#: src/components/event/EventEdit.js:478
+#: src/components/event/EventEdit.js:477
 msgid "Owner of event record in this database"
 msgstr "Owner of event record in this database"
 
@@ -305,25 +369,25 @@ msgstr "Place"
 msgid "Refresh list"
 msgstr "Refresh list"
 
-#: src/components/event/EventEdit.js:303
+#: src/components/event/EventEdit.js:302
 msgid "Region(s) (customisable)"
 msgstr "Region(s) (customisable)"
 
-#: src/components/event/EventEdit.js:308
+#: src/components/event/EventEdit.js:307
 msgid "Region(s) associated with event"
 msgstr "Region(s) associated with event"
 
 #: src/components/event/EventDetails.js:178
-#: src/components/event/EventEdit.js:416
+#: src/components/event/EventEdit.js:415
 #: src/components/event/EventResults.js:72
 msgid "Results"
 msgstr "Results"
 
-#: src/components/event/EventMapViewer.js:156
+#: src/components/event/EventMapViewer.js:153
 msgid "Return to map view"
 msgstr "Return to map view"
 
-#: src/components/event/EventMapViewerEdit.js:274
+#: src/components/event/EventMapViewerEdit.js:348
 msgid "Route"
 msgstr "Route"
 
@@ -335,7 +399,7 @@ msgstr "Runners at event"
 msgid "Search for events"
 msgstr "Search for events"
 
-#: src/components/event/EventViewList.js:268
+#: src/components/event/EventViewList.js:272
 msgid "Select an event from the list to show further details here"
 msgstr "Select an event from the list to show further details here"
 
@@ -343,7 +407,7 @@ msgstr "Select an event from the list to show further details here"
 msgid "Select an event on the map to show further details here"
 msgstr "Select an event on the map to show further details here"
 
-#: src/components/event/EventMapViewerEdit.js:224
+#: src/components/event/EventMapViewerEdit.js:288
 msgid "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 
@@ -351,9 +415,13 @@ msgstr "Select your course map file (drag and drop or click to open file dialogu
 msgid "Select your file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 1MB."
 msgstr "Select your file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 1MB."
 
-#: src/components/event/EventMapViewerEdit.js:232
+#: src/components/event/EventMapViewerEdit.js:296
 msgid "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
+
+#: src/components/event/EventLinkedManage.js:168
+msgid "Show event link list"
+msgstr "Show event link list"
 
 #: src/components/Header.js:140
 msgid "Sign Up"
@@ -363,8 +431,11 @@ msgstr "Sign Up"
 msgid "Sorry, no event is selected."
 msgstr "Sorry, no event is selected."
 
-#: src/components/event/EventCourseMap.js:538
-#: src/components/event/EventMapViewerCanvas.js:462
+#: src/components/event/EventLinkedList.js:11
+msgid "Sorry, no event links found."
+msgstr "Sorry, no event links found."
+
+#: src/components/event/EventMapViewerCanvas.js:426
 msgid "Sorry, there are no maps to display."
 msgstr "Sorry, there are no maps to display."
 
@@ -376,11 +447,11 @@ msgstr "Sorry, there are no results to display."
 msgid "Sorry, there aren't any matching events to display!"
 msgstr "Sorry, there aren't any matching events to display!"
 
-#: src/components/event/EventEdit.js:382
+#: src/components/event/EventEdit.js:381
 msgid "Tags (customisable)"
 msgstr "Tags (customisable)"
 
-#: src/components/event/EventEdit.js:387
+#: src/components/event/EventEdit.js:386
 msgid "Tags for event"
 msgstr "Tags for event"
 
@@ -388,24 +459,29 @@ msgstr "Tags for event"
 msgid "There are no comments yet."
 msgstr "There are no comments yet."
 
-#: src/components/event/EventMapViewerEdit.js:206
+#: src/components/event/EventLinked.js:25
+msgid "This event is not currently linked to any others."
+msgstr "This event is not currently linked to any others."
+
+#: src/components/event/EventMapViewerEdit.js:241
 msgid "Title for map (e.g. \"Part 1\")"
 msgstr "Title for map (e.g. \"Part 1\")"
 
-#: src/components/event/EventEdit.js:366
+#: src/components/event/EventEdit.js:365
 msgid "Type of event"
 msgstr "Type of event"
 
-#: src/components/event/EventEdit.js:361
+#: src/components/event/EventEdit.js:360
 msgid "Type(s) of event"
 msgstr "Type(s) of event"
 
-#: src/components/event/EventEdit.js:159
+#: src/components/event/EventEdit.js:158
+#: src/components/event/EventLinkedEdit.js:50
 msgid "Update"
 msgstr "Update"
 
-#: src/components/event/EventMapViewerEdit.js:261
-#: src/components/event/EventMapViewerEdit.js:291
+#: src/components/event/EventMapViewerEdit.js:335
+#: src/components/event/EventMapViewerEdit.js:366
 #: src/components/user/UserEditProfileImage.js:59
 msgid "Upload selected"
 msgstr "Upload selected"
@@ -414,19 +490,27 @@ msgstr "Upload selected"
 msgid "Users"
 msgstr "Users"
 
-#: src/components/event/EventEdit.js:401
+#: src/components/event/EventEdit.js:400
 msgid "Website"
 msgstr "Website"
 
-#: src/components/event/EventMapViewerEdit.js:180
-#: src/components/event/EventMapViewerEdit.js:191
+#: src/components/event/EventMapViewerEdit.js:216
+#: src/components/event/EventMapViewerEdit.js:227
 msgid "no map yet"
 msgstr "no map yet"
 
-#: src/components/event/EventMapViewer.js:193
+#: src/components/event/EventMapViewer.js:186
 msgid "no maps found"
 msgstr "no maps found"
 
 #: src/components/event/EventListItem.js:61
 msgid "none"
 msgstr "none"
+
+#: src/components/event/EventLinkedList.js:14
+#~ msgid "{0, plural, one {# event} other {# events}}"
+#~ msgstr "{0, plural, one {# event} other {# events}}"
+
+#: src/components/event/EventLinkedList.js:16
+msgid "{eventCount, plural, one {# event} other {# events}}"
+msgstr "{eventCount, plural, one {# event} other {# events}}"

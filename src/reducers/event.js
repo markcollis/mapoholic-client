@@ -14,7 +14,7 @@ import {
   EVENT_LINK_UPDATED,
   // EVENT_COMMENT_UPDATED, // not yet implemented
   EVENT_DELETED,
-  // EVENT_RUNNER_DELETED, // not yet implemented
+  EVENT_RUNNER_DELETED, // not yet implemented on back end
   EVENT_MAP_DELETED,
   EVENT_LINK_DELETED,
   // EVENT_COMMENT_DELETED, // not yet implemented
@@ -35,7 +35,7 @@ const INITIAL_STATE = {
   searchField: '', // contents of search box in EventFilter
   eventMode: 'none', // none, view, add, edit, delete
   eventLinkMode: 'view', // view, add, edit, delete
-  runnerMode: 'view', // view, edit, delete
+  runnerMode: 'view', // none, view, edit, delete
   commentMode: 'view', // view, add, edit, delete
   list: null, // replaced each time API is queried, also populates corresponding details
   linkList: null, // replaced each time API is queried
@@ -67,7 +67,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       const newDetails = { ...state.linkListDetails };
       if (action.payload.length > 0) {
         action.payload.forEach((link) => {
-          newDetails[link._id] = link;
+          if (link._id) newDetails[link._id] = link;
         });
       }
       return {
@@ -191,8 +191,9 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case EVENT_UPDATED:
+    case EVENT_RUNNER_DELETED: // same thing, runner delete returns whole event minus runner
     case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
-      console.log('EVENT_(RUNNER_)UPDATED payload:', action.payload);
+      // console.log('EVENT_(RUNNER_)UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },

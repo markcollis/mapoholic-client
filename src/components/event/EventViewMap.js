@@ -303,7 +303,9 @@ class EventViewMap extends Component {
       cancelEventError,
       createEventLink,
       deleteEventLink,
+      getEventById,
       getEventList,
+      getEventLinkList,
       oevent,
       selectEventForDetails,
       clearEventSearchField,
@@ -322,6 +324,7 @@ class EventViewMap extends Component {
       list,
       searchField,
       selectedEventDetails,
+      selectedEventDisplay,
       selectedEventLink,
     } = oevent;
     const { current } = user;
@@ -389,6 +392,28 @@ class EventViewMap extends Component {
       )
       : null;
 
+    const renderEventLinkedManage = (current)
+      ? (
+        <EventLinkedManage
+          eventLinkMode={eventLinkMode}
+          selectedEvent={selectedEvent}
+          selectedEventDetails={selectedEventDetails}
+          selectedEventDisplay={selectedEventDisplay}
+          selectedEventLink={selectedEventLink}
+          eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
+          linkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
+          linkDetails={linkDetails}
+          getEventById={getEventById}
+          getEventLinkList={getEventLinkList}
+          getEventList={getEventList}
+          createEventLink={createEventLink}
+          updateEventLink={updateEventLink}
+          deleteEventLink={deleteEventLink}
+          setEventViewModeEvent={setEventViewModeEvent}
+          setEventViewModeEventLink={setEventViewModeEventLink}
+        />
+      )
+      : null;
     return (
       <div className="ui vertically padded stackable grid">
         {renderError}
@@ -401,6 +426,7 @@ class EventViewMap extends Component {
         </div>
         <div className="eight wide column">
           <EventFilter
+            currentUser={current}
             searchField={searchField}
             clearEventSearchField={clearEventSearchField}
             setEventSearchField={setEventSearchField}
@@ -409,19 +435,7 @@ class EventViewMap extends Component {
             selectEventForDetails={selectEventForDetails}
           />
           {renderEventLinked}
-          <EventLinkedManage
-            eventLinkMode={eventLinkMode}
-            selectedEvent={selectedEvent}
-            selectedEventLink={selectedEventLink}
-            eventList={list}
-            linkList={linkList}
-            linkDetails={linkDetails}
-            createEventLink={createEventLink}
-            updateEventLink={updateEventLink}
-            deleteEventLink={deleteEventLink}
-            setEventViewModeEvent={setEventViewModeEvent}
-            setEventViewModeEventLink={setEventViewModeEventLink}
-          />
+          {renderEventLinkedManage}
         </div>
         {this.renderRightColumn()}
       </div>

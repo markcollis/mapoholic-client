@@ -164,18 +164,17 @@ class EventViewList extends Component {
       selectRunnerToDisplay,
     } = this.props;
     const {
-      eventMode,
-      eventLinkMode,
-      runnerMode,
-      list,
       details,
-      linkList,
+      errorMessage,
+      eventLinkMode,
+      eventMode,
       linkDetails,
-      // orisList,
-      selectedEventLink,
+      linkList,
+      list,
+      runnerMode,
       selectedEventDetails,
       selectedEventDisplay,
-      errorMessage,
+      selectedEventLink,
     } = oevent;
     const orisList = testOrisList;
     const { current, list: userList } = user;
@@ -248,10 +247,15 @@ class EventViewList extends Component {
       <EventLinkedManage
         eventLinkMode={eventLinkMode}
         selectedEvent={selectedEvent}
+        selectedEventDetails={selectedEventDetails}
+        selectedEventDisplay={selectedEventDisplay}
         selectedEventLink={selectedEventLink}
-        eventList={list}
-        linkList={linkList}
+        eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
+        linkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
         linkDetails={linkDetails}
+        getEventById={getEventById}
+        getEventLinkList={getEventLinkList}
+        getEventList={getEventList}
         createEventLink={createEventLink}
         updateEventLink={updateEventLink}
         deleteEventLink={deleteEventLink}
@@ -281,7 +285,7 @@ class EventViewList extends Component {
             />
             {renderEventRunners}
             {renderEventLinked}
-            {renderEventLinkedManage}
+            {(current) ? renderEventLinkedManage : null}
           </div>
         );
       case 'edit':
@@ -357,7 +361,7 @@ class EventViewList extends Component {
     const {
       config,
       oevent,
-      // user,
+      user,
       getEventList,
       // getEventListOris,
       clearEventSearchField,
@@ -369,8 +373,7 @@ class EventViewList extends Component {
     const { searchField, errorMessage } = oevent;
     // const { searchField, errorMessage, orisList } = oevent;
     const { language } = config;
-    // const { current } = user;
-
+    const { current } = user;
     // populate ORIS event list when rendered with a current user for the first time
     // if (!orisList && current && current.orisId !== '') getEventListOris();
 
@@ -404,6 +407,7 @@ class EventViewList extends Component {
         {renderError}
         <div className="eight wide column">
           <EventFilter
+            currentUser={current}
             searchField={searchField}
             clearEventSearchField={clearEventSearchField}
             setEventSearchField={setEventSearchField}

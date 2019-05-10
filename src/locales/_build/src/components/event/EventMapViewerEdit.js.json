@@ -3,11 +3,11 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        180
+        216
       ],
       [
         "src/components/event/EventMapViewerEdit.js",
-        191
+        227
       ]
     ]
   },
@@ -15,7 +15,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        200
+        235
       ]
     ]
   },
@@ -23,7 +23,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        206
+        241
       ]
     ]
   },
@@ -31,7 +31,31 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        215
+        250
+      ]
+    ]
+  },
+  "Confirm change": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        257
+      ]
+    ]
+  },
+  "Change title": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        258
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewerEdit.js",
+        279
       ]
     ]
   },
@@ -39,7 +63,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        224
+        288
       ]
     ]
   },
@@ -47,7 +71,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        232
+        296
       ]
     ]
   },
@@ -55,7 +79,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        244
+        317
       ]
     ]
   },
@@ -63,11 +87,11 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        261
+        335
       ],
       [
         "src/components/event/EventMapViewerEdit.js",
-        291
+        366
       ]
     ]
   },
@@ -75,11 +99,11 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        269
+        343
       ],
       [
         "src/components/event/EventMapViewerEdit.js",
-        299
+        374
       ]
     ]
   },
@@ -87,7 +111,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        274
+        348
       ]
     ]
   }

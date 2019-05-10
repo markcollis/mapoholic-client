@@ -1,0 +1,58 @@
+{
+  "Create": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedEdit.js",
+        50
+      ]
+    ]
+  },
+  "Update": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedEdit.js",
+        50
+      ]
+    ]
+  },
+  "Name": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedEdit.js",
+        66
+      ]
+    ]
+  },
+  "Name of event link (required)": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedEdit.js",
+        71
+      ]
+    ]
+  },
+  "Events included": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedEdit.js",
+        82
+      ]
+    ]
+  },
+  "Events connected by this link": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedEdit.js",
+        87
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventLinkedEdit.js",
+        113
+      ]
+    ]
+  }
+}

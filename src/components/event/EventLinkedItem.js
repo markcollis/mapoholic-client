@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { reformatDate } from '../../common/conversions';
 
 const EventLinkedItem = ({
   eventId,
@@ -8,19 +9,17 @@ const EventLinkedItem = ({
   setEventViewModeEvent,
   setEventViewModeEventLink,
 }) => {
-  // console.log('eventId', eventId);
-  // console.log('linkedEvent', linkedEvent);
-  // console.log('selectEventForDetails', selectEventForDetails);
-  // console.log('setEventViewModeEvent', setEventViewModeEvent);
   if (!linkedEvent) return null;
-  // console.log('linkedEvent in EventLinkedItem:', linkedEvent);
   const { _id: linkedEventId, name, date } = linkedEvent;
-  if (linkedEventId === eventId) return null;
-  const reformattedDate = date.slice(8)
-    .concat('/')
-    .concat(date.slice(5, 7))
-    .concat('/')
-    .concat(date.slice(0, 4));
+  if (linkedEventId === eventId) {
+    return (
+      <div className="ui fluid centered card event-link-current">
+        <div className="content">
+          <div className="header">{`${reformatDate(date)} - ${name}`}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -39,7 +38,7 @@ const EventLinkedItem = ({
       tabIndex="0"
     >
       <div className="content">
-        <div className="header">{`${reformattedDate} - ${name}`}</div>
+        <div className="header">{`${reformatDate(date)} - ${name}`}</div>
       </div>
     </div>
   );

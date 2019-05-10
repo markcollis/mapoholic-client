@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
+import memoize from 'memoize-one';
 import EventMapViewerCanvas from './EventMapViewerCanvas';
 import EventMapViewerDetails from './EventMapViewerDetails';
 import { OMAPFOLDER_SERVER } from '../../config';
@@ -8,12 +9,12 @@ import { OMAPFOLDER_SERVER } from '../../config';
 
 class EventMapViewer extends Component {
   static propTypes = {
-    selectedEvent: PropTypes.objectOf(PropTypes.any),
-    selectedRunner: PropTypes.string,
-    selectedMap: PropTypes.string,
-    selectMapToDisplay: PropTypes.func.isRequired,
-    postMap: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
+    postMap: PropTypes.func.isRequired,
+    selectedEvent: PropTypes.objectOf(PropTypes.any),
+    selectedMap: PropTypes.string,
+    selectedRunner: PropTypes.string,
+    selectMapToDisplay: PropTypes.func.isRequired,
     updateEventRunner: PropTypes.func.isRequired,
   };
 
@@ -28,19 +29,9 @@ class EventMapViewer extends Component {
   state = {
     mapContainerWidth: null,
     mapContainerHeight: null,
-    mapImageArray: [],
+    mapUpdates: 0,
     showMapViewerDetails: false,
   };
-  // constructor(props) {
-  //   super(props);
-  //   this.mapRef = React.createRef();
-  //   this.state = {
-  //     mapContainerWidth: null,
-  //     mapContainerHeight: null,
-  //     mapImageArray: [],
-  //     showMapViewerDetails: false,
-  //   };
-  // }
 
   componentDidMount() {
     this.setState({
@@ -48,14 +39,21 @@ class EventMapViewer extends Component {
       mapContainerHeight: this.mapRef.current.offsetHeight,
     });
     window.addEventListener('resize', this.handleResize, false);
-    this.createMapImageArray();
   }
 
-  componentDidUpdate(prevProps) {
-    const { selectedEvent, selectedRunner } = this.props;
-    const { selectedEvent: prevSelEv, selectedRunner: prevSelRun } = prevProps;
-    if (selectedEvent !== prevSelEv || selectedRunner !== prevSelRun) {
-      this.createMapImageArray();
+  componentDidUpdate() {
+    const {
+      selectedEvent,
+      selectedMap,
+      selectedRunner,
+    } = this.props;
+    const { mapUpdates } = this.state;
+    const mapImageArray = this.getMapImageArray(selectedEvent._id, selectedRunner, mapUpdates);
+    const hasMaps = mapImageArray.length > 0;
+    const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
+    if (hasMaps && !selectedMapImage) {
+      // console.log('selecting map to display');
+      this.handleSelectMapImage(mapImageArray[0].mapId);
     }
   }
 
@@ -63,30 +61,17 @@ class EventMapViewer extends Component {
     window.removeEventListener('resize', this.handleResize, false);
   }
 
-  handleResize = () => {
-    const { showMapViewerDetails } = this.state;
-    if (!showMapViewerDetails) { // i.e. only when map container is visible
-      this.setState({
-        mapContainerWidth: this.mapRef.current.offsetWidth,
-        mapContainerHeight: this.mapRef.current.offsetHeight,
-      });
-    }
-  }
-
-  createMapImageArray = (update = false) => {
-    const {
-      selectedEvent,
-      selectedRunner,
-      selectedMap,
-      selectMapToDisplay,
-    } = this.props;
+  // helper to derive mapImageArray if input props have changed (different event or runner)
+  getMapImageArray = memoize((selectedEventId, selectedRunner, mapUpdates) => {
+    // console.log('getMapImageArray called:', selectedEventId, selectedRunner, mapUpdates);
+    const { selectedEvent } = this.props;
     const runnerData = (selectedEvent.runners)
       ? selectedEvent.runners.find(runner => runner.user._id.toString() === selectedRunner)
       : null;
     const hasMaps = runnerData && runnerData.maps.length > 0;
     const now = new Date();
-    const srcSuffix = (update) ? `?${now.getTime()}` : ''; // to force reload on change
-    let hasVisibleMap = false;
+    const srcSuffix = (mapUpdates > 0) ? `?${now.getTime()}` : ''; // to force reload if image changed
+    // let hasVisibleMap = false;
     const mapImages = (hasMaps)
       ? runnerData.maps.map((map) => {
         const {
@@ -95,7 +80,7 @@ class EventMapViewer extends Component {
           course,
           route,
         } = map;
-        const defaultPreferType = 'Course'; // consider making a config option later?
+        const defaultPreferType = 'Course'; // consider making this a config option later?
         const hasCourseMap = (course && course !== '');
         const hasRouteMap = (route && route !== '');
         if (!hasCourseMap && !hasRouteMap) {
@@ -105,8 +90,8 @@ class EventMapViewer extends Component {
             empty: true,
           };
         }
-        const isVisibleMap = (selectedMap === mapId.toString());
-        hasVisibleMap = hasVisibleMap || isVisibleMap;
+        // const isVisibleMap = (selectedMap === mapId.toString());
+        // hasVisibleMap = hasVisibleMap || isVisibleMap;
         const preferType = ((defaultPreferType === 'Course' && hasCourseMap)
           || (defaultPreferType === 'Route' && !hasRouteMap)) ? 'Course' : 'Route';
         return {
@@ -121,11 +106,18 @@ class EventMapViewer extends Component {
         };
       })
       : [];
-    if (hasMaps && !hasVisibleMap) {
-      selectMapToDisplay(mapImages[0].mapId);
-    }
     // console.log('new mapImageArray:', mapImages);
-    this.setState({ mapImageArray: mapImages });
+    return mapImages;
+  });
+
+  handleResize = () => {
+    const { showMapViewerDetails } = this.state;
+    if (!showMapViewerDetails) { // i.e. only when map container is visible
+      this.setState({
+        mapContainerWidth: this.mapRef.current.offsetWidth,
+        mapContainerHeight: this.mapRef.current.offsetHeight,
+      });
+    }
   }
 
   handleSelectMapImage = (mapId) => {
@@ -133,26 +125,30 @@ class EventMapViewer extends Component {
     selectMapToDisplay(mapId);
   }
 
+  handleMapUpdated = () => {
+    const { mapUpdates } = this.state;
+    this.setState({ mapUpdates: mapUpdates + 1 });
+  }
+
   render() {
-    console.log('this.props in EventMapViewer:', this.props);
-    console.log('this.state in EventMapViewer:', this.state);
+    // console.log('this.props in EventMapViewer:', this.props);
+    // console.log('this.state in EventMapViewer:', this.state);
     const {
-      mapImageArray,
-      showMapViewerDetails,
-      mapContainerWidth,
       mapContainerHeight,
+      mapContainerWidth,
+      mapUpdates,
+      showMapViewerDetails,
     } = this.state;
     const {
-      selectedEvent,
-      selectedRunner,
-      selectedMap,
-      postMap,
       deleteMap,
+      postMap,
+      selectedEvent,
+      selectedMap,
+      selectedRunner,
       updateEventRunner,
     } = this.props;
+    const mapImageArray = this.getMapImageArray(selectedEvent._id, selectedRunner, mapUpdates);
     const hasMaps = (mapImageArray.length > 0);
-    const mapTitleList = (hasMaps) ? mapImageArray.map(mapImage => mapImage.title) : [];
-
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>
       : <Trans>Add or Delete maps</Trans>;
@@ -207,13 +203,12 @@ class EventMapViewer extends Component {
       <div style={(showMapViewerDetails) ? {} : { display: 'none' }}>
         <p />
         <EventMapViewerDetails
+          deleteMap={deleteMap}
+          postMap={postMap}
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
-          mapTitleList={mapTitleList}
-          postMap={postMap}
-          deleteMap={deleteMap}
-          updateMapImageArray={() => this.createMapImageArray(true)}
           updateEventRunner={updateEventRunner}
+          updateMapImageArray={() => this.handleMapUpdated()}
         />
       </div>
     );

@@ -19,13 +19,13 @@ import EventResults from './EventResults';
 
 import {
   // setEventViewModeCommentAction,
-  // setEventViewModeRunnerAction,
   addEventRunnerAction,
   addEventRunnerOrisAction,
   cancelEventErrorAction,
   createEventLinkAction,
   deleteEventAction,
   deleteEventLinkAction,
+  deleteEventRunnerAction,
   deleteMapAction,
   getClubListAction,
   getEventByIdAction,
@@ -39,6 +39,7 @@ import {
   selectRunnerToDisplayAction,
   setEventViewModeEventAction,
   setEventViewModeEventLinkAction,
+  setEventViewModeRunnerAction,
   updateEventAction,
   updateEventLinkAction,
   updateEventRunnerAction,
@@ -49,14 +50,15 @@ class MapView extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,
     config: PropTypes.objectOf(PropTypes.any).isRequired,
-    user: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
+    user: PropTypes.objectOf(PropTypes.any).isRequired,
     addEventRunner: PropTypes.func.isRequired,
     addEventRunnerOris: PropTypes.func.isRequired,
     cancelEventError: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
+    deleteEventRunner: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
@@ -70,6 +72,7 @@ class MapView extends Component {
     selectRunnerToDisplay: PropTypes.func.isRequired,
     setEventViewModeEvent: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
+    setEventViewModeRunner: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
     updateEventRunner: PropTypes.func.isRequired,
@@ -87,49 +90,42 @@ class MapView extends Component {
       getUserList,
     } = this.props;
     const { list: clubList } = club;
-    const { list: userList } = user;
     const { list: eventList, linkList } = oevent;
+    const { list: userList } = user;
     if (!clubList) getClubList();
-    if (!userList) getUserList();
     if (!eventList) getEventList();
     if (!linkList) getEventLinkList();
+    if (!userList) getUserList();
   }
 
-  // get detailed data for selected event if not already available
-  componentDidUpdate() {
-    const { oevent, getEventById } = this.props;
-    const { details, errorMessage, selectedEventDisplay } = oevent;
+  // helper to get details of selected event if input props have changed
+  getSelectedEvent = memoize((details, selectedEventDisplay, errorMessage) => {
+    // get detailed data for selected event if not already available
     if (selectedEventDisplay && !details[selectedEventDisplay] && !errorMessage) {
+      const { getEventById } = this.props;
       getEventById(selectedEventDisplay);
     }
-  }
-
-  // helper to recalculate only if input props have changed
-  getSelectedEvent = memoize((details, selectedEventDisplay) => {
     return details[selectedEventDisplay] || {};
   });
 
-  // helper to recalculate only if input prop has changed
-  getCurrentUserId = memoize((current) => {
-    return (current) ? current._id.toString() : null;
-  });
+  // helper to return current user's id if input prop has changed
+  getCurrentUserId = memoize(current => ((current) ? current._id.toString() : null));
 
-  // helper to recalculate only if input prop has changed
+  // helper to check if current user is administrator if input prop has changed
   getIsAdmin = memoize(current => (current && current.role === 'admin'));
 
-  // helper to recalculate only if input props have changed
+  // helper to determine if current user can edit runner if input props have changed
   getCanEdit = memoize((current, selectedEvent) => {
     const isAdmin = (current && current.role === 'admin');
     if (isAdmin) return true;
     const runnerList = (selectedEvent.runners)
       ? selectedEvent.runners.map(runner => runner.user.toString())
       : [];
-    const isRunner = (current && selectedEvent
-      && runnerList.includes(current._id.toString()));
+    const isRunner = (current && selectedEvent && runnerList.includes(current._id.toString()));
     return isRunner;
   });
 
-  // helper to recalculate only if input props have changed
+  // helper to get details of organising clubs if input props have changed
   getOrganisingClubs = memoize((selectedEvent, clubDetails) => {
     const organisingClubs = (selectedEvent.organisedBy)
       ? selectedEvent.organisedBy.map(organisingClub => clubDetails[organisingClub._id])
@@ -147,19 +143,24 @@ class MapView extends Component {
       selectEventToDisplay,
       selectRunnerToDisplay,
     } = this.props;
-    const { details, runnerMode, selectedEventDisplay } = oevent;
+    const {
+      details,
+      errorMessage,
+      runnerMode,
+      selectedEventDisplay,
+    } = oevent;
     const { current } = user;
 
     const currentUserId = this.getCurrentUserId(current);
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay);
+    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
 
     return (
       <EventRunners
-        currentUserId={currentUserId} // derived
-        selectedEvent={selectedEvent} // derived
-        runnerMode={runnerMode} // prop (oevent)
         addEventRunner={addEventRunner} // prop
         addEventRunnerOris={addEventRunnerOris} // prop
+        currentUserId={currentUserId} // derived
+        runnerMode={runnerMode} // prop (oevent)
+        selectedEvent={selectedEvent} // derived
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
       />
@@ -167,28 +168,67 @@ class MapView extends Component {
   }
 
   // render EventRunnerDetails, EventRunnerEdit or EventRunnerDelete components as required
-  renderEventRunnerDetails = () => { // new, to do now
+  renderEventRunnerDetails = () => {
     const {
+      config,
       oevent,
+      user,
+      deleteEventRunner,
+      setEventViewModeRunner,
+      updateEventRunner,
     } = this.props;
+    const { language } = config;
     const {
       details,
+      runnerMode,
       selectedEventDisplay,
+      selectedRunner,
     } = oevent;
+    const { current } = user;
+
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay);
-    return (
-      <div>
-        <EventRunnerDetails
-          selectedEvent={selectedEvent}
-        />
-        <EventRunnerEdit
-          selectedEvent={selectedEvent}
-        />
-        <EventRunnerDelete
-          selectedEvent={selectedEvent}
-        />
-      </div>
-    );
+    const canEdit = this.getCanEdit(current, selectedEvent);
+    const isAdmin = this.getIsAdmin(current);
+
+    switch (runnerMode) {
+      case 'none':
+        return (
+          <div className="ui segment">
+            <p><Trans>Select a runner from the list to show further details here</Trans></p>
+          </div>
+        );
+      case 'view':
+        return (
+          <EventRunnerDetails
+            canEdit={canEdit}
+            selectedEvent={selectedEvent} // derived
+            selectedRunner={selectedRunner} // prop (oevent)
+            setEventViewModeRunner={setEventViewModeRunner} // prop
+          />
+        );
+      case 'edit':
+        return (
+          <EventRunnerEdit
+            isAdmin={isAdmin}
+            language={language} // prop (config)
+            selectedEvent={selectedEvent} // derived
+            selectedRunner={selectedRunner} // prop (oevent)
+            setEventViewModeRunner={setEventViewModeRunner} // prop
+            updateEventRunner={updateEventRunner} // prop
+          />
+        );
+      case 'delete':
+        return (
+          <EventRunnerDelete
+            deleteEventRunner={deleteEventRunner} // prop
+            selectedEvent={selectedEvent} // derived
+            selectedRunner={selectedRunner} // prop (oevent)
+            setEventViewModeRunner={setEventViewModeRunner} // prop
+          />
+        );
+      default:
+        return null;
+    }
   }
 
   // render EventDetails, EventEdit or EventDelete components as required by eventMode
@@ -207,10 +247,10 @@ class MapView extends Component {
       updateEvent,
     } = this.props;
     const {
-      eventMode,
-      list,
       details,
+      eventMode,
       linkList,
+      list,
       selectedEventDisplay,
     } = oevent;
     const { details: clubDetails, list: clubList } = club;
@@ -243,30 +283,30 @@ class MapView extends Component {
       case 'edit':
         return (
           <EventEdit
-            language={language} // prop (config)
-            isAdmin={isAdmin} // derived
+            clubList={(clubList) ? clubList.slice(0, -1) : []} // prop (club)
+            eventLinkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
+            eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
             eventMode={eventMode} // prop (oevent)
             getEventList={getEventList} // prop
+            isAdmin={isAdmin} // derived
+            language={language} // prop (config)
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
             updateEvent={updateEvent} // prop
-            eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
-            eventLinkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
             userList={(userList) ? userList.slice(0, -1) : []} // prop (user)
-            clubList={(clubList) ? clubList.slice(0, -1) : []} // prop (club)
           />
         );
       case 'delete':
         return (
           <EventDelete
+            deleteEvent={deleteEvent} // prop
+            getEventLinkList={getEventLinkList} // prop
+            getEventList={getEventList} // prop
             selectedEvent={selectedEvent} // derived
             selectedEventDisplay={selectedEventDisplay} // prop (oevent)
-            deleteEvent={deleteEvent} // prop
-            getEventList={getEventList} // prop
-            getEventLinkList={getEventLinkList} // prop
-            setEventViewModeEvent={setEventViewModeEvent} // prop
             selectEventForDetails={selectEventForDetails} // prop
             selectEventToDisplay={selectEventToDisplay} // prop
+            setEventViewModeEvent={setEventViewModeEvent} // prop
           />
         );
       default:
@@ -279,12 +319,15 @@ class MapView extends Component {
     const {
       oevent,
       user,
+      createEventLink,
+      deleteEventLink,
+      getEventById,
+      getEventLinkList,
+      getEventList,
       selectEventToDisplay,
       setEventViewModeEvent,
       setEventViewModeEventLink,
-      createEventLink,
       updateEventLink,
-      deleteEventLink,
     } = this.props;
     const {
       details,
@@ -292,6 +335,7 @@ class MapView extends Component {
       list,
       linkDetails,
       linkList,
+      selectedEventDetails,
       selectedEventDisplay,
       selectedEventLink,
     } = oevent;
@@ -310,12 +354,12 @@ class MapView extends Component {
               return (
                 <EventLinked
                   key={link._id} // derived (selectedEvent)
-                  isAdmin={isAdmin} // derived
                   canEdit={canEdit} // derived
                   eventLinkMode={eventLinkMode} // prop (oevent)
-                  selectedEvent={selectedEvent} // derived
+                  isAdmin={isAdmin} // derived
                   link={link} // derived (selectedEvent)
                   linkDetails={linkDetails} // prop (oevent)
+                  selectedEvent={selectedEvent} // derived
                   selectEventForDetails={selectEventToDisplay} // prop: names need work
                   setEventViewModeEvent={setEventViewModeEvent} // prop
                   setEventViewModeEventLink={setEventViewModeEventLink} // prop
@@ -324,17 +368,21 @@ class MapView extends Component {
             })
           )}
         <EventLinkedManage
-          eventLinkMode={eventLinkMode} // prop (oevent)
-          selectedEvent={selectedEvent} // derived
-          selectedEventLink={selectedEventLink} // prop (oevent)
-          eventList={list} // prop (oevent)
-          linkList={linkList} // prop (oevent)
-          linkDetails={linkDetails} // prop (oevent)
           createEventLink={createEventLink} // prop
-          updateEventLink={updateEventLink} // prop
           deleteEventLink={deleteEventLink} // prop
-          setEventViewModeEvent={setEventViewModeEvent} // prop
+          eventLinkMode={eventLinkMode} // prop (oevent)
+          eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
+          getEventById={getEventById} // prop
+          getEventLinkList={getEventLinkList} // prop
+          getEventList={getEventList} // prop
+          linkDetails={linkDetails} // prop (oevent)
+          linkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
+          selectedEvent={selectedEvent} // derived
+          selectedEventDetails={selectedEventDetails} // prop (oevent)
+          selectedEventDisplay={selectedEventDisplay} // prop (oevent)
+          selectedEventLink={selectedEventLink} // prop (oevent)
           setEventViewModeEventLink={setEventViewModeEventLink} // prop
+          updateEventLink={updateEventLink} // prop
         />
       </div>
     );
@@ -350,11 +398,13 @@ class MapView extends Component {
       selectedEventDisplay,
       selectedRunner,
     } = oevent;
+
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay);
+
     return (
       <EventComments
-        selectedEvent={selectedEvent}
-        selectedRunner={selectedRunner}
+        selectedEvent={selectedEvent} // derived
+        selectedRunner={selectedRunner} // prop (oevent)
       />
     );
   }
@@ -363,9 +413,9 @@ class MapView extends Component {
   renderEventMapViewer = () => {
     const {
       oevent,
-      selectMapToDisplay,
-      postMap,
       deleteMap,
+      postMap,
+      selectMapToDisplay,
       updateEventRunner,
     } = this.props;
     const {
@@ -379,13 +429,13 @@ class MapView extends Component {
 
     return (
       <EventMapViewer
-        selectedEvent={selectedEvent}
-        selectedRunner={selectedRunner}
-        selectedMap={selectedMap}
-        selectMapToDisplay={selectMapToDisplay}
-        postMap={postMap}
-        deleteMap={deleteMap}
-        updateEventRunner={updateEventRunner}
+        selectedEvent={selectedEvent} // derived
+        selectedRunner={selectedRunner} // prop (oevent)
+        selectedMap={selectedMap} // prop (oevent)
+        deleteMap={deleteMap} // prop
+        postMap={postMap} // prop
+        selectMapToDisplay={selectMapToDisplay} // prop
+        updateEventRunner={updateEventRunner} // prop
       />
     );
   }
@@ -393,19 +443,19 @@ class MapView extends Component {
   // render EventResults component (self-contained with add/edit/delete)
   // *** consider whether add/edit might need wider screen? ***
   renderEventResults = () => { // simple viewer done, not editable yet
-    const {
-      oevent,
-    } = this.props;
+    const { oevent } = this.props;
     const {
       details,
       selectedEventDisplay,
       selectedRunner,
     } = oevent;
+
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay);
+
     return (
       <EventResults
-        selectedEvent={selectedEvent}
-        selectedRunner={selectedRunner}
+        selectedEvent={selectedEvent} // derived
+        selectedRunner={selectedRunner} // prop (oevent)
       />
     );
   }
@@ -413,6 +463,7 @@ class MapView extends Component {
   renderError = () => {
     const { oevent, cancelEventError } = this.props;
     const { errorMessage } = oevent;
+
     if (!errorMessage) return null;
     return (
       <div className="sixteen wide column">
@@ -424,29 +475,15 @@ class MapView extends Component {
             onKeyPress={() => cancelEventError()}
             tabIndex="0"
           />
-          {`Error: ${errorMessage}`}
+          <Trans>{`Error: ${errorMessage}`}</Trans>
         </div>
       </div>
     );
   }
 
   render() {
-    const { oevent } = this.props;
-    const {
-      selectedEventDetails,
-      selectedEventDisplay,
-      selectedRunner,
-      selectedMap,
-    } = oevent;
     return (
       <div className="ui vertically padded stackable grid">
-        <div className="sixteen wide column">
-          <h3>MapView component</h3>
-          <p>{`Selected Event (details): ${selectedEventDetails}`}</p>
-          <p>{`Selected Event (display): ${selectedEventDisplay}`}</p>
-          <p>{`Selected Runner: ${selectedRunner}`}</p>
-          <p>{`Selected Map: ${selectedMap}`}</p>
-        </div>
         {this.renderError()}
         <div className="eight wide column">
           {this.renderEventRunnerDetails()}
@@ -485,13 +522,13 @@ const mapStateToProps = ({
 };
 const mapDispatchToProps = {
   // setEventViewModeComment: setEventViewModeCommentAction,
-  // setEventViewModeRunner: setEventViewModeRunnerAction,
   addEventRunner: addEventRunnerAction,
   addEventRunnerOris: addEventRunnerOrisAction,
   cancelEventError: cancelEventErrorAction,
   createEventLink: createEventLinkAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
+  deleteEventRunner: deleteEventRunnerAction,
   deleteMap: deleteMapAction,
   getClubList: getClubListAction,
   getEventById: getEventByIdAction,
@@ -505,6 +542,7 @@ const mapDispatchToProps = {
   selectRunnerToDisplay: selectRunnerToDisplayAction,
   setEventViewModeEvent: setEventViewModeEventAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
+  setEventViewModeRunner: setEventViewModeRunnerAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,
   updateEventRunner: updateEventRunnerAction,

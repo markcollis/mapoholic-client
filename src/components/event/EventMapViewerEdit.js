@@ -7,32 +7,34 @@ import { OMAPFOLDER_SERVER } from '../../config';
 
 class EventMapViewerEdit extends Component {
   static propTypes = {
-    eventId: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
-    mapTitle: PropTypes.string,
-    selectedRunnerMaps: PropTypes.arrayOf(PropTypes.object),
     courseImg: PropTypes.string,
-    routeImg: PropTypes.string,
-    postMap: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
-    updateMapImageArray: PropTypes.func.isRequired,
+    eventId: PropTypes.string.isRequired,
+    mapTitle: PropTypes.string,
+    postMap: PropTypes.func.isRequired,
+    routeImg: PropTypes.string,
+    selectedRunnerMaps: PropTypes.arrayOf(PropTypes.object),
     updateEventRunner: PropTypes.func,
+    updateMapImageArray: PropTypes.func.isRequired,
+    userId: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
-    mapTitle: null,
-    selectedRunnerMaps: [],
     courseImg: null,
+    mapTitle: null,
     routeImg: null,
+    selectedRunnerMaps: [],
     updateEventRunner: () => {},
   };
 
   state = {
+    changesMade: false,
+    courseMapToUpload: null,
+    dropZoneKeyCourse: 0,
+    dropZoneKeyRoute: 0,
     mapTitleToUpload: '',
     mapTitleEditable: true,
-    courseMapToUpload: null,
     routeMapToUpload: null,
-    changesMade: false,
   };
 
   componentDidMount() {
@@ -53,7 +55,12 @@ class EventMapViewerEdit extends Component {
       updateMapImageArray,
     } = this.props;
     // console.log('upload course map');
-    const { courseMapToUpload, mapTitleToUpload, mapTitleEditable } = this.state;
+    const {
+      courseMapToUpload,
+      mapTitleToUpload,
+      mapTitleEditable,
+      dropZoneKeyCourse,
+    } = this.state;
     if (courseMapToUpload) {
       const parameters = {
         eventId,
@@ -64,7 +71,11 @@ class EventMapViewerEdit extends Component {
       postMap(parameters, courseMapToUpload, (successful) => {
         if (successful) {
           updateMapImageArray();
-          this.setState({ changesMade: true, courseMapToUpload: null });
+          this.setState({
+            changesMade: true,
+            courseMapToUpload: null,
+            dropZoneKeyCourse: dropZoneKeyCourse + 1,
+          });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('course map upload successful');
         } else {
@@ -112,7 +123,12 @@ class EventMapViewerEdit extends Component {
       updateMapImageArray,
     } = this.props;
     // console.log('upload route map');
-    const { routeMapToUpload, mapTitleToUpload, mapTitleEditable } = this.state;
+    const {
+      routeMapToUpload,
+      mapTitleToUpload,
+      mapTitleEditable,
+      dropZoneKeyRoute,
+    } = this.state;
     if (routeMapToUpload) {
       const parameters = {
         eventId,
@@ -123,7 +139,11 @@ class EventMapViewerEdit extends Component {
       postMap(parameters, routeMapToUpload, (successful) => {
         if (successful) {
           updateMapImageArray();
-          this.setState({ changesMade: true, routeMapToUpload: null });
+          this.setState({
+            changesMade: true,
+            routeMapToUpload: null,
+            dropZoneKeyRoute: dropZoneKeyRoute + 1,
+          });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('route map upload successful');
         } else {
@@ -149,15 +169,8 @@ class EventMapViewerEdit extends Component {
         if (map.title === mapTitle) newMap.title = mapTitleToUpload;
         return newMap;
       });
-      console.log('newMaps', newMaps);
-      updateEventRunner(eventId, userId, { maps: newMaps }, (successful) => {
-        if (successful) {
-          console.log('successfully updated title');
-          // this.setState({ mapTitleEditable: false }); // no need, will unmount!
-        } else {
-          console.log('update failed');
-        }
-      });
+      // console.log('newMaps', newMaps);
+      updateEventRunner(eventId, userId, { maps: newMaps });
     }
   }
 
@@ -174,12 +187,17 @@ class EventMapViewerEdit extends Component {
     // console.log('state in EventMapViewerEdit:', this.state);
     const {
       mapTitle,
-      // mapTitleList,
       selectedRunnerMaps,
       courseImg,
       routeImg,
     } = this.props;
-    const { mapTitleToUpload, mapTitleEditable, changesMade } = this.state;
+    const {
+      mapTitleToUpload,
+      mapTitleEditable,
+      changesMade,
+      dropZoneKeyCourse,
+      dropZoneKeyRoute,
+    } = this.state;
     const mapTitlesInUse = selectedRunnerMaps.map(map => map.title);
     const mapTitleIsDuplicate = (mapTitleEditable && (mapTitleToUpload !== mapTitle)
       && mapTitlesInUse.includes(mapTitleToUpload));
@@ -302,6 +320,7 @@ class EventMapViewerEdit extends Component {
             </div>
             <div className="column seven wide">
               <FileDropzone
+                key={dropZoneKeyCourse}
                 onFileAdded={file => this.setState({ courseMapToUpload: file })}
                 icon={dropzoneIcon}
                 text={dropzoneTextCourse}
@@ -332,6 +351,7 @@ class EventMapViewerEdit extends Component {
             </div>
             <div className="column seven wide">
               <FileDropzone
+                key={dropZoneKeyRoute}
                 onFileAdded={file => this.setState({ routeMapToUpload: file })}
                 icon={dropzoneIcon}
                 text={dropzoneTextRoute}
