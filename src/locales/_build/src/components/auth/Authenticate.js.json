@@ -1,0 +1,90 @@
+{
+  "Error: {errorMessage} Please try again.": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        38
+      ]
+    ]
+  },
+  "Sign up": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        54
+      ]
+    ]
+  },
+  "Log in": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        55
+      ]
+    ]
+  },
+  "Email": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        60
+      ]
+    ]
+  },
+  "Enter email address": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        66
+      ]
+    ]
+  },
+  "Password": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        77
+      ]
+    ]
+  },
+  "Enter password": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        83
+      ]
+    ]
+  },
+  "User name": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        96
+      ]
+    ]
+  },
+  "Enter user name (your email address will be used if left blank)": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        101
+      ]
+    ]
+  },
+  "Sign up for OMapFolder": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        121
+      ]
+    ]
+  },
+  "Log in to OMapFolder": {
+    "origin": [
+      [
+        "src/components/auth/Authenticate.js",
+        122
+      ]
+    ]
+  }
+}

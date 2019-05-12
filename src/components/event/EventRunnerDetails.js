@@ -30,7 +30,6 @@ const EventRunnerDetails = ({
   // console.log('selectedRunnerDetails', selectedRunnerDetails);
   const {
     user,
-    visibility,
     courseTitle,
     courseLength,
     courseClimb,
@@ -41,21 +40,84 @@ const EventRunnerDetails = ({
     timeBehind,
     fieldSize,
     tags,
-    maps,
-    comments,
+    // maps,
+    // comments,
   } = selectedRunnerDetails;
   const { displayName, fullName } = user;
 
-  const showEdit = (canEdit)
+  const renderHeader = (
+    <h3 className="header">
+      {`${displayName} ${(fullName && fullName !== '') ? `(${fullName})` : ''}`}
+    </h3>
+  );
+  const courseTitleToDisplay = (courseTitle && courseTitle !== '')
     ? (
-      <div>
-        <hr className="divider" />
-        <button type="button" className="ui red tiny button right floated" onClick={() => setEventViewModeRunner('delete')}>
-          <Trans>Delete runner</Trans>
-        </button>
-        <button type="button" className="ui primary tiny button" onClick={() => setEventViewModeRunner('edit')}>
-          <Trans>Edit runner details</Trans>
-        </button>
+      <Trans>
+        {'Course: '}
+        <span className="course-title">{courseTitle}</span>
+      </Trans>
+    )
+    : null;
+  const courseLengthToDisplay = (courseLength && courseLength !== '')
+    ? `${courseLength}km, `
+    : '';
+  const courseClimbToDisplay = (courseClimb && courseClimb !== '')
+    ? `${courseClimb}m, `
+    : '';
+  const courseControlsToDisplay = (courseControls && courseControls !== '')
+    ? <Trans>{`${courseControls} controls`}</Trans>
+    : '';
+  const renderCourseDetails = (courseTitleToDisplay)
+    ? (
+      <div className="item">
+        {courseTitleToDisplay}
+        {(courseLengthToDisplay || courseClimbToDisplay || courseControlsToDisplay)
+          ? (
+            <span>
+              {' ('}
+              {courseLengthToDisplay}
+              {courseClimbToDisplay}
+              {courseControlsToDisplay}
+              {')'}
+            </span>
+          )
+          : ''}
+      </div>
+    )
+    : <div className="item"><Trans>No course details to display</Trans></div>;
+  const resultTimeToDisplay = (time && time !== '')
+    ? (
+      <Trans>
+        {'Result: '}
+        <span className="course-title">{time}</span>
+      </Trans>
+    )
+    : null;
+  const resultFieldSizeToDisplay = (fieldSize && fieldSize !== '')
+    ? <Trans>{`of ${fieldSize}`}</Trans>
+    : '';
+  const renderResultSummary = (resultTimeToDisplay)
+    ? (
+      <div className="item">
+        {resultTimeToDisplay}
+        {((place && place !== '') || (timeBehind && timeBehind !== ''))
+          ? (
+            <span>
+              {(timeBehind) ? ` (${timeBehind}, ` : ' ('}
+              {place || ''}
+              {(resultFieldSizeToDisplay !== '') ? ' ' : ''}
+              {resultFieldSizeToDisplay}
+              {')'}
+            </span>
+          )
+          : ''}
+      </div>
+    )
+    : <div className="item"><Trans>No result to display</Trans></div>;
+  const renderResultsInfo = (fullResults.length > 0)
+    ? (
+      <div className="item">
+        <Trans>{`See below for results (${fullResults.length} runners)`}</Trans>
       </div>
     )
     : null;
@@ -68,28 +130,34 @@ const EventRunnerDetails = ({
       </span>
     )
     : null;
-  const renderResultsInfo = (fullResults.length > 0)
-    ? <Trans>{`See below for results (${fullResults.length})`}</Trans>
-    : <Trans>No results to display</Trans>;
+  const renderEditButtons = (canEdit)
+    ? (
+      <div>
+        <hr className="divider" />
+        <button type="button" className="ui red tiny button right floated" onClick={() => setEventViewModeRunner('delete')}>
+          <Trans>Delete runner</Trans>
+        </button>
+        <button type="button" className="ui primary tiny button" onClick={() => setEventViewModeRunner('edit')}>
+          <Trans>Edit runner details</Trans>
+        </button>
+      </div>
+    )
+    : null;
   const displayEventRunnerDetails = (
     <div>
-      <h3 className="header">{`${displayName} (${fullName})`}</h3>
-      {`visibility: ${visibility}`}
+      {renderHeader}
       <div className="ui list">
-        <div className="item">
-          {`Course: ${courseTitle}\n(${courseLength}km, ${courseClimb}m, ${courseControls} controls)`}
-        </div>
-        <div className="item">
-          {`Result: ${time}, ${place} of ${fieldSize}, ${timeBehind}`}
-        </div>
-        <div className="item">{renderResultsInfo}</div>
-        <div className="item">{`${maps.length} maps, see below`}</div>
-        <div className="item">{`${comments.length} comments, see below`}</div>
+        {renderCourseDetails}
+        {renderResultSummary}
+        {renderResultsInfo}
       </div>
       <div>{renderTags}</div>
-      {showEdit}
+      {renderEditButtons}
     </div>
   );
+  // <div className="item">{`${maps.length} maps, see below`}</div>
+  // <div className="item">{`${comments.length} comments, see below`}</div>
+
   const title = <Trans>Runner details</Trans>;
   return (
     <div className="ui segment">

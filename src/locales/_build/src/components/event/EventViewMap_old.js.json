@@ -2,7 +2,7 @@
   "Select an event on the map to show further details here": {
     "origin": [
       [
-        "src/components/event/EventViewMap.js",
+        "src/components/event/EventViewMap_old.js",
         221
       ]
     ]

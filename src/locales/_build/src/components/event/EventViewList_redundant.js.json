@@ -1,0 +1,18 @@
+{
+  "Sorry, no event is selected.": {
+    "origin": [
+      [
+        "src/components/event/EventViewList_redundant.js",
+        213
+      ]
+    ]
+  },
+  "Error: {errorMessage}": {
+    "origin": [
+      [
+        "src/components/event/EventViewList_redundant.js",
+        410
+      ]
+    ]
+  }
+}

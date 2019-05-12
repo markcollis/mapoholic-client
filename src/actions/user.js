@@ -14,7 +14,6 @@ import {
   USER_CHANGE_VIEW_MODE,
   USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
-  USER_SELECT_USER_EVENT,
 } from './types';
 import { OMAPFOLDER_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
@@ -55,10 +54,10 @@ export const selectUserToDisplayAction = userId => ({
   type: USER_SELECT_USER,
   payload: userId,
 });
-// select an event attended by a user to show further information (event details + maps)
-export const selectUserEventAction = eventId => ({
-  type: USER_SELECT_USER_EVENT,
-  payload: eventId,
+// cancel a displayed error message
+export const cancelUserErrorAction = () => ({
+  type: USER_ERROR,
+  payload: '',
 });
 
 // *** actions that are functions are enabled by redux-thunk middleware ***

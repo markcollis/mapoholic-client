@@ -1,47 +1,51 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Collapse from '../Collapse';
+import { Trans } from '@lingui/macro';
+
+import UserDelete from './UserDelete';
+import UserDetails from './UserDetails';
+import UserEdit from './UserEdit';
+import UserEvents from './UserEvents';
 import UserFilter from './UserFilter';
 import UserList from './UserList';
-import UserDetails from './UserDetails';
-import UserEvents from './UserEvents';
-import UserEdit from './UserEdit';
-import UserDelete from './UserDelete';
 import {
-  setUserViewModeAction,
-  setUserSearchFieldAction,
-  selectUserToDisplayAction,
-  selectUserEventAction,
   changePasswordAction,
-  postProfileImageAction,
-  getUserListAction,
+  deleteProfileImageAction,
+  deleteUserAction,
+  getClubListAction,
   getUserByIdAction,
   getUserEventsAction,
+  getUserListAction,
+  postProfileImageAction,
+  selectEventToDisplayAction,
+  selectRunnerToDisplayAction,
+  selectUserToDisplayAction,
+  setUserSearchFieldAction,
+  setUserViewModeAction,
   updateUserAction,
-  deleteUserAction,
-  deleteProfileImageAction,
-  getClubListAction,
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
 class UserView extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,
+    config: PropTypes.objectOf(PropTypes.any).isRequired,
     user: PropTypes.objectOf(PropTypes.any).isRequired,
-    getClubList: PropTypes.func.isRequired,
-    setUserViewMode: PropTypes.func.isRequired,
-    setUserSearchField: PropTypes.func.isRequired,
-    selectUserToDisplay: PropTypes.func.isRequired,
-    selectUserEvent: PropTypes.func.isRequired,
     changePassword: PropTypes.func.isRequired,
-    postProfileImage: PropTypes.func.isRequired,
-    getUserList: PropTypes.func.isRequired,
+    deleteProfileImage: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
+    getClubList: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
     getUserEvents: PropTypes.func.isRequired,
+    getUserList: PropTypes.func.isRequired,
+    postProfileImage: PropTypes.func.isRequired,
+    selectEventToDisplay: PropTypes.func.isRequired,
+    selectRunnerToDisplay: PropTypes.func.isRequired,
+    selectUserToDisplay: PropTypes.func.isRequired,
+    setUserSearchField: PropTypes.func.isRequired,
+    setUserViewMode: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
-    deleteUser: PropTypes.func.isRequired,
-    deleteProfileImage: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -50,66 +54,45 @@ class UserView extends Component {
     if (!user.list) getUserList();
   }
 
-  // show extra details if an event is selected
-  renderUserEvent() {
-    const { user } = this.props;
-    const { selectedEvent } = user;
-    if (selectedEvent !== '') {
-      return (
-        <div className="ui segment">
-          <Collapse title="Event Details">
-            <h3>{selectedEvent}</h3>
-            <p>Update later when event components are defined</p>
-          </Collapse>
-        </div>
-      );
-    }
-    return null;
-  }
-
   renderRightColumn() {
     const {
       club,
+      config,
       user,
+      changePassword,
+      deleteProfileImage,
+      deleteUser,
       getClubList,
+      getUserById,
       getUserEvents,
       getUserList,
-      getUserById,
+      postProfileImage,
+      selectEventToDisplay,
+      selectRunnerToDisplay,
       selectUserToDisplay,
-      selectUserEvent,
       setUserViewMode,
       updateUser,
-      changePassword,
-      postProfileImage,
-      deleteUser,
-      deleteProfileImage,
     } = this.props;
     const {
-      list,
       current,
-      viewMode,
       details,
-      selectedUserId,
-      eventLists,
       errorMessage,
+      eventLists,
+      list,
+      selectedUserId,
+      viewMode,
     } = user;
     const { list: clubListRaw } = club;
     const clubList = (clubListRaw) ? clubListRaw.slice(0, -1) : [];
+    const { language } = config;
 
     if (selectedUserId && !details[selectedUserId] && !errorMessage) {
-      setTimeout(() => getUserById(selectedUserId), 1000); // simulate network delay
+      getUserById(selectedUserId);
     }
     const isAdmin = (current && current.role === 'admin');
     const isSelf = (current && current._id === selectedUserId);
-    // console.log('isAdmin:', isAdmin, 'isSelf:', isSelf);
     const showOptional = (isAdmin || isSelf);
     const selectedUser = details[selectedUserId];
-
-    // console.log('viewMode:', viewMode);
-    // console.log('current:', current);
-    // console.log('selectedUserId:', selectedUserId);
-    // console.log('selectedUser:', selectedUser);
-    // console.log('eventLists:', eventLists);
     if (selectedUser && !eventLists[selectedUser._id]) {
       getUserEvents(selectedUser._id);
     }
@@ -123,7 +106,7 @@ class UserView extends Component {
         return (
           <div className="nine wide column">
             <div className="ui segment">
-              <p>Select a user from the list to show further details here</p>
+              <p><Trans>Select a user from the list to show further details here</Trans></p>
             </div>
           </div>
         );
@@ -132,43 +115,53 @@ class UserView extends Component {
           <div className="nine wide column">
             <UserDetails
               selectedUser={selectedUser || {}}
-              showOptional={showOptional}
               setUserViewMode={setUserViewMode}
+              showOptional={showOptional}
             />
-            <UserEvents eventsList={eventsList} selectUserEvent={selectUserEvent} />
-            {this.renderUserEvent()}
+            <UserEvents
+              eventsList={eventsList}
+              language={language}
+              selectedUser={selectedUser || {}}
+              selectEventToDisplay={selectEventToDisplay}
+              selectRunnerToDisplay={selectRunnerToDisplay}
+            />
           </div>
         );
       case 'edit':
         return (
           <div className="nine wide column">
             <UserEdit
-              isAdmin={isAdmin}
-              selectedUser={selectedUser}
-              updateUser={updateUser}
-              setUserViewMode={setUserViewMode}
-              selectUserToDisplay={selectUserToDisplay}
-              getUserList={getUserList}
-              getUserById={getUserById}
-              userList={(list) ? list.slice(0, -1) : []}
               changePassword={changePassword}
-              postProfileImage={postProfileImage}
-              deleteProfileImage={deleteProfileImage}
               clubList={clubList}
+              deleteProfileImage={deleteProfileImage}
               getClubList={getClubList}
+              getUserById={getUserById}
+              getUserList={getUserList}
+              isAdmin={isAdmin}
+              postProfileImage={postProfileImage}
+              selectedUser={selectedUser}
+              selectUserToDisplay={selectUserToDisplay}
+              setUserViewMode={setUserViewMode}
+              updateUser={updateUser}
+              userList={(list) ? list.slice(0, -1) : []}
             />
-            <UserEvents eventsList={eventsList} selectUserEvent={selectUserEvent} />
-            {this.renderUserEvent()}
+            <UserEvents
+              eventsList={eventsList}
+              language={language}
+              selectedUser={selectedUser || {}}
+              selectEventToDisplay={selectEventToDisplay}
+              selectRunnerToDisplay={selectRunnerToDisplay}
+            />
           </div>
         );
       case 'delete':
         return (
           <div className="nine wide column">
             <UserDelete
-              selectedUser={selectedUser}
               deleteUser={deleteUser}
-              setUserViewMode={setUserViewMode}
               getUserList={getUserList}
+              selectedUser={selectedUser}
+              setUserViewMode={setUserViewMode}
             />
           </div>
         );
@@ -181,16 +174,15 @@ class UserView extends Component {
     const {
       user,
       getUserList,
+      selectUserToDisplay,
       setUserSearchField,
       setUserViewMode,
-      selectUserToDisplay,
     } = this.props;
     const {
+      errorMessage,
       list,
       searchField,
-      errorMessage,
     } = user;
-    // console.log('list of users:', list);
     // need to consider reducing the number shown if there are many many users...
     const userListArray = (list)
       ? list.slice(0, -1).filter((eachUser) => {
@@ -198,14 +190,12 @@ class UserView extends Component {
           || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase()));
       })
       : [];
-
-    if (errorMessage) {
-      console.log('Error:', errorMessage);
-    }
     const renderError = (errorMessage)
       ? (
         <div className="sixteen wide column">
-          {(errorMessage) ? <div className="ui error message">{`Error: ${errorMessage}`}</div> : null}
+          {(errorMessage)
+            ? <div className="ui error message"><Trans>{`Error: ${errorMessage}`}</Trans></div>
+            : null}
         </div>
       )
       : null;
@@ -215,15 +205,15 @@ class UserView extends Component {
         {renderError}
         <div className="seven wide column">
           <UserFilter
+            getUserList={getUserList}
             searchField={searchField}
             setUserSearchField={setUserSearchField}
-            getUserList={getUserList}
           />
           <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
             <UserList
-              users={userListArray}
               selectUserToDisplay={selectUserToDisplay}
               setUserViewMode={setUserViewMode}
+              users={userListArray}
             />
           </div>
         </div>
@@ -233,23 +223,24 @@ class UserView extends Component {
   }
 }
 
-const mapStateToProps = ({ user, club }) => {
-  return { user, club };
+const mapStateToProps = ({ user, club, config }) => {
+  return { user, club, config };
 };
 const mapDispatchToProps = {
-  setUserSearchField: event => setUserSearchFieldAction(event.target.value),
-  setUserViewMode: setUserViewModeAction,
-  selectUserToDisplay: selectUserToDisplayAction,
-  selectUserEvent: selectUserEventAction,
   changePassword: changePasswordAction,
-  postProfileImage: postProfileImageAction,
-  getUserList: getUserListAction,
+  deleteProfileImage: deleteProfileImageAction,
+  deleteUser: deleteUserAction,
+  getClubList: getClubListAction,
   getUserById: getUserByIdAction,
   getUserEvents: getUserEventsAction,
+  getUserList: getUserListAction,
+  postProfileImage: postProfileImageAction,
+  selectEventToDisplay: selectEventToDisplayAction,
+  selectRunnerToDisplay: selectRunnerToDisplayAction,
+  selectUserToDisplay: selectUserToDisplayAction,
+  setUserSearchField: event => setUserSearchFieldAction(event.target.value),
+  setUserViewMode: setUserViewModeAction,
   updateUser: updateUserAction,
-  deleteUser: deleteUserAction,
-  deleteProfileImage: deleteProfileImageAction,
-  getClubList: getClubListAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserView);

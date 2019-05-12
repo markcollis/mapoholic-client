@@ -1,0 +1,18 @@
+{
+  "Select a user from the list to show further details here": {
+    "origin": [
+      [
+        "src/components/user/UserView.js",
+        109
+      ]
+    ]
+  },
+  "Error: {errorMessage}": {
+    "origin": [
+      [
+        "src/components/user/UserView.js",
+        197
+      ]
+    ]
+  }
+}

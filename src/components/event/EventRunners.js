@@ -81,14 +81,14 @@ const EventRunners = ({
 };
 
 EventRunners.propTypes = {
-  currentUserId: PropTypes.string,
-  currentUserOrisId: PropTypes.string,
-  selectedEvent: PropTypes.objectOf(PropTypes.any),
   addEventRunner: PropTypes.func.isRequired,
   addEventRunnerOris: PropTypes.func.isRequired,
+  currentUserId: PropTypes.string,
+  currentUserOrisId: PropTypes.string,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectEventToDisplay: PropTypes.func.isRequired,
   selectRunnerToDisplay: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 EventRunners.defaultProps = {
   currentUserId: null,

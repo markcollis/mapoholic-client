@@ -1,9 +1,9 @@
 {
-  "Add a new link between events": {
+  "Add a new link": {
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        156
+        159
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        167
+        170
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        168
+        171
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        190
+        193
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        191
+        194
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        192
+        195
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedManage.js",
-        193
+        196
       ]
     ]
   }

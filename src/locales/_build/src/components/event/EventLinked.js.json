@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        24
+        25
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        25
+        26
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        32
+        33
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        61
+        67
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        77
+        83
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        82
+        88
       ]
     ]
   }

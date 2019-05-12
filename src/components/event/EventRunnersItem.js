@@ -59,12 +59,15 @@ const EventRunnersItem = ({
 };
 
 EventRunnersItem.propTypes = {
-  currentUserId: PropTypes.string.isRequired,
+  currentUserId: PropTypes.string,
   eventId: PropTypes.string.isRequired,
   runner: PropTypes.objectOf(PropTypes.any).isRequired,
   selectEventToDisplay: PropTypes.func.isRequired,
   selectRunnerToDisplay: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+EventRunnersItem.defaultProps = {
+  currentUserId: null,
 };
 
 export default withRouter(EventRunnersItem);

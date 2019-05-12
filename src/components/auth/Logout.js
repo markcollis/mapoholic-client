@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 import { logoutAction } from '../../actions';
 
 class Logout extends Component {
@@ -16,8 +17,8 @@ class Logout extends Component {
   render() {
     return (
       <div className="logout ui segment">
-        <h3 className="header">Logged out</h3>
-        <p>Sorry to see you leave, come back again soon!</p>
+        <h3 className="header"><Trans>Logged out</Trans></h3>
+        <p><Trans>Sorry to see you leave, come back again soon!</Trans></p>
       </div>
     );
   }

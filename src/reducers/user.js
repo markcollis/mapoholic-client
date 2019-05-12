@@ -14,7 +14,6 @@ import {
   USER_CHANGE_VIEW_MODE,
   USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
-  USER_SELECT_USER_EVENT,
 } from '../actions/types';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
@@ -27,7 +26,6 @@ const INITIAL_STATE = {
   details: {}, // all user records viewed, key is userId
   selectedUserId: '', // userId of user to display in UserDetails
   eventLists: {}, // all event list records viewed, key is userId
-  selectedEvent: '', // selected event to show details of (eventId)
   errorMessage: '', // empty unless an error occurs
 };
 
@@ -143,9 +141,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case USER_SELECT_USER:
       // console.log('USER_SELECT_USER payload:', action.payload);
       return { ...state, selectedUserId: action.payload };
-    case USER_SELECT_USER_EVENT:
-      // console.log('USER_SELECT_USER_EVENT payload:', action.payload);
-      return { ...state, selectedEvent: action.payload };
     default:
       return state;
   }

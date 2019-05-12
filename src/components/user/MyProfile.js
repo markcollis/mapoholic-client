@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 
-import Collapse from '../Collapse';
+// import Collapse from '../Collapse';
 import UserDelete from './UserDelete';
 import UserDetails from './UserDetails';
 import UserEdit from './UserEdit';
@@ -17,7 +18,8 @@ import {
   getUserEventsAction,
   getUserListAction,
   postProfileImageAction,
-  selectUserEventAction,
+  selectEventToDisplayAction,
+  selectRunnerToDisplayAction,
   setUserViewModeSelfAction,
   updateUserAction,
 } from '../../actions';
@@ -25,6 +27,7 @@ import {
 
 const MyProfile = ({
   club,
+  config,
   user,
   changePassword,
   deleteProfileImage,
@@ -34,7 +37,8 @@ const MyProfile = ({
   getUserEvents,
   getUserList,
   postProfileImage,
-  selectUserEvent,
+  selectEventToDisplay,
+  selectRunnerToDisplay,
   setUserViewModeSelf,
   updateUser,
 }) => {
@@ -43,13 +47,13 @@ const MyProfile = ({
     errorMessage,
     eventLists,
     list,
-    selectedEvent,
     viewModeSelf,
   } = user;
+  const { language } = config;
   const { list: clubListRaw } = club;
   const clubList = (clubListRaw) ? clubListRaw.slice(0, -1) : [];
   const isAdmin = (current && current.role === 'admin');
-  if (current && !eventLists[current._id]) {
+  if (current && !eventLists[current._id] && !errorMessage) {
     getUserEvents(current._id);
   }
   const eventsList = (current && eventLists[current._id])
@@ -58,21 +62,23 @@ const MyProfile = ({
   const rightColumn = (
     <div className="seven wide column">
       {(eventsList.length === 0)
-        ? <div className="ui warning message">You have not added any events yet.</div>
-        : <UserEvents eventsList={eventsList} selectUserEvent={selectUserEvent} />
-      }
-      {(selectedEvent !== '')
         ? (
-          <div className="ui segment">
-            <Collapse title="Event Details">
-              <h3>{selectedEvent}</h3>
-              <p>Update later when event components are defined</p>
-            </Collapse>
+          <div className="ui warning message">
+            <Trans>You have not added any events yet.</Trans>
           </div>
         )
-        : null}
+        : (
+          <UserEvents
+            eventsList={eventsList}
+            language={language}
+            selectedUser={current || {}}
+            selectEventToDisplay={selectEventToDisplay}
+            selectRunnerToDisplay={selectRunnerToDisplay}
+          />
+        )
+      }
       {(errorMessage)
-        ? <div className="ui error message">{`Error: ${errorMessage}`}</div>
+        ? <div className="ui error message"><Trans>{`Error: ${errorMessage}`}</Trans></div>
         : null
       }
     </div>
@@ -136,6 +142,7 @@ const MyProfile = ({
 MyProfile.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
   club: PropTypes.objectOf(PropTypes.any).isRequired,
+  config: PropTypes.objectOf(PropTypes.any).isRequired,
   changePassword: PropTypes.func.isRequired,
   deleteProfileImage: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
@@ -144,13 +151,14 @@ MyProfile.propTypes = {
   getUserEvents: PropTypes.func.isRequired,
   getUserList: PropTypes.func.isRequired,
   postProfileImage: PropTypes.func.isRequired,
-  selectUserEvent: PropTypes.func.isRequired,
+  selectEventToDisplay: PropTypes.func.isRequired,
+  selectRunnerToDisplay: PropTypes.func.isRequired,
   setUserViewModeSelf: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ user, club }) => {
-  return { user, club };
+const mapStateToProps = ({ user, club, config }) => {
+  return { user, club, config };
 };
 const mapDispatchToProps = {
   changePassword: changePasswordAction,
@@ -161,7 +169,8 @@ const mapDispatchToProps = {
   getUserEvents: getUserEventsAction,
   getUserList: getUserListAction,
   postProfileImage: postProfileImageAction,
-  selectUserEvent: selectUserEventAction,
+  selectEventToDisplay: selectEventToDisplayAction,
+  selectRunnerToDisplay: selectRunnerToDisplayAction,
   setUserViewModeSelf: setUserViewModeSelfAction,
   updateUser: updateUserAction,
 };

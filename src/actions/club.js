@@ -49,6 +49,11 @@ export const selectClubEventAction = eventId => ({
   type: CLUB_SELECT_CLUB_EVENT,
   payload: eventId,
 });
+// cancel a displayed error message
+export const cancelClubErrorAction = () => ({
+  type: CLUB_ERROR,
+  payload: '',
+});
 
 // *** actions that are functions are enabled by redux-thunk middleware ***
 

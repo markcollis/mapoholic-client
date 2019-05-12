@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
-// import { withRouter } from 'react-router-dom';
-// import Collapse from '../Collapse';
 import EventLinkedList from './EventLinkedList';
 import EventLinkedEdit from './EventLinkedEdit';
 import EventLinkedDelete from './EventLinkedDelete';
@@ -20,6 +18,7 @@ class EventLinkedManage extends Component {
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
+    language: PropTypes.string.isRequired,
     linkDetails: PropTypes.objectOf(PropTypes.any),
     linkList: PropTypes.arrayOf(PropTypes.any),
     selectedEvent: PropTypes.objectOf(PropTypes.any),
@@ -62,6 +61,7 @@ class EventLinkedManage extends Component {
       getEventById,
       getEventLinkList,
       getEventList,
+      language,
       linkDetails,
       linkList,
       selectedEventDetails,
@@ -76,6 +76,7 @@ class EventLinkedManage extends Component {
         getEventById={getEventById}
         getEventLinkList={getEventLinkList}
         getEventList={getEventList}
+        language={language}
         linkDetails={linkDetails}
         linkList={linkList}
         selectedEventDetails={selectedEventDetails}
@@ -92,6 +93,7 @@ class EventLinkedManage extends Component {
       getEventById,
       getEventLinkList,
       getEventList,
+      language,
       linkDetails,
       linkList,
       selectedEventDetails,
@@ -107,6 +109,7 @@ class EventLinkedManage extends Component {
         getEventById={getEventById}
         getEventLinkList={getEventLinkList}
         getEventList={getEventList}
+        language={language}
         linkDetails={linkDetails}
         linkList={linkList}
         selectedEventDetails={selectedEventDetails}
@@ -153,7 +156,7 @@ class EventLinkedManage extends Component {
         className="ui tiny primary right floated button"
         onClick={() => setEventViewModeEventLink('add')}
       >
-        <Trans>Add a new link between events</Trans>
+        <Trans>Add a new link</Trans>
       </button>
     );
   }

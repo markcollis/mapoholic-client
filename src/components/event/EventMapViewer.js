@@ -9,6 +9,7 @@ import { OMAPFOLDER_SERVER } from '../../config';
 
 class EventMapViewer extends Component {
   static propTypes = {
+    canEdit: PropTypes.bool,
     deleteMap: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
     selectedEvent: PropTypes.objectOf(PropTypes.any),
@@ -19,6 +20,7 @@ class EventMapViewer extends Component {
   };
 
   static defaultProps = {
+    canEdit: false,
     selectedEvent: {},
     selectedRunner: '',
     selectedMap: '',
@@ -140,6 +142,7 @@ class EventMapViewer extends Component {
       showMapViewerDetails,
     } = this.state;
     const {
+      canEdit,
       deleteMap,
       postMap,
       selectedEvent,
@@ -152,17 +155,19 @@ class EventMapViewer extends Component {
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>
       : <Trans>Add or Delete maps</Trans>;
-    const renderAddDeleteButton = (
-      <button
-        type="button"
-        className={(showMapViewerDetails) ? 'ui tiny button' : 'ui tiny button primary'}
-        onClick={() => this.setState({ showMapViewerDetails: !showMapViewerDetails })}
-        onKeyPress={() => this.setState({ showMapViewerDetails: !showMapViewerDetails })}
-        tabIndex="0"
-      >
-        {addDeleteTitle}
-      </button>
-    );
+    const renderAddDeleteButton = (canEdit)
+      ? (
+        <button
+          type="button"
+          className={(showMapViewerDetails) ? 'ui tiny button' : 'ui tiny button primary'}
+          onClick={() => this.setState({ showMapViewerDetails: !showMapViewerDetails })}
+          onKeyPress={() => this.setState({ showMapViewerDetails: !showMapViewerDetails })}
+          tabIndex="0"
+        >
+          {addDeleteTitle}
+        </button>
+      )
+      : null;
     const renderTabs = (mapImageArray.length > 1)
       ? mapImageArray.map((mapImage) => {
         const { mapId, title } = mapImage;

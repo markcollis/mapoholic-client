@@ -1,0 +1,98 @@
+{
+  "Loading event details...": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        17
+      ]
+    ]
+  },
+  "Sorry, no matching runner details were found.": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        26
+      ]
+    ]
+  },
+  "Course: <0>{courseTitle}</0>": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        55
+      ]
+    ]
+  },
+  "{courseControls} controls": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        68
+      ]
+    ]
+  },
+  "No course details to display": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        87
+      ]
+    ]
+  },
+  "Result: <0>{time}</0>": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        90
+      ]
+    ]
+  },
+  "of {fieldSize}": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        97
+      ]
+    ]
+  },
+  "No result to display": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        116
+      ]
+    ]
+  },
+  "See below for results ({0} runners)": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        120
+      ]
+    ]
+  },
+  "Delete runner": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        138
+      ]
+    ]
+  },
+  "Edit runner details": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        141
+      ]
+    ]
+  },
+  "Runner details": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDetails.js",
+        161
+      ]
+    ]
+  }
+}

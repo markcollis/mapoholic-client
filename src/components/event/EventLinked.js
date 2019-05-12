@@ -11,7 +11,7 @@ const EventLinked = ({
   link,
   linkDetails,
   selectedEvent,
-  selectEventForDetails,
+  selectEvent,
   setEventViewModeEvent,
   setEventViewModeEventLink,
 }) => {
@@ -48,7 +48,7 @@ const EventLinked = ({
         key={linkedEventId}
         eventId={eventId}
         linkedEvent={linkedEvent}
-        selectEventForDetails={selectEventForDetails}
+        selectEvent={selectEvent}
         setEventViewModeEvent={setEventViewModeEvent}
         setEventViewModeEventLink={setEventViewModeEventLink}
       />
@@ -106,7 +106,7 @@ EventLinked.propTypes = {
   link: PropTypes.objectOf(PropTypes.any),
   linkDetails: PropTypes.objectOf(PropTypes.any),
   selectedEvent: PropTypes.objectOf(PropTypes.any),
-  selectEventForDetails: PropTypes.func.isRequired,
+  selectEvent: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
   setEventViewModeEventLink: PropTypes.func.isRequired,
 };

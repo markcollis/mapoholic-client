@@ -35,8 +35,7 @@ const Header = ({
   const isLogin = (location.pathname === '/login');
   const isMyMapsList = (location.pathname === '/mymaps');
   const isMyMapsMap = (location.pathname === '/mymapsmap');
-  const isFeature = (location.pathname === '/feature');
-  const isMyMapsGroup = isMyMapsList || isMyMapsMap || isFeature;
+  const isMyMapsGroup = isMyMapsList || isMyMapsMap;
   const isEventsList = (location.pathname === '/events');
   const isEventsMap = (location.pathname === '/eventsmap');
   const isEventsGroup = isEventsList || isEventsMap;
@@ -73,7 +72,6 @@ const Header = ({
         <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active item' : 'item'}>
           <Trans>Map view</Trans>
         </Link>
-        <Link to="/feature" className={(isFeature) ? 'active item' : 'item'}>Feature (Leaflet API test)</Link>
       </div>
     )
     : null;

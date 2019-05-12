@@ -1,64 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Collapse from '../Collapse';
+import { withRouter } from 'react-router-dom';
 
-const UserEvents = ({ eventsList, selectUserEvent }) => {
+import Collapse from '../Collapse';
+import EventListItem from '../event/EventListItem';
+
+const UserEvents = ({
+  eventsList,
+  history,
+  language,
+  selectedUser,
+  selectEventToDisplay,
+  selectRunnerToDisplay,
+}) => {
   if (eventsList.length === 0) {
     return null;
   }
-
-  const userEventsArray = eventsList.map((eachEvent) => {
-    const {
-      _id: eventId,
-      name,
-      date,
-      locPlace,
-      types,
-      tags,
-      totalRunners,
-      orisId,
-    } = eachEvent;
-    const typesTags = types.concat(tags);
-    return (
-      <div
-        key={eventId}
-        className="ui card fluid"
-        role="button"
-        onClick={() => selectUserEvent(eventId)}
-        onKeyPress={() => selectUserEvent(eventId)}
-        tabIndex="0"
-      >
-        <div className="content">
-          <div className="header  ">
-            {name}
-          </div>
-          <div className="meta">
-            <div>{`${date}, ${locPlace}`}</div>
-            {(orisId)
-              ? (
-                <p>
-                  {`(${totalRunners} users attended) `}
-                  <a href={`https://oris.orientacnisporty.cz/Zavod?id=${orisId}`}>{`ORIS ID: ${orisId}`}</a>
-                </p>
-              )
-              : (
-                <p>{`(${totalRunners} users attended)`}</p>
-              )
-            }
-            {(typesTags && typesTags.length > 0)
-              ? (
-                <div>
-                  {typesTags.map((type) => {
-                    return <div key={type} className="ui label blue">{type}</div>;
-                  })}
-                </div>
-              )
-              : null}
-          </div>
-        </div>
-      </div>
-    );
-  });
+  const { _id: userId } = selectedUser;
+  const handleSelectEvent = (eventId) => {
+    selectEventToDisplay(eventId);
+    selectRunnerToDisplay(userId);
+    history.push('/mapview');
+  };
+  const userEventsArray = [...eventsList]
+    .sort((a, b) => {
+      return (a.date < b.date) ? 0 : -1;
+    })
+    .map((oevent) => {
+      const { _id: eventId } = oevent;
+      return (
+        <EventListItem
+          key={eventId}
+          language={language}
+          oevent={oevent}
+          handleSelectEvent={handleSelectEvent}
+        />
+      );
+    });
 
   return (
     <div className="ui segment">
@@ -73,10 +51,14 @@ const UserEvents = ({ eventsList, selectUserEvent }) => {
 
 UserEvents.propTypes = {
   eventsList: PropTypes.arrayOf(PropTypes.object),
-  selectUserEvent: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  language: PropTypes.string.isRequired,
+  selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectEventToDisplay: PropTypes.func.isRequired,
+  selectRunnerToDisplay: PropTypes.func.isRequired,
 };
 UserEvents.defaultProps = {
   eventsList: [],
 };
 
-export default UserEvents;
+export default withRouter(UserEvents);

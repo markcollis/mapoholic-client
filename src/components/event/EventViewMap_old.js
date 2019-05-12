@@ -91,7 +91,7 @@ class EventViewMap extends Component {
       getEventLinkList,
       getUserList,
     } = this.props;
-    console.log('EventViewMap mounted - oevent:', oevent);
+    // console.log('EventViewMap mounted - oevent:', oevent);
     const { list: clubList } = club;
     const { list: userList } = user;
     const { list, linkList } = oevent;
@@ -346,7 +346,7 @@ class EventViewMap extends Component {
     // need to consider reducing the number shown if there are many many events...
     const eventListArray = this.createEventListArray();
     if (errorMessage) {
-      console.log('Error:', errorMessage);
+      // console.log('Error:', errorMessage);
     }
     const renderError = (errorMessage)
       ? (

@@ -5,7 +5,7 @@ import { reformatDate } from '../../common/conversions';
 const EventLinkedItem = ({
   eventId,
   linkedEvent,
-  selectEventForDetails,
+  selectEvent,
   setEventViewModeEvent,
   setEventViewModeEventLink,
 }) => {
@@ -26,12 +26,12 @@ const EventLinkedItem = ({
       className="ui fluid centered card"
       role="button"
       onClick={() => {
-        selectEventForDetails(linkedEventId);
+        selectEvent(linkedEventId);
         setEventViewModeEvent('view');
         setEventViewModeEventLink('view');
       }}
       onKeyPress={() => {
-        selectEventForDetails(linkedEventId);
+        selectEvent(linkedEventId);
         setEventViewModeEvent('view');
         setEventViewModeEventLink('view');
       }}
@@ -47,7 +47,7 @@ const EventLinkedItem = ({
 EventLinkedItem.propTypes = {
   eventId: PropTypes.string.isRequired,
   linkedEvent: PropTypes.objectOf(PropTypes.any).isRequired,
-  selectEventForDetails: PropTypes.func.isRequired,
+  selectEvent: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
   setEventViewModeEventLink: PropTypes.func.isRequired,
 };

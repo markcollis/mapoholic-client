@@ -11,6 +11,11 @@ export const logoutAction = () => {
   localStorage.removeItem('omapfolder-auth-token');
   return { type: AUTH_USER, payload: '' };
 };
+// cancel a displayed error message
+export const cancelAuthErrorAction = () => ({
+  type: AUTH_ERROR,
+  payload: '',
+});
 
 // *** Helper functions ***
 // handle errors consistently, for all routes except login

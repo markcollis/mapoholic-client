@@ -1,0 +1,18 @@
+{
+  "Logged out": {
+    "origin": [
+      [
+        "src/components/auth/Logout.js",
+        20
+      ]
+    ]
+  },
+  "Sorry to see you leave, come back again soon!": {
+    "origin": [
+      [
+        "src/components/auth/Logout.js",
+        21
+      ]
+    ]
+  }
+}

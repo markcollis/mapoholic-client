@@ -12,10 +12,13 @@ const EventMapViewerDetails = ({
   updateEventRunner,
   updateMapImageArray,
 }) => {
+  // console.log('selectedEvent in EventMapViewerDetails', selectedEvent);
   const eventId = selectedEvent._id;
-  const selectedRunnerMaps = (eventId)
-    ? selectedEvent.runners.find(runner => runner.user._id === selectedRunner).maps
-    : [];
+  const selectedEventRunners = selectedEvent.runners;
+  const selectedRunnerDetails = (selectedEventRunners)
+    ? selectedEventRunners.find(runner => runner.user._id === selectedRunner)
+    : null;
+  const selectedRunnerMaps = (selectedRunnerDetails) ? selectedRunnerDetails.maps : [];
   const mapViewerEditArray = selectedRunnerMaps.map((map) => {
     const {
       title,

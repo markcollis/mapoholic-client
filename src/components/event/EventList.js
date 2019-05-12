@@ -19,6 +19,10 @@ const EventList = ({
       </div>
     );
   }
+  const handleSelectEvent = (eventId) => {
+    selectEventForDetails(eventId);
+    setEventViewModeEvent('view');
+  };
   const eventsArray = [...events]
     .sort((a, b) => {
       return (a.date < b.date) ? 0 : -1;
@@ -30,6 +34,7 @@ const EventList = ({
           key={eventId}
           language={language}
           oevent={oevent}
+          handleSelectEvent={handleSelectEvent}
           selectEventForDetails={selectEventForDetails}
           setEventViewModeEvent={setEventViewModeEvent}
         />

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { typesOptionsLocale } from '../data';
+import { reformatDate } from '../../common/conversions';
 
 const EventListItem = ({
+  handleSelectEvent,
   language,
   oevent,
-  selectEventForDetails,
-  setEventViewModeEvent,
 }) => {
   const {
     _id: eventId,
@@ -17,15 +17,10 @@ const EventListItem = ({
     locPlace,
     locCountry,
     organisedBy,
-    totalRunners,
+    runners,
     types,
     tags,
   } = oevent;
-  const reformattedDate = date.slice(8)
-    .concat('/')
-    .concat(date.slice(5, 7))
-    .concat('/')
-    .concat(date.slice(0, 4));
   const typesOptions = typesOptionsLocale[language];
   const renderOrganisedBy = (organisedBy && organisedBy.length > 0)
     ? (
@@ -56,26 +51,20 @@ const EventListItem = ({
       </span>
     )
     : null;
-  const renderTotalRunners = (totalRunners > 0)
-    ? <span className="ui label circular floatedright">{totalRunners}</span>
+  const renderTotalRunners = (runners && runners.length > 0)
+    ? <span className="ui label circular floatedright">{runners.length}</span>
     : <span className="ui label floatedright"><Trans>none</Trans></span>;
 
   return (
     <div
       className="ui fluid centered card"
       role="button"
-      onClick={() => {
-        selectEventForDetails(eventId);
-        setEventViewModeEvent('view');
-      }}
-      onKeyPress={() => {
-        selectEventForDetails(eventId);
-        setEventViewModeEvent('view');
-      }}
+      onClick={() => handleSelectEvent(eventId)}
+      onKeyPress={() => handleSelectEvent(eventId)}
       tabIndex="0"
     >
       <div className="content">
-        <div className="header">{`${reformattedDate} - ${name}`}</div>
+        <div className="header">{`${reformatDate(date)} - ${name}`}</div>
         <div className="meta">
           <div>
             <Trans>Place</Trans>
@@ -96,13 +85,9 @@ const EventListItem = ({
 };
 
 EventListItem.propTypes = {
-  language: PropTypes.string,
+  language: PropTypes.string.isRequired,
   oevent: PropTypes.objectOf(PropTypes.any).isRequired,
-  selectEventForDetails: PropTypes.func.isRequired,
-  setEventViewModeEvent: PropTypes.func.isRequired,
-};
-EventListItem.defaultProps = {
-  language: 'en',
+  handleSelectEvent: PropTypes.func.isRequired,
 };
 
 export default EventListItem;

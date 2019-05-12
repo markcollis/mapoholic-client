@@ -1,0 +1,18 @@
+{
+  "You have not added any events yet.": {
+    "origin": [
+      [
+        "src/components/user/MyProfile.js",
+        67
+      ]
+    ]
+  },
+  "Error: {errorMessage}": {
+    "origin": [
+      [
+        "src/components/user/MyProfile.js",
+        81
+      ]
+    ]
+  }
+}

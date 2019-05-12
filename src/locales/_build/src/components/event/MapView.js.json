@@ -1,9 +1,25 @@
 {
+  "Select a runner from the list to show further details here": {
+    "origin": [
+      [
+        "src/components/event/MapView.js",
+        212
+      ]
+    ]
+  },
   "Sorry, no event is selected.": {
     "origin": [
       [
         "src/components/event/MapView.js",
-        229
+        285
+      ]
+    ]
+  },
+  "Error: {errorMessage}": {
+    "origin": [
+      [
+        "src/components/event/MapView.js",
+        509
       ]
     ]
   }

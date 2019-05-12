@@ -5,6 +5,7 @@ import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
+import { validationErrorsLocale } from '../data';
 /* eslint no-underscore-dangle: 0 */
 
 // renders form to either create or edit an event link record
@@ -21,6 +22,7 @@ class EventLinkedEdit extends Component {
     // passed down from parent
     eventLinkMode: PropTypes.string.isRequired,
     eventList: PropTypes.arrayOf(PropTypes.object),
+    language: PropTypes.string.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
   };
 
@@ -45,6 +47,7 @@ class EventLinkedEdit extends Component {
       isSubmitting,
       eventLinkMode,
       eventList,
+      language,
       setEventViewModeEventLink,
     } = this.props;
     const submitButtonText = (eventLinkMode === 'add') ? <Trans>Create</Trans> : <Trans>Update</Trans>;
@@ -58,6 +61,7 @@ class EventLinkedEdit extends Component {
       return { value: eventId, label: `${name} (${date})` };
     });
     // console.log('includesOptions:', includesOptions);
+    const validationErrors = validationErrorsLocale[language];
 
     return (
       <Form className="ui warning form" noValidate>
@@ -74,7 +78,7 @@ class EventLinkedEdit extends Component {
               )}
             </I18n>
             { touched.displayName && errors.displayName
-              && <div className="ui warning message">{errors.displayName}</div> }
+              && <div className="ui warning message">{validationErrors[errors.displayName]}</div> }
           </label>
         </div>
         <div className="field">
@@ -152,7 +156,7 @@ const formikEventLinkedEdit = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    displayName: Yup.string().required('You must provide a name for the event link.'),
+    displayName: Yup.string().required('eventLinkNameRequired'),
   }),
   handleSubmit(values, { props, setSubmitting }) {
     const {

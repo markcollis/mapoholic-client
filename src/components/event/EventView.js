@@ -1,54 +1,50 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
-import EventRunners from './EventRunners';
-import EventRunnerDetails from './EventRunnerDetails';
-import EventRunnerEdit from './EventRunnerEdit';
-import EventRunnerDelete from './EventRunnerDelete';
-import EventMapViewer from './EventMapViewer';
+import EventDelete from './EventDelete';
 import EventDetails from './EventDetails';
 import EventEdit from './EventEdit';
-import EventDelete from './EventDelete';
+import EventFilter from './EventFilter';
 import EventLinked from './EventLinked';
 import EventLinkedManage from './EventLinkedManage';
-import EventComments from './EventComments';
-import EventResults from './EventResults';
-
+import EventList from './EventList';
+import EventMap from './EventMap';
+import EventRunners from './EventRunners';
+import { testOrisList } from '../data'; // support dev without repeatedly calling ORIS API
+import { reformatDate } from '../../common/conversions';
 import {
-  // setEventViewModeCommentAction,
   addEventRunnerAction,
   addEventRunnerOrisAction,
   cancelEventErrorAction,
+  createEventAction,
   createEventLinkAction,
+  createEventOrisAction,
   deleteEventAction,
   deleteEventLinkAction,
-  deleteEventRunnerAction,
-  deleteMapAction,
   getClubListAction,
   getEventByIdAction,
   getEventLinkListAction,
   getEventListAction,
+  getEventListOrisAction,
   getUserListAction,
-  postMapAction,
   selectEventForDetailsAction,
   selectEventToDisplayAction,
-  selectMapToDisplayAction,
   selectRunnerToDisplayAction,
+  setEventSearchFieldAction,
   setEventViewModeEventAction,
   setEventViewModeEventLinkAction,
-  setEventViewModeRunnerAction,
   updateEventAction,
   updateEventLinkAction,
-  updateEventRunnerAction,
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
-class MapView extends Component {
+class EventViewList extends Component {
   static propTypes = {
+    mineOnly: PropTypes.bool,
+    showMap: PropTypes.bool,
     club: PropTypes.objectOf(PropTypes.any).isRequired,
     config: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -56,30 +52,30 @@ class MapView extends Component {
     addEventRunner: PropTypes.func.isRequired,
     addEventRunnerOris: PropTypes.func.isRequired,
     cancelEventError: PropTypes.func.isRequired,
+    clearEventSearchField: PropTypes.func.isRequired,
+    createEvent: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
+    createEventOris: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
-    deleteEventRunner: PropTypes.func.isRequired,
-    deleteMap: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
-    postMap: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
-    selectMapToDisplay: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
+    setEventSearchField: PropTypes.func.isRequired,
     setEventViewModeEvent: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
-    setEventViewModeRunner: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
-    updateEventRunner: PropTypes.func.isRequired,
   }
 
-  // get summary data from API if not already available
+  static defaultProps = { mineOnly: false, showMap: false };
+
+  // get summary data from API if not available
   componentDidMount() {
     const {
       club,
@@ -91,26 +87,70 @@ class MapView extends Component {
       getUserList,
     } = this.props;
     const { list: clubList } = club;
-    const { list: eventList, linkList } = oevent;
     const { list: userList } = user;
+    const { list, linkList } = oevent;
     if (!clubList) getClubList();
-    if (!eventList) getEventList();
-    if (!linkList) getEventLinkList();
     if (!userList) getUserList();
+    if (!list) getEventList();
+    if (!linkList) getEventLinkList();
   }
 
+  // helper to create event list if relevant props change
+  getEventListArray = memoize((list, searchField, current, mineOnly) => {
+    // console.log('refreshing event list array');
+    const currentUserId = (current) ? current._id : '';
+    if (!list) return [];
+    return list.slice(0, -1)
+      .filter((eachEvent) => { // if mineOnly, select only those with current user as runner
+        const { runners } = eachEvent;
+        const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+        // console.log(currentUserId, runnerIds);
+        return !mineOnly || runnerIds.includes(currentUserId);
+      })
+      .filter((eachEvent) => { // filter against search field
+        const {
+          date,
+          locCountry,
+          locPlace,
+          mapName,
+          name,
+          organisedBy,
+          tags,
+          types,
+        } = eachEvent;
+        const reformattedDate = reformatDate(date);
+        const matchName = name.toLowerCase().includes(searchField.toLowerCase());
+        const matchMapName = mapName.toLowerCase().includes(searchField.toLowerCase());
+        const matchDate = (date.includes(searchField) || reformattedDate.includes(searchField));
+        const matchPlace = locPlace.toLowerCase().includes(searchField.toLowerCase());
+        const matchCountry = locCountry.includes(searchField.toUpperCase());
+        const matchOrganisedBy = organisedBy.length > 0 && organisedBy.some((club) => {
+          return club.shortName.toLowerCase().includes(searchField.toLowerCase());
+        });
+        const matchTypes = types.length > 0 && types.some((type) => {
+          return type.toLowerCase().includes(searchField.toLowerCase());
+        });
+        const matchTags = tags.length > 0 && tags.some((tag) => {
+          return tag.toLowerCase().includes(searchField.toLowerCase());
+        });
+        return (matchName || matchMapName || matchDate || matchPlace || matchCountry
+          || matchOrganisedBy || matchTypes || matchTags);
+      });
+  });
+
   // helper to get details of selected event if input props have changed
-  getSelectedEvent = memoize((details, selectedEventDisplay, errorMessage) => {
+  getSelectedEvent = memoize((details, selectedEventDetails, errorMessage) => {
+    // console.log('getting selected event');
     // get detailed data for selected event if not already available
-    if (selectedEventDisplay && !details[selectedEventDisplay] && !errorMessage) {
+    if (selectedEventDetails && !details[selectedEventDetails] && !errorMessage) {
       const { getEventById } = this.props;
-      getEventById(selectedEventDisplay);
+      getEventById(selectedEventDetails);
     }
-    return details[selectedEventDisplay] || {};
+    return details[selectedEventDetails] || {};
   });
 
   // helper to return current user's id if input prop has changed
-  getCurrentUserId = memoize(current => ((current) ? current._id.toString() : null));
+  getCurrentUserId = memoize(current => ((current) ? current._id : null));
 
   // helper to return current user's ORIS id if input prop has changed
   getCurrentUserOrisId = memoize(current => ((current) ? current.orisId : null));
@@ -120,6 +160,7 @@ class MapView extends Component {
 
   // helper to determine if current user can edit event if input props have changed
   getCanEditEvent = memoize((current, selectedEvent) => {
+    // console.log('checking if user can edit event');
     const isAdmin = (current && current.role === 'admin');
     if (isAdmin) return true;
     const runnerList = (selectedEvent.runners)
@@ -130,15 +171,6 @@ class MapView extends Component {
     return isRunner;
   });
 
-  // helper to determine if current user can edit runner if input props have changed
-  getCanEditRunner = memoize((current, selectedRunner) => {
-    // console.log('current', current);
-    const isAdmin = (current && current.role === 'admin');
-    const isSelectedRunner = (current && current._id === selectedRunner);
-    // console.log('isAdmin, isSelectedRunner:', isAdmin, isSelectedRunner);
-    return isAdmin || isSelectedRunner;
-  });
-
   // helper to get details of organising clubs if input props have changed
   getOrganisingClubs = memoize((selectedEvent, clubDetails) => {
     const organisingClubs = (selectedEvent.organisedBy)
@@ -147,105 +179,6 @@ class MapView extends Component {
     return organisingClubs;
   });
 
-  // render EventRunners component
-  renderEventRunners = () => {
-    const {
-      oevent,
-      user,
-      addEventRunner,
-      addEventRunnerOris,
-      selectEventToDisplay,
-      selectRunnerToDisplay,
-    } = this.props;
-    const {
-      details,
-      errorMessage,
-      selectedEventDisplay,
-    } = oevent;
-    const { current } = user;
-
-    const currentUserId = this.getCurrentUserId(current);
-    const currentUserOrisId = this.getCurrentUserOrisId(current);
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
-
-    return (
-      <EventRunners
-        addEventRunner={addEventRunner} // prop
-        addEventRunnerOris={addEventRunnerOris} // prop
-        currentUserId={currentUserId} // derived
-        currentUserOrisId={currentUserOrisId} // derived
-        selectedEvent={selectedEvent} // derived
-        selectEventToDisplay={selectEventToDisplay} // prop
-        selectRunnerToDisplay={selectRunnerToDisplay} // prop
-      />
-    );
-  }
-
-  // render EventRunnerDetails, EventRunnerEdit or EventRunnerDelete components as required
-  renderEventRunnerDetails = () => {
-    const {
-      config,
-      oevent,
-      user,
-      deleteEventRunner,
-      setEventViewModeRunner,
-      updateEventRunner,
-    } = this.props;
-    const { language } = config;
-    const {
-      details,
-      errorMessage,
-      runnerMode,
-      selectedEventDisplay,
-      selectedRunner,
-    } = oevent;
-    const { current } = user;
-
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
-    const canEdit = this.getCanEditRunner(current, selectedRunner);
-    const isAdmin = this.getIsAdmin(current);
-
-    switch (runnerMode) {
-      case 'none':
-        return (
-          <div className="ui segment">
-            <p><Trans>Select a runner from the list to show further details here</Trans></p>
-          </div>
-        );
-      case 'view':
-        return (
-          <EventRunnerDetails
-            canEdit={canEdit}
-            selectedEvent={selectedEvent} // derived
-            selectedRunner={selectedRunner} // prop (oevent)
-            setEventViewModeRunner={setEventViewModeRunner} // prop
-          />
-        );
-      case 'edit':
-        return (
-          <EventRunnerEdit
-            isAdmin={isAdmin}
-            language={language} // prop (config)
-            selectedEvent={selectedEvent} // derived
-            selectedRunner={selectedRunner} // prop (oevent)
-            setEventViewModeRunner={setEventViewModeRunner} // prop
-            updateEventRunner={updateEventRunner} // prop
-          />
-        );
-      case 'delete':
-        return (
-          <EventRunnerDelete
-            deleteEventRunner={deleteEventRunner} // prop
-            selectedEvent={selectedEvent} // derived
-            selectedRunner={selectedRunner} // prop (oevent)
-            setEventViewModeRunner={setEventViewModeRunner} // prop
-          />
-        );
-      default:
-        return null;
-    }
-  }
-
   // render EventDetails, EventEdit or EventDelete components as required by eventMode
   renderEventDetails = () => {
     const {
@@ -253,6 +186,8 @@ class MapView extends Component {
       config,
       oevent,
       user,
+      createEvent, // different to MapView version
+      createEventOris, // different to MapView version
       deleteEvent,
       getEventList,
       getEventLinkList,
@@ -263,20 +198,26 @@ class MapView extends Component {
     } = this.props;
     const {
       details,
-      errorMessage,
+      errorMessage, // different to MapView version
       eventMode,
       linkList,
       list,
+      selectedEventDetails, // different to MapView version
       selectedEventDisplay,
     } = oevent;
     const { details: clubDetails, list: clubList } = club;
     const { language } = config;
     const { current, list: userList } = user;
 
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
+    const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
+    // different to MapView version
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
     const organisingClubs = this.getOrganisingClubs(selectedEvent, clubDetails);
+    const orisList = testOrisList; // different to MapView version, temporary while developing
+    // const { orisList } = oevent;
+    // populate ORIS event list when rendered with a current user for the first time
+    // if (!orisList && current && current.orisId !== '') getEventListOris();
 
     switch (eventMode) {
       case 'none':
@@ -285,7 +226,26 @@ class MapView extends Component {
             <p><Trans>Sorry, no event is selected.</Trans></p>
           </div>
         );
-      case 'add': // not relevant on this screen
+      case 'add': // not provided in MapView version
+        // console.log('orisList prop for EventEdit:', orisList);
+        return (
+          <EventEdit // same form component handles both create and update
+            language={language}
+            isAdmin={isAdmin}
+            eventMode={eventMode}
+            selectedEvent={selectedEvent}
+            createEvent={createEvent}
+            createEventOris={createEventOris}
+            setEventViewModeEvent={setEventViewModeEvent}
+            selectEventForDetails={selectEventForDetails}
+            selectEventToDisplay={selectEventToDisplay}
+            getEventList={getEventList}
+            eventList={(list) ? list.slice(0, -1) : []}
+            eventLinkList={(linkList) ? linkList.slice(0, -1) : []}
+            clubList={(clubList) ? clubList.slice(0, -1) : []}
+            orisList={orisList || []}
+          />
+        );
       case 'view':
         return (
           <EventDetails
@@ -319,6 +279,7 @@ class MapView extends Component {
             getEventLinkList={getEventLinkList} // prop
             getEventList={getEventList} // prop
             selectedEvent={selectedEvent} // derived
+            selectedEventDetails={selectedEventDetails} // prop (oevent)
             selectedEventDisplay={selectedEventDisplay} // prop (oevent)
             selectEventForDetails={selectEventForDetails} // prop
             selectEventToDisplay={selectEventToDisplay} // prop
@@ -341,7 +302,7 @@ class MapView extends Component {
       getEventById,
       getEventLinkList,
       getEventList,
-      selectEventToDisplay,
+      selectEventForDetails,
       setEventViewModeEvent,
       setEventViewModeEventLink,
       updateEventLink,
@@ -360,7 +321,8 @@ class MapView extends Component {
     } = oevent;
     const { current } = user;
 
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
+    const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
+    // different from MapView version
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
 
@@ -379,7 +341,7 @@ class MapView extends Component {
                   link={link} // derived (selectedEvent)
                   linkDetails={linkDetails} // prop (oevent)
                   selectedEvent={selectedEvent} // derived
-                  selectEvent={selectEventToDisplay} // prop
+                  selectEvent={selectEventForDetails} // prop, different from MapView version
                   setEventViewModeEvent={setEventViewModeEvent} // prop
                   setEventViewModeEventLink={setEventViewModeEventLink} // prop
                 />
@@ -412,81 +374,36 @@ class MapView extends Component {
     );
   }
 
-  // render EventComments component (self-contained with add/edit/delete)
-  renderEventComments = () => {
-    const {
-      oevent,
-    } = this.props;
-    const {
-      details,
-      errorMessage,
-      selectedEventDisplay,
-      selectedRunner,
-    } = oevent;
-
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
-
-    return (
-      <EventComments
-        selectedEvent={selectedEvent} // derived
-        selectedRunner={selectedRunner} // prop (oevent)
-      />
-    );
-  }
-
-  // render EventMapViewer component (self-contained with add/replace/delete maps)
-  renderEventMapViewer = () => {
+  // render EventRunners component
+  renderEventRunners = () => {
     const {
       oevent,
       user,
-      deleteMap,
-      postMap,
-      selectMapToDisplay,
-      updateEventRunner,
+      addEventRunner,
+      addEventRunnerOris,
+      selectEventToDisplay,
+      selectRunnerToDisplay,
     } = this.props;
     const {
       details,
       errorMessage,
-      selectedEventDisplay,
-      selectedRunner,
-      selectedMap,
+      selectedEventDetails, // only difference from version in MapView
     } = oevent;
     const { current } = user;
 
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
-    const canEdit = this.getCanEditRunner(current, selectedRunner);
+    const currentUserId = this.getCurrentUserId(current);
+    const currentUserOrisId = this.getCurrentUserOrisId(current);
+    const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
 
     return (
-      <EventMapViewer
-        canEdit={canEdit} // derived
+      <EventRunners
+        addEventRunner={addEventRunner} // prop
+        addEventRunnerOris={addEventRunnerOris} // prop
+        currentUserId={currentUserId} // derived
+        currentUserOrisId={currentUserOrisId} // derived
         selectedEvent={selectedEvent} // derived
-        selectedRunner={selectedRunner} // prop (oevent)
-        selectedMap={selectedMap} // prop (oevent)
-        deleteMap={deleteMap} // prop
-        postMap={postMap} // prop
-        selectMapToDisplay={selectMapToDisplay} // prop
-        updateEventRunner={updateEventRunner} // prop
-      />
-    );
-  }
-
-  // render EventResults component (self-contained with add/edit/delete)
-  // *** consider whether add/edit might need wider screen? ***
-  renderEventResults = () => { // simple viewer done, not editable yet
-    const { oevent } = this.props;
-    const {
-      details,
-      errorMessage,
-      selectedEventDisplay,
-      selectedRunner,
-    } = oevent;
-
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
-
-    return (
-      <EventResults
-        selectedEvent={selectedEvent} // derived
-        selectedRunner={selectedRunner} // prop (oevent)
+        selectEventToDisplay={selectEventToDisplay} // prop
+        selectRunnerToDisplay={selectRunnerToDisplay} // prop
       />
     );
   }
@@ -512,32 +429,113 @@ class MapView extends Component {
     );
   }
 
+  renderEventFilter = () => {
+    const {
+      oevent,
+      user,
+      getEventList,
+      clearEventSearchField,
+      setEventSearchField,
+      setEventViewModeEvent,
+      selectEventForDetails,
+    } = this.props;
+    const { searchField } = oevent;
+    const { current } = user;
+
+    return (
+      <EventFilter
+        currentUser={current}
+        searchField={searchField}
+        clearEventSearchField={clearEventSearchField}
+        setEventSearchField={setEventSearchField}
+        setEventViewModeEvent={setEventViewModeEvent}
+        getEventList={getEventList}
+        selectEventForDetails={selectEventForDetails}
+      />
+    );
+  }
+
+  renderEventList = () => {
+    const {
+      mineOnly,
+      config,
+      oevent,
+      user,
+      setEventViewModeEvent,
+      selectEventForDetails,
+    } = this.props;
+    const { language } = config;
+    const { searchField, list } = oevent;
+    const { current } = user;
+    // need to consider reducing the number shown if there are many many events...
+    const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
+
+    return (
+      <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
+        <EventList
+          language={language}
+          events={eventListArray}
+          selectEventForDetails={selectEventForDetails}
+          setEventViewModeEvent={setEventViewModeEvent}
+        />
+      </div>
+    );
+  }
+
+  renderEventMap = () => {
+    const {
+      mineOnly,
+      oevent,
+      user,
+      setEventViewModeEvent,
+      selectEventForDetails,
+    } = this.props;
+    const { searchField, list } = oevent;
+    const { current } = user;
+    const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
+
+    return (
+      <EventMap
+        events={eventListArray}
+        selectEventForDetails={selectEventForDetails}
+        setEventViewModeEvent={setEventViewModeEvent}
+      />
+    );
+  }
+
   render() {
-    const { oevent } = this.props;
-    const { selectedEventDisplay } = oevent;
-    if (!selectedEventDisplay) {
-      // console.log('no event selected, redirecting to events list');
-      return <Redirect to="/events" />;
+    console.log('props in EventView:', this.props);
+    const { showMap } = this.props;
+    if (showMap) {
+      return (
+        <div className="ui vertically padded stackable grid">
+          {this.renderError()}
+          <div className="sixteen wide column">
+            {this.renderEventMap()}
+          </div>
+          <div className="eight wide column">
+            {this.renderEventFilter()}
+            {this.renderLinkedEvents()}
+          </div>
+          <div className="eight wide column">
+            {this.renderEventDetails()}
+            {this.renderEventRunners()}
+          </div>
+        </div>
+      );
     }
+
     return (
       <div className="ui vertically padded stackable grid">
         {this.renderError()}
         <div className="eight wide column">
-          {this.renderEventRunnerDetails()}
-        </div>
-        <div className="eight wide column">
-          {this.renderEventRunners()}
-        </div>
-        <div className="sixteen wide column">
-          {this.renderEventMapViewer()}
+          {this.renderEventFilter()}
+          {this.renderEventList()}
         </div>
         <div className="eight wide column">
           {this.renderEventDetails()}
+          {this.renderEventRunners()}
           {this.renderLinkedEvents()}
-        </div>
-        <div className="eight wide column">
-          {this.renderEventComments()}
-          {this.renderEventResults()}
         </div>
       </div>
     );
@@ -558,31 +556,29 @@ const mapStateToProps = ({
   };
 };
 const mapDispatchToProps = {
-  // setEventViewModeComment: setEventViewModeCommentAction,
   addEventRunner: addEventRunnerAction,
   addEventRunnerOris: addEventRunnerOrisAction,
   cancelEventError: cancelEventErrorAction,
+  clearEventSearchField: () => setEventSearchFieldAction(''),
+  createEvent: createEventAction,
   createEventLink: createEventLinkAction,
+  createEventOris: createEventOrisAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
-  deleteEventRunner: deleteEventRunnerAction,
-  deleteMap: deleteMapAction,
   getClubList: getClubListAction,
   getEventById: getEventByIdAction,
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
+  getEventListOris: getEventListOrisAction,
   getUserList: getUserListAction,
-  postMap: postMapAction,
   selectEventForDetails: selectEventForDetailsAction,
   selectEventToDisplay: selectEventToDisplayAction,
-  selectMapToDisplay: selectMapToDisplayAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
+  setEventSearchField: event => setEventSearchFieldAction(event.target.value),
   setEventViewModeEvent: setEventViewModeEventAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
-  setEventViewModeRunner: setEventViewModeRunnerAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,
-  updateEventRunner: updateEventRunnerAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapView);
+export default connect(mapStateToProps, mapDispatchToProps)(EventViewList);

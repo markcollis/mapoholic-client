@@ -4,6 +4,7 @@ import { Trans } from '@lingui/macro';
 
 const EventDelete = ({
   selectedEvent,
+  selectedEventDetails,
   selectedEventDisplay,
   deleteEvent,
   getEventList,
@@ -32,8 +33,8 @@ const EventDelete = ({
             if (didSucceed) {
               getEventList(null, () => {
                 setEventViewModeEvent('none');
-                selectEventForDetails('');
                 getEventLinkList();
+                if (eventId === selectedEventDetails) selectEventForDetails('');
                 if (eventId === selectedEventDisplay) selectEventToDisplay('');
               });
             }
@@ -55,6 +56,7 @@ const EventDelete = ({
 
 EventDelete.propTypes = {
   selectedEvent: PropTypes.objectOf(PropTypes.any),
+  selectedEventDetails: PropTypes.string,
   selectedEventDisplay: PropTypes.string,
   getEventList: PropTypes.func.isRequired,
   getEventLinkList: PropTypes.func.isRequired,
@@ -65,6 +67,7 @@ EventDelete.propTypes = {
 };
 EventDelete.defaultProps = {
   selectedEvent: null,
+  selectedEventDetails: '',
   selectedEventDisplay: '',
 };
 

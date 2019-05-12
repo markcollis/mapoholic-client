@@ -10,7 +10,12 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import enGB from 'date-fns/locale/en-GB';
 import cs from '../../common/cs';
-import { countryOptionsLocale, regionOptionSets, typesOptionsLocale } from '../data';
+import {
+  countryOptionsLocale,
+  regionOptionSets,
+  typesOptionsLocale,
+  validationErrorsLocale,
+} from '../data';
 import { dateToDateString, dateStringToDate } from '../../common/conversions';
 
 registerLocale('cs', cs);
@@ -57,27 +62,20 @@ class EventEdit extends Component {
   };
 
   state = {
-    // countryOptions: [],
     orisOptions: [],
     regionOptions: [],
     tagsOptions: [{ value: 'default', label: 'default' }],
-    // typesOptions: [],
   };
 
   componentDidMount() {
     const {
       eventList,
       eventMode,
-      // language,
       getEventList,
       orisList,
       selectedEvent,
     } = this.props;
     if (eventList && eventList.length === 0 && eventMode === 'edit') getEventList();
-    // this.setState({
-    //   countryOptions: countryOptionsLocale[language],
-    //   typesOptions: typesOptionsLocale[language],
-    // });
     if (selectedEvent && selectedEvent.locCountry) {
       this.setState({ regionOptions: regionOptionSets[selectedEvent.locCountry] });
     }
@@ -102,30 +100,11 @@ class EventEdit extends Component {
         });
       this.setState({ orisOptions: populatedOrisOptions });
     }
-    // if (eventMode === 'add') {
-    //   console.log('checking for ORIS events now');
-    //   getEventListOris((success) => {
-    //     if (success) {
-    //       const { orisList } = this.props;
-    //       console.log('current props:', this.props);
-    //       console.log('oris event list:', orisList);
-    //       if (orisList.length > 0) {
-    //         const populatedOrisOptions = orisList.map((orisEvent) => {
-    //           const value = orisEvent.orisEventId;
-    //           const label = `${orisEvent.name} (${orisEvent.date})`;
-    //           return { value, label };
-    //         });
-    //         this.setState({ orisOptions: populatedOrisOptions });
-    //       }
-    //     }
-    //   });
-    // }
   }
 
   componentDidUpdate(prevProps) {
     const {
       eventMode,
-      // language,
       resetForm,
     } = this.props;
     if (prevProps.eventMode === 'edit' && eventMode === 'add') {
@@ -161,20 +140,15 @@ class EventEdit extends Component {
         return { value: user.user_id, label: user.displayName };
       })
       : [{ value: null, label: 'no users in list' }];
-    // console.log('ownerOptions', ownerOptions);
     const organisedByOptions = clubList.map((club) => {
       return { value: club._id, label: club.shortName };
     });
-    // console.log('organisedByOptions:', organisedByOptions);
     const linkedToOptions = eventLinkList.map((link) => {
       return { value: link._id, label: link.displayName };
     });
-    // console.log('linkedToOptions:', linkedToOptions);
-    // console.log('values:', values);
-    // console.log('tagsOptions:', tagsOptions);
     const countryOptions = countryOptionsLocale[language];
     const typesOptions = typesOptionsLocale[language];
-    // const orisOptions = [{ value: 'test', label: 'test' }];
+    const validationErrors = validationErrorsLocale[language];
 
     return (
       <Form className="ui warning form" noValidate>
@@ -236,7 +210,8 @@ class EventEdit extends Component {
                       />
                     )}
                   </I18n>
-                  { touched.name && errors.name && <div className="ui warning message">{errors.name}</div> }
+                  { touched.name && errors.name
+                    && <div className="ui warning message">{validationErrors[errors.name] || '!'}</div> }
                 </label>
               </div>
               <div className="field">
@@ -333,7 +308,8 @@ class EventEdit extends Component {
                         />
                       )}
                     </I18n>
-                    { touched.locLat && errors.locLat && <div className="ui warning message">{errors.locLat}</div> }
+                    { touched.locLat && errors.locLat
+                      && <div className="ui warning message">{validationErrors[errors.locLat] || '!'}</div> }
                   </label>
                 </div>
                 <div className="eight wide field">
@@ -351,7 +327,8 @@ class EventEdit extends Component {
                         />
                       )}
                     </I18n>
-                    { touched.locLong && errors.locLong && <div className="ui warning message">{errors.locLong}</div> }
+                    { touched.locLong && errors.locLong
+                      && <div className="ui warning message">{validationErrors[errors.locLong] || '!'}</div> }
                   </label>
                 </div>
               </div>
@@ -407,7 +384,8 @@ class EventEdit extends Component {
                       />
                     )}
                   </I18n>
-                  { touched.website && errors.website && <div className="ui warning message">{errors.website}</div> }
+                  { touched.website && errors.website
+                    && <div className="ui warning message">{validationErrors[errors.website] || '!'}</div> }
                 </label>
               </div>
               <div className="field">
@@ -422,7 +400,8 @@ class EventEdit extends Component {
                       />
                     )}
                   </I18n>
-                  { touched.results && errors.results && <div className="ui warning message">{errors.results}</div> }
+                  { touched.results && errors.results
+                    && <div className="ui warning message">{validationErrors[errors.results] || '!'}</div> }
                 </label>
               </div>
               <div className="field">
@@ -586,13 +565,13 @@ const formikEventEdit = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    name: Yup.string().required('You must provide a name for the event.'),
+    name: Yup.string().required('eventNameRequired'),
     mapName: Yup.string(),
     locPlace: Yup.string(),
-    locLat: Yup.number().moreThan(-90, 'Not a valid latitude (<-90°)').lessThan(90, 'Not a valid latitude (>90°)'),
-    locLong: Yup.number().moreThan(-180, 'Not a valid longitude (<-180°)').lessThan(180, 'Not a valid longitude (>180°)'),
-    website: Yup.string().url('You must provide a valid URL (including http(s)://).'),
-    results: Yup.string().url('You must provide a valid URL (including http(s)://).'),
+    locLat: Yup.number().moreThan(-90, 'invalidLatLow').lessThan(90, 'invalidLatHigh'),
+    locLong: Yup.number().moreThan(-180, 'invalidLongLow').lessThan(180, 'invalidLongHigh'),
+    website: Yup.string().url('invalidUrl'),
+    results: Yup.string().url('invalidUrl'),
   }),
   handleSubmit(values, { props, setSubmitting }) {
     const {
