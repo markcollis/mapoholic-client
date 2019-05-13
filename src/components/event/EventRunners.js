@@ -15,6 +15,7 @@ const EventRunners = ({
   selectEventToDisplay,
   selectRunnerToDisplay,
   history,
+  handleSelectEventRunner,
 }) => {
   if (!selectedEvent._id) return null;
   const { _id: eventId, runners, orisId } = selectedEvent;
@@ -31,8 +32,7 @@ const EventRunners = ({
           currentUserId={currentUserId}
           eventId={eventId}
           runner={runner}
-          selectEventToDisplay={selectEventToDisplay}
-          selectRunnerToDisplay={selectRunnerToDisplay}
+          handleSelectEventRunner={handleSelectEventRunner}
         />
       );
     });
@@ -51,6 +51,7 @@ const EventRunners = ({
                 selectEventToDisplay(eventId);
                 selectRunnerToDisplay(currentUserId);
                 history.push('/mapview');
+                window.scrollTo(0, 0);
               }
             });
           } else {
@@ -59,6 +60,7 @@ const EventRunners = ({
                 selectEventToDisplay(eventId);
                 selectRunnerToDisplay(currentUserId);
                 history.push('/mapview');
+                window.scrollTo(0, 0);
               }
             });
           }
@@ -85,6 +87,7 @@ EventRunners.propTypes = {
   addEventRunnerOris: PropTypes.func.isRequired,
   currentUserId: PropTypes.string,
   currentUserOrisId: PropTypes.string,
+  handleSelectEventRunner: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectEventToDisplay: PropTypes.func.isRequired,

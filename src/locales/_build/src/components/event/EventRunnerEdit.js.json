@@ -1,0 +1,186 @@
+{
+  "Course title": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        84
+      ]
+    ]
+  },
+  "Title of course": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        89
+      ]
+    ]
+  },
+  "Course length": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        100
+      ]
+    ]
+  },
+  "Length of course (km)": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        105
+      ]
+    ]
+  },
+  "Course climb": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        116
+      ]
+    ]
+  },
+  "Climb on course (m)": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        121
+      ]
+    ]
+  },
+  "Number of controls": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        132
+      ]
+    ]
+  },
+  "Number of controls on course": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        137
+      ]
+    ]
+  },
+  "Time": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        148
+      ]
+    ]
+  },
+  "Time taken": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        153
+      ]
+    ]
+  },
+  "Place": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        164
+      ]
+    ]
+  },
+  "Placing in field": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        169
+      ]
+    ]
+  },
+  "Time behind winner": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        180
+      ]
+    ]
+  },
+  "Time behind the winner": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        185
+      ]
+    ]
+  },
+  "Field size": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        196
+      ]
+    ]
+  },
+  "Total number of runners": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        201
+      ]
+    ]
+  },
+  "Tags (customisable)": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        212
+      ]
+    ]
+  },
+  "Personal tags for event": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        217
+      ]
+    ]
+  },
+  "Visibility": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        232
+      ]
+    ]
+  },
+  "Visibility of your maps from this event to others": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        237
+      ]
+    ]
+  },
+  "Update": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        254
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        261
+      ]
+    ]
+  },
+  "Edit Event Runner Details": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerEdit.js",
+        270
+      ]
+    ]
+  }
+}

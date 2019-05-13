@@ -1,0 +1,42 @@
+{
+  "Delete Runner": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDelete.js",
+        26
+      ]
+    ]
+  },
+  "You are about to delete {runnerName} from {name} ({0}).": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDelete.js",
+        28
+      ]
+    ]
+  },
+  "Note: Currently non-functional, server does not suspport this yet.": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDelete.js",
+        32
+      ]
+    ]
+  },
+  "Delete {runnerName}?": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDelete.js",
+        45
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventRunnerDelete.js",
+        52
+      ]
+    ]
+  }
+}

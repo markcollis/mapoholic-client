@@ -1,13 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { Trans, Plural } from '@lingui/macro';
 import Collapse from '../Collapse';
 import noAvatar from '../../no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 
-const ClubMembers = ({ membersList, selectClubMember }) => {
+const ClubMembers = ({
+  history,
+  fullEventList,
+  membersList,
+  selectUserToDisplay,
+  setUserViewMode,
+}) => {
   if (membersList.length === 0) {
     return null;
   }
+  // console.log('fullEventList:', fullEventList);
+  const mapCountByUserId = {};
+  fullEventList.forEach((eventSummary) => {
+    const { runners } = eventSummary;
+    if (runners) {
+      runners.forEach((runner) => {
+        const { user, numberMaps } = runner;
+        if (mapCountByUserId[user]) {
+          mapCountByUserId[user] += numberMaps;
+        } else {
+          mapCountByUserId[user] = numberMaps;
+        }
+      });
+    }
+  });
+  // console.log('mapCountByUserId:', mapCountByUserId);
+
+  const handleSelectUser = (userId) => {
+    selectUserToDisplay(userId);
+    setUserViewMode('view');
+    history.push('/users');
+    window.scrollTo(0, 0);
+  };
   const clubMembersArray = membersList.map((member) => {
     const {
       user_id: userId,
@@ -15,13 +46,23 @@ const ClubMembers = ({ membersList, selectClubMember }) => {
       fullName,
       profileImage,
     } = member;
+    // console.log('maps', mapCountByUserId[userId]);
+    const mapCountText = (mapCountByUserId[userId] && mapCountByUserId[userId] > 0)
+      ? (
+        <Plural
+          value={mapCountByUserId[userId]}
+          one="# map"
+          other="# maps"
+        />
+      )
+      : '';
     return (
       <div
         key={userId}
         className="ui card centered"
         role="button"
-        onClick={() => selectClubMember(userId)}
-        onKeyPress={() => selectClubMember(userId)}
+        onClick={() => handleSelectUser(userId)}
+        onKeyPress={() => handleSelectUser(userId)}
         tabIndex="0"
       >
         <div className="content">
@@ -34,16 +75,18 @@ const ClubMembers = ({ membersList, selectClubMember }) => {
             {displayName}
           </div>
           <div className="meta">
-            {`${fullName} (x maps)`}
+            {fullName}
+            {' '}
+            {mapCountText}
           </div>
         </div>
       </div>
     );
   });
-
+  const title = <Trans>Members</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title="Members">
+      <Collapse title={title}>
         <div className="ui link cards card-list">
           {clubMembersArray}
         </div>
@@ -53,11 +96,15 @@ const ClubMembers = ({ membersList, selectClubMember }) => {
 };
 
 ClubMembers.propTypes = {
+  fullEventList: PropTypes.arrayOf(PropTypes.object),
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   membersList: PropTypes.arrayOf(PropTypes.object),
-  selectClubMember: PropTypes.func.isRequired,
+  selectUserToDisplay: PropTypes.func.isRequired,
+  setUserViewMode: PropTypes.func.isRequired,
 };
 ClubMembers.defaultProps = {
+  fullEventList: [],
   membersList: [],
 };
 
-export default ClubMembers;
+export default withRouter(ClubMembers);

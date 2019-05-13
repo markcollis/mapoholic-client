@@ -15,11 +15,15 @@
   text-align: center;
 }
 
-/* settings for EventCourseMap */
+/* settings for EventMapViewerCanvas */
 .course-map-container {
   height: 600px;
   width: 100%;
   overflow: hidden;
+}
+.event-course-map-loader {
+  margin-top: 10px !important;
+  height: 540px;
 }
 .event-course-map-canvas {
   margin-top: 5px;

@@ -1,71 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Collapse from '../Collapse';
+import { withRouter } from 'react-router-dom';
 
-const ClubEvents = ({ eventsList, selectClubEvent }) => {
+import Collapse from '../Collapse';
+import EventListItem from '../event/EventListItem';
+
+const ClubEvents = ({
+  eventsList,
+  history,
+  language,
+  selectEventForDetails,
+  setEventViewModeEvent,
+}) => {
   if (eventsList.length === 0) {
     return null;
   }
-
-  const clubEventsArray = eventsList.map((eachEvent) => {
-    const {
-      _id: eventId,
-      name,
-      date,
-      locPlace,
-      types,
-      tags,
-      totalRunners,
-      orisId,
-    } = eachEvent;
-    // console.log('event:', eachEvent);
-    const typesTags = types.concat(tags);
-    return (
-      <div
-        key={eventId}
-        className="ui card fluid"
-        role="button"
-        onClick={() => selectClubEvent(eventId)}
-        onKeyPress={() => selectClubEvent(eventId)}
-        tabIndex="0"
-      >
-        <div className="content">
-          <div className="header  ">
-            {name}
-          </div>
-          <div className="meta">
-            <div>{`${date}, ${locPlace}`}</div>
-            {(orisId)
-              ? (
-                <p>
-                  {`(${totalRunners} users attended) `}
-                  <a href={`https://oris.orientacnisporty.cz/Zavod?id=${orisId}`}>{`ORIS ID: ${orisId}`}</a>
-                </p>
-              )
-              : (
-                <p>{`(${totalRunners} users attended)`}</p>
-              )
-            }
-            {(typesTags && typesTags.length > 0)
-              ? (
-                <div>
-                  {typesTags.map((type) => {
-                    return <div key={type} className="ui label blue">{type}</div>;
-                  })}
-                </div>
-              )
-              : null}
-          </div>
-        </div>
-      </div>
-    );
-  });
+  const handleSelectEvent = (eventId) => {
+    selectEventForDetails(eventId);
+    setEventViewModeEvent('view');
+    history.push('/events');
+    window.scrollTo(0, 0);
+  };
+  const userEventsArray = [...eventsList]
+    .sort((a, b) => {
+      return (a.date < b.date) ? 0 : -1;
+    })
+    .map((oevent) => {
+      const { _id: eventId } = oevent;
+      return (
+        <EventListItem
+          key={eventId}
+          language={language}
+          oevent={oevent}
+          handleSelectEvent={handleSelectEvent}
+        />
+      );
+    });
 
   return (
     <div className="ui segment">
       <Collapse title="Events">
         <div className="ui link cards card-list">
-          {clubEventsArray}
+          {userEventsArray}
         </div>
       </Collapse>
     </div>
@@ -74,10 +50,13 @@ const ClubEvents = ({ eventsList, selectClubEvent }) => {
 
 ClubEvents.propTypes = {
   eventsList: PropTypes.arrayOf(PropTypes.object),
-  selectClubEvent: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  language: PropTypes.string.isRequired,
+  selectEventForDetails: PropTypes.func.isRequired,
+  setEventViewModeEvent: PropTypes.func.isRequired,
 };
 ClubEvents.defaultProps = {
   eventsList: [],
 };
 
-export default ClubEvents;
+export default withRouter(ClubEvents);

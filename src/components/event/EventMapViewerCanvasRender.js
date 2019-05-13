@@ -11,8 +11,8 @@ class EventCourseMapCanvasRender extends Component {
   };
 
   static propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number,
     left: PropTypes.number,
     top: PropTypes.number.isRequired,
     rotate: PropTypes.number.isRequired,
@@ -20,13 +20,13 @@ class EventCourseMapCanvasRender extends Component {
     imageSrc: PropTypes.string,
     imageAlt: PropTypes.string,
     isLoading: PropTypes.bool,
-    // onResizeWindow: PropTypes.func.isRequired,
     onChangeImageState: PropTypes.func.isRequired,
-    // onCanvasMouseDown: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     left: null,
+    width: null,
+    height: null,
     scale: 1,
     imageSrc: '',
     imageAlt: 'a map',
@@ -36,19 +36,12 @@ class EventCourseMapCanvasRender extends Component {
   componentDidMount() {
     document.addEventListener('click', this.handleMouseUp, false);
     document.addEventListener('mousemove', this.handleMouseMove, false);
-    // window.addEventListener('resize', this.handleResize, false);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.handleMouseUp, false);
     document.removeEventListener('mousemove', this.handleMouseMove, false);
-    // window.removeEventListener('resize', this.handleResize, false);
   }
-
-  // handleResize = () => {
-  //   const { onResizeWindow } = this.props;
-  //   onResizeWindow();
-  // }
 
   handleMouseDown = (e) => {
     e.preventDefault();
@@ -59,12 +52,6 @@ class EventCourseMapCanvasRender extends Component {
       mouseY: e.nativeEvent.clientY,
     });
   }
-
-  // handleCanvasMouseDown = (e) => {
-  // const { onCanvasMouseDown } = this.props;
-  // onCanvasMouseDown(e);
-  // this.handleMouseDown(e);
-  // }
 
   handleMouseMove = (e) => {
     const {
@@ -88,6 +75,7 @@ class EventCourseMapCanvasRender extends Component {
   }
 
   render() {
+    // console.log('props in EventMapViewerCanvasRender:', this.props);
     const {
       width,
       height,
@@ -125,7 +113,13 @@ class EventCourseMapCanvasRender extends Component {
         </div>
       );
     return (isLoading)
-      ? <p>Loading...</p>
+      ? (
+        <div className="ui segment event-course-map-loader">
+          <div className="ui active dimmer">
+            <div className="ui medium text loader">Loading...</div>
+          </div>
+        </div>
+      )
       : imgToDisplay;
   }
 }

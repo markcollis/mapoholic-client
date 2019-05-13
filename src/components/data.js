@@ -222,7 +222,7 @@ export const validationErrorsLocale = {
     invalidUrl: 'You must provide a valid URL (including http(s)://).', // EventEdit
     eventLinkNameRequired: 'You must provide a name for the event link.', // EventLinkedEdit
   },
-  cs: {
+  cs: { // to do later once I have a full set
     invalidEmail: 'TRANSLATE You must provide a valid email address.',
     emailRequired: 'TRANSLATE You must provide an email address.',
     passwordLength: 'TRANSLATE Your password must be at least 8 characters long.',

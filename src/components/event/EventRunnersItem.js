@@ -1,15 +1,12 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventRunnersItem = ({
   currentUserId,
   eventId,
+  handleSelectEventRunner,
   runner,
-  selectEventToDisplay,
-  selectRunnerToDisplay,
-  history,
 }) => {
   const {
     _id: userId,
@@ -35,16 +32,8 @@ const EventRunnersItem = ({
     <div
       className={cardClass}
       role="button"
-      onClick={() => {
-        selectEventToDisplay(eventId);
-        selectRunnerToDisplay(userId);
-        history.push('/mapview');
-      }}
-      onKeyPress={() => {
-        selectEventToDisplay(eventId);
-        selectRunnerToDisplay(userId);
-        history.push('/mapview');
-      }}
+      onClick={() => handleSelectEventRunner(eventId, userId)}
+      onKeyPress={() => handleSelectEventRunner(eventId, userId)}
       tabIndex="0"
     >
       <div className="content">
@@ -61,13 +50,11 @@ const EventRunnersItem = ({
 EventRunnersItem.propTypes = {
   currentUserId: PropTypes.string,
   eventId: PropTypes.string.isRequired,
+  handleSelectEventRunner: PropTypes.func.isRequired,
   runner: PropTypes.objectOf(PropTypes.any).isRequired,
-  selectEventToDisplay: PropTypes.func.isRequired,
-  selectRunnerToDisplay: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 EventRunnersItem.defaultProps = {
   currentUserId: null,
 };
 
-export default withRouter(EventRunnersItem);
+export default EventRunnersItem;

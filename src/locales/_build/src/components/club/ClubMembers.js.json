@@ -1,0 +1,18 @@
+{
+  "{0, plural, one {# map} other {# maps}}": {
+    "origin": [
+      [
+        "src/components/club/ClubMembers.js",
+        52
+      ]
+    ]
+  },
+  "Members": {
+    "origin": [
+      [
+        "src/components/club/ClubMembers.js",
+        86
+      ]
+    ]
+  }
+}

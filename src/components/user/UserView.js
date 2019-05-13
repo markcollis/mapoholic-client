@@ -14,6 +14,7 @@ import {
   deleteProfileImageAction,
   deleteUserAction,
   getClubListAction,
+  getClubMembersAction,
   getUserByIdAction,
   getUserEventsAction,
   getUserListAction,
@@ -36,6 +37,7 @@ class UserView extends Component {
     deleteProfileImage: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
+    getClubMembers: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
     getUserEvents: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
@@ -63,6 +65,7 @@ class UserView extends Component {
       deleteProfileImage,
       deleteUser,
       getClubList,
+      getClubMembers,
       getUserById,
       getUserEvents,
       getUserList,
@@ -135,6 +138,7 @@ class UserView extends Component {
               clubList={clubList}
               deleteProfileImage={deleteProfileImage}
               getClubList={getClubList}
+              getClubMembers={getClubMembers}
               getUserById={getUserById}
               getUserList={getUserList}
               isAdmin={isAdmin}
@@ -231,6 +235,7 @@ const mapDispatchToProps = {
   deleteProfileImage: deleteProfileImageAction,
   deleteUser: deleteUserAction,
   getClubList: getClubListAction,
+  getClubMembers: getClubMembersAction,
   getUserById: getUserByIdAction,
   getUserEvents: getUserEventsAction,
   getUserList: getUserListAction,

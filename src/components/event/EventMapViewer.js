@@ -36,6 +36,7 @@ class EventMapViewer extends Component {
   };
 
   componentDidMount() {
+    console.log('EventMapViewer mounted, props:', this.props);
     this.setState({
       mapContainerWidth: this.mapRef.current.offsetWidth,
       mapContainerHeight: this.mapRef.current.offsetHeight,
@@ -65,7 +66,7 @@ class EventMapViewer extends Component {
 
   // helper to derive mapImageArray if input props have changed (different event or runner)
   getMapImageArray = memoize((selectedEventId, selectedRunner, mapUpdates) => {
-    // console.log('getMapImageArray called:', selectedEventId, selectedRunner, mapUpdates);
+    console.log('getMapImageArray called:', selectedEventId, selectedRunner, mapUpdates);
     const { selectedEvent } = this.props;
     const runnerData = (selectedEvent.runners)
       ? selectedEvent.runners.find(runner => runner.user._id.toString() === selectedRunner)
@@ -151,6 +152,7 @@ class EventMapViewer extends Component {
       updateEventRunner,
     } = this.props;
     const mapImageArray = this.getMapImageArray(selectedEvent._id, selectedRunner, mapUpdates);
+    console.log('mapImageArray returned:', mapImageArray);
     const hasMaps = (mapImageArray.length > 0);
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>

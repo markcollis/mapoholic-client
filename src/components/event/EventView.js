@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
@@ -43,6 +44,7 @@ import {
 
 class EventViewList extends Component {
   static propTypes = {
+    history: PropTypes.objectOf(PropTypes.any).isRequired,
     mineOnly: PropTypes.bool,
     showMap: PropTypes.bool,
     club: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -377,6 +379,7 @@ class EventViewList extends Component {
   // render EventRunners component
   renderEventRunners = () => {
     const {
+      history,
       oevent,
       user,
       addEventRunner,
@@ -394,6 +397,12 @@ class EventViewList extends Component {
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
     const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
+    const handleSelectEventRunner = (eventId, userId) => {
+      selectEventToDisplay(eventId);
+      selectRunnerToDisplay(userId);
+      history.push('/mapview');
+      window.scrollTo(0, 0);
+    };
 
     return (
       <EventRunners
@@ -401,6 +410,7 @@ class EventViewList extends Component {
         addEventRunnerOris={addEventRunnerOris} // prop
         currentUserId={currentUserId} // derived
         currentUserOrisId={currentUserOrisId} // derived
+        handleSelectEventRunner={handleSelectEventRunner} // defined here
         selectedEvent={selectedEvent} // derived
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
@@ -504,7 +514,7 @@ class EventViewList extends Component {
   }
 
   render() {
-    console.log('props in EventView:', this.props);
+    // console.log('props in EventView:', this.props);
     const { showMap } = this.props;
     if (showMap) {
       return (
@@ -581,4 +591,4 @@ const mapDispatchToProps = {
   updateEventLink: updateEventLinkAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventViewList);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EventViewList));

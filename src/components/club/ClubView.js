@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Collapse from '../Collapse';
 import ClubFilter from './ClubFilter';
 import ClubList from './ClubList';
 import ClubDetails from './ClubDetails';
@@ -9,8 +8,6 @@ import ClubMembers from './ClubMembers';
 import ClubEvents from './ClubEvents';
 import ClubEdit from './ClubEdit';
 import ClubDelete from './ClubDelete';
-import UserDetails from '../user/UserDetails';
-import UserEvents from '../user/UserEvents';
 import {
   setClubSearchFieldAction,
   setClubViewModeAction,
@@ -20,9 +17,12 @@ import {
   getClubEventsAction,
   getUserByIdAction,
   getUserListAction,
+  getEventListAction,
   selectClubToDisplayAction,
-  selectClubMemberAction,
-  selectClubEventAction,
+  selectEventForDetailsAction,
+  selectUserToDisplayAction,
+  setUserViewModeAction,
+  setEventViewModeEventAction,
   createClubAction,
   updateClubAction,
   deleteClubAction,
@@ -32,89 +32,60 @@ import {
 class ClubView extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,
+    config: PropTypes.objectOf(PropTypes.any).isRequired,
+    oevent: PropTypes.objectOf(PropTypes.any).isRequired,
     user: PropTypes.objectOf(PropTypes.any).isRequired,
     setClubSearchField: PropTypes.func.isRequired,
     setClubViewMode: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
     getClubMembers: PropTypes.func.isRequired,
     getClubEvents: PropTypes.func.isRequired,
-    getUserById: PropTypes.func.isRequired,
+    getEventList: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
-    selectClubMember: PropTypes.func.isRequired,
-    selectClubEvent: PropTypes.func.isRequired,
+    selectEventForDetails: PropTypes.func.isRequired,
+    selectUserToDisplay: PropTypes.func.isRequired,
+    setEventViewModeEvent: PropTypes.func.isRequired,
+    setUserViewMode: PropTypes.func.isRequired,
     createClub: PropTypes.func.isRequired,
     updateClub: PropTypes.func.isRequired,
     deleteClub: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    const { club, getClubList, user } = this.props;
-    if (!club.list) getClubList();
-    console.log('user:', user);
-  }
-
-  // show extra details if a club member is selected
-  renderClubMember() {
-    const { club, user, getUserById } = this.props;
-    const { selectedMember } = club;
-    const { details: userDetails, errorMessage: userErrorMessage, current } = user;
-    if (selectedMember !== '') {
-      let isPending = false;
-      if (!userDetails[selectedMember] && !userErrorMessage) {
-        isPending = true;
-        setTimeout(() => getUserById(selectedMember, () => {
-          isPending = false;
-        }), 2000); // simulate network delay
-      }
-      const isAdmin = (current && current.role === 'admin');
-      const isSelf = (current && current._id === selectedMember);
-      const showOptional = (isAdmin || isSelf);
-      const userToDisplay = userDetails[selectedMember] || {};
-
-      return (
-        <div>
-          <UserDetails
-            userToDisplay={userToDisplay}
-            showOptional={showOptional}
-            isPending={isPending}
-          />
-          <UserEvents userId={selectedMember} />
-        </div>
-      );
-    }
-    return null;
-  }
-
-  // show extra details if an event is selected
-  renderClubEvent() {
-    const { club } = this.props;
-    const { selectedEvent } = club;
-    if (selectedEvent !== '') {
-      return (
-        <div className="ui segment">
-          <Collapse title="Event Details">
-            <h3>{selectedEvent}</h3>
-            <p>Update later when event components are defined</p>
-          </Collapse>
-        </div>
-      );
-    }
-    return null;
+    // console.log('oevent', this.props.oevent);
+    const {
+      club,
+      oevent,
+      user,
+      getClubList,
+      getEventList,
+      getUserList,
+    } = this.props;
+    const { list: clubList } = club;
+    const { list: eventList } = oevent;
+    const { list: userList } = user;
+    if (!clubList) getClubList();
+    if (!userList) getUserList();
+    if (!eventList) getEventList();
   }
 
   renderRightColumn() {
     const {
       club,
+      config,
+      oevent,
       user,
       getClubMembers,
       getClubEvents,
       getClubList,
       getUserList,
       selectClubToDisplay,
-      selectClubMember,
-      selectClubEvent,
+      selectEventForDetails,
+      selectUserToDisplay,
       setClubViewMode,
+      setUserViewMode,
+      setEventViewModeEvent,
       createClub,
       updateClub,
       deleteClub,
@@ -126,6 +97,8 @@ class ClubView extends Component {
       selectedClubId,
       details,
     } = club;
+    const { language } = config;
+    const { list: fullEventList } = oevent;
     const { current, list } = user;
     const selectedClub = details[selectedClubId];
     // console.log('viewMode:', viewMode);
@@ -167,10 +140,18 @@ class ClubView extends Component {
               canEdit={canEdit}
               setClubViewMode={setClubViewMode}
             />
-            <ClubMembers membersList={membersList} selectClubMember={selectClubMember} />
-            {this.renderClubMember()}
-            <ClubEvents eventsList={eventsList} selectClubEvent={selectClubEvent} />
-            {this.renderClubEvent()}
+            <ClubMembers
+              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []}
+              membersList={membersList}
+              selectUserToDisplay={selectUserToDisplay}
+              setUserViewMode={setUserViewMode}
+            />
+            <ClubEvents
+              eventsList={eventsList}
+              language={language}
+              selectEventForDetails={selectEventForDetails}
+              setEventViewModeEvent={setEventViewModeEvent}
+            />
           </div>
         );
       case 'edit':
@@ -187,10 +168,18 @@ class ClubView extends Component {
               userList={(list) ? list.slice(0, -1) : []}
               getUserList={getUserList}
             />
-            <ClubMembers membersList={membersList} selectClubMember={selectClubMember} />
-            {this.renderClubMember()}
-            <ClubEvents eventsList={eventsList} selectClubEvent={selectClubEvent} />
-            {this.renderClubEvent()}
+            <ClubMembers
+              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []}
+              membersList={membersList}
+              selectUserToDisplay={selectUserToDisplay}
+              setUserViewMode={setUserViewMode}
+            />
+            <ClubEvents
+              eventsList={eventsList}
+              language={language}
+              selectEventForDetails={selectEventForDetails}
+              setEventViewModeEvent={setEventViewModeEvent}
+            />
           </div>
         );
       case 'add':
@@ -245,9 +234,6 @@ class ClubView extends Component {
       : [];
     // const selectedClub = clubListArray.filter(eachClub => eachClub._id === selectedClubId)[0];
 
-    if (errorMessage || userErrorMessage) {
-      console.log('Error:', errorMessage, userErrorMessage);
-    }
     const renderError = (errorMessage || userErrorMessage)
       ? (
         <div className="sixteen wide column">
@@ -281,8 +267,18 @@ class ClubView extends Component {
   }
 }
 
-const mapStateToProps = ({ club, user }) => {
-  return { club, user };
+const mapStateToProps = ({
+  club,
+  config,
+  oevent,
+  user,
+}) => {
+  return {
+    club,
+    config,
+    oevent,
+    user,
+  };
 };
 const mapDispatchToProps = {
   setClubSearchField: event => setClubSearchFieldAction(event.target.value),
@@ -291,11 +287,14 @@ const mapDispatchToProps = {
   getClubById: getClubByIdAction,
   getClubMembers: getClubMembersAction,
   getClubEvents: getClubEventsAction,
+  getEventList: getEventListAction,
   getUserById: getUserByIdAction,
   getUserList: getUserListAction,
   selectClubToDisplay: selectClubToDisplayAction,
-  selectClubMember: selectClubMemberAction,
-  selectClubEvent: selectClubEventAction,
+  selectEventForDetails: selectEventForDetailsAction,
+  selectUserToDisplay: selectUserToDisplayAction,
+  setEventViewModeEvent: setEventViewModeEventAction,
+  setUserViewMode: setUserViewModeAction,
   createClub: createClubAction,
   updateClub: updateClubAction,
   deleteClub: deleteClubAction,

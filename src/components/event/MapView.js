@@ -167,6 +167,10 @@ class MapView extends Component {
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
+    const handleSelectEventRunner = (eventId, userId) => {
+      selectEventToDisplay(eventId);
+      selectRunnerToDisplay(userId);
+    };
 
     return (
       <EventRunners
@@ -174,6 +178,7 @@ class MapView extends Component {
         addEventRunnerOris={addEventRunnerOris} // prop
         currentUserId={currentUserId} // derived
         currentUserOrisId={currentUserOrisId} // derived
+        handleSelectEventRunner={handleSelectEventRunner} // defined here
         selectedEvent={selectedEvent} // derived
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
@@ -203,7 +208,6 @@ class MapView extends Component {
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
     const canEdit = this.getCanEditRunner(current, selectedRunner);
-    const isAdmin = this.getIsAdmin(current);
 
     switch (runnerMode) {
       case 'none':
@@ -215,7 +219,8 @@ class MapView extends Component {
       case 'view':
         return (
           <EventRunnerDetails
-            canEdit={canEdit}
+            canEdit={canEdit} // derived
+            language={language} // prop (config)
             selectedEvent={selectedEvent} // derived
             selectedRunner={selectedRunner} // prop (oevent)
             setEventViewModeRunner={setEventViewModeRunner} // prop
@@ -224,7 +229,6 @@ class MapView extends Component {
       case 'edit':
         return (
           <EventRunnerEdit
-            isAdmin={isAdmin}
             language={language} // prop (config)
             selectedEvent={selectedEvent} // derived
             selectedRunner={selectedRunner} // prop (oevent)

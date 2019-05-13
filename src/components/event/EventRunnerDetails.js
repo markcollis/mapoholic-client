@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import Collapse from '../Collapse';
+import { visibilityOptionsLocale } from '../data';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventRunnerDetails = ({
   canEdit,
+  language,
   selectedEvent,
   selectedRunner,
   setEventViewModeRunner,
@@ -18,6 +20,7 @@ const EventRunnerDetails = ({
       </div>
     );
   }
+  const visibilityOptions = visibilityOptionsLocale[language];
   const selectedRunnerDetails = selectedEvent.runners
     .find(runner => runner.user._id === selectedRunner);
   if (!selectedRunnerDetails) {
@@ -30,6 +33,7 @@ const EventRunnerDetails = ({
   // console.log('selectedRunnerDetails', selectedRunnerDetails);
   const {
     user,
+    visibility,
     courseTitle,
     courseLength,
     courseClimb,
@@ -130,10 +134,12 @@ const EventRunnerDetails = ({
       </span>
     )
     : null;
+  const visibilityText = visibilityOptions.find(el => el.value === visibility).label;
   const renderEditButtons = (canEdit)
     ? (
       <div>
         <hr className="divider" />
+        <p>{`Visibility to other users: ${visibilityText}`}</p>
         <button type="button" className="ui red tiny button right floated" onClick={() => setEventViewModeRunner('delete')}>
           <Trans>Delete runner</Trans>
         </button>
@@ -170,6 +176,7 @@ const EventRunnerDetails = ({
 
 EventRunnerDetails.propTypes = {
   canEdit: PropTypes.bool,
+  language: PropTypes.string.isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,
   setEventViewModeRunner: PropTypes.func.isRequired,

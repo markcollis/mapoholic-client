@@ -321,6 +321,7 @@ const formikUserEdit = withFormik({
       updateUser,
       setUserViewMode,
       selectedUser,
+      getClubMembers,
       getUserList,
       getUserById,
     } = props;
@@ -335,6 +336,9 @@ const formikUserEdit = withFormik({
         getUserList(null, () => {
           getUserById(selectedUser._id);
           setUserViewMode('view');
+          valuesToSubmit.memberOf.forEach((clubId) => {
+            getClubMembers(clubId);
+          });
         });
       } else {
         setSubmitting(false);

@@ -987,7 +987,7 @@
     jest-validate "^23.5.0"
     pkg-conf "^2.1.0"
 
-"@lingui/core@2.7.4", "@lingui/core@^2.7.4":
+"@lingui/core@2.7.4":
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/@lingui/core/-/core-2.7.4.tgz#66499439e35d4de7fbd861b6c83fa07589606538"
   integrity sha512-UFdnJbxTXD5CnVHk8Hk/dIQNdXMZXNrUCjNNzcboFBIdXehpruT/y6GFZpw6CxVpmjhnLTJsJVXTEUINRmuUMg==
@@ -8966,6 +8966,13 @@ react-select@^2.4.2:
     raf "^3.4.0"
     react-input-autosize "^2.2.1"
     react-transition-group "^2.2.1"
+
+react-table@^6.10.0:
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.10.0.tgz#20444b19d8ca3c1a08e7544e5c3a93e4ba56690e"
+  integrity sha512-s/mQLI1+mNvlae45MfAZyZ04YIT3jUzWJqx34s0tfwpDdgJkpeK6vyzwMUkKFCpGODBxpjBOekYZzcEmk+2FiQ==
+  dependencies:
+    classnames "^2.2.5"
 
 react-transition-group@^2.2.1:
   version "2.7.1"
