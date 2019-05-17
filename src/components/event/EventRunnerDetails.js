@@ -4,11 +4,14 @@ import { Trans } from '@lingui/macro';
 
 import Collapse from '../Collapse';
 import { visibilityOptionsLocale } from '../data';
+import noAvatar from '../../no-avatar.png';
+import { OMAPFOLDER_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventRunnerDetails = ({
   canEdit,
   language,
+  runnerDetails,
   selectedEvent,
   selectedRunner,
   setEventViewModeRunner,
@@ -48,7 +51,14 @@ const EventRunnerDetails = ({
     // comments,
   } = selectedRunnerDetails;
   const { displayName, fullName } = user;
-
+  // className="event-runner-profile-image"
+  const avatar = (
+    <img
+      className="ui tiny image right floated"
+      alt="avatar"
+      src={(runnerDetails && runnerDetails.profileImage) ? `${OMAPFOLDER_SERVER}/${runnerDetails.profileImage}` : noAvatar}
+    />
+  );
   const renderHeader = (
     <h3 className="header">
       {`${displayName} ${(fullName && fullName !== '') ? `(${fullName})` : ''}`}
@@ -73,7 +83,7 @@ const EventRunnerDetails = ({
     : '';
   const renderCourseDetails = (courseTitleToDisplay)
     ? (
-      <div className="item">
+      <div>
         {courseTitleToDisplay}
         {(courseLengthToDisplay || courseClimbToDisplay || courseControlsToDisplay)
           ? (
@@ -102,7 +112,7 @@ const EventRunnerDetails = ({
     : '';
   const renderResultSummary = (resultTimeToDisplay)
     ? (
-      <div className="item">
+      <p>
         {resultTimeToDisplay}
         {((place && place !== '') || (timeBehind && timeBehind !== ''))
           ? (
@@ -115,23 +125,19 @@ const EventRunnerDetails = ({
             </span>
           )
           : ''}
-      </div>
+      </p>
     )
-    : <div className="item"><Trans>No result to display</Trans></div>;
+    : <p><Trans>No result to display</Trans></p>;
   const renderResultsInfo = (fullResults.length > 0)
-    ? (
-      <div className="item">
-        <Trans>{`See below for results (${fullResults.length} runners)`}</Trans>
-      </div>
-    )
+    ? <p><Trans>{`See below for results (${fullResults.length} runners)`}</Trans></p>
     : null;
   const renderTags = (tags && tags.length > 0)
     ? (
-      <span>
+      <div>
         {tags.map((tag) => {
           return <div key={tag} className="ui violet label">{tag}</div>;
         })}
-      </span>
+      </div>
     )
     : null;
   const visibilityText = visibilityOptions.find(el => el.value === visibility).label;
@@ -151,13 +157,12 @@ const EventRunnerDetails = ({
     : null;
   const displayEventRunnerDetails = (
     <div>
+      {avatar}
       {renderHeader}
-      <div className="ui list">
-        {renderCourseDetails}
-        {renderResultSummary}
-        {renderResultsInfo}
-      </div>
-      <div>{renderTags}</div>
+      {renderCourseDetails}
+      {renderResultSummary}
+      {renderResultsInfo}
+      {renderTags}
       {renderEditButtons}
     </div>
   );
@@ -177,12 +182,14 @@ const EventRunnerDetails = ({
 EventRunnerDetails.propTypes = {
   canEdit: PropTypes.bool,
   language: PropTypes.string.isRequired,
+  runnerDetails: PropTypes.objectOf(PropTypes.any),
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,
   setEventViewModeRunner: PropTypes.func.isRequired,
 };
 EventRunnerDetails.defaultProps = {
   canEdit: false,
+  runnerDetails: {},
   selectedEvent: {},
   selectedRunner: '',
 };

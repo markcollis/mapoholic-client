@@ -30,6 +30,7 @@ import {
   getEventLinkListAction,
   getEventListAction,
   getEventListOrisAction,
+  getUserByIdAction,
   getUserListAction,
   selectEventForDetailsAction,
   selectEventToDisplayAction,
@@ -64,6 +65,7 @@ class EventViewList extends Component {
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
+    getUserById: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
@@ -384,6 +386,7 @@ class EventViewList extends Component {
       user,
       addEventRunner,
       addEventRunnerOris,
+      getUserById,
       selectEventToDisplay,
       selectRunnerToDisplay,
     } = this.props;
@@ -392,7 +395,7 @@ class EventViewList extends Component {
       errorMessage,
       selectedEventDetails, // only difference from version in MapView
     } = oevent;
-    const { current } = user;
+    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
 
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
@@ -410,10 +413,13 @@ class EventViewList extends Component {
         addEventRunnerOris={addEventRunnerOris} // prop
         currentUserId={currentUserId} // derived
         currentUserOrisId={currentUserOrisId} // derived
+        getUserById={getUserById} // prop
         handleSelectEventRunner={handleSelectEventRunner} // defined here
         selectedEvent={selectedEvent} // derived
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
+        userDetails={userDetails} // prop (user)
+        userErrorMessage={userErrorMessage} // prop (user)
       />
     );
   }
@@ -580,6 +586,7 @@ const mapDispatchToProps = {
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,
+  getUserById: getUserByIdAction,
   getUserList: getUserListAction,
   selectEventForDetails: selectEventForDetailsAction,
   selectEventToDisplay: selectEventToDisplayAction,

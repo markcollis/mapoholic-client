@@ -2,69 +2,86 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import Collapse from '../Collapse';
-import { reformatDate } from '../../common/conversions';
+import EventCommentsAdd from './EventCommentsAdd';
+import EventCommentsList from './EventCommentsList';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventComments = ({
+  collapseTrigger,
+  currentUser,
+  deleteComment,
+  getUserById,
+  postComment,
+  updateComment,
   selectedEvent,
   selectedRunner,
+  userDetails,
+  userErrorMessage,
 }) => {
-  // console.log('selectedEvent:', selectedEvent);
+  const { _id: eventId } = selectedEvent;
+  console.log('selectedEvent/Runner in EventComments:', selectedEvent, selectedRunner);
+  console.log('currentUser in EventComments:', currentUser);
   const runnerData = (selectedEvent.runners)
     ? selectedEvent.runners.find(runner => runner.user._id.toString() === selectedRunner)
     : null;
-  const hasComments = runnerData && runnerData.comments.length > 0;
+  const isAdmin = (currentUser && currentUser.role === 'admin');
+  const isStandard = (currentUser && currentUser.role === 'standard');
+  const canPostComments = isAdmin || isStandard;
+  const currentUserId = (currentUser) ? currentUser._id : null;
 
-  const commentsList = (hasComments)
-    ? [...runnerData.comments]
-      .sort((a, b) => parseInt(a.postedAt, 10) - parseInt(b.postedAt, 10))
-      .map((comment) => {
-        const {
-          _id,
-          author,
-          text,
-          postedAt,
-          updatedAt,
-        } = comment;
-        const { displayName, fullName } = author;
-        const postedDate = reformatDate(postedAt.slice(0, 10));
-        const updatedDate = reformatDate(updatedAt.slice(0, 10));
-        const datesToDisplay = (postedDate === updatedDate)
-          ? `posted ${postedDate}`
-          : `posted ${postedDate}, updated ${updatedDate}`;
-        return (
-          <div key={_id}>
-            <p>{text}</p>
-            <p>{`${displayName} (${fullName})`}</p>
-            <p>{datesToDisplay}</p>
-          </div>
-        );
-      })
-    : null;
-  const commentsToDisplay = (hasComments)
-    ? (
-      <div>
-        {commentsList}
-      </div>
-    )
-    : <p><Trans>There are no comments yet.</Trans></p>;
   const title = <Trans>Comments</Trans>;
   return (
     <div className="ui segment">
       <Collapse title={title}>
-        {commentsToDisplay}
+        <EventCommentsList
+          collapseTrigger={collapseTrigger}
+          currentUserId={currentUserId}
+          deleteComment={deleteComment}
+          eventId={eventId}
+          getUserById={getUserById}
+          isAdmin={isAdmin}
+          runnerData={runnerData}
+          updateComment={updateComment}
+          userDetails={userDetails}
+          userErrorMessage={userErrorMessage}
+        />
+        {(canPostComments)
+          ? (
+            <div>
+              <hr className="divider" />
+              <EventCommentsAdd
+                collapseTrigger={collapseTrigger}
+                eventId={eventId}
+                postComment={postComment}
+                runnerData={runnerData}
+              />
+            </div>
+          )
+          : null
+        }
       </Collapse>
     </div>
   );
 };
 
 EventComments.propTypes = {
+  collapseTrigger: PropTypes.func.isRequired,
+  currentUser: PropTypes.objectOf(PropTypes.any),
+  deleteComment: PropTypes.func.isRequired,
+  getUserById: PropTypes.func.isRequired,
+  postComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,
+  userDetails: PropTypes.objectOf(PropTypes.any),
+  userErrorMessage: PropTypes.string,
 };
 EventComments.defaultProps = {
+  currentUser: null,
   selectedEvent: {},
   selectedRunner: '',
+  userDetails: {},
+  userErrorMessage: '',
 };
 
 export default EventComments;

@@ -51,7 +51,7 @@ export const signupAction = (formValues, callback) => async (dispatch) => {
 // app.post('/users/login', requireLogin, Authentication.login);
 export const loginAction = (formValues, callback) => async (dispatch) => {
   try {
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/login`, formValues);
+    const response = await axios.post(`${OMAPFOLDER_SERVER}/users/login`, formValues);
     dispatch({ type: AUTH_USER, payload: response.data.token });
     localStorage.setItem('omapfolder-auth-token', response.data.token);
     callback(true);

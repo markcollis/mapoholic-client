@@ -5,18 +5,18 @@ import { Redirect } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
-import EventRunners from './EventRunners';
-import EventRunnerDetails from './EventRunnerDetails';
-import EventRunnerEdit from './EventRunnerEdit';
-import EventRunnerDelete from './EventRunnerDelete';
-import EventMapViewer from './EventMapViewer';
+import EventComments from './EventComments';
+import EventDelete from './EventDelete';
 import EventDetails from './EventDetails';
 import EventEdit from './EventEdit';
-import EventDelete from './EventDelete';
 import EventLinked from './EventLinked';
 import EventLinkedManage from './EventLinkedManage';
-import EventComments from './EventComments';
+import EventMapViewer from './EventMapViewer';
 import EventResults from './EventResults';
+import EventRunnerDelete from './EventRunnerDelete';
+import EventRunnerDetails from './EventRunnerDetails';
+import EventRunnerEdit from './EventRunnerEdit';
+import EventRunners from './EventRunners';
 
 import {
   // setEventViewModeCommentAction,
@@ -24,6 +24,7 @@ import {
   addEventRunnerOrisAction,
   cancelEventErrorAction,
   createEventLinkAction,
+  deleteCommentAction,
   deleteEventAction,
   deleteEventLinkAction,
   deleteEventRunnerAction,
@@ -32,7 +33,9 @@ import {
   getEventByIdAction,
   getEventLinkListAction,
   getEventListAction,
+  getUserByIdAction,
   getUserListAction,
+  postCommentAction,
   postMapAction,
   selectEventForDetailsAction,
   selectEventToDisplayAction,
@@ -41,6 +44,7 @@ import {
   setEventViewModeEventAction,
   setEventViewModeEventLinkAction,
   setEventViewModeRunnerAction,
+  updateCommentAction,
   updateEventAction,
   updateEventLinkAction,
   updateEventRunnerAction,
@@ -57,6 +61,7 @@ class MapView extends Component {
     addEventRunnerOris: PropTypes.func.isRequired,
     cancelEventError: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
     deleteEventRunner: PropTypes.func.isRequired,
@@ -65,7 +70,9 @@ class MapView extends Component {
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
+    getUserById: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
+    postComment: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
@@ -74,9 +81,14 @@ class MapView extends Component {
     setEventViewModeEvent: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
     setEventViewModeRunner: PropTypes.func.isRequired,
+    updateComment: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
     updateEventRunner: PropTypes.func.isRequired,
+  }
+
+  state = {
+    collapseTriggerEventComments: 0,
   }
 
   // get summary data from API if not already available
@@ -130,6 +142,16 @@ class MapView extends Component {
     return isRunner;
   });
 
+  // helper to get full details of currently selected runner if input props have changed
+  getRunnerDetails = memoize((selectedRunner, userDetails, userErrorMessage) => {
+    const { getUserById } = this.props;
+    if (selectedRunner && !userDetails[selectedRunner] && !userErrorMessage) {
+      getUserById(selectedRunner);
+      return null;
+    }
+    return userDetails[selectedRunner];
+  });
+
   // helper to determine if current user can edit runner if input props have changed
   getCanEditRunner = memoize((current, selectedRunner) => {
     // console.log('current', current);
@@ -147,6 +169,11 @@ class MapView extends Component {
     return organisingClubs;
   });
 
+  refreshCollapseEventComments = () => {
+    const { collapseTriggerEventComments } = this.state;
+    this.setState({ collapseTriggerEventComments: collapseTriggerEventComments + 1 });
+  }
+
   // render EventRunners component
   renderEventRunners = () => {
     const {
@@ -154,6 +181,7 @@ class MapView extends Component {
       user,
       addEventRunner,
       addEventRunnerOris,
+      getUserById,
       selectEventToDisplay,
       selectRunnerToDisplay,
     } = this.props;
@@ -162,7 +190,7 @@ class MapView extends Component {
       errorMessage,
       selectedEventDisplay,
     } = oevent;
-    const { current } = user;
+    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
 
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
@@ -178,10 +206,13 @@ class MapView extends Component {
         addEventRunnerOris={addEventRunnerOris} // prop
         currentUserId={currentUserId} // derived
         currentUserOrisId={currentUserOrisId} // derived
+        getUserById={getUserById} // prop
         handleSelectEventRunner={handleSelectEventRunner} // defined here
         selectedEvent={selectedEvent} // derived
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
+        userDetails={userDetails}
+        userErrorMessage={userErrorMessage} // prop
       />
     );
   }
@@ -204,10 +235,11 @@ class MapView extends Component {
       selectedEventDisplay,
       selectedRunner,
     } = oevent;
-    const { current } = user;
+    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
     const canEdit = this.getCanEditRunner(current, selectedRunner);
+    const runnerDetails = this.getRunnerDetails(selectedRunner, userDetails, userErrorMessage);
 
     switch (runnerMode) {
       case 'none':
@@ -221,6 +253,7 @@ class MapView extends Component {
           <EventRunnerDetails
             canEdit={canEdit} // derived
             language={language} // prop (config)
+            runnerDetails={runnerDetails} // derived
             selectedEvent={selectedEvent} // derived
             selectedRunner={selectedRunner} // prop (oevent)
             setEventViewModeRunner={setEventViewModeRunner} // prop
@@ -419,7 +452,12 @@ class MapView extends Component {
   // render EventComments component (self-contained with add/edit/delete)
   renderEventComments = () => {
     const {
+      deleteComment,
+      getUserById,
       oevent,
+      postComment,
+      updateComment,
+      user,
     } = this.props;
     const {
       details,
@@ -429,9 +467,20 @@ class MapView extends Component {
     } = oevent;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
+    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
+    // const runnerDetails = this.getRunnerDetails(selectedRunner, userDetails, userErrorMessage);
 
     return (
       <EventComments
+        collapseTrigger={this.refreshCollapseEventComments}
+        currentUser={current} // prop (user) - can user post, edit, delete?
+        deleteComment={deleteComment} // prop
+        getUserById={getUserById} // prop
+        postComment={postComment} // prop
+        // runnerDetails={runnerDetails} // derived
+        updateComment={updateComment} // prop
+        userDetails={userDetails} // prop (user)
+        userErrorMessage={userErrorMessage} // prop (user)
         selectedEvent={selectedEvent} // derived
         selectedRunner={selectedRunner} // prop (oevent)
       />
@@ -567,6 +616,7 @@ const mapDispatchToProps = {
   addEventRunnerOris: addEventRunnerOrisAction,
   cancelEventError: cancelEventErrorAction,
   createEventLink: createEventLinkAction,
+  deleteComment: deleteCommentAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
   deleteEventRunner: deleteEventRunnerAction,
@@ -575,7 +625,9 @@ const mapDispatchToProps = {
   getEventById: getEventByIdAction,
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
+  getUserById: getUserByIdAction,
   getUserList: getUserListAction,
+  postComment: postCommentAction,
   postMap: postMapAction,
   selectEventForDetails: selectEventForDetailsAction,
   selectEventToDisplay: selectEventToDisplayAction,
@@ -584,6 +636,7 @@ const mapDispatchToProps = {
   setEventViewModeEvent: setEventViewModeEventAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
   setEventViewModeRunner: setEventViewModeRunnerAction,
+  updateComment: updateCommentAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,
   updateEventRunner: updateEventRunnerAction,

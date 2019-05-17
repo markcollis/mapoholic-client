@@ -7,15 +7,18 @@ import EventRunnersItem from './EventRunnersItem';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventRunners = ({
-  currentUserId,
-  currentUserOrisId,
-  selectedEvent,
   addEventRunner,
   addEventRunnerOris,
+  currentUserId,
+  currentUserOrisId,
+  getUserById,
+  handleSelectEventRunner,
+  history,
+  selectedEvent,
   selectEventToDisplay,
   selectRunnerToDisplay,
-  history,
-  handleSelectEventRunner,
+  userDetails,
+  userErrorMessage,
 }) => {
   if (!selectedEvent._id) return null;
   const { _id: eventId, runners, orisId } = selectedEvent;
@@ -31,8 +34,11 @@ const EventRunners = ({
           key={runnerId}
           currentUserId={currentUserId}
           eventId={eventId}
-          runner={runner}
+          getUserById={getUserById}
           handleSelectEventRunner={handleSelectEventRunner}
+          runner={runner}
+          userDetails={userDetails}
+          userErrorMessage={userErrorMessage}
         />
       );
     });
@@ -87,16 +93,21 @@ EventRunners.propTypes = {
   addEventRunnerOris: PropTypes.func.isRequired,
   currentUserId: PropTypes.string,
   currentUserOrisId: PropTypes.string,
+  getUserById: PropTypes.func.isRequired,
   handleSelectEventRunner: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectEventToDisplay: PropTypes.func.isRequired,
   selectRunnerToDisplay: PropTypes.func.isRequired,
+  userDetails: PropTypes.objectOf(PropTypes.any),
+  userErrorMessage: PropTypes.string,
 };
 EventRunners.defaultProps = {
   currentUserId: null,
   currentUserOrisId: null,
   selectedEvent: {},
+  userDetails: {},
+  userErrorMessage: '',
 };
 
 export default withRouter(EventRunners);

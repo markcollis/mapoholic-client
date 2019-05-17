@@ -35,15 +35,38 @@
   margin-bottom: 5px;
 }
 
+/* settings for EventCommentsItem */
+.comment-header {
+  padding-top: 0.3em !important;
+  padding-bottom: 0.5em !important;
+}
+.comment-author {
+  color: #2185d0 !important;
+}
+.comment-fullname {
+  font-size: 0.9em;
+  font-weight: normal;
+}
+.comment-date {
+  font-size: 0.9em;
+  font-style: italic;
+}
+.comment-editor {
+  padding-top: 1rem;
+}
+.comment-text {
+  white-space: pre-line;
+}
 
+/* settings for EventRunnersItem */
 .event-runners-item .label {
   margin-right: 0.3em !important;
 }
-
 .event-runners-current {
   box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
 }
 
+/* settings for EventLinkedItem */
 .event-link-current {
   box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
 }
@@ -52,13 +75,20 @@
   margin-right: 0.3em !important;
 }
 
+/* format common Footer text */
 .footer {
   text-align: right;
   font-style: italic;
 }
 
+/* settings for EventRunnerDetails */
 .course-title {
   font-weight: bold;
+}
+.event-runner-profile-image {
+  width: 100px;
+  height: 100px;
+  float: right;
 }
 
 /* float right (initially intended for labels) */

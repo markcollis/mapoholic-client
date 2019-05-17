@@ -8,11 +8,13 @@ class Collapse extends Component {
       PropTypes.objectOf(PropTypes.any),
     ]),
     children: PropTypes.node,
+    refreshTrigger: PropTypes.number,
   };
 
   static defaultProps = {
     title: '[no title provided]',
     children: [],
+    refreshTrigger: 0,
   }
 
   constructor(props) {

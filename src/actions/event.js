@@ -9,16 +9,16 @@ import {
   EVENT_LINK_CREATED,
   EVENT_RUNNER_ADDED,
   EVENT_MAP_UPLOADED,
-  // EVENT_COMMENT_ADDED, // not yet implemented
+  EVENT_COMMENT_ADDED,
   EVENT_UPDATED,
   EVENT_RUNNER_UPDATED,
   EVENT_LINK_UPDATED,
-  // EVENT_COMMENT_UPDATED, // not yet implemented
+  EVENT_COMMENT_UPDATED,
   EVENT_DELETED,
   EVENT_RUNNER_DELETED, // not yet implemented on back end
   EVENT_MAP_DELETED,
   EVENT_LINK_DELETED,
-  // EVENT_COMMENT_DELETED, // not yet implemented
+  EVENT_COMMENT_DELETED,
   EVENT_ERROR,
   EVENT_CHANGE_SEARCH_FIELD,
   EVENT_CHANGE_VIEW_EVENT,
@@ -257,7 +257,25 @@ export const postMapAction = (parameters, file, callback) => async (dispatch) =>
 
 // Post a new comment against the specified user's map in this event
 // app.post('/events/:eventid/comments/:userid', requireAuth, Events.postComment);
-// NOT DONE YET
+export const postCommentAction = (eventId, userId, formValues, callback) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('omapfolder-auth-token');
+    const response = await axios.post(
+      `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}`,
+      formValues,
+      { headers: { Authorization: `bearer ${token}` } },
+    );
+    dispatch({
+      type: EVENT_COMMENT_ADDED,
+      payload: { eventId, userId, comments: response.data },
+    });
+    // console.log('callback', callback);
+    if (callback) callback(true);
+  } catch (err) {
+    handleError(EVENT_ERROR)(err, dispatch);
+    if (callback) callback(false);
+  }
+};
 
 // create a new event using oris data *eventid is ORIS event id*
 // if a corresponding event is already in db, fill empty fields only
@@ -422,7 +440,28 @@ export const updateEventLinkAction = (eventLinkId, formValues, callback) => asyn
 
 // edit the specified comment (multiple amendment not supported)
 // app.patch('/events/:eventid/comments/:userid/:commentid', requireAuth, Events.updateComment);
-// NOT DONE YET
+export const updateCommentAction = (eventId, userId, commentId, formValues, callback) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('omapfolder-auth-token');
+      const response = await axios.patch(
+        `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
+        formValues,
+        { headers: { Authorization: `bearer ${token}` } },
+      );
+      dispatch({
+        type: EVENT_COMMENT_UPDATED,
+        payload: { eventId, userId, comments: response.data },
+      });
+      // dispatch({ type: EVENT_COMMENT_UPDATED, payload: response.data });
+      // console.log('callback', callback);
+      if (callback) callback(true);
+    } catch (err) {
+      handleError(EVENT_ERROR)(err, dispatch);
+      if (callback) callback(false);
+    }
+  };
+};
 
 // delete the specified event (multiple delete not supported)
 // [will fail if other users have records attached to event, unless admin]
@@ -515,4 +554,24 @@ export const deleteEventLinkAction = (eventLinkId, callback) => async (dispatch)
 
 // delete the specified comment (multiple deletion not supported)
 // app.delete('/events/:eventid/comments/:userid/:commentid', requireAuth, Events.deleteComment);
-// NOT DONE YET
+export const deleteCommentAction = (eventId, userId, commentId, callback) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('omapfolder-auth-token');
+      const response = await axios.delete(
+        `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
+        { headers: { Authorization: `bearer ${token}` } },
+      );
+      // dispatch({ type: EVENT_COMMENT_DELETED, payload: response.data });
+      dispatch({
+        type: EVENT_COMMENT_DELETED,
+        payload: { eventId, userId, comments: response.data },
+      });
+      // console.log('callback', callback);
+      if (callback) callback(true);
+    } catch (err) {
+      handleError(EVENT_ERROR)(err, dispatch);
+      if (callback) callback(false);
+    }
+  };
+};
