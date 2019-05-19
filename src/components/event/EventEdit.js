@@ -253,7 +253,7 @@ class EventEdit extends Component {
                         id="locCountry"
                         placeholder={i18n._(t`Location (country)`)}
                         isClearable
-                        options={countryOptionsLocale[language]}
+                        options={countryOptions}
                         onChange={(value) => {
                           setFieldValue('locCountry', value);
                           // console.log('regionOptionSets[value]', regionOptionSets[value]);

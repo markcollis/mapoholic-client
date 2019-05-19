@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
+
 import ClubListItem from './ClubListItem';
 import Collapse from '../Collapse';
 
@@ -7,7 +9,9 @@ const ClubList = ({ clubs, selectClubToDisplay, setClubViewMode }) => {
   if (clubs.length === 0) {
     return (
       <div className="ui segment">
-        <div className="ui message warning">{'Sorry, there aren\'t any matching clubs to display!'}</div>
+        <div className="ui message warning">
+          <Trans>{'Sorry, there aren\'t any matching clubs to display!'}</Trans>
+        </div>
       </div>
     );
   }
@@ -26,9 +30,10 @@ const ClubList = ({ clubs, selectClubToDisplay, setClubViewMode }) => {
         />
       );
     });
+  const title = <Trans>Club list</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title="Club list">
+      <Collapse title={title}>
         <div
           className="ui link cards card-list"
           role="button"

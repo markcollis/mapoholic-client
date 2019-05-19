@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventListItem.js",
-        56
+        57
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventListItem.js",
-        70
+        104
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventListItem.js",
-        74
+        110
       ]
     ]
   }

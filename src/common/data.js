@@ -215,11 +215,13 @@ export const validationErrorsLocale = {
     passwordLength: 'Your password must be at least 8 characters long.', // Authenticate
     passwordRequired: 'A password is required.', // Authenticate
     eventNameRequired: 'You must provide a name for the event.', // EventEdit
+    clubShortNameRequired: 'You must provide the club\'s abbreviation or short name.', // ClubEdit
+    clubFullNameRequired: 'You must provide the club\'s full name.', // ClubEdit
     invalidLatLow: 'Not a valid latitude (<-90°)', // EventEdit
     invalidLatHigh: 'Not a valid latitude (>90°)', // EventEdit
     invalidLongLow: 'Not a valid longitude (<-180°)', // EventEdit
     invalidLongHigh: 'Not a valid longitude (>180°)', // EventEdit
-    invalidUrl: 'You must provide a valid URL (including http(s)://).', // EventEdit
+    invalidUrl: 'You must provide a valid URL (including http(s)://).', // EventEdit, ClubEdit
     eventLinkNameRequired: 'You must provide a name for the event link.', // EventLinkedEdit
   },
   cs: { // to do later once I have a full set
@@ -228,6 +230,8 @@ export const validationErrorsLocale = {
     passwordLength: 'TRANSLATE Your password must be at least 8 characters long.',
     passwordRequired: 'TRANSLATE A password is required.',
     eventNameRequired: 'TRANSLATE You must provide a name for the event.',
+    clubShortNameRequired: 'TRANSLATE You must provide the club\'s abbreviation or short name.',
+    clubFullNameRequired: 'TRANSLATE You must provide the club\'s full name.',
     invalidLatLow: 'TRANSLATE Not a valid latitude (<-90°)',
     invalidLatHigh: 'TRANSLATE Not a valid latitude (>90°)',
     invalidLongLow: 'TRANSLATE Not a valid longitude (<-180°)',

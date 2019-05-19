@@ -1,17 +1,9 @@
 {
-  "There are no comments yet.": {
-    "origin": [
-      [
-        "src/components/event/EventComments.js",
-        50
-      ]
-    ]
-  },
   "Comments": {
     "origin": [
       [
         "src/components/event/EventComments.js",
-        51
+        34
       ]
     ]
   }

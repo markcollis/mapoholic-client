@@ -39,18 +39,21 @@ class Collapse extends Component {
     const { children: newChildren, refreshCollapse: newRefreshCollapse } = nextProps;
     // const { title } = nextProps;
     if (newRefreshCollapse !== refreshCollapse) {
-      // console.log('have props changed?, prevState, nextProps:', title.props.id, prevState, nextProps);
+      // console.log('have props changed?, prevState, nextProps:',
+      // title.props.id, prevState, nextProps);
       // console.log('yes, refreshCollapse has!');
       return { propsChanged: true, refreshCollapse: newRefreshCollapse };
     }
     if (newChildren !== children) { // does this compare deeply enough?
-      // console.log('have props changed?, prevState, nextProps:', title.props.id, prevState, nextProps);
+      // console.log('have props changed?, prevState, nextProps:',
+      // title.props.id, prevState, nextProps);
       // console.log('yes, children has!');
       return { propsChanged: true, children: newChildren };
     }
     return null;
   }
 
+  /* eslint react/no-did-update-set-state: 0 */
   componentDidUpdate() {
     const { propsChanged } = this.state;
     if (propsChanged && this.contentRef.current) { // OK to set state due to this check

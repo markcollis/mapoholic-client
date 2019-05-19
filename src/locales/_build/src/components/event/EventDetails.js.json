@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        19
+        21
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        45
+        72
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        49
+        76
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        50
+        77
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        53
+        80
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        56
+        83
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        166
+        189
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        178
+        201
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        192
+        215
       ]
     ]
   }

@@ -23,6 +23,15 @@ const Welcome = ({ auth, currentUser }) => {
             </li>
             <li>Some sort of image on club details (map of where they are based? logo?)</li>
             <li>Add some links to Footer (Github, my email?)</li>
+            <li>
+              <del>Enable HTTPS</del>
+              {' (done 19/5)'}
+            </li>
+            <li>Implement delete runner on server</li>
+            <li>
+              Clarify what happens to OrganisedBy and MemberOf references if club is deleted,
+              updating ClubDelete as appropriate
+            </li>
             <li>Refactor User and Club pages to align with Event best practice</li>
             <li>Add some more introductory/help text on this page</li>
             <li>Add a component here to show recent activity (own or all?)</li>

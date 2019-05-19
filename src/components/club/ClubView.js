@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
+
 import ClubFilter from './ClubFilter';
 import ClubList from './ClubList';
 import ClubDetails from './ClubDetails';
@@ -101,11 +103,6 @@ class ClubView extends Component {
     const { list: fullEventList } = oevent;
     const { current, list } = user;
     const selectedClub = details[selectedClubId];
-    // console.log('viewMode:', viewMode);
-    // console.log('selectedClubId:', selectedClubId);
-    // console.log('club.details:', details);
-    // console.log('current:', current);
-    // console.log('selectedClub:', selectedClub);
     const isAdmin = (current && current.role === 'admin');
     const isOwner = (current && selectedClub
       && current._id.toString() === selectedClub.owner._id.toString());
@@ -128,7 +125,7 @@ class ClubView extends Component {
         return (
           <div className="ten wide column">
             <div className="ui segment">
-              <p>Select a club from the list to show further details here</p>
+              <p><Trans>Select a club from the list to show further details here</Trans></p>
             </div>
           </div>
         );
@@ -158,6 +155,7 @@ class ClubView extends Component {
         return (
           <div className="ten wide column">
             <ClubEdit // same form component handles both create and update
+              language={language}
               isAdmin={isAdmin}
               selectedClub={selectedClub}
               viewMode={viewMode}
@@ -186,6 +184,7 @@ class ClubView extends Component {
         return (
           <div className="ten wide column">
             <ClubEdit // same form component handles both create and update
+              language={language}
               viewMode={viewMode}
               createClub={createClub}
               setClubViewMode={setClubViewMode}
@@ -237,8 +236,12 @@ class ClubView extends Component {
     const renderError = (errorMessage || userErrorMessage)
       ? (
         <div className="sixteen wide column">
-          {(errorMessage) ? <div className="ui error message">{`Error: ${errorMessage}`}</div> : null}
-          {(userErrorMessage) ? <div className="ui error message">{`Error (get user): ${userErrorMessage}`}</div> : null}
+          {(errorMessage)
+            ? <div className="ui error message"><Trans>{`Error: ${errorMessage}`}</Trans></div>
+            : null}
+          {(userErrorMessage)
+            ? <div className="ui error message"><Trans>{`Error (get user): ${userErrorMessage}`}</Trans></div>
+            : null}
         </div>
       )
       : null;

@@ -168,10 +168,9 @@ class MapView extends Component {
     return organisingClubs;
   });
 
+  // update a prop in EventComments to trigger refresh of Collapse component to new size
   refreshCollapseEventComments = () => {
     const { refreshCollapseEventComments } = this.state;
-    console.log('refresh Collapse triggered');
-    console.log('new value', refreshCollapseEventComments + 1);
     this.setState({ refreshCollapseEventComments: refreshCollapseEventComments + 1 });
   }
 
@@ -569,7 +568,7 @@ class MapView extends Component {
   }
 
   render() {
-    console.log('state in MapView:', this.state);
+    // console.log('state in MapView:', this.state);
     const { oevent } = this.props;
     const { selectedEventDisplay } = oevent;
     if (!selectedEventDisplay) {

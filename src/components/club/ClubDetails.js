@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
+
 import Collapse from '../Collapse';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
@@ -12,7 +14,9 @@ const ClubDetails = ({
   if (!selectedClub._id) {
     return (
       <div className="ui segment">
-        <div className="ui active inline centered text loader">Loading club details...</div>
+        <div className="ui active inline centered text loader">
+          <Trans>Loading club details...</Trans>
+        </div>
       </div>
     );
   }
@@ -28,16 +32,16 @@ const ClubDetails = ({
     ? (
       <div>
         <hr className="divider" />
-        <div className="">{`Owner: ${owner.displayName}`}</div>
+        <div className=""><Trans>{`Owner: ${owner.displayName}`}</Trans></div>
         {(orisId)
-          ? <div>{`ORIS ID: ${orisId}`}</div>
+          ? <div><Trans>{`ORIS ID: ${orisId}`}</Trans></div>
           : null}
         <hr className="divider" />
         <button type="button" className="ui red tiny button right floated" onClick={() => setClubViewMode('delete')}>
-          Delete club
+          <Trans>Delete club</Trans>
         </button>
         <button type="button" className="ui primary tiny button" onClick={() => setClubViewMode('edit')}>
-          Edit club details
+          <Trans>Edit club details</Trans>
         </button>
       </div>
     )
@@ -61,9 +65,10 @@ const ClubDetails = ({
       </div>
     </div>
   );
+  const title = <Trans>Club details</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title="Club details">
+      <Collapse title={title}>
         {displayProfile}
       </Collapse>
     </div>

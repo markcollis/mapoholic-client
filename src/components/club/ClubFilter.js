@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { I18n } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
+
 import Collapse from '../Collapse';
 
 const ClubFilter = ({
@@ -9,22 +12,27 @@ const ClubFilter = ({
   selectClubToDisplay,
   getClubList,
 }) => {
+  const title = <Trans>Search for clubs</Trans>;
   return (
     <div className="ui segment">
       <div className="ui items">
-        <Collapse title="Search for clubs">
+        <Collapse title={title}>
           <div className="ui icon input fluid">
-            <input
-              type="search"
-              placeholder="Club search filter"
-              onChange={setClubSearchField}
-              value={searchField}
-            />
+            <I18n>
+              {({ i18n }) => (
+                <input
+                  type="search"
+                  placeholder={i18n._(t`Club search filter`)}
+                  onChange={setClubSearchField}
+                  value={searchField}
+                />
+              )}
+            </I18n>
             <i className="circular search icon" />
           </div>
           <div className="ui divider" />
           <button type="button" className="ui tiny button" onClick={() => getClubList()}>
-            Refresh list
+            <Trans>Refresh list</Trans>
           </button>
           <button
             type="button"
@@ -34,7 +42,7 @@ const ClubFilter = ({
               setClubViewMode('add');
             }}
           >
-            Add new club
+            <Trans>Add new club</Trans>
           </button>
         </Collapse>
       </div>

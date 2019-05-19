@@ -39,26 +39,21 @@ class EventCommentsItem extends Component {
 
   handleInputChange = (e) => {
     this.setState({ editCommentText: e.target.value });
-    // e.target.style.height = 'inherit';
-    // e.target.style.height = `${e.target.scrollHeight}px`;
   }
 
   handleDeleteEnable = () => {
-    // console.log('handleDeleteEnable', e);
     const { requestRefreshCollapse } = this.props;
     this.setState({ isDeleting: true });
     requestRefreshCollapse();
   }
 
   handleDeleteCancel = () => {
-    // console.log('handleDeleteCancel', e);
     const { requestRefreshCollapse } = this.props;
     this.setState({ isDeleting: false });
     requestRefreshCollapse();
   }
 
   handleDeleteSubmit = () => {
-    // console.log('handleDeleteSubmit', e);
     const {
       comment,
       deleteComment,
@@ -66,24 +61,23 @@ class EventCommentsItem extends Component {
       runnerId,
     } = this.props;
     const { _id: commentId } = comment;
-    deleteComment(eventId, runnerId, commentId, (successful) => {
-      if (successful) {
-        console.log('comment delete successful');
-      } else {
-        console.log('comment delete failed');
-      }
-    });
+    deleteComment(eventId, runnerId, commentId);
+    // deleteComment(eventId, runnerId, commentId, (successful) => {
+    //   if (successful) {
+    //     console.log('comment delete successful');
+    //   } else {
+    //     console.log('comment delete failed');
+    //   }
+    // });
   }
 
   handleEditEnable = () => {
-    // console.log('handleEditEnable', e);
     const { requestRefreshCollapse } = this.props;
     this.setState({ isEditing: true });
     requestRefreshCollapse();
   }
 
   handleEditCancel = () => {
-    // console.log('handleEditCancel', e);
     const { requestRefreshCollapse, comment } = this.props;
     const { text } = comment;
     this.setState({ editCommentText: text, isEditing: false });
@@ -91,7 +85,6 @@ class EventCommentsItem extends Component {
   }
 
   handleEditSubmit = () => {
-    // console.log('handleEditSubmit', e);
     const { editCommentText } = this.state;
     const {
       comment,
@@ -103,11 +96,11 @@ class EventCommentsItem extends Component {
     const { _id: commentId } = comment;
     updateComment(eventId, runnerId, commentId, { text: editCommentText }, (successful) => {
       if (successful) {
-        console.log('comment update successful');
+        // console.log('comment update successful');
         this.setState({ isEditing: false });
         requestRefreshCollapse();
-      } else {
-        console.log('comment update failed');
+      // } else {
+      //   console.log('comment update failed');
       }
     });
   }

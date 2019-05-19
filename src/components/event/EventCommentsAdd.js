@@ -49,11 +49,11 @@ class EventCommentsAdd extends Component {
       const { _id: runnerId } = user;
       postComment(eventId, runnerId, { text: commentText }, (successful) => {
         if (successful) {
-          console.log('posting comment successful');
+          // console.log('posting comment successful');
           this.setState({ isEditing: false, commentText: '' });
           requestRefreshCollapse();
         } else {
-          console.log('posting comment failed');
+          // console.log('posting comment failed');
         }
       });
     }

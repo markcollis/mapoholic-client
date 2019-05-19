@@ -19,7 +19,7 @@ const EventComments = ({
   userDetails,
   userErrorMessage,
 }) => {
-  console.log('refreshCollapse in EventComments:', refreshCollapse);
+  // console.log('refreshCollapse in EventComments:', refreshCollapse);
   const { _id: eventId } = selectedEvent;
   // console.log('selectedEvent/Runner in EventComments:', selectedEvent, selectedRunner);
   // console.log('currentUser in EventComments:', currentUser);

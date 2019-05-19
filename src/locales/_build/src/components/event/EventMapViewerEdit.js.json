@@ -87,11 +87,11 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        335
+        336
       ],
       [
         "src/components/event/EventMapViewerEdit.js",
-        366
+        367
       ]
     ]
   },
@@ -99,11 +99,11 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        343
+        344
       ],
       [
         "src/components/event/EventMapViewerEdit.js",
-        374
+        375
       ]
     ]
   },
@@ -111,7 +111,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewerEdit.js",
-        348
+        349
       ]
     ]
   }
