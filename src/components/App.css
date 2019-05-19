@@ -76,7 +76,7 @@
   margin-right: 0.3em !important;
 }
 .event-details .item:after {
-    clear: left !important;
+  clear: left !important;
 }
 
 /* settings for EventListItem */
@@ -158,6 +158,9 @@
 }
 .highlighted {
   background-color: #ddd;
+}
+.border-button {
+  text-align: center;
 }
 
 /* set margins to avoid clipping when inside a Collapse component */

@@ -7,20 +7,22 @@ import EventCommentsList from './EventCommentsList';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventComments = ({
-  collapseTrigger,
   currentUser,
   deleteComment,
   getUserById,
   postComment,
-  updateComment,
+  refreshCollapse,
+  requestRefreshCollapse,
   selectedEvent,
   selectedRunner,
+  updateComment,
   userDetails,
   userErrorMessage,
 }) => {
+  console.log('refreshCollapse in EventComments:', refreshCollapse);
   const { _id: eventId } = selectedEvent;
-  console.log('selectedEvent/Runner in EventComments:', selectedEvent, selectedRunner);
-  console.log('currentUser in EventComments:', currentUser);
+  // console.log('selectedEvent/Runner in EventComments:', selectedEvent, selectedRunner);
+  // console.log('currentUser in EventComments:', currentUser);
   const runnerData = (selectedEvent.runners)
     ? selectedEvent.runners.find(runner => runner.user._id.toString() === selectedRunner)
     : null;
@@ -32,14 +34,15 @@ const EventComments = ({
   const title = <Trans>Comments</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title={title}>
+      <Collapse title={title} refreshCollapse={refreshCollapse}>
         <EventCommentsList
-          collapseTrigger={collapseTrigger}
+          requestRefreshCollapse={requestRefreshCollapse}
           currentUserId={currentUserId}
           deleteComment={deleteComment}
           eventId={eventId}
           getUserById={getUserById}
           isAdmin={isAdmin}
+          refreshCollapse={refreshCollapse}
           runnerData={runnerData}
           updateComment={updateComment}
           userDetails={userDetails}
@@ -50,9 +53,10 @@ const EventComments = ({
             <div>
               <hr className="divider" />
               <EventCommentsAdd
-                collapseTrigger={collapseTrigger}
+                requestRefreshCollapse={requestRefreshCollapse}
                 eventId={eventId}
                 postComment={postComment}
+                refreshCollapse={refreshCollapse}
                 runnerData={runnerData}
               />
             </div>
@@ -65,14 +69,15 @@ const EventComments = ({
 };
 
 EventComments.propTypes = {
-  collapseTrigger: PropTypes.func.isRequired,
   currentUser: PropTypes.objectOf(PropTypes.any),
   deleteComment: PropTypes.func.isRequired,
   getUserById: PropTypes.func.isRequired,
   postComment: PropTypes.func.isRequired,
-  updateComment: PropTypes.func.isRequired,
+  refreshCollapse: PropTypes.number.isRequired,
+  requestRefreshCollapse: PropTypes.func.isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,
+  updateComment: PropTypes.func.isRequired,
   userDetails: PropTypes.objectOf(PropTypes.any),
   userErrorMessage: PropTypes.string,
 };

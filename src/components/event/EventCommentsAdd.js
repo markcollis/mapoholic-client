@@ -4,7 +4,7 @@ import { Trans } from '@lingui/macro';
 
 class EventCommentsAdd extends Component {
   static propTypes = {
-    collapseTrigger: PropTypes.func.isRequired,
+    requestRefreshCollapse: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
     eventId: PropTypes.string,
     runnerData: PropTypes.objectOf(PropTypes.any),
@@ -25,21 +25,21 @@ class EventCommentsAdd extends Component {
   }
 
   handleEditEnable = () => {
-    const { collapseTrigger } = this.props;
+    const { requestRefreshCollapse } = this.props;
     this.setState({ isEditing: true });
-    collapseTrigger();
+    requestRefreshCollapse();
   }
 
   handleCancel = () => {
-    const { collapseTrigger } = this.props;
+    const { requestRefreshCollapse } = this.props;
     this.setState({ commentText: '', isEditing: false });
-    collapseTrigger();
+    requestRefreshCollapse();
   }
 
   handleSubmit = () => {
     const { commentText } = this.state;
     const {
-      collapseTrigger,
+      requestRefreshCollapse,
       eventId,
       postComment,
       runnerData,
@@ -51,7 +51,7 @@ class EventCommentsAdd extends Component {
         if (successful) {
           console.log('posting comment successful');
           this.setState({ isEditing: false, commentText: '' });
-          collapseTrigger();
+          requestRefreshCollapse();
         } else {
           console.log('posting comment failed');
         }

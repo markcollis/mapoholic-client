@@ -8,13 +8,13 @@ class Collapse extends Component {
       PropTypes.objectOf(PropTypes.any),
     ]),
     children: PropTypes.node,
-    refreshTrigger: PropTypes.number,
+    refreshCollapse: PropTypes.number, // used to trigger re-render, value unimportant
   };
 
   static defaultProps = {
     title: '[no title provided]',
     children: [],
-    refreshTrigger: 0,
+    refreshCollapse: 0,
   }
 
   constructor(props) {
@@ -23,36 +23,45 @@ class Collapse extends Component {
       hideContent: false,
       contentHeight: null,
       propsChanged: true,
+      children: null,
+      refreshCollapse: null,
     };
     this.contentRef = React.createRef();
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ propsChanged: false, contentHeight: this.contentRef.current.clientHeight });
-    }, 200);
+    const { children, refreshCollapse } = this.props;
+    this.setState({ children, refreshCollapse });
   }
 
-  componentWillReceiveProps() {
-    // console.log('will receive props');
-    this.setState({ propsChanged: true });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { children, refreshCollapse } = prevState;
+    const { children: newChildren, refreshCollapse: newRefreshCollapse } = nextProps;
+    // const { title } = nextProps;
+    if (newRefreshCollapse !== refreshCollapse) {
+      // console.log('have props changed?, prevState, nextProps:', title.props.id, prevState, nextProps);
+      // console.log('yes, refreshCollapse has!');
+      return { propsChanged: true, refreshCollapse: newRefreshCollapse };
+    }
+    if (newChildren !== children) { // does this compare deeply enough?
+      // console.log('have props changed?, prevState, nextProps:', title.props.id, prevState, nextProps);
+      // console.log('yes, children has!');
+      return { propsChanged: true, children: newChildren };
+    }
+    return null;
   }
 
   componentDidUpdate() {
     const { propsChanged } = this.state;
-    if (propsChanged) {
+    if (propsChanged && this.contentRef.current) { // OK to set state due to this check
       this.setState({ propsChanged: false, contentHeight: this.contentRef.current.clientHeight });
     }
   }
 
   swapVisibility(e) {
     e.preventDefault();
-    // const { title } = this.props;
     const { hideContent, contentHeight } = this.state;
     const currentHeight = this.contentRef.current.clientHeight;
-    // if (title === 'User list') {
-    //   console.log('heights (content, current):', contentHeight, currentHeight);
-    // }
     this.setState({ hideContent: !hideContent });
     if (!hideContent) {
       if (currentHeight !== contentHeight) {
@@ -63,6 +72,8 @@ class Collapse extends Component {
 
   render() {
     const { title, children } = this.props;
+    // console.log('this.contentRef', this.contentRef);
+    // console.log('props and state in Collapse', title, this.props, this.state);
     const { hideContent, contentHeight, propsChanged } = this.state;
     const currentHeight = `${(hideContent) ? 0 : contentHeight}px`;
     const contentStyle = (propsChanged) ? { visibility: 'hidden', maxHeight: '' } : { maxHeight: currentHeight };

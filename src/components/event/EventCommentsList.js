@@ -4,12 +4,12 @@ import { Trans, Plural } from '@lingui/macro';
 import EventCommentsItem from './EventCommentsItem';
 
 const EventCommentsList = ({
-  collapseTrigger,
   currentUserId,
   deleteComment,
-  getUserById,
   eventId,
+  getUserById,
   isAdmin,
+  requestRefreshCollapse,
   runnerData,
   updateComment,
   userDetails,
@@ -48,7 +48,7 @@ const EventCommentsList = ({
             <EventCommentsItem
               key={commentId}
               authorDetails={userDetails[authorId]}
-              collapseTrigger={collapseTrigger}
+              requestRefreshCollapse={requestRefreshCollapse}
               comment={comment}
               currentUserId={currentUserId}
               deleteComment={deleteComment}
@@ -71,12 +71,12 @@ const EventCommentsList = ({
 };
 
 EventCommentsList.propTypes = {
-  collapseTrigger: PropTypes.func.isRequired,
   currentUserId: PropTypes.string,
   deleteComment: PropTypes.func.isRequired,
   eventId: PropTypes.string,
   getUserById: PropTypes.func.isRequired,
   isAdmin: PropTypes.bool,
+  requestRefreshCollapse: PropTypes.func.isRequired,
   runnerData: PropTypes.objectOf(PropTypes.any),
   updateComment: PropTypes.func.isRequired,
   userDetails: PropTypes.objectOf(PropTypes.any).isRequired,

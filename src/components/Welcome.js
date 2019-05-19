@@ -30,13 +30,18 @@ const Welcome = ({ auth, currentUser }) => {
               <del>Investigate unauthorized /users/me request when logging in</del>
               {' (fixed 18/5)'}
             </li>
+            <li>Investigate image resize bug if uploaded maps are too small</li>
             <li>Check for other components that could use CollapseTrigger function</li>
             <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
             <li>Complete the translations and check that nothing is missing</li>
             <li>
+              <del>
               Add option to process blank course maps used with QR
               (black border: top 66px, others 1px)
+              </del>
+              {' (added 19/5)'}
             </li>
+            <li>Centre rotation on current view when zoomed in</li>
             <li>Add some real sample data/maps</li>
             <li>Test it out on a real Internet-facing server</li>
           </ol>

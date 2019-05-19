@@ -324,6 +324,7 @@ class EventMapViewerEdit extends Component {
                 onFileAdded={file => this.setState({ courseMapToUpload: file })}
                 icon={dropzoneIcon}
                 text={dropzoneTextCourse}
+                showAddBorder
               />
             </div>
             <div className="column three wide">

@@ -8,12 +8,12 @@ import { OMAPFOLDER_SERVER } from '../../config';
 class EventCommentsItem extends Component {
   static propTypes = {
     authorDetails: PropTypes.objectOf(PropTypes.any),
-    collapseTrigger: PropTypes.func.isRequired,
     comment: PropTypes.objectOf(PropTypes.any).isRequired,
     currentUserId: PropTypes.string,
     deleteComment: PropTypes.func.isRequired,
     eventId: PropTypes.string,
     isAdmin: PropTypes.bool.isRequired,
+    requestRefreshCollapse: PropTypes.func.isRequired,
     runnerId: PropTypes.string,
     updateComment: PropTypes.func.isRequired,
   };
@@ -45,16 +45,16 @@ class EventCommentsItem extends Component {
 
   handleDeleteEnable = () => {
     // console.log('handleDeleteEnable', e);
-    const { collapseTrigger } = this.props;
+    const { requestRefreshCollapse } = this.props;
     this.setState({ isDeleting: true });
-    collapseTrigger();
+    requestRefreshCollapse();
   }
 
   handleDeleteCancel = () => {
     // console.log('handleDeleteCancel', e);
-    const { collapseTrigger } = this.props;
+    const { requestRefreshCollapse } = this.props;
     this.setState({ isDeleting: false });
-    collapseTrigger();
+    requestRefreshCollapse();
   }
 
   handleDeleteSubmit = () => {
@@ -77,26 +77,26 @@ class EventCommentsItem extends Component {
 
   handleEditEnable = () => {
     // console.log('handleEditEnable', e);
-    const { collapseTrigger } = this.props;
+    const { requestRefreshCollapse } = this.props;
     this.setState({ isEditing: true });
-    collapseTrigger();
+    requestRefreshCollapse();
   }
 
   handleEditCancel = () => {
     // console.log('handleEditCancel', e);
-    const { collapseTrigger, comment } = this.props;
+    const { requestRefreshCollapse, comment } = this.props;
     const { text } = comment;
     this.setState({ editCommentText: text, isEditing: false });
-    collapseTrigger();
+    requestRefreshCollapse();
   }
 
   handleEditSubmit = () => {
     // console.log('handleEditSubmit', e);
     const { editCommentText } = this.state;
     const {
-      collapseTrigger,
       comment,
       eventId,
+      requestRefreshCollapse,
       runnerId,
       updateComment,
     } = this.props;
@@ -105,7 +105,7 @@ class EventCommentsItem extends Component {
       if (successful) {
         console.log('comment update successful');
         this.setState({ isEditing: false });
-        collapseTrigger();
+        requestRefreshCollapse();
       } else {
         console.log('comment update failed');
       }
@@ -227,7 +227,7 @@ class EventCommentsItem extends Component {
   }
 
   render() {
-    console.log('props, state in EventCommentsItem:', this.props, this.state);
+    // console.log('props, state in EventCommentsItem:', this.props, this.state);
     return (
       <div className="item">
         <div className="content">

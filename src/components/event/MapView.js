@@ -87,7 +87,7 @@ class MapView extends Component {
   }
 
   state = {
-    collapseTriggerEventComments: 0,
+    refreshCollapseEventComments: 0,
   }
 
   // get summary data from API if not already available
@@ -169,8 +169,10 @@ class MapView extends Component {
   });
 
   refreshCollapseEventComments = () => {
-    const { collapseTriggerEventComments } = this.state;
-    this.setState({ collapseTriggerEventComments: collapseTriggerEventComments + 1 });
+    const { refreshCollapseEventComments } = this.state;
+    console.log('refresh Collapse triggered');
+    console.log('new value', refreshCollapseEventComments + 1);
+    this.setState({ refreshCollapseEventComments: refreshCollapseEventComments + 1 });
   }
 
   // render EventRunners component
@@ -450,6 +452,7 @@ class MapView extends Component {
 
   // render EventComments component (self-contained with add/edit/delete)
   renderEventComments = () => {
+    const { refreshCollapseEventComments } = this.state;
     const {
       deleteComment,
       getUserById,
@@ -471,12 +474,13 @@ class MapView extends Component {
 
     return (
       <EventComments
-        collapseTrigger={this.refreshCollapseEventComments}
         currentUser={current} // prop (user) - can user post, edit, delete?
         deleteComment={deleteComment} // prop
         getUserById={getUserById} // prop
         postComment={postComment} // prop
         // runnerDetails={runnerDetails} // derived
+        refreshCollapse={refreshCollapseEventComments} // state (value increments to trigger)
+        requestRefreshCollapse={this.refreshCollapseEventComments} // defined here
         updateComment={updateComment} // prop
         userDetails={userDetails} // prop (user)
         userErrorMessage={userErrorMessage} // prop (user)
@@ -565,6 +569,7 @@ class MapView extends Component {
   }
 
   render() {
+    console.log('state in MapView:', this.state);
     const { oevent } = this.props;
     const { selectedEventDisplay } = oevent;
     if (!selectedEventDisplay) {

@@ -520,7 +520,7 @@ class EventViewList extends Component {
   }
 
   render() {
-    console.log('props in EventView:', this.props);
+    // console.log('props in EventView:', this.props);
     const { showMap } = this.props;
     if (showMap) {
       return (
