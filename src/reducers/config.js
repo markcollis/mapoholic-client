@@ -1,7 +1,8 @@
 import { CONFIG_SET_LANGUAGE } from '../actions/types';
+import { defaultLanguage } from '../config';
 
 const INITIAL_STATE = {
-  language: 'en',
+  language: defaultLanguage || 'en',
 };
 
 const configReducer = (state = INITIAL_STATE, action) => {

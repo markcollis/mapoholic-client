@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import iconFile from '../o.png';
+import iconFile from '../graphics/o.png';
 
 const iconFlag = new L.Icon({
   iconUrl: iconFile,

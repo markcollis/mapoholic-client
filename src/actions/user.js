@@ -167,13 +167,19 @@ export const getCurrentUserAction = callback => async (dispatch) => {
   // console.log('getCurrentUserAction called.');
   try {
     const token = localStorage.getItem('omapfolder-auth-token');
-    // console.log('token:', token);
-    const response = await axios.get(`${OMAPFOLDER_SERVER}/users/me`, {
-      headers: { Authorization: `bearer ${token}` },
-    });
-    // console.log('response:', response.data);
-    dispatch({ type: USER_GOT_CURRENT, payload: response.data });
-    if (callback) callback(true);
+    if (!token) { // extra check needed here because token is set in state
+      // faster than it is written to localStorage
+      console.log('No token found, no point in calling API for now');
+      if (callback) callback(false);
+    } else {
+      // console.log('token:', token);
+      const response = await axios.get(`${OMAPFOLDER_SERVER}/users/me`, {
+        headers: { Authorization: `bearer ${token}` },
+      });
+      // console.log('response:', response.data);
+      dispatch({ type: USER_GOT_CURRENT, payload: response.data });
+      if (callback) callback(true);
+    }
   } catch (err) {
     handleError(USER_ERROR)(err, dispatch);
     if (callback) callback(false);

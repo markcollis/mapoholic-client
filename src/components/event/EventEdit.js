@@ -15,7 +15,7 @@ import {
   regionOptionSets,
   typesOptionsLocale,
   validationErrorsLocale,
-} from '../data';
+} from '../../common/data';
 import { dateToDateString, dateStringToDate } from '../../common/conversions';
 
 registerLocale('cs', cs);

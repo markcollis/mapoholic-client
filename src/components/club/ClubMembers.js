@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Trans, Plural } from '@lingui/macro';
 import Collapse from '../Collapse';
-import noAvatar from '../../no-avatar.png';
+import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 
 const ClubMembers = ({

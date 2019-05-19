@@ -19,7 +19,6 @@ import EventRunnerEdit from './EventRunnerEdit';
 import EventRunners from './EventRunners';
 
 import {
-  // setEventViewModeCommentAction,
   addEventRunnerAction,
   addEventRunnerOrisAction,
   cancelEventErrorAction,

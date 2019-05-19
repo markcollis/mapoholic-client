@@ -23,7 +23,6 @@ import {
   EVENT_CHANGE_VIEW_EVENT,
   EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_CHANGE_VIEW_COMMENT,
   EVENT_SELECT_EVENT_DETAILS,
   EVENT_SELECT_EVENT_DISPLAY,
   EVENT_SELECT_RUNNER,
@@ -36,7 +35,6 @@ const INITIAL_STATE = {
   eventMode: 'none', // none, view, add, edit, delete
   eventLinkMode: 'view', // view, add, edit, delete
   runnerMode: 'view', // none, view, edit, delete
-  commentMode: 'view', // view, add, edit, delete
   list: null, // replaced each time API is queried, also populates corresponding details
   linkList: null, // replaced each time API is queried
   linkDetails: {}, // all link list records downloaded/updated
@@ -140,9 +138,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_CHANGE_VIEW_RUNNER:
       // console.log('EVENT_CHANGE_VIEW_RUNNER payload:', action.payload);
       return { ...state, runnerMode: action.payload };
-    case EVENT_CHANGE_VIEW_COMMENT:
-      // console.log('EVENT_CHANGE_VIEW_COMMENT payload:', action.payload);
-      return { ...state, commentMode: action.payload };
     case EVENT_SELECT_EVENT_DETAILS:
       // console.log('EVENT_SELECT_EVENT_DETAILS payload:', action.payload);
       return { ...state, selectedEventDetails: action.payload };
@@ -201,31 +196,19 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     case EVENT_COMMENT_UPDATED:
     case EVENT_COMMENT_DELETED:
-    case EVENT_COMMENT_ADDED: { // API returns comments array
-      console.log('EVENT_COMMENT_ADDED payload:', action.payload);
+    case EVENT_COMMENT_ADDED: { // API returns relevant comments array
+      // console.log('EVENT_COMMENT_ADDED payload:', action.payload);
       const { eventId, userId, comments } = action.payload;
       const runnersInState = state.details[eventId].runners;
-      console.log('runnersInState:', runnersInState);
+      // console.log('runnersInState:', runnersInState);
       const updatedRunners = runnersInState.map((runner) => {
         return { ...runner };
       }); // copy each runner object
       // const updatedRunners = JSON.parse(JSON.stringify(runnersInState)); // copy
-      // const updatedRunners = runnersInState.slice(); // copy
       const runnerToUpdate = updatedRunners
         .find(runner => runner.user._id === userId);
       runnerToUpdate.comments = comments;
-      console.log('runnerToUpdate', runnerToUpdate);
-      console.log('updatedRunners', updatedRunners);
-      // console.log('state.details[eventid]', state.details[eventId]);
-      // // const eventDetailsCopy = { ...state.details };
-      // // const eventDetailsToUpdate = eventDetailsCopy[eventId];
-      // const runnerDetailsToUpdate = state.details[eventId].runners
-      //   .find(runner => runner.user._id === userId);
-      // const newRunnerDetails = JSON.parse(JSON.stringify(runnerDetailsToUpdate));
-      // newRunnerDetails.comments = comments;
-      // // runnerDetailsToUpdate.comments = comments;
-      // console.log('state.details[eventid]', state.details[eventId]);
-      // console.log('eventDetailsToUpdate', eventDetailsToUpdate);
+      // console.log('updatedRunners', updatedRunners);
       return {
         ...state,
         details: {

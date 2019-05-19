@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import noAvatar from '../../no-avatar.png';
+import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 

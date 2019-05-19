@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
-import { countryOptions } from '../data';
+import { countryOptions } from '../../common/data';
 /* eslint no-underscore-dangle: 0 */
 
 // renders form to submit credentials either for login or creating account

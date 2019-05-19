@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Collapse from '../Collapse';
-import forest from '../../silhouette.jpg';
-import noAvatar from '../../no-avatar.png';
+import forest from '../../graphics/silhouette.jpg';
+import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 

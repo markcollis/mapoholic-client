@@ -71,8 +71,18 @@
   box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
 }
 
+/* settings for EventDetails */
 .event-details .label {
   margin-right: 0.3em !important;
+}
+.event-details .item:after {
+    clear: left !important;
+}
+
+/* settings for EventListItem */
+.event-list-text {
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
 }
 
 /* format common Footer text */

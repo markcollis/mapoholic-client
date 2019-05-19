@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import Collapse from '../Collapse';
-import { visibilityOptionsLocale } from '../data';
-import noAvatar from '../../no-avatar.png';
+import { visibilityOptionsLocale } from '../../common/data';
+import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 

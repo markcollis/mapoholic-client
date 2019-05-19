@@ -14,7 +14,7 @@ import EventLinkedManage from './EventLinkedManage';
 import EventList from './EventList';
 import EventMap from './EventMap';
 import EventRunners from './EventRunners';
-import { testOrisList } from '../data'; // support dev without repeatedly calling ORIS API
+import { testOrisList } from '../../common/data'; // support dev without repeatedly calling ORIS API
 import { reformatDate } from '../../common/conversions';
 import {
   addEventRunnerAction,
@@ -520,7 +520,7 @@ class EventViewList extends Component {
   }
 
   render() {
-    // console.log('props in EventView:', this.props);
+    console.log('props in EventView:', this.props);
     const { showMap } = this.props;
     if (showMap) {
       return (

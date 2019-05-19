@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { getCurrentUserAction, setLanguageAction } from '../actions';
-import noAvatar from '../no-avatar.png';
+import noAvatar from '../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../config';
 
 const Header = ({

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
-import { typesOptionsLocale } from '../data';
+import { typesOptionsLocale } from '../../common/data';
+import { reformatDate } from '../../common/conversions';
+import { OMAPFOLDER_SERVER } from '../../config';
 
 import Collapse from '../Collapse';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
@@ -20,6 +22,7 @@ const EventDetails = ({
       </div>
     );
   }
+  // console.log('selectedEvent in EventDetails:', selectedEvent);
   const {
     owner,
     orisId,
@@ -33,11 +36,35 @@ const EventDetails = ({
     locCountry,
     locLat,
     locLong,
+    runners,
     types,
     tags,
     website,
     results,
   } = selectedEvent;
+  const mapFiles = [];
+  runners.forEach((runner) => {
+    const { maps } = runner;
+    maps.forEach((map) => {
+      const { course, route } = map;
+      if (course && course !== '') {
+        mapFiles.push(course);
+      } else if (route && route !== '') {
+        mapFiles.push(route);
+      }
+    });
+  });
+  // console.log('mapFiles:', mapFiles);
+  const renderThumbnail = (mapFiles.length > 0)
+    ? (
+      <img
+        className="ui image right floated"
+        alt="map thumbnail"
+        src={`${OMAPFOLDER_SERVER}/${mapFiles[0]
+          .slice(0, -4).concat('-thumb').concat(mapFiles[0].slice(-4))}`}
+      />
+    )
+    : null;
   const showEdit = (canEdit)
     ? (
       <div>
@@ -58,11 +85,6 @@ const EventDetails = ({
       </div>
     )
     : null;
-  const reformattedDate = date.slice(8)
-    .concat('/')
-    .concat(date.slice(5, 7))
-    .concat('/')
-    .concat(date.slice(0, 4));
   const typesOptions = typesOptionsLocale[language];
   const renderTypes = (types && types.length > 0)
     ? (
@@ -95,10 +117,11 @@ const EventDetails = ({
     : null;
   const displayEventDetails = (
     <div>
+      {renderThumbnail}
       <h3 className="header">
         {name}
         <br />
-        {reformattedDate}
+        {reformatDate(date)}
       </h3>
       <div className="ui list event-details">
         {(regionLabels)

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import noAvatar from '../../no-avatar.png';
+import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 
 const UserListItem = ({ user, selectUserToDisplay, setUserViewMode }) => {

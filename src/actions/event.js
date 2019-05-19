@@ -24,7 +24,6 @@ import {
   EVENT_CHANGE_VIEW_EVENT,
   EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_CHANGE_VIEW_COMMENT,
   EVENT_SELECT_EVENT_DETAILS,
   EVENT_SELECT_EVENT_DISPLAY,
   EVENT_SELECT_RUNNER,
@@ -68,18 +67,6 @@ export const setEventViewModeRunnerAction = (mode) => {
     });
   }
   // console.log('Warning: Invalid event/runner view mode! There\'s a typo somewhere', mode);
-  return null;
-};
-// change event view mode (comment)
-export const setEventViewModeCommentAction = (mode) => {
-  const validModes = ['view', 'edit', 'delete'];
-  if (validModes.includes(mode)) {
-    return ({
-      type: EVENT_CHANGE_VIEW_COMMENT,
-      payload: mode,
-    });
-  }
-  // console.log('Warning: Invalid event/comment view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // track changes to the event search field

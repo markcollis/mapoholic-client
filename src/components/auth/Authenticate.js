@@ -9,7 +9,7 @@ import { Trans, t } from '@lingui/macro';
 
 // import { i18nInstance } from '../App'; doesn't work properly, needs more investigation
 import { loginAction, signupAction, cancelAuthErrorAction } from '../../actions';
-import { validationErrorsLocale } from '../data';
+import { validationErrorsLocale } from '../../common/data';
 
 // renders form to submit credentials either for login or creating account
 class Authenticate extends Component {
