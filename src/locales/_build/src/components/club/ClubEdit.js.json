@@ -1,0 +1,106 @@
+{
+  "Create": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        62
+      ]
+    ]
+  },
+  "Update": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        62
+      ]
+    ]
+  },
+  "Abbreviation": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        75
+      ]
+    ]
+  },
+  "Standard abbreviation for club": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        80
+      ]
+    ]
+  },
+  "Full name": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        91
+      ]
+    ]
+  },
+  "Full name of club": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        96
+      ]
+    ]
+  },
+  "Country": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        107
+      ]
+    ]
+  },
+  "Country in which club is based": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        112
+      ]
+    ]
+  },
+  "Website": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        128
+      ]
+    ]
+  },
+  "Address of club website": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        133
+      ]
+    ]
+  },
+  "Owner": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        146
+      ]
+    ]
+  },
+  "Owner of club record in this database": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        151
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/club/ClubEdit.js",
+        173
+      ]
+    ]
+  }
+}

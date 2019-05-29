@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { roleOptionsLocale } from '../../common/data';
 import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 
-const UserListItem = ({ user, selectUserToDisplay, setUserViewMode }) => {
+const UserListItem = ({
+  language,
+  selectUserToDisplay,
+  setUserViewMode,
+  user,
+}) => {
   const {
     user_id: userId,
     profileImage,
@@ -12,7 +19,10 @@ const UserListItem = ({ user, selectUserToDisplay, setUserViewMode }) => {
     memberOf,
     role,
   } = user;
-  // console.log(user);
+  const roleOptions = roleOptionsLocale[language];
+  const roleAdminName = roleOptions.find(el => el.value === 'admin').label;
+  const roleGuestName = roleOptions.find(el => el.value === 'guest').label;
+
   return (
     <div
       className="ui centered card"
@@ -53,7 +63,7 @@ const UserListItem = ({ user, selectUserToDisplay, setUserViewMode }) => {
         ? (
           <div className="extra content">
             <div className="right floated">
-              {(role === 'admin') ? 'Adminstrator' : 'Guest'}
+              {(role === 'admin') ? roleAdminName : roleGuestName}
             </div>
           </div>
         )
@@ -63,9 +73,13 @@ const UserListItem = ({ user, selectUserToDisplay, setUserViewMode }) => {
 };
 
 UserListItem.propTypes = {
+  language: PropTypes.string,
   user: PropTypes.objectOf(PropTypes.any).isRequired,
   selectUserToDisplay: PropTypes.func.isRequired,
   setUserViewMode: PropTypes.func.isRequired,
+};
+UserListItem.defaultProps = {
+  language: 'en',
 };
 
 export default UserListItem;

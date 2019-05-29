@@ -1,0 +1,18 @@
+{
+  "{0, plural, one {# comment} other {# comments}}": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsList.js",
+        30
+      ]
+    ]
+  },
+  "No comments have been posted yet": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsList.js",
+        37
+      ]
+    ]
+  }
+}

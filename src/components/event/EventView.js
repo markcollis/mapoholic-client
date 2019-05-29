@@ -165,12 +165,17 @@ class EventViewList extends Component {
   // helper to determine if current user can edit event if input props have changed
   getCanEditEvent = memoize((current, selectedEvent) => {
     // console.log('checking if user can edit event');
-    const isAdmin = (current && current.role === 'admin');
+    // console.log('current, selectedEvent', current, selectedEvent);
+    if (!current || !selectedEvent) return false;
+    const isAdmin = (current.role === 'admin');
     if (isAdmin) return true;
+    const isOwner = (current._id && selectedEvent.owner
+      && current._id === selectedEvent.owner._id);
+    if (isOwner) return true;
     const runnerList = (selectedEvent.runners)
       ? selectedEvent.runners.map(runner => runner.user._id)
       : [];
-    const isRunner = (current && selectedEvent && runnerList.includes(current._id));
+    const isRunner = runnerList.includes(current._id);
     // console.log('isRunner:', isRunner);
     return isRunner;
   });
@@ -217,6 +222,7 @@ class EventViewList extends Component {
     // different to MapView version
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
+    // console.log('canEdit, current, selectedEvent:', canEdit, current, selectedEvent);
     const organisingClubs = this.getOrganisingClubs(selectedEvent, clubDetails);
     const orisList = testOrisList; // different to MapView version, temporary while developing
     // const { orisList } = oevent;
@@ -487,7 +493,7 @@ class EventViewList extends Component {
     const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
 
     return (
-      <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
+      <div className="list-limit-height">
         <EventList
           language={language}
           events={eventListArray}

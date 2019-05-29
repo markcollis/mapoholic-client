@@ -1,0 +1,18 @@
+{
+  "Add border": {
+    "origin": [
+      [
+        "src/components/FileDropzone.js",
+        156
+      ]
+    ]
+  },
+  "(to match QuickRoute output)": {
+    "origin": [
+      [
+        "src/components/FileDropzone.js",
+        158
+      ]
+    ]
+  }
+}

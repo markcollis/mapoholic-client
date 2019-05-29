@@ -1,0 +1,26 @@
+{
+  "Add a comment": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsAdd.js",
+        71
+      ]
+    ]
+  },
+  "Post comment": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsAdd.js",
+        90
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsAdd.js",
+        93
+      ]
+    ]
+  }
+}

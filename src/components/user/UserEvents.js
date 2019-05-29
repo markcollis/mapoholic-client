@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { Trans } from '@lingui/macro';
 
 import Collapse from '../Collapse';
 import EventListItem from '../event/EventListItem';
@@ -37,10 +38,11 @@ const UserEvents = ({
         />
       );
     });
+  const title = <Trans>Events</Trans>;
 
   return (
     <div className="ui segment">
-      <Collapse title="Events">
+      <Collapse title={title}>
         <div className="ui link cards card-list">
           {userEventsArray}
         </div>

@@ -1,0 +1,26 @@
+{
+  "Select a club from the list to show further details here": {
+    "origin": [
+      [
+        "src/components/club/ClubView.js",
+        183
+      ]
+    ]
+  },
+  "Error: {errorMessage}": {
+    "origin": [
+      [
+        "src/components/club/ClubView.js",
+        274
+      ]
+    ]
+  },
+  "Error (get user): {userErrorMessage}": {
+    "origin": [
+      [
+        "src/components/club/ClubView.js",
+        277
+      ]
+    ]
+  }
+}

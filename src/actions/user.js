@@ -266,16 +266,17 @@ export const updateUserAction = (userId, formValues, callback) => async (dispatc
 // delete the specified user (multiple deletion not supported)
 // app.delete('/users/:id', requireAuth, Users.deleteUser);
 export const deleteUserAction = (userId, callback) => async (dispatch) => {
-  // console.log('deleteUserAction called.');
+  console.log('deleteUserAction called.');
   try {
     const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
-    // console.log('response:', response.data);
+    console.log('response:', response.data);
     dispatch({ type: USER_DELETED, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
+    console.log('error in delete user:', err);
     handleError(USER_ERROR)(err, dispatch);
     if (callback) callback(false);
   }

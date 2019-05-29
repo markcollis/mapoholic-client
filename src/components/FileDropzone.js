@@ -89,12 +89,14 @@ class FileDropzone extends Component {
         const { width, height } = mapImage;
         borderCanvas.width = width + 2;
         borderCanvas.height = height + 67;
-        borderCanvas.getContext('2d').fillStyle = 'black';
+        // borderCanvas.getContext('2d').fillStyle = 'black';
+        // black would be consistent with QuickRoute, but I think white looks better
         borderCanvas.getContext('2d').fillRect(0, 0, borderCanvas.width, borderCanvas.height);
         borderCanvas.getContext('2d').drawImage(mapImage, 1, 66, width, height);
         const dataUrl = borderCanvas.toDataURL('image/jpeg', 0.8);
         const updatedImage = this.dataURLToBlob(dataUrl);
-        console.log('image sizes (before and after adding border):', currentFile.size, updatedImage.size);
+        // console.log('image sizes (before and after adding border):',
+        // currentFile.size, updatedImage.size);
         // const blob = borderCanvas.toBlob() // simpler way of achieving the same result?
         onFileAdded(updatedImage);
         this.setState({ borderAdded: true, currentFile: updatedImage });

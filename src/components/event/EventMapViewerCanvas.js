@@ -115,6 +115,7 @@ class EventMapViewerCanvas extends Component {
     } else {
       const activeType = type || mapImage.preferType;
       const img = new Image();
+      // console.log('started loading');
       this.setState({
         activeType,
         isLoading: true,

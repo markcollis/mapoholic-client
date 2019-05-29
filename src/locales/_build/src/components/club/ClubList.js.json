@@ -1,0 +1,18 @@
+{
+  "Sorry, there aren't any matching clubs to display!": {
+    "origin": [
+      [
+        "src/components/club/ClubList.js",
+        13
+      ]
+    ]
+  },
+  "Club list": {
+    "origin": [
+      [
+        "src/components/club/ClubList.js",
+        33
+      ]
+    ]
+  }
+}

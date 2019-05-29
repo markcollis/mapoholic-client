@@ -212,8 +212,9 @@ export const validationErrorsLocale = {
   en: {
     invalidEmail: 'You must provide a valid email address.', // Authenticate
     emailRequired: 'You must provide an email address.', // Authenticate
-    passwordLength: 'Your password must be at least 8 characters long.', // Authenticate
-    passwordRequired: 'A password is required.', // Authenticate
+    passwordLength: 'Your password must be at least 8 characters long.', // Authenticate, UserChangePassword
+    passwordCurrentRequired: 'You must confirm your current password.', // UserChangePassword
+    passwordRequired: 'A password is required.', // Authenticate, UserChangePassword
     eventNameRequired: 'You must provide a name for the event.', // EventEdit
     clubShortNameRequired: 'You must provide the club\'s abbreviation or short name.', // ClubEdit
     clubFullNameRequired: 'You must provide the club\'s full name.', // ClubEdit

@@ -93,9 +93,15 @@ msgstr "Browse Public Maps"
 #: src/components/event/EventMapViewerEdit.js:279
 #: src/components/event/EventRunnerDelete.js:52
 #: src/components/event/EventRunnerEdit.js:261
+#: src/components/user/UserChangePassword.js:63
+#: src/components/user/UserDelete.js:32
 #: src/components/user/UserEditProfileImage.js:73
 msgid "Cancel"
 msgstr "Cancel"
+
+#: src/components/user/UserChangePassword.js:57
+msgid "Change password"
+msgstr "Change password"
 
 #: src/components/event/EventMapViewerEdit.js:258
 msgid "Change title"
@@ -214,6 +220,10 @@ msgstr "Delete Event?"
 msgid "Delete Runner"
 msgstr "Delete Runner"
 
+#: src/components/user/UserDelete.js:15
+msgid "Delete User"
+msgstr "Delete User"
+
 #: src/components/club/ClubDetails.js:41
 msgid "Delete club"
 msgstr "Delete club"
@@ -243,6 +253,14 @@ msgstr "Delete link"
 #: src/components/event/EventRunnerDetails.js:150
 msgid "Delete runner"
 msgstr "Delete runner"
+
+#: src/components/user/UserDetails.js:54
+msgid "Delete user"
+msgstr "Delete user"
+
+#: src/components/user/UserDelete.js:25
+msgid "Delete {displayName}?"
+msgstr "Delete {displayName}?"
 
 #: src/components/event/EventDelete.js:43
 #~ msgid "Delete {name} ({date})?"
@@ -293,6 +311,10 @@ msgstr "Edit link details"
 msgid "Edit runner details"
 msgstr "Edit runner details"
 
+#: src/components/user/UserDetails.js:61
+msgid "Edit user details"
+msgstr "Edit user details"
+
 #: src/components/auth/Authenticate.js:60
 msgid "Email"
 msgstr "Email"
@@ -301,9 +323,17 @@ msgstr "Email"
 msgid "Enter ORIS event ID or select from your recent events"
 msgstr "Enter ORIS event ID or select from your recent events"
 
+#: src/components/user/UserChangePassword.js:31
+msgid "Enter current password"
+msgstr "Enter current password"
+
 #: src/components/auth/Authenticate.js:66
 msgid "Enter email address"
 msgstr "Enter email address"
+
+#: src/components/user/UserChangePassword.js:48
+msgid "Enter new password"
+msgstr "Enter new password"
 
 #: src/components/auth/Authenticate.js:83
 msgid "Enter password"
@@ -313,15 +343,15 @@ msgstr "Enter password"
 msgid "Enter user name (your email address will be used if left blank)"
 msgstr "Enter user name (your email address will be used if left blank)"
 
-#: src/components/club/ClubView.js:243
+#: src/components/club/ClubView.js:277
 msgid "Error (get user): {userErrorMessage}"
 msgstr "Error (get user): {userErrorMessage}"
 
-#: src/components/club/ClubView.js:240
+#: src/components/club/ClubView.js:274
 #: src/components/event/EventView.js:442
 #: src/components/event/MapView.js:564
-#: src/components/user/MyProfile.js:81
-#: src/components/user/UserView.js:201
+#: src/components/user/MyProfile.js:83
+#: src/components/user/UserView.js:204
 msgid "Error: {errorMessage}"
 msgstr "Error: {errorMessage}"
 
@@ -390,11 +420,20 @@ msgstr "Groups of other events that this event is linked to"
 msgid "Hide event link list"
 msgstr "Hide event link list"
 
+#: src/components/user/UserDetails.js:43
+msgid "Internal ID: {userId}"
+msgstr "Internal ID: {userId}"
+
 #: src/components/event/EventLinkedDelete.js:29
 msgid "It links the following events:"
 msgstr "It links the following events:"
 
+#: src/components/user/UserDetails.js:114
+msgid "Joined: {0}"
+msgstr "Joined: {0}"
+
 #: src/components/event/EventDetails.js:77
+#: src/components/user/UserDetails.js:47
 msgid "Last updated: {0}"
 msgstr "Last updated: {0}"
 
@@ -435,6 +474,10 @@ msgstr "Loading club details..."
 #: src/components/event/EventRunnerDetails.js:22
 msgid "Loading event details..."
 msgstr "Loading event details..."
+
+#: src/components/user/UserDetails.js:17
+msgid "Loading user details..."
+msgstr "Loading user details..."
 
 #: src/components/event/EventEdit.js:234
 msgid "Location"
@@ -526,6 +569,10 @@ msgstr "Name of event link (required)"
 msgid "Name of map used for event"
 msgstr "Name of map used for event"
 
+#: src/components/user/UserChangePassword.js:42
+msgid "New password"
+msgstr "New password"
+
 #: src/components/event/EventCommentsList.js:37
 msgid "No comments have been posted yet"
 msgstr "No comments have been posted yet"
@@ -555,6 +602,7 @@ msgid "Number of controls on course"
 msgstr "Number of controls on course"
 
 #: src/components/club/ClubDetails.js:37
+#: src/components/user/UserDetails.js:45
 msgid "ORIS ID: {orisId}"
 msgstr "ORIS ID: {orisId}"
 
@@ -600,6 +648,10 @@ msgstr "Placing in field"
 #: src/components/event/EventCommentsAdd.js:90
 msgid "Post comment"
 msgstr "Post comment"
+
+#: src/components/user/UserDetails.js:42
+msgid "Profile visibility: {visibility}"
+msgstr "Profile visibility: {visibility}"
 
 #: src/components/club/ClubFilter.js:35
 #: src/components/event/EventFilter.js:42
@@ -657,7 +709,7 @@ msgstr "Search for events"
 msgid "See below for results ({0} runners)"
 msgstr "See below for results ({0} runners)"
 
-#: src/components/club/ClubView.js:128
+#: src/components/club/ClubView.js:183
 msgid "Select a club from the list to show further details here"
 msgstr "Select a club from the list to show further details here"
 
@@ -698,7 +750,7 @@ msgstr "Show event link list"
 msgid "Sign Up"
 msgstr "Sign Up"
 
-#: src/components/Welcome.js:76
+#: src/components/Welcome.js:83
 #: src/components/auth/Authenticate.js:54
 msgid "Sign up"
 msgstr "Sign up"
@@ -819,6 +871,14 @@ msgstr "Upload selected"
 msgid "User name"
 msgstr "User name"
 
+#: src/components/user/UserDetails.js:120
+msgid "User profile"
+msgstr "User profile"
+
+#: src/components/user/UserDetails.js:41
+msgid "User type: {role}"
+msgstr "User type: {role}"
+
 #: src/components/Header.js:111
 msgid "Users"
 msgstr "Users"
@@ -836,11 +896,11 @@ msgstr "Visibility of your maps from this event to others"
 msgid "Website"
 msgstr "Website"
 
-#: src/components/Welcome.js:68
+#: src/components/Welcome.js:75
 msgid "Welcome back!"
 msgstr "Welcome back!"
 
-#: src/components/Welcome.js:83
+#: src/components/Welcome.js:90
 msgid "Welcome!"
 msgstr "Welcome!"
 
@@ -848,19 +908,19 @@ msgstr "Welcome!"
 msgid "You are about to delete {runnerName} from {name} ({0})."
 msgstr "You are about to delete {runnerName} from {name} ({0})."
 
-#: src/components/Welcome.js:69
+#: src/components/Welcome.js:76
 msgid "You are still logged in."
 msgstr "You are still logged in."
 
-#: src/components/user/MyProfile.js:67
+#: src/components/user/MyProfile.js:69
 msgid "You have not added any events yet."
 msgstr "You have not added any events yet."
 
-#: src/components/Welcome.js:78
+#: src/components/Welcome.js:85
 msgid "browse them here"
 msgstr "browse them here"
 
-#: src/components/Welcome.js:77
+#: src/components/Welcome.js:84
 msgid "log in"
 msgstr "log in"
 
@@ -892,6 +952,10 @@ msgstr "{0, plural, one {# comment} other {# comments}}"
 #: src/components/club/ClubMembers.js:52
 msgid "{0, plural, one {# map} other {# maps}}"
 msgstr "{0, plural, one {# map} other {# maps}}"
+
+#: src/components/user/UserChangePassword.js:25
+msgid "{0}"
+msgstr "{0}"
 
 #: src/components/event/EventRunnerDetails.js:82
 msgid "{courseControls} controls"

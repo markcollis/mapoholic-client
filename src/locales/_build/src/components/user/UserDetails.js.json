@@ -1,0 +1,82 @@
+{
+  "Loading user details...": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        17
+      ]
+    ]
+  },
+  "User type: {role}": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        41
+      ]
+    ]
+  },
+  "Profile visibility: {visibility}": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        42
+      ]
+    ]
+  },
+  "Internal ID: {userId}": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        43
+      ]
+    ]
+  },
+  "ORIS ID: {orisId}": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        45
+      ]
+    ]
+  },
+  "Last updated: {0}": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        47
+      ]
+    ]
+  },
+  "Delete user": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        54
+      ]
+    ]
+  },
+  "Edit user details": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        61
+      ]
+    ]
+  },
+  "Joined: {0}": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        114
+      ]
+    ]
+  },
+  "User profile": {
+    "origin": [
+      [
+        "src/components/user/UserDetails.js",
+        120
+      ]
+    ]
+  }
+}

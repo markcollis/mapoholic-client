@@ -469,7 +469,6 @@ export const deleteEventAction = (eventId, callback) => async (dispatch) => {
 
 // delete the specified runner and map data (multiple deletion not supported)
 // app.delete('/events/:eventid/maps/:userid', requireAuth, Events.deleteEventRunner);
-// NOT DONE YET - placeholder on front end
 export const deleteEventRunnerAction = (eventId, userId, callback) => async (dispatch) => {
   try {
     const token = localStorage.getItem('omapfolder-auth-token');

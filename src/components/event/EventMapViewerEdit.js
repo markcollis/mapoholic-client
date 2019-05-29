@@ -21,7 +21,7 @@ class EventMapViewerEdit extends Component {
 
   static defaultProps = {
     courseImg: null,
-    mapTitle: null,
+    mapTitle: null, // i.e. entirely new; if an existing title is empty, mapTitle = ''
     routeImg: null,
     selectedRunnerMaps: [],
     updateEventRunner: () => {},
@@ -39,7 +39,8 @@ class EventMapViewerEdit extends Component {
 
   componentDidMount() {
     const { mapTitle } = this.props;
-    if (mapTitle) {
+    // console.log('mapTitle "', mapTitle, '"');
+    if (mapTitle || mapTitle === '') {
       this.setState({
         mapTitleToUpload: mapTitle,
         mapTitleEditable: false,
@@ -256,7 +257,7 @@ class EventMapViewerEdit extends Component {
     const editTitleButtonText = (mapTitleEditable)
       ? <Trans>Confirm change</Trans>
       : <Trans>Change title</Trans>;
-    const renderEditTitleButton = (mapTitle)
+    const renderEditTitleButton = (mapTitle || mapTitle === '')
       ? (
         <button
           className={`ui tiny button primary fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}

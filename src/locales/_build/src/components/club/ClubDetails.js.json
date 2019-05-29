@@ -1,0 +1,50 @@
+{
+  "Loading club details...": {
+    "origin": [
+      [
+        "src/components/club/ClubDetails.js",
+        18
+      ]
+    ]
+  },
+  "Owner: {0}": {
+    "origin": [
+      [
+        "src/components/club/ClubDetails.js",
+        35
+      ]
+    ]
+  },
+  "ORIS ID: {orisId}": {
+    "origin": [
+      [
+        "src/components/club/ClubDetails.js",
+        37
+      ]
+    ]
+  },
+  "Delete club": {
+    "origin": [
+      [
+        "src/components/club/ClubDetails.js",
+        41
+      ]
+    ]
+  },
+  "Edit club details": {
+    "origin": [
+      [
+        "src/components/club/ClubDetails.js",
+        44
+      ]
+    ]
+  },
+  "Club details": {
+    "origin": [
+      [
+        "src/components/club/ClubDetails.js",
+        68
+      ]
+    ]
+  }
+}

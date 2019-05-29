@@ -44,6 +44,7 @@ const RouteHandler = ({ user }) => {
       </div>
     );
   }
+  // include logout to provide escape route from 'unclean' logout that does not empty localStorage
   return (
     <div>
       <Route path="/" component={Header} />
@@ -51,6 +52,7 @@ const RouteHandler = ({ user }) => {
         <Route path="/" exact component={Welcome} />
         <Route path="/signup" component={Authenticate} />
         <Route path="/login" component={Authenticate} />
+        <Route path="/logout" component={Logout} />
         <Route path="/events" component={EventView} />
         <Route path="/eventsmap" render={props => <EventView {...props} showMap />} />
         <Route path="/mapview" component={MapView} />

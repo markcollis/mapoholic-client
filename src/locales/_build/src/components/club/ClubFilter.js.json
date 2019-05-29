@@ -1,0 +1,34 @@
+{
+  "Search for clubs": {
+    "origin": [
+      [
+        "src/components/club/ClubFilter.js",
+        15
+      ]
+    ]
+  },
+  "Club search filter": {
+    "origin": [
+      [
+        "src/components/club/ClubFilter.js",
+        25
+      ]
+    ]
+  },
+  "Refresh list": {
+    "origin": [
+      [
+        "src/components/club/ClubFilter.js",
+        35
+      ]
+    ]
+  },
+  "Add new club": {
+    "origin": [
+      [
+        "src/components/club/ClubFilter.js",
+        45
+      ]
+    ]
+  }
+}

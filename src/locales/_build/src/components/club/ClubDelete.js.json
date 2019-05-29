@@ -1,0 +1,26 @@
+{
+  "Delete Club": {
+    "origin": [
+      [
+        "src/components/club/ClubDelete.js",
+        16
+      ]
+    ]
+  },
+  "Delete {shortName}?": {
+    "origin": [
+      [
+        "src/components/club/ClubDelete.js",
+        35
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/club/ClubDelete.js",
+        42
+      ]
+    ]
+  }
+}

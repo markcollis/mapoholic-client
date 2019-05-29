@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
 import UserListItem from './UserListItem';
 import Collapse from '../Collapse';
 
-const UserList = ({ users, selectUserToDisplay, setUserViewMode }) => {
+const UserList = ({
+  language,
+  selectUserToDisplay,
+  setUserViewMode,
+  users,
+}) => {
   if (users.length === 0) {
     return (
       <div className="ui segment">
-        <div className="ui message warning">{'Sorry, there aren\'t any matching users to display!'}</div>
+        <div className="ui message warning">
+          <Trans>{'Sorry, there aren\'t any matching users to display!'}</Trans>
+        </div>
       </div>
     );
   }
@@ -20,15 +28,17 @@ const UserList = ({ users, selectUserToDisplay, setUserViewMode }) => {
       return (
         <UserListItem
           key={userId}
+          language={language}
           user={user}
           selectUserToDisplay={selectUserToDisplay}
           setUserViewMode={setUserViewMode}
         />
       );
     });
+  const title = <Trans>User list</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title="User list">
+      <Collapse title={title}>
         <div
           className="ui link cards card-list"
           role="button"
@@ -54,11 +64,13 @@ const UserList = ({ users, selectUserToDisplay, setUserViewMode }) => {
 };
 
 UserList.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.object),
+  language: PropTypes.string,
   selectUserToDisplay: PropTypes.func.isRequired,
   setUserViewMode: PropTypes.func.isRequired,
+  users: PropTypes.arrayOf(PropTypes.object),
 };
 UserList.defaultProps = {
+  language: 'en',
   users: [],
 };
 

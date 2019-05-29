@@ -1,0 +1,50 @@
+{
+  "Welcome back!": {
+    "origin": [
+      [
+        "src/components/Welcome.js",
+        75
+      ]
+    ]
+  },
+  "You are still logged in.": {
+    "origin": [
+      [
+        "src/components/Welcome.js",
+        76
+      ]
+    ]
+  },
+  "Sign up": {
+    "origin": [
+      [
+        "src/components/Welcome.js",
+        83
+      ]
+    ]
+  },
+  "log in": {
+    "origin": [
+      [
+        "src/components/Welcome.js",
+        84
+      ]
+    ]
+  },
+  "browse them here": {
+    "origin": [
+      [
+        "src/components/Welcome.js",
+        85
+      ]
+    ]
+  },
+  "Welcome!": {
+    "origin": [
+      [
+        "src/components/Welcome.js",
+        90
+      ]
+    ]
+  }
+}

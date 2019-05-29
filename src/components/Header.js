@@ -10,13 +10,15 @@ import { OMAPFOLDER_SERVER } from '../config';
 const Header = ({
   auth,
   currentUser,
+  error,
   getCurrentUser,
   location,
   setLanguage,
   selectedEventDisplay,
   selectedRunner,
 }) => {
-  if (auth && !currentUser) getCurrentUser();
+  // console.log('auth, error, currentUser', auth, error, currentUser);
+  if (auth && auth !== '' && error === '' && !currentUser) getCurrentUser();
 
   const userDetails = (currentUser)
     ? (
@@ -150,9 +152,10 @@ const Header = ({
 
 Header.propTypes = {
   auth: PropTypes.string,
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
   currentUser: PropTypes.objectOf(PropTypes.any),
+  error: PropTypes.string,
   getCurrentUser: PropTypes.func.isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   setLanguage: PropTypes.func.isRequired,
   selectedRunner: PropTypes.string,
   selectedEventDisplay: PropTypes.string,
@@ -160,6 +163,7 @@ Header.propTypes = {
 Header.defaultProps = {
   auth: '',
   currentUser: null,
+  error: '',
   selectedRunner: '',
   selectedEventDisplay: '',
 };
@@ -168,6 +172,7 @@ const mapStateToProps = ({ auth, user, oevent }) => {
   return {
     auth: auth.authenticated,
     currentUser: user.current,
+    error: user.errorMessage,
     selectedRunner: oevent.selectedRunner,
     selectedEventDisplay: oevent.selectedEventDisplay,
   };

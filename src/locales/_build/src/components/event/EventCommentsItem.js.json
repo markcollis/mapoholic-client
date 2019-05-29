@@ -1,0 +1,46 @@
+{
+  "Delete": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsItem.js",
+        122
+      ]
+    ]
+  },
+  "Edit": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsItem.js",
+        127
+      ]
+    ]
+  },
+  "Save changes": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsItem.js",
+        165
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsItem.js",
+        168
+      ],
+      [
+        "src/components/event/EventCommentsItem.js",
+        181
+      ]
+    ]
+  },
+  "Delete comment": {
+    "origin": [
+      [
+        "src/components/event/EventCommentsItem.js",
+        178
+      ]
+    ]
+  }
+}

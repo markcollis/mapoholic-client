@@ -33,7 +33,8 @@ const EventRunnerDetails = ({
       </div>
     );
   }
-  // console.log('selectedRunnerDetails', selectedRunnerDetails);
+  // console.log('runnerDetails:', runnerDetails);
+  // console.log('selectedRunnerDetails:', selectedRunnerDetails);
   const {
     user,
     visibility,

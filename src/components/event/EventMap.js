@@ -178,6 +178,7 @@ class EventMap extends Component {
     // console.log('mapBounds', mapBounds);
     return (
       <div className="ui segment">
+        <p>is it here</p>
         <Map
           ref={this.mapRef}
           bounds={mapBounds}

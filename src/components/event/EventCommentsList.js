@@ -7,13 +7,10 @@ const EventCommentsList = ({
   currentUserId,
   deleteComment,
   eventId,
-  getUserById,
   isAdmin,
   requestRefreshCollapse,
   runnerData,
   updateComment,
-  userDetails,
-  userErrorMessage,
 }) => {
   if (!runnerData) return null;
 
@@ -39,15 +36,10 @@ const EventCommentsList = ({
     ? (
       <div className="ui items">
         {sortedComments.map((comment) => {
-          const { _id: commentId, author } = comment;
-          const { _id: authorId } = author;
-          if (!userDetails[authorId] && !userErrorMessage) {
-            getUserById(authorId);
-          }
+          const { _id: commentId } = comment;
           return (
             <EventCommentsItem
               key={commentId}
-              authorDetails={userDetails[authorId]}
               requestRefreshCollapse={requestRefreshCollapse}
               comment={comment}
               currentUserId={currentUserId}
@@ -74,13 +66,10 @@ EventCommentsList.propTypes = {
   currentUserId: PropTypes.string,
   deleteComment: PropTypes.func.isRequired,
   eventId: PropTypes.string,
-  getUserById: PropTypes.func.isRequired,
   isAdmin: PropTypes.bool,
   requestRefreshCollapse: PropTypes.func.isRequired,
   runnerData: PropTypes.objectOf(PropTypes.any),
   updateComment: PropTypes.func.isRequired,
-  userDetails: PropTypes.objectOf(PropTypes.any).isRequired,
-  userErrorMessage: PropTypes.string.isRequired,
 };
 EventCommentsList.defaultProps = {
   currentUserId: null,

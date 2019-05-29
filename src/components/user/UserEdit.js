@@ -1,36 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { I18n } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
-import { roleOptions, visibilityOptions } from '../../common/data';
+import { roleOptionsLocale, visibilityOptionsLocale, validationErrorsLocale } from '../../common/data';
 import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 import UserChangePassword from './UserChangePassword';
 import UserEditProfileImage from './UserEditProfileImage';
-/* eslint no-underscore-dangle: 0 */
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 // renders form to submit credentials either for login or creating account
 class UserEdit extends Component {
   static propTypes = {
-    touched: PropTypes.objectOf(PropTypes.any).isRequired,
     errors: PropTypes.objectOf(PropTypes.any).isRequired, // input validation
-    values: PropTypes.objectOf(PropTypes.any).isRequired,
     isSubmitting: PropTypes.bool.isRequired,
-    isAdmin: PropTypes.bool,
-    setFieldValue: PropTypes.func.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
+    setFieldValue: PropTypes.func.isRequired,
+    touched: PropTypes.objectOf(PropTypes.any).isRequired,
+    values: PropTypes.objectOf(PropTypes.any).isRequired,
+    changePassword: PropTypes.func.isRequired,
     clubList: PropTypes.arrayOf(PropTypes.object),
+    deleteProfileImage: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
+    isAdmin: PropTypes.bool,
+    language: PropTypes.string,
+    postProfileImage: PropTypes.func.isRequired,
     selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
     setUserViewMode: PropTypes.func.isRequired,
-    changePassword: PropTypes.func.isRequired,
-    postProfileImage: PropTypes.func.isRequired,
-    deleteProfileImage: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     isAdmin: false,
+    language: 'en',
     clubList: [],
   };
 
@@ -45,14 +49,20 @@ class UserEdit extends Component {
   }
 
   renderUpdatePassword() {
-    const { selectedUser, changePassword, isAdmin } = this.props;
+    const {
+      changePassword,
+      isAdmin,
+      language,
+      selectedUser,
+    } = this.props;
     return (
       <div>
         <UserChangePassword
-          isAdmin={isAdmin}
-          user={selectedUser}
-          hide={() => this.setState({ showUpdatePassword: false })}
           changePassword={changePassword}
+          hide={() => this.setState({ showUpdatePassword: false })}
+          isAdmin={isAdmin}
+          language={language}
+          user={selectedUser}
         />
         <hr className="divider" />
       </div>
@@ -76,6 +86,7 @@ class UserEdit extends Component {
 
   renderForm() {
     const {
+      language,
       errors,
       touched,
       values,
@@ -92,97 +103,127 @@ class UserEdit extends Component {
       return { value: club._id, label: club.shortName };
     });
     // console.log('memberOfOptions', memberOfOptions);
+    const validationErrors = validationErrorsLocale[language];
+    const roleOptions = roleOptionsLocale[language];
+    const visibilityOptions = visibilityOptionsLocale[language];
+
     return (
       <Form className="ui warning form" noValidate>
         <div className="field">
           <label htmlFor="email">
-          Email address
+            <Trans>Email address</Trans>
             <Field
               name="email"
               autoComplete="off"
             />
-            { touched.email && errors.email && <div className="ui warning message">{errors.email}</div> }
+            { touched.email && errors.email
+               && <div className="ui warning message">{validationErrors[errors.email] || '!'}</div> }
           </label>
         </div>
         <div className="fields">
           <div className="eight wide field">
             <label htmlFor="displayName">
-            User name
+              <Trans>User name</Trans>
               <Field
                 name="displayName"
                 autoComplete="off"
               />
-              { touched.displayName && errors.displayName && <div className="ui warning message">{errors.displayName}</div> }
+              { touched.displayName && errors.displayName
+                && <div className="ui warning message">{errors.displayName}</div> }
             </label>
           </div>
           <div className="eight wide field">
             <label htmlFor="fullName">
-            Full name
-              <Field
-                name="fullName"
-                placeholder="Full name of user"
-                autoComplete="off"
-              />
-              { touched.fullName && errors.fullName && <div className="ui warning message">{errors.fullName}</div> }
+              <Trans>Full name</Trans>
+              <I18n>
+                {({ i18n }) => (
+                  <Field
+                    name="fullName"
+                    placeholder={i18n._(t`Full name of user`)}
+                    autoComplete="off"
+                  />
+                )}
+              </I18n>
+              { touched.fullName && errors.fullName
+                && <div className="ui warning message">{errors.fullName}</div> }
             </label>
           </div>
         </div>
         <div className="field">
           <label htmlFor="memberOf">
-          Member of
-            <Select
-              id="memberOf"
-              placeholder="Clubs that user is a member of"
-              options={memberOfOptions}
-              isMulti
-              onChange={value => setFieldValue('memberOf', value)}
-              onBlur={() => setFieldTouched('memberOf', true)}
-              value={values.memberOf}
-            />
-
-            { touched.memberOf && errors.memberOf && <div className="ui warning message">{errors.memberOf}</div> }
+            <Trans>Member of</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Select
+                  id="memberOf"
+                  placeholder={i18n._(t`Clubs that user is a member of`)}
+                  options={memberOfOptions}
+                  isMulti
+                  onChange={value => setFieldValue('memberOf', value)}
+                  onBlur={() => setFieldTouched('memberOf', true)}
+                  value={values.memberOf}
+                />
+              )}
+            </I18n>
+            { touched.memberOf && errors.memberOf
+              && <div className="ui warning message">{errors.memberOf}</div> }
           </label>
         </div>
         <div className="field">
           <label htmlFor="about">
-          About
-            <Field
-              component="textarea"
-              name="about"
-              placeholder="More details about the user"
-              autoComplete="off"
-            />
-            { touched.about && errors.about && <div className="ui warning message">{errors.about}</div> }
+            <Trans>About</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  component="textarea"
+                  name="about"
+                  placeholder={i18n._(t`A brief user profile`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
+            { touched.about && errors.about
+              && <div className="ui warning message">{errors.about}</div> }
           </label>
         </div>
         <div className="fields">
           <div className="eight wide field">
             <label htmlFor="location">
-            Location
-              <Field
-                name="location"
-                placeholder="Location where the user is based"
-                autoComplete="off"
-              />
-              { touched.location && errors.location && <div className="ui warning message">{errors.location}</div> }
+              <Trans>Location</Trans>
+              <I18n>
+                {({ i18n }) => (
+                  <Field
+                    name="location"
+                    placeholder={i18n._(t`Where user is based`)}
+                    autoComplete="off"
+                  />
+                )}
+              </I18n>
+              { touched.location && errors.location
+                && <div className="ui warning message">{errors.location}</div> }
             </label>
           </div>
           <div className="eight wide field">
             <label htmlFor="regNumber">
-            Registration number
-              <Field
-                name="regNumber"
-                placeholder="Registration number of user"
-                autoComplete="off"
-              />
-              { touched.regNumber && errors.regNumber && <div className="ui warning message">{errors.regNumber}</div> }
+              <Trans>Registration number</Trans>
+              <I18n>
+                {({ i18n }) => (
+                  <Field
+                    name="regNumber"
+                    placeholder={i18n._(t`National registration number of user`)}
+                    autoComplete="off"
+                  />
+                )}
+              </I18n>
+              { touched.regNumber && errors.regNumber
+                && <div className="ui warning message">{errors.regNumber}</div> }
             </label>
           </div>
         </div>
         <div className="fields">
           <div className="eight wide field">
             <label htmlFor="visibility">
-            Profile visibility
+              <Trans>Profile visibility</Trans>
               <Select
                 id="visibility"
                 options={visibilityOptions}
@@ -190,14 +231,15 @@ class UserEdit extends Component {
                 onBlur={() => setFieldTouched('visibility', true)}
                 value={values.visibility}
               />
-              { touched.visibility && errors.visibility && <div className="ui warning message">{errors.visibility}</div> }
+              { touched.visibility && errors.visibility
+                && <div className="ui warning message">{errors.visibility}</div> }
             </label>
           </div>
           {(isAdmin)
             ? (
               <div className="eight wide field">
                 <label htmlFor="role">
-                Role
+                  <Trans>Role</Trans>
                   <Select
                     id="role"
                     options={roleOptions}
@@ -205,20 +247,27 @@ class UserEdit extends Component {
                     onBlur={() => setFieldTouched('role', true)}
                     value={values.role}
                   />
-                  { touched.role && errors.role && <div className="ui warning message">{errors.role}</div> }
+                  { touched.role && errors.role
+                    && <div className="ui warning message">{errors.role}</div> }
                 </label>
               </div>
             )
             : null
           }
         </div>
-        <button type="submit" className="ui tiny button primary" disabled={isSubmitting}>Update</button>
+        <button
+          type="submit"
+          className="ui tiny button primary"
+          disabled={isSubmitting}
+        >
+          <Trans>Update</Trans>
+        </button>
         <button
           type="button"
           className="ui tiny button right floated"
           onClick={() => setUserViewMode('view')}
         >
-        Cancel
+          <Trans>Cancel</Trans>
         </button>
       </Form>
     );
@@ -235,7 +284,7 @@ class UserEdit extends Component {
     const { showUpdateEmail, showUpdatePassword, showUpdateProfileImage } = this.state;
     return (
       <div className="ui segment">
-        <h3 className="header">Edit User Details</h3>
+        <h3 className="header"><Trans>Edit User Details</Trans></h3>
         <hr className="divider" />
         <div className="ui grid">
           <div className="ten wide column">
@@ -246,7 +295,7 @@ class UserEdit extends Component {
               className={(showUpdatePassword) ? 'ui tiny button disabled' : 'ui primary tiny button'}
               onClick={() => this.setState({ showUpdatePassword: true })}
             >
-            Change Password
+              <Trans>Change Password</Trans>
             </button>
           </div>
           <div className="six wide column">
@@ -284,7 +333,7 @@ class UserEdit extends Component {
 }
 
 const formikUserEdit = withFormik({
-  mapPropsToValues({ selectedUser }) {
+  mapPropsToValues({ selectedUser, language }) {
     return {
       email: selectedUser.email,
       displayName: selectedUser.displayName,
@@ -298,12 +347,13 @@ const formikUserEdit = withFormik({
       about: selectedUser.about || '',
       location: selectedUser.location || '',
       regNumber: selectedUser.regNumber || '',
-      role: roleOptions.filter(el => el.value === selectedUser.role),
-      visibility: visibilityOptions.filter(el => el.value === selectedUser.visibility),
+      role: roleOptionsLocale[language].filter(el => el.value === selectedUser.role),
+      visibility: visibilityOptionsLocale[language]
+        .filter(el => el.value === selectedUser.visibility),
     };
   },
   validationSchema: Yup.object().shape({
-    email: Yup.string().required().email('This is not a valid email address.'),
+    email: Yup.string().required().email('invalidEmail'),
     displayName: Yup.string().required(),
     fullName: Yup.string(),
     memberOf: Yup.array().of(
@@ -331,7 +381,7 @@ const formikUserEdit = withFormik({
     valuesToSubmit.visibility = values.visibility.value;
     valuesToSubmit.memberOf = values.memberOf.map(el => el.value);
     // console.log('valuesToSubmit:', valuesToSubmit);
-    setTimeout(() => updateUser(selectedUser._id, valuesToSubmit, (didSucceed) => {
+    updateUser(selectedUser._id, valuesToSubmit, (didSucceed) => {
       if (didSucceed) {
         getUserList(null, () => {
           getUserById(selectedUser._id);
@@ -343,7 +393,7 @@ const formikUserEdit = withFormik({
       } else {
         setSubmitting(false);
       }
-    }), 2000); // simulate network delay
+    });
   },
 })(UserEdit);
 

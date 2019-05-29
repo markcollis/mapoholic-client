@@ -36,12 +36,20 @@ export const reformatDate = (dateString) => {
   return reformattedDate;
 };
 
-// convert YYYY-MM-DD to DD/MM/YYYY hh:mm
+// convert YYYY-MM-DDThh:mm:ss.xxxZ to DD/MM/YYYY hh:mm
 // e.g. '2019-05-15T05:41:44.478Z' to '15/05/2019 07:41'
 export const reformatTimestamp = (timestamp) => {
   const newDate = new Date(timestamp);
   const reformattedTimestamp = newDate.toLocaleString().split(',').join('').slice(0, -3);
   // console.log('newDate:', newDate, 'from', timestamp);
   // console.log('reformattedTimestamp:', reformattedTimestamp);
+  return reformattedTimestamp;
+};
+
+// convert YYYY-MM-DDThh:mm:ss.xxxZ to DD/MM/YYYY
+// e.g. '2019-05-15T05:41:44.478Z' to '15/05/2019'
+export const reformatTimestampDateOnly = (timestamp) => {
+  const newDate = new Date(timestamp);
+  const reformattedTimestamp = newDate.toLocaleString().split(',')[0];
   return reformattedTimestamp;
 };

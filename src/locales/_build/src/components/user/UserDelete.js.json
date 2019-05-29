@@ -1,0 +1,26 @@
+{
+  "Delete User": {
+    "origin": [
+      [
+        "src/components/user/UserDelete.js",
+        15
+      ]
+    ]
+  },
+  "Delete {displayName}?": {
+    "origin": [
+      [
+        "src/components/user/UserDelete.js",
+        25
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/user/UserDelete.js",
+        32
+      ]
+    ]
+  }
+}

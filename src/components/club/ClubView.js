@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
+import memoize from 'memoize-one';
 
 import ClubFilter from './ClubFilter';
 import ClubList from './ClubList';
@@ -11,23 +12,23 @@ import ClubEvents from './ClubEvents';
 import ClubEdit from './ClubEdit';
 import ClubDelete from './ClubDelete';
 import {
-  setClubSearchFieldAction,
-  setClubViewModeAction,
-  getClubListAction,
+  createClubAction,
+  deleteClubAction,
   getClubByIdAction,
-  getClubMembersAction,
   getClubEventsAction,
+  getClubListAction,
+  getClubMembersAction,
+  getEventListAction,
   getUserByIdAction,
   getUserListAction,
-  getEventListAction,
   selectClubToDisplayAction,
   selectEventForDetailsAction,
   selectUserToDisplayAction,
-  setUserViewModeAction,
+  setClubSearchFieldAction,
+  setClubViewModeAction,
   setEventViewModeEventAction,
-  createClubAction,
+  setUserViewModeAction,
   updateClubAction,
-  deleteClubAction,
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
@@ -37,25 +38,30 @@ class ClubView extends Component {
     config: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
     user: PropTypes.objectOf(PropTypes.any).isRequired,
-    setClubSearchField: PropTypes.func.isRequired,
-    setClubViewMode: PropTypes.func.isRequired,
+    createClub: PropTypes.func.isRequired,
+    deleteClub: PropTypes.func.isRequired,
+    getClubEvents: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
     getClubMembers: PropTypes.func.isRequired,
-    getClubEvents: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectUserToDisplay: PropTypes.func.isRequired,
+    setClubSearchField: PropTypes.func.isRequired,
+    setClubViewMode: PropTypes.func.isRequired,
     setEventViewModeEvent: PropTypes.func.isRequired,
     setUserViewMode: PropTypes.func.isRequired,
-    createClub: PropTypes.func.isRequired,
     updateClub: PropTypes.func.isRequired,
-    deleteClub: PropTypes.func.isRequired,
   }
 
+  state = {
+    gettingEventList: '',
+    gettingMemberList: '',
+  };
+
+  // get summary data from API if not available
   componentDidMount() {
-    // console.log('oevent', this.props.oevent);
     const {
       club,
       oevent,
@@ -72,14 +78,71 @@ class ClubView extends Component {
     if (!eventList) getEventList();
   }
 
-  renderRightColumn() {
+  componentDidUpdate() {
+    // console.log('state', this.state);
+    const { gettingEventList, gettingMemberList } = this.state;
+    const { club, getClubEvents, getClubMembers } = this.props;
+    const {
+      details,
+      eventLists,
+      memberLists,
+      selectedClubId,
+    } = club;
+    /* eslint react/no-did-update-set-state: 0 */
+    if (details[selectedClubId]) {
+      if (!eventLists[selectedClubId] && gettingEventList !== selectedClubId) {
+        console.log('getting event list for', selectedClubId);
+        getClubEvents(selectedClubId, (successful) => {
+          if (successful) this.setState({ gettingEventList: '' });
+        });
+        this.setState({ gettingEventList: selectedClubId });
+      }
+      if (!memberLists[selectedClubId] && gettingMemberList !== selectedClubId) {
+        console.log('getting member list for', selectedClubId);
+        getClubMembers(selectedClubId, (successful) => {
+          if (successful) this.setState({ gettingMemberList: '' });
+        });
+        this.setState({ gettingMemberList: selectedClubId });
+      }
+    }
+  }
+
+  // helper to return current user's id if input prop has changed
+  // getCurrentUserId = memoize(current => ((current) ? current._id : null));
+
+  // helper to check if current user is administrator if input prop has changed
+  getIsAdmin = memoize(current => (current && current.role === 'admin'));
+
+  // helper to determine if current user can edit club details if input props have changed
+  getCanEditClub = memoize((current, selectedClub) => {
+    console.log('current, selectedClub in getCanEditClub:', current, selectedClub);
+    if (!current || !current.role || !selectedClub || !selectedClub.owner) return false;
+    const isAdmin = (current.role === 'admin');
+    if (isAdmin) return true;
+    const isOwner = (current._id.toString() === selectedClub.owner._id.toString());
+    const canEdit = (isAdmin || isOwner);
+    return canEdit;
+  });
+
+  // helper to return filtered list of clubs based on search criteria
+  getClubList = memoize((list, searchField) => {
+    if (!list) return [];
+    return list.slice(0, -1).filter((eachClub) => {
+      return (eachClub.shortName.toLowerCase().includes(searchField.toLowerCase())
+      || eachClub.fullName.toLowerCase().includes(searchField.toLowerCase()));
+    });
+  });
+
+  // helper to return selected club details when selected club or details change
+  getSelectedClub = memoize((details, selectedClubId) => details[selectedClubId] || {});
+
+  // render ClubDetails, Edit, Delete, Members, Events components as required by viewMode
+  renderClubDetails = () => {
     const {
       club,
       config,
       oevent,
       user,
-      getClubMembers,
-      getClubEvents,
       getClubList,
       getUserList,
       selectClubToDisplay,
@@ -101,23 +164,16 @@ class ClubView extends Component {
     } = club;
     const { language } = config;
     const { list: fullEventList } = oevent;
-    const { current, list } = user;
-    const selectedClub = details[selectedClubId];
-    const isAdmin = (current && current.role === 'admin');
-    const isOwner = (current && selectedClub
-      && current._id.toString() === selectedClub.owner._id.toString());
-    const canEdit = (isAdmin || isOwner);
-    if (selectedClub && !memberLists[selectedClub._id]) {
-      getClubMembers(selectedClub._id);
-    }
-    if (selectedClub && !eventLists[selectedClub._id]) {
-      getClubEvents(selectedClub._id);
-    }
-    const membersList = (selectedClub && memberLists[selectedClub._id])
-      ? memberLists[selectedClub._id]
+    const { current, list: userList } = user;
+
+    const selectedClub = this.getSelectedClub(details, selectedClubId);
+    const isAdmin = this.getIsAdmin(current);
+    const canEdit = this.getCanEditClub(current, selectedClub);
+    const membersList = (selectedClub && memberLists[selectedClubId])
+      ? memberLists[selectedClubId]
       : [];
-    const eventsList = (selectedClub && eventLists[selectedClub._id])
-      ? eventLists[selectedClub._id]
+    const eventsList = (selectedClub && eventLists[selectedClubId])
+      ? eventLists[selectedClubId]
       : [];
 
     switch (viewMode) {
@@ -133,21 +189,21 @@ class ClubView extends Component {
         return (
           <div className="ten wide column">
             <ClubDetails
-              selectedClub={selectedClub || {}}
-              canEdit={canEdit}
-              setClubViewMode={setClubViewMode}
+              canEdit={canEdit} // derived
+              selectedClub={selectedClub} // derived
+              setClubViewMode={setClubViewMode} // prop
             />
             <ClubMembers
-              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []}
-              membersList={membersList}
-              selectUserToDisplay={selectUserToDisplay}
-              setUserViewMode={setUserViewMode}
+              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
+              membersList={membersList} // derived
+              selectUserToDisplay={selectUserToDisplay} // prop
+              setUserViewMode={setUserViewMode} // prop
             />
             <ClubEvents
-              eventsList={eventsList}
-              language={language}
-              selectEventForDetails={selectEventForDetails}
-              setEventViewModeEvent={setEventViewModeEvent}
+              eventsList={eventsList} // derived
+              language={language} // prop (config)
+              selectEventForDetails={selectEventForDetails} // prop
+              setEventViewModeEvent={setEventViewModeEvent} // prop
             />
           </div>
         );
@@ -155,28 +211,28 @@ class ClubView extends Component {
         return (
           <div className="ten wide column">
             <ClubEdit // same form component handles both create and update
-              language={language}
-              isAdmin={isAdmin}
-              selectedClub={selectedClub}
-              viewMode={viewMode}
-              updateClub={updateClub}
-              setClubViewMode={setClubViewMode}
-              selectClubToDisplay={selectClubToDisplay}
-              getClubList={getClubList}
-              userList={(list) ? list.slice(0, -1) : []}
-              getUserList={getUserList}
+              getClubList={getClubList} // prop
+              getUserList={getUserList} // prop
+              isAdmin={isAdmin} // derived
+              language={language} // prop (config)
+              selectClubToDisplay={selectClubToDisplay} // prop
+              selectedClub={selectedClub} // derived
+              setClubViewMode={setClubViewMode} // prop
+              updateClub={updateClub} // prop
+              userList={(userList) ? userList.slice(0, -1) : []} // prop (user)
+              viewMode={viewMode} // prop (club)
             />
             <ClubMembers
-              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []}
-              membersList={membersList}
-              selectUserToDisplay={selectUserToDisplay}
-              setUserViewMode={setUserViewMode}
+              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
+              membersList={membersList} // derived
+              selectUserToDisplay={selectUserToDisplay} // prop
+              setUserViewMode={setUserViewMode} // prop
             />
             <ClubEvents
-              eventsList={eventsList}
-              language={language}
-              selectEventForDetails={selectEventForDetails}
-              setEventViewModeEvent={setEventViewModeEvent}
+              eventsList={eventsList} // derived
+              language={language} // prop (config)
+              selectEventForDetails={selectEventForDetails} // prop
+              setEventViewModeEvent={setEventViewModeEvent} // prop
             />
           </div>
         );
@@ -184,11 +240,11 @@ class ClubView extends Component {
         return (
           <div className="ten wide column">
             <ClubEdit // same form component handles both create and update
-              language={language}
-              viewMode={viewMode}
-              createClub={createClub}
-              setClubViewMode={setClubViewMode}
-              getClubList={getClubList}
+              createClub={createClub} // prop
+              getClubList={getClubList} // prop
+              language={language} // prop (config)
+              setClubViewMode={setClubViewMode} // prop
+              viewMode={viewMode} // prop (club)
             />
           </div>
         );
@@ -196,10 +252,10 @@ class ClubView extends Component {
         return (
           <div className="ten wide column">
             <ClubDelete
-              selectedClub={selectedClub}
-              deleteClub={deleteClub}
-              setClubViewMode={setClubViewMode}
-              getClubList={getClubList}
+              deleteClub={deleteClub} // prop
+              getClubList={getClubList} // prop
+              selectedClub={selectedClub} // derived
+              setClubViewMode={setClubViewMode} // prop
             />
           </div>
         );
@@ -208,33 +264,12 @@ class ClubView extends Component {
     }
   }
 
-  render() {
-    const {
-      club,
-      user,
-      getClubList,
-      setClubSearchField,
-      setClubViewMode,
-      selectClubToDisplay,
-    } = this.props;
-    const {
-      list,
-      searchField,
-      errorMessage,
-    } = club;
+  renderError = () => {
+    const { club, user } = this.props;
+    const { errorMessage } = club;
     const { errorMessage: userErrorMessage } = user;
-
-    // need to consider reducing the number shown if there are many many clubs...
-    const clubListArray = (list)
-      ? list.slice(0, -1).filter((eachClub) => {
-        return (eachClub.shortName.toLowerCase().includes(searchField.toLowerCase())
-          || eachClub.fullName.toLowerCase().includes(searchField.toLowerCase()));
-      })
-      : [];
-    // const selectedClub = clubListArray.filter(eachClub => eachClub._id === selectedClubId)[0];
-
-    const renderError = (errorMessage || userErrorMessage)
-      ? (
+    if (errorMessage || userErrorMessage) {
+      return (
         <div className="sixteen wide column">
           {(errorMessage)
             ? <div className="ui error message"><Trans>{`Error: ${errorMessage}`}</Trans></div>
@@ -243,28 +278,55 @@ class ClubView extends Component {
             ? <div className="ui error message"><Trans>{`Error (get user): ${userErrorMessage}`}</Trans></div>
             : null}
         </div>
-      )
-      : null;
+      );
+    }
+    return null;
+  }
+
+  renderClubFilter = () => {
+    const {
+      club,
+      getClubList,
+      setClubSearchField,
+      setClubViewMode,
+      selectClubToDisplay,
+    } = this.props;
+    const { searchField } = club;
+    return (
+      <ClubFilter
+        getClubList={getClubList} // prop
+        searchField={searchField} // prop (club)
+        selectClubToDisplay={selectClubToDisplay} // prop
+        setClubSearchField={setClubSearchField} // prop
+        setClubViewMode={setClubViewMode} // prop
+      />
+    );
+  }
+
+  renderClubList = () => {
+    const { club, selectClubToDisplay, setClubViewMode } = this.props;
+    const { list, searchField } = club;
+    const clubList = this.getClubList(list, searchField);
+    return (
+      <div className="list-limit-height">
+        <ClubList
+          clubList={clubList}
+          selectClubToDisplay={selectClubToDisplay}
+          setClubViewMode={setClubViewMode}
+        />
+      </div>
+    );
+  }
+
+  render() {
     return (
       <div className="ui vertically padded stackable grid">
-        {renderError}
+        {this.renderError()}
         <div className="six wide column">
-          <ClubFilter
-            searchField={searchField}
-            setClubSearchField={setClubSearchField}
-            getClubList={getClubList}
-            setClubViewMode={setClubViewMode}
-            selectClubToDisplay={selectClubToDisplay}
-          />
-          <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
-            <ClubList
-              clubs={clubListArray}
-              selectClubToDisplay={selectClubToDisplay}
-              setClubViewMode={setClubViewMode}
-            />
-          </div>
+          {this.renderClubFilter()}
+          {this.renderClubList()}
         </div>
-        {this.renderRightColumn()}
+        {this.renderClubDetails()}
       </div>
     );
   }

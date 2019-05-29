@@ -9,20 +9,14 @@ import EventCommentsList from './EventCommentsList';
 const EventComments = ({
   currentUser,
   deleteComment,
-  getUserById,
   postComment,
   refreshCollapse,
   requestRefreshCollapse,
   selectedEvent,
   selectedRunner,
   updateComment,
-  userDetails,
-  userErrorMessage,
 }) => {
-  // console.log('refreshCollapse in EventComments:', refreshCollapse);
   const { _id: eventId } = selectedEvent;
-  // console.log('selectedEvent/Runner in EventComments:', selectedEvent, selectedRunner);
-  // console.log('currentUser in EventComments:', currentUser);
   const runnerData = (selectedEvent.runners)
     ? selectedEvent.runners.find(runner => runner.user._id.toString() === selectedRunner)
     : null;
@@ -40,13 +34,10 @@ const EventComments = ({
           currentUserId={currentUserId}
           deleteComment={deleteComment}
           eventId={eventId}
-          getUserById={getUserById}
           isAdmin={isAdmin}
           refreshCollapse={refreshCollapse}
           runnerData={runnerData}
           updateComment={updateComment}
-          userDetails={userDetails}
-          userErrorMessage={userErrorMessage}
         />
         {(canPostComments)
           ? (
@@ -71,22 +62,17 @@ const EventComments = ({
 EventComments.propTypes = {
   currentUser: PropTypes.objectOf(PropTypes.any),
   deleteComment: PropTypes.func.isRequired,
-  getUserById: PropTypes.func.isRequired,
   postComment: PropTypes.func.isRequired,
   refreshCollapse: PropTypes.number.isRequired,
   requestRefreshCollapse: PropTypes.func.isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,
   updateComment: PropTypes.func.isRequired,
-  userDetails: PropTypes.objectOf(PropTypes.any),
-  userErrorMessage: PropTypes.string,
 };
 EventComments.defaultProps = {
   currentUser: null,
   selectedEvent: {},
   selectedRunner: '',
-  userDetails: {},
-  userErrorMessage: '',
 };
 
 export default EventComments;

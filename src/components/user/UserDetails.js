@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Trans } from '@lingui/macro';
+
 import Collapse from '../Collapse';
 import forest from '../../graphics/silhouette.jpg';
 import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
-  if (!selectedUser._id) {
+  const { _id: userId } = selectedUser;
+  if (!userId) {
     return (
       <div className="ui segment">
-        <div className="ui active inline centered text loader">Loading user details...</div>
+        <div className="ui active inline centered text loader">
+          <Trans>Loading user details...</Trans>
+        </div>
       </div>
     );
   }
   const {
-    _id: userId,
     about,
     createdAt,
     displayName,
@@ -34,19 +38,27 @@ const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
     ? (
       <div>
         <hr className="divider" />
-        <div className="item">{`User type: ${role}`}</div>
-        <div className="item">{`Profile visibility: ${visibility}`}</div>
-        <div className="item">{`Internal ID: ${userId}`}</div>
+        <div className="item"><Trans>{`User type: ${role}`}</Trans></div>
+        <div className="item"><Trans>{`Profile visibility: ${visibility}`}</Trans></div>
+        <div className="item"><Trans>{`Internal ID: ${userId}`}</Trans></div>
         {(orisId)
-          ? <div>{`ORIS ID: ${orisId}`}</div>
+          ? <div><Trans>{`ORIS ID: ${orisId}`}</Trans></div>
           : null}
-        <div className="item">{`Last updated: ${updatedAt.slice(0, 10)}`}</div>
+        <div className="item"><Trans>{`Last updated: ${reformatTimestampDateOnly(updatedAt)}`}</Trans></div>
         <hr className="divider" />
-        <button type="button" className="ui red tiny button right floated" onClick={() => setUserViewMode('delete')}>
-          Delete user
+        <button
+          type="button"
+          className="ui red tiny button right floated"
+          onClick={() => setUserViewMode('delete')}
+        >
+          <Trans>Delete user</Trans>
         </button>
-        <button type="button" className="ui primary tiny button" onClick={() => setUserViewMode('edit')}>
-          Edit user details
+        <button
+          type="button"
+          className="ui primary tiny button"
+          onClick={() => setUserViewMode('edit')}
+        >
+          <Trans>Edit user details</Trans>
         </button>
       </div>
     )
@@ -54,7 +66,6 @@ const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
   const displayProfile = (
     <div>
       <div>
-        <div />
         <img className="profile-forest" alt="forest" src={forest} />
         <div>
           <img
@@ -62,7 +73,6 @@ const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
             alt="avatar"
             src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
           />
-
           <h3>{displayName}</h3>
           {(fullName !== displayName)
             ? <div>{fullName}</div>
@@ -101,15 +111,16 @@ const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
             )
             : null
           }
-          <div className="item">{`Joined: ${createdAt.slice(0, 10)}`}</div>
+          <div className="item"><Trans>{`Joined: ${reformatTimestampDateOnly(createdAt)}`}</Trans></div>
           {optionalItems}
         </div>
       </div>
     </div>
   );
+  const title = <Trans>User profile</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title="User profile">
+      <Collapse title={title}>
         {displayProfile}
       </Collapse>
     </div>
@@ -118,8 +129,8 @@ const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
 
 UserDetails.propTypes = {
   selectedUser: PropTypes.objectOf(PropTypes.any),
-  showOptional: PropTypes.bool,
   setUserViewMode: PropTypes.func.isRequired,
+  showOptional: PropTypes.bool,
 };
 UserDetails.defaultProps = {
   selectedUser: {},

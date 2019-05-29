@@ -5,8 +5,8 @@ import { Trans } from '@lingui/macro';
 import ClubListItem from './ClubListItem';
 import Collapse from '../Collapse';
 
-const ClubList = ({ clubs, selectClubToDisplay, setClubViewMode }) => {
-  if (clubs.length === 0) {
+const ClubList = ({ clubList, selectClubToDisplay, setClubViewMode }) => {
+  if (clubList.length === 0) {
     return (
       <div className="ui segment">
         <div className="ui message warning">
@@ -15,7 +15,7 @@ const ClubList = ({ clubs, selectClubToDisplay, setClubViewMode }) => {
       </div>
     );
   }
-  const clubsArray = [...clubs]
+  const clubsArray = [...clubList]
     .sort((a, b) => {
       return (a.shortName > b.shortName) ? 0 : -1;
     })
@@ -59,12 +59,12 @@ const ClubList = ({ clubs, selectClubToDisplay, setClubViewMode }) => {
 };
 
 ClubList.propTypes = {
-  clubs: PropTypes.arrayOf(PropTypes.object),
+  clubList: PropTypes.arrayOf(PropTypes.object),
   selectClubToDisplay: PropTypes.func.isRequired,
   setClubViewMode: PropTypes.func.isRequired,
 };
 ClubList.defaultProps = {
-  clubs: [],
+  clubList: [],
 };
 
 export default ClubList;

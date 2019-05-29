@@ -1,39 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { I18n } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
+import { validationErrorsLocale } from '../../common/data';
+
 const UserChangePassword = ({
+  errors,
   hide,
   isAdmin,
-  errors,
+  language,
   touched,
 }) => {
+  const validationErrors = validationErrorsLocale[language];
+
   return (
     <div className="formik">
       <h3 className="header">Change password</h3>
       <Form className="ui form">
         <div className="field">
           <label htmlFor="currentPassword">
-            {(isAdmin) ? 'Your own password' : 'Current password'}
-            <Field type="password" name="currentPassword" placeholder="Enter current password" />
+            {(isAdmin) ? <Trans>Your own password</Trans> : <Trans>Current password</Trans>}
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  type="password"
+                  name="currentPassword"
+                  placeholder={i18n._(t`Enter current password`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
           </label>
-          { touched.currentPassword && errors.currentPassword && <p className="ui negative message">{errors.currentPassword}</p> }
+          { touched.currentPassword && errors.currentPassword
+            && <div className="ui warning message">{validationErrors[errors.currentPassword] || '!'}</div> }
         </div>
         <div className="field">
           <label htmlFor="newPassword">
-            New password
-            <Field type="password" name="newPassword" placeholder="Enter new password" />
+            <Trans>New password</Trans>
+            <I18n>
+              {({ i18n }) => (
+                <Field
+                  type="password"
+                  name="newPassword"
+                  placeholder={i18n._(t`Enter new password`)}
+                  autoComplete="off"
+                />
+              )}
+            </I18n>
           </label>
-          { touched.newPassword && errors.newPassword && <p className="ui negative message">{errors.newPassword}</p> }
+          { touched.newPassword && errors.newPassword
+            && <div className="ui warning message">{validationErrors[errors.newPassword] || '!'}</div> }
         </div>
-        <button type="submit" className="ui tiny button primary">Submit</button>
+        <button type="submit" className="ui tiny button primary"><Trans>Change password</Trans></button>
         <button
           type="button"
           className="ui tiny button"
           onClick={() => hide()}
         >
-        Cancel
+          <Trans>Cancel</Trans>
         </button>
       </Form>
     </div>
@@ -43,21 +70,23 @@ const UserChangePassword = ({
 UserChangePassword.propTypes = {
   hide: PropTypes.func.isRequired,
   isAdmin: PropTypes.bool,
+  language: PropTypes.string,
   errors: PropTypes.objectOf(PropTypes.any).isRequired,
   touched: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 UserChangePassword.defaultProps = {
   isAdmin: false,
+  language: 'en',
 };
 
 const schema = Yup.object().shape({
   currentPassword: Yup.string()
-    .min(8, 'Your password must be at least 8 characters long.')
-    .required('You must confirm your current password.'),
+    .min(8, 'passwordLength')
+    .required('currentPasswordRequired'),
   newPassword: Yup.string()
-    .min(8, 'Your password must be at least 8 characters long.')
-    .required('A password is required.'),
+    .min(8, 'passwordLength')
+    .required('passwordRequired'),
 });
 
 export default withFormik({
@@ -71,12 +100,12 @@ export default withFormik({
   handleSubmit(values, { props, setSubmitting }) {
     const { hide, user, changePassword } = props;
     const { _id: userId } = user;
-    setTimeout(() => changePassword(userId, values, (didSucceed) => {
+    changePassword(userId, values, (didSucceed) => {
       if (didSucceed) {
         hide();
       } else {
         setSubmitting(false);
       }
-    }), 2000); // simulate network delay
+    });
   },
 })(UserChangePassword);

@@ -1,4 +1,4 @@
-/* settings for demo map component */
+/* settings for EventMap component (leaflet) */
 .leaflet-container {
   height: 400px;
   width: 100%;
@@ -13,6 +13,12 @@
 }
 .event-map-flag-tooltip {
   text-align: center;
+}
+
+/* settings for ClubView, EventView, UserView lists */
+.list-limit-height {
+  max-height: 50em;
+  overflow-y: auto;
 }
 
 /* settings for EventMapViewerCanvas */
@@ -65,6 +71,9 @@
 .event-runners-current {
   box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
 }
+.event-runners-deleted {
+  color: red !important;
+}
 
 /* settings for EventLinkedItem */
 .event-link-current {
@@ -89,6 +98,7 @@
 .footer {
   text-align: right;
   font-style: italic;
+  margin-bottom: 1rem;
 }
 
 /* settings for EventRunnerDetails */

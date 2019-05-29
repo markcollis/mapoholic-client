@@ -93,6 +93,7 @@ class UserView extends Component {
       getUserById(selectedUserId);
     }
     const isAdmin = (current && current.role === 'admin');
+    console.log('current, selectedUserId', current, selectedUserId);
     const isSelf = (current && current._id === selectedUserId);
     const showOptional = (isAdmin || isSelf);
     const selectedUser = details[selectedUserId];
@@ -121,13 +122,15 @@ class UserView extends Component {
               setUserViewMode={setUserViewMode}
               showOptional={showOptional}
             />
-            <UserEvents
-              eventsList={eventsList}
-              language={language}
-              selectedUser={selectedUser || {}}
-              selectEventToDisplay={selectEventToDisplay}
-              selectRunnerToDisplay={selectRunnerToDisplay}
-            />
+            <div className="list-limit-height">
+              <UserEvents
+                eventsList={eventsList}
+                language={language}
+                selectedUser={selectedUser || {}}
+                selectEventToDisplay={selectEventToDisplay}
+                selectRunnerToDisplay={selectRunnerToDisplay}
+              />
+            </div>
           </div>
         );
       case 'edit':
@@ -142,6 +145,7 @@ class UserView extends Component {
               getUserById={getUserById}
               getUserList={getUserList}
               isAdmin={isAdmin}
+              language={language}
               postProfileImage={postProfileImage}
               selectedUser={selectedUser}
               selectUserToDisplay={selectUserToDisplay}
@@ -164,6 +168,7 @@ class UserView extends Component {
             <UserDelete
               deleteUser={deleteUser}
               getUserList={getUserList}
+              isSelf={isSelf}
               selectedUser={selectedUser}
               setUserViewMode={setUserViewMode}
             />
@@ -176,6 +181,7 @@ class UserView extends Component {
 
   render() {
     const {
+      config,
       user,
       getUserList,
       selectUserToDisplay,
@@ -187,6 +193,7 @@ class UserView extends Component {
       list,
       searchField,
     } = user;
+    const { language } = config;
     // need to consider reducing the number shown if there are many many users...
     const userListArray = (list)
       ? list.slice(0, -1).filter((eachUser) => {
@@ -213,8 +220,9 @@ class UserView extends Component {
             searchField={searchField}
             setUserSearchField={setUserSearchField}
           />
-          <div style={{ maxHeight: '50em', overflowY: 'auto' }}>
+          <div className="list-limit-height">
             <UserList
+              language={language}
               selectUserToDisplay={selectUserToDisplay}
               setUserViewMode={setUserViewMode}
               users={userListArray}

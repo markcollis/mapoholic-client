@@ -137,7 +137,6 @@ class MapView extends Component {
       ? selectedEvent.runners.map(runner => runner.user._id)
       : [];
     const isRunner = (current && selectedEvent && runnerList.includes(current._id));
-    // console.log('isRunner:', isRunner);
     return isRunner;
   });
 
@@ -153,10 +152,8 @@ class MapView extends Component {
 
   // helper to determine if current user can edit runner if input props have changed
   getCanEditRunner = memoize((current, selectedRunner) => {
-    // console.log('current', current);
     const isAdmin = (current && current.role === 'admin');
     const isSelectedRunner = (current && current._id === selectedRunner);
-    // console.log('isAdmin, isSelectedRunner:', isAdmin, isSelectedRunner);
     return isAdmin || isSelectedRunner;
   });
 
@@ -454,7 +451,6 @@ class MapView extends Component {
     const { refreshCollapseEventComments } = this.state;
     const {
       deleteComment,
-      getUserById,
       oevent,
       postComment,
       updateComment,
@@ -468,21 +464,16 @@ class MapView extends Component {
     } = oevent;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
-    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
-    // const runnerDetails = this.getRunnerDetails(selectedRunner, userDetails, userErrorMessage);
+    const { current } = user;
 
     return (
       <EventComments
         currentUser={current} // prop (user) - can user post, edit, delete?
         deleteComment={deleteComment} // prop
-        getUserById={getUserById} // prop
         postComment={postComment} // prop
-        // runnerDetails={runnerDetails} // derived
         refreshCollapse={refreshCollapseEventComments} // state (value increments to trigger)
         requestRefreshCollapse={this.refreshCollapseEventComments} // defined here
         updateComment={updateComment} // prop
-        userDetails={userDetails} // prop (user)
-        userErrorMessage={userErrorMessage} // prop (user)
         selectedEvent={selectedEvent} // derived
         selectedRunner={selectedRunner} // prop (oevent)
       />
@@ -614,7 +605,6 @@ const mapStateToProps = ({
   };
 };
 const mapDispatchToProps = {
-  // setEventViewModeComment: setEventViewModeCommentAction,
   addEventRunner: addEventRunnerAction,
   addEventRunnerOris: addEventRunnerOrisAction,
   cancelEventError: cancelEventErrorAction,

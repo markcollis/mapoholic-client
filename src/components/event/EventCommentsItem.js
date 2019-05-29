@@ -7,7 +7,6 @@ import { OMAPFOLDER_SERVER } from '../../config';
 
 class EventCommentsItem extends Component {
   static propTypes = {
-    authorDetails: PropTypes.objectOf(PropTypes.any),
     comment: PropTypes.objectOf(PropTypes.any).isRequired,
     currentUserId: PropTypes.string,
     deleteComment: PropTypes.func.isRequired,
@@ -19,7 +18,6 @@ class EventCommentsItem extends Component {
   };
 
   static defaultProps = {
-    authorDetails: {},
     currentUserId: null,
     eventId: null,
     runnerId: null,
@@ -62,13 +60,6 @@ class EventCommentsItem extends Component {
     } = this.props;
     const { _id: commentId } = comment;
     deleteComment(eventId, runnerId, commentId);
-    // deleteComment(eventId, runnerId, commentId, (successful) => {
-    //   if (successful) {
-    //     console.log('comment delete successful');
-    //   } else {
-    //     console.log('comment delete failed');
-    //   }
-    // });
   }
 
   handleEditEnable = () => {
@@ -96,11 +87,8 @@ class EventCommentsItem extends Component {
     const { _id: commentId } = comment;
     updateComment(eventId, runnerId, commentId, { text: editCommentText }, (successful) => {
       if (successful) {
-        // console.log('comment update successful');
         this.setState({ isEditing: false });
         requestRefreshCollapse();
-      // } else {
-      //   console.log('comment update failed');
       }
     });
   }
@@ -134,14 +122,20 @@ class EventCommentsItem extends Component {
 
   renderPost = () => {
     const { editCommentText, isDeleting, isEditing } = this.state;
-    const { authorDetails, comment, currentUserId } = this.props;
+    const { comment, currentUserId } = this.props;
     const {
       author,
       text,
       postedAt,
       updatedAt,
     } = comment;
-    const { _id: authorId, displayName, fullName } = author;
+    const {
+      _id: authorId,
+      displayName,
+      fullName,
+      active,
+      profileImage,
+    } = author;
     const isAuthor = (authorId === currentUserId);
     const postedDate = reformatTimestamp(postedAt);
     const updatedDate = reformatTimestamp(updatedAt);
@@ -151,6 +145,7 @@ class EventCommentsItem extends Component {
     const headerStyle = (isAuthor)
       ? 'header comment-header comment-author'
       : 'header comment-header';
+    const displayNameFiltered = (active) ? displayName : displayName.slice(0, -22);
     const textContent = (isEditing)
       ? (
         <div className="ui form comment-editor">
@@ -187,14 +182,14 @@ class EventCommentsItem extends Component {
       <img
         className="ui mini image left floated"
         alt="avatar"
-        src={(authorDetails && authorDetails.profileImage) ? `${OMAPFOLDER_SERVER}/${authorDetails.profileImage}` : noAvatar}
+        src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
       />
     );
     const header = (fullName === '')
-      ? <div className={headerStyle}>{displayName}</div>
+      ? <div className={headerStyle}>{displayNameFiltered}</div>
       : (
         <div className={headerStyle}>
-          {`${displayName} `}
+          {`${displayNameFiltered} `}
           <span className="comment-fullname">
             {`(${fullName})`}
           </span>

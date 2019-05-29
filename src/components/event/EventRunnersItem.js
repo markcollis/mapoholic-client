@@ -19,6 +19,14 @@ const EventRunnersItem = ({
     fullName,
     memberOf,
   } = runner.user;
+  // check if runner has been deleted (as 'deletion' involves setting runner
+  // records to 'private' instead of completely deleting them)
+  // only admin users should ever see deleted runners displayed
+  const isDeleted = (displayName.slice(-21, -14) === 'deleted');
+  // console.log('isDeleted', isDeleted);
+  const headerClass = (isDeleted)
+    ? 'header event-runners-deleted'
+    : 'header';
   const cardClass = (currentUserId === userId)
     ? 'ui fluid centered card event-runners-item event-runners-current'
     : 'ui fluid centered card event-runners-item';
@@ -33,7 +41,7 @@ const EventRunnersItem = ({
     )
     : null;
 
-  if (!userDetails[userId] && !userErrorMessage) {
+  if (!userDetails[userId] && !userErrorMessage && !isDeleted) {
     getUserById(userId);
   }
 
@@ -57,7 +65,7 @@ const EventRunnersItem = ({
     >
       <div className="content">
         {avatar}
-        <div className="header">
+        <div className={headerClass}>
           {displayName}
         </div>
         <div className="meta">
