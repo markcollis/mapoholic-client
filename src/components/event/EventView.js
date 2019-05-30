@@ -43,7 +43,7 @@ import {
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
-class EventViewList extends Component {
+class EventView extends Component {
   static propTypes = {
     history: PropTypes.objectOf(PropTypes.any).isRequired,
     mineOnly: PropTypes.bool,
@@ -77,7 +77,10 @@ class EventViewList extends Component {
     updateEventLink: PropTypes.func.isRequired,
   }
 
-  static defaultProps = { mineOnly: false, showMap: false };
+  static defaultProps = {
+    mineOnly: false,
+    showMap: false,
+  };
 
   // get summary data from API if not available
   componentDidMount() {
@@ -604,4 +607,4 @@ const mapDispatchToProps = {
   updateEventLink: updateEventLinkAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EventViewList));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EventView));

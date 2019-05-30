@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 
 const Welcome = ({ auth, currentUser }) => {
   if (auth) {
-    // console.log('auth:', auth);
     const adminNotes = (currentUser && currentUser.role === 'admin')
       ? (
         <>
@@ -73,14 +72,14 @@ const Welcome = ({ auth, currentUser }) => {
               {' (done 28/5)'}
             </li>
             <li>
+              <del>Refactor User and Club pages to align with Event best practice</del>
+              {'(Club completed 20/5, User completed 30/5)'}
+            </li>
+            <li>
               Choose a better name... how about MapOholic, or is it too contrived?
               (O)MapArchive? (O)MapBrowser? (O)MapStore?
             </li>
             <li>Add a bit more visual identity</li>
-            <li>
-              Refactor User and Club pages to align with Event best practice
-              (Club completed 20/5)
-            </li>
             <li>Add some more introductory/help text on this page</li>
             <li>Add a component here to show recent activity (own or all?)</li>
             <li>Investigate making results editable/uploadable if not on ORIS</li>

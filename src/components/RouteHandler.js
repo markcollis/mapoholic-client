@@ -8,13 +8,10 @@ import Footer from './Footer';
 import Welcome from './Welcome';
 import Authenticate from './auth/Authenticate';
 import Logout from './auth/Logout';
-// import MyMapsViewList from './event/MyMapsViewList';
-// import MyMapsViewMap from './event/MyMapsViewMap';
 import EventView from './event/EventView';
 import MapView from './event/MapView';
 import UserView from './user/UserView';
 import ClubView from './club/ClubView';
-import MyProfile from './user/MyProfile';
 
 // This component limits access to certain components for users who are not logged in
 const RouteHandler = ({ user }) => {
@@ -35,15 +32,14 @@ const RouteHandler = ({ user }) => {
           <Route path="/mapview" component={MapView} />
           <Route path="/users" component={UserView} />
           <Route path="/clubs" component={ClubView} />
-          <Route path="/me" component={MyProfile} />
-          <Route path="/editprofile" component={MyProfile} />
-          <Route path="/profile/:userid" component={MyProfile} />
+          <Route path="/me" render={props => <UserView {...props} ownProfile />} />
           <Route component={Welcome} />
         </Switch>
         <Route path="/" component={Footer} />
       </div>
     );
   }
+
   // include logout to provide escape route from 'unclean' logout that does not empty localStorage
   return (
     <div>
