@@ -1,3 +1,13 @@
+/* settings for ClubDetails component */
+.club-details-floating {
+  position: absolute;
+  top: 6.5em;
+  left: 3em;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5em;
+  box-shadow: 0 0 0.5em 0.5em rgba(255, 255, 255, 0.9);
+}
+
 /* settings for EventMap component (leaflet) */
 .leaflet-container {
   height: 400px;

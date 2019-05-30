@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import Collapse from '../Collapse';
+import forest from '../../graphics/silhouette.jpg';
+
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const ClubDetails = ({
@@ -48,21 +50,24 @@ const ClubDetails = ({
     : null;
   const displayProfile = (
     <div>
-      <h3>{shortName}</h3>
-      {(fullName)
-        ? <div>{fullName}</div>
-        : null}
-      <div className="ui list">
-        <div className="item">
-          <i className="marker icon" />
-          {country}
+      <img className="profile-forest" alt="forest" src={forest} />
+      <div className="club-details-floating">
+        <h3>{shortName}</h3>
+        {(fullName)
+          ? <div>{fullName}</div>
+          : null}
+        <div className="ui list">
+          <div className="item">
+            <i className="marker icon" />
+            {country}
+          </div>
+          <div className="item">
+            <i className="linkify icon" />
+            {website}
+          </div>
         </div>
-        <div className="item">
-          <i className="linkify icon" />
-          {website}
-        </div>
-        {showEdit}
       </div>
+      {showEdit}
     </div>
   );
   const title = <Trans>Club details</Trans>;

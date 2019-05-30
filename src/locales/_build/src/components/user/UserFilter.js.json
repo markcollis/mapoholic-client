@@ -1,0 +1,26 @@
+{
+  "Search for users": {
+    "origin": [
+      [
+        "src/components/user/UserFilter.js",
+        12
+      ]
+    ]
+  },
+  "User search filter": {
+    "origin": [
+      [
+        "src/components/user/UserFilter.js",
+        22
+      ]
+    ]
+  },
+  "Refresh list": {
+    "origin": [
+      [
+        "src/components/user/UserFilter.js",
+        33
+      ]
+    ]
+  }
+}

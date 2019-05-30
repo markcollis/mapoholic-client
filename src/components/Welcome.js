@@ -73,20 +73,23 @@ const Welcome = ({ auth, currentUser }) => {
             </li>
             <li>
               <del>Refactor User and Club pages to align with Event best practice</del>
-              {'(Club completed 20/5, User completed 30/5)'}
+              {' (Club completed 20/5, User completed 30/5)'}
+            </li>
+            <li>
+              <del>Add a bit more visual identity</del>
+              {' (added flags and tree background to Club page 30/5, others look OK for now)'}
+            </li>
+            <li>
+              <del>Check for other components that could use CollapseTrigger function</del>
+              {' (EventDetails trigger when thumbnail image loaded 30/5)'}
             </li>
             <li>
               Choose a better name... how about MapOholic, or is it too contrived?
               (O)MapArchive? (O)MapBrowser? (O)MapStore?
             </li>
-            <li>Add a bit more visual identity</li>
             <li>Add some more introductory/help text on this page</li>
             <li>Add a component here to show recent activity (own or all?)</li>
             <li>Investigate making results editable/uploadable if not on ORIS</li>
-            <li>
-            Check for other components that could use CollapseTrigger function
-            1. EventDetails!
-            </li>
             <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
             <li>Complete the translations and check that nothing is missing</li>
             <li>Centre rotation on current view when zoomed in</li>

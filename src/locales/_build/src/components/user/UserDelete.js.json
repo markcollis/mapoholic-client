@@ -3,7 +3,15 @@
     "origin": [
       [
         "src/components/user/UserDelete.js",
-        15
+        40
+      ]
+    ]
+  },
+  "Deleting a user removes their details and all of their event records including maps. All that is retained is any comments that they have made on other users' maps.": {
+    "origin": [
+      [
+        "src/components/user/UserDelete.js",
+        42
       ]
     ]
   },
@@ -11,7 +19,7 @@
     "origin": [
       [
         "src/components/user/UserDelete.js",
-        25
+        66
       ]
     ]
   },
@@ -19,7 +27,7 @@
     "origin": [
       [
         "src/components/user/UserDelete.js",
-        32
+        73
       ]
     ]
   }

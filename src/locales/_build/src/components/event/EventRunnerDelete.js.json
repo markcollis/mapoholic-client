@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDelete.js",
-        26
+        47
       ]
     ]
   },
@@ -11,15 +11,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDelete.js",
-        28
-      ]
-    ]
-  },
-  "Note: Currently non-functional, server does not suspport this yet.": {
-    "origin": [
-      [
-        "src/components/event/EventRunnerDelete.js",
-        32
+        49
       ]
     ]
   },
@@ -27,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDelete.js",
-        45
+        65
       ]
     ]
   },
@@ -35,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDelete.js",
-        52
+        72
       ]
     ]
   }

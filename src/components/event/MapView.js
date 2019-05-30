@@ -88,6 +88,7 @@ class MapView extends Component {
 
   state = {
     refreshCollapseEventComments: 0,
+    refreshCollapseEventDetails: 0,
   }
 
   // get summary data from API if not already available
@@ -166,9 +167,15 @@ class MapView extends Component {
   });
 
   // update a prop in EventComments to trigger refresh of Collapse component to new size
-  refreshCollapseEventComments = () => {
+  requestRefreshCollapseEventComments = () => {
     const { refreshCollapseEventComments } = this.state;
     this.setState({ refreshCollapseEventComments: refreshCollapseEventComments + 1 });
+  }
+
+  // update a prop in EventDetails to trigger refresh of Collapse component to new size
+  requestRefreshCollapseEventDetails = () => {
+    const { refreshCollapseEventDetails } = this.state;
+    this.setState({ refreshCollapseEventDetails: refreshCollapseEventDetails + 1 });
   }
 
   // render EventRunners component
@@ -282,6 +289,7 @@ class MapView extends Component {
 
   // render EventDetails, EventEdit or EventDelete components as required by eventMode
   renderEventDetails = () => {
+    const { refreshCollapseEventDetails } = this.state;
     const {
       club,
       config,
@@ -326,6 +334,8 @@ class MapView extends Component {
             canEdit={canEdit} // derived
             language={language} // prop (config)
             organisingClubs={organisingClubs} // derived
+            refreshCollapse={refreshCollapseEventDetails} // state (value increments to trigger)
+            requestRefreshCollapse={this.requestRefreshCollapseEventDetails} // defined here
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
           />
@@ -472,7 +482,7 @@ class MapView extends Component {
         deleteComment={deleteComment} // prop
         postComment={postComment} // prop
         refreshCollapse={refreshCollapseEventComments} // state (value increments to trigger)
-        requestRefreshCollapse={this.refreshCollapseEventComments} // defined here
+        requestRefreshCollapse={this.requestRefreshCollapseEventComments} // defined here
         updateComment={updateComment} // prop
         selectedEvent={selectedEvent} // derived
         selectedRunner={selectedRunner} // prop (oevent)

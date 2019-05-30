@@ -1,0 +1,146 @@
+{
+  "Email address": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        114
+      ]
+    ]
+  },
+  "User name": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        126
+      ]
+    ]
+  },
+  "Full name": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        137
+      ]
+    ]
+  },
+  "Full name of user": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        142
+      ]
+    ]
+  },
+  "Member of": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        154
+      ]
+    ]
+  },
+  "Clubs that user is a member of": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        159
+      ]
+    ]
+  },
+  "About": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        174
+      ]
+    ]
+  },
+  "A brief user profile": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        180
+      ]
+    ]
+  },
+  "Location": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        192
+      ]
+    ]
+  },
+  "Where user is based": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        197
+      ]
+    ]
+  },
+  "Registration number": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        208
+      ]
+    ]
+  },
+  "National registration number of user": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        213
+      ]
+    ]
+  },
+  "Profile visibility": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        226
+      ]
+    ]
+  },
+  "Role": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        242
+      ]
+    ]
+  },
+  "Update": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        263
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        270
+      ]
+    ]
+  },
+  "Edit User Details": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        287
+      ]
+    ]
+  },
+  "Change Password": {
+    "origin": [
+      [
+        "src/components/user/UserEdit.js",
+        298
+      ]
+    ]
+  }
+}

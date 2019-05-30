@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventCommentsItem.js",
-        122
+        110
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventCommentsItem.js",
-        127
+        115
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventCommentsItem.js",
-        165
+        160
       ]
     ]
   },
@@ -27,11 +27,11 @@
     "origin": [
       [
         "src/components/event/EventCommentsItem.js",
-        168
+        163
       ],
       [
         "src/components/event/EventCommentsItem.js",
-        181
+        176
       ]
     ]
   },
@@ -39,7 +39,7 @@
     "origin": [
       [
         "src/components/event/EventCommentsItem.js",
-        178
+        173
       ]
     ]
   }

@@ -1,0 +1,18 @@
+{
+  "Sorry, there aren't any matching users to display!": {
+    "origin": [
+      [
+        "src/components/user/UserList.js",
+        17
+      ]
+    ]
+  },
+  "User list": {
+    "origin": [
+      [
+        "src/components/user/UserList.js",
+        38
+      ]
+    ]
+  }
+}

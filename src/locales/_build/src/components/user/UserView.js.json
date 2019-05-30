@@ -1,17 +1,25 @@
 {
-  "Select a user from the list to show further details here": {
-    "origin": [
-      [
-        "src/components/user/UserView.js",
-        112
-      ]
-    ]
-  },
   "Error: {errorMessage}": {
     "origin": [
       [
         "src/components/user/UserView.js",
-        204
+        147
+      ]
+    ]
+  },
+  "You have not added any events yet.": {
+    "origin": [
+      [
+        "src/components/user/UserView.js",
+        339
+      ]
+    ]
+  },
+  "Select a user from the list to show further details here": {
+    "origin": [
+      [
+        "src/components/user/UserView.js",
+        391
       ]
     ]
   }

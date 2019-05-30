@@ -12,6 +12,8 @@ const EventDetails = ({
   canEdit,
   language,
   organisingClubs,
+  refreshCollapse,
+  requestRefreshCollapse,
   selectedEvent,
   setEventViewModeEvent,
 }) => {
@@ -60,6 +62,10 @@ const EventDetails = ({
       <img
         className="ui image right floated"
         alt="map thumbnail"
+        onLoad={() => {
+          // console.log('image loaded!');
+          requestRefreshCollapse();
+        }}
         src={`${OMAPFOLDER_SERVER}/${mapFiles[0]
           .slice(0, -4).concat('-thumb').concat(mapFiles[0].slice(-4))}`}
       />
@@ -215,7 +221,7 @@ const EventDetails = ({
   const title = <Trans>Event details</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title={title}>
+      <Collapse title={title} refreshCollapse={refreshCollapse}>
         {displayEventDetails}
       </Collapse>
     </div>
@@ -226,6 +232,8 @@ EventDetails.propTypes = {
   canEdit: PropTypes.bool,
   language: PropTypes.string,
   organisingClubs: PropTypes.arrayOf(PropTypes.any),
+  refreshCollapse: PropTypes.number.isRequired,
+  requestRefreshCollapse: PropTypes.func.isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   setEventViewModeEvent: PropTypes.func.isRequired,
 };

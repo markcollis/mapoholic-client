@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { countryCodesConversion } from '../../common/data';
 
 const ClubListItem = ({ club, selectClubToDisplay, setClubViewMode }) => {
   const {
     _id: clubId,
     shortName,
     fullName,
+    country,
   } = club;
+  const flagStyle = `${countryCodesConversion[country]} flag floatedright`;
   // console.log('club:', club);
   return (
     <div
@@ -23,6 +26,7 @@ const ClubListItem = ({ club, selectClubToDisplay, setClubViewMode }) => {
       tabIndex="0"
     >
       <div className="content">
+        <i className={flagStyle} />
         <div className="header">
           {shortName}
         </div>

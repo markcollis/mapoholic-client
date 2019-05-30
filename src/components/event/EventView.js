@@ -82,6 +82,10 @@ class EventView extends Component {
     showMap: false,
   };
 
+  state = {
+    refreshCollapseEventDetails: 0,
+  }
+
   // get summary data from API if not available
   componentDidMount() {
     const {
@@ -191,8 +195,15 @@ class EventView extends Component {
     return organisingClubs;
   });
 
+  // update a prop in EventDetails to trigger refresh of Collapse component to new size
+  refreshCollapseEventDetails = () => {
+    const { refreshCollapseEventDetails } = this.state;
+    this.setState({ refreshCollapseEventDetails: refreshCollapseEventDetails + 1 });
+  }
+
   // render EventDetails, EventEdit or EventDelete components as required by eventMode
   renderEventDetails = () => {
+    const { refreshCollapseEventDetails } = this.state;
     const {
       club,
       config,
@@ -265,6 +276,8 @@ class EventView extends Component {
             canEdit={canEdit} // derived
             language={language} // prop (config)
             organisingClubs={organisingClubs} // derived
+            refreshCollapse={refreshCollapseEventDetails} // state (value increments to trigger)
+            requestRefreshCollapse={this.refreshCollapseEventDetails} // defined here
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
           />

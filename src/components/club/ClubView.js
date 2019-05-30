@@ -91,14 +91,14 @@ class ClubView extends Component {
     /* eslint react/no-did-update-set-state: 0 */
     if (details[selectedClubId]) {
       if (!eventLists[selectedClubId] && gettingEventList !== selectedClubId) {
-        console.log('getting event list for', selectedClubId);
+        // console.log('getting event list for', selectedClubId);
         getClubEvents(selectedClubId, (successful) => {
           if (successful) this.setState({ gettingEventList: '' });
         });
         this.setState({ gettingEventList: selectedClubId });
       }
       if (!memberLists[selectedClubId] && gettingMemberList !== selectedClubId) {
-        console.log('getting member list for', selectedClubId);
+        // console.log('getting member list for', selectedClubId);
         getClubMembers(selectedClubId, (successful) => {
           if (successful) this.setState({ gettingMemberList: '' });
         });
@@ -115,7 +115,7 @@ class ClubView extends Component {
 
   // helper to determine if current user can edit club details if input props have changed
   getCanEditClub = memoize((current, selectedClub) => {
-    console.log('current, selectedClub in getCanEditClub:', current, selectedClub);
+    // console.log('current, selectedClub in getCanEditClub:', current, selectedClub);
     if (!current || !current.role || !selectedClub || !selectedClub.owner) return false;
     const isAdmin = (current.role === 'admin');
     if (isAdmin) return true;
@@ -128,8 +128,17 @@ class ClubView extends Component {
   getClubList = memoize((list, searchField) => {
     if (!list) return [];
     return list.slice(0, -1).filter((eachClub) => {
-      return (eachClub.shortName.toLowerCase().includes(searchField.toLowerCase())
-      || eachClub.fullName.toLowerCase().includes(searchField.toLowerCase()));
+      const {
+        fullName,
+        shortName,
+        country,
+      } = eachClub;
+      const matchFullName = fullName.toLowerCase().includes(searchField.toLowerCase());
+      const matchShortName = shortName.toLowerCase().includes(searchField.toLowerCase());
+      const matchCountry = country.toLowerCase().includes(searchField.toLowerCase());
+      return (matchFullName || matchShortName || matchCountry);
+      // return (eachClub.shortName.toLowerCase().includes(searchField.toLowerCase())
+      // || eachClub.fullName.toLowerCase().includes(searchField.toLowerCase()));
     });
   });
 
@@ -193,17 +202,17 @@ class ClubView extends Component {
               selectedClub={selectedClub} // derived
               setClubViewMode={setClubViewMode} // prop
             />
-            <ClubMembers
-              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
-              membersList={membersList} // derived
-              selectUserToDisplay={selectUserToDisplay} // prop
-              setUserViewMode={setUserViewMode} // prop
-            />
             <ClubEvents
               eventsList={eventsList} // derived
               language={language} // prop (config)
               selectEventForDetails={selectEventForDetails} // prop
               setEventViewModeEvent={setEventViewModeEvent} // prop
+            />
+            <ClubMembers
+              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
+              membersList={membersList} // derived
+              selectUserToDisplay={selectUserToDisplay} // prop
+              setUserViewMode={setUserViewMode} // prop
             />
           </div>
         );
@@ -222,17 +231,17 @@ class ClubView extends Component {
               userList={(userList) ? userList.slice(0, -1) : []} // prop (user)
               viewMode={viewMode} // prop (club)
             />
-            <ClubMembers
-              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
-              membersList={membersList} // derived
-              selectUserToDisplay={selectUserToDisplay} // prop
-              setUserViewMode={setUserViewMode} // prop
-            />
             <ClubEvents
               eventsList={eventsList} // derived
               language={language} // prop (config)
               selectEventForDetails={selectEventForDetails} // prop
               setEventViewModeEvent={setEventViewModeEvent} // prop
+            />
+            <ClubMembers
+              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
+              membersList={membersList} // derived
+              selectUserToDisplay={selectUserToDisplay} // prop
+              setUserViewMode={setUserViewMode} // prop
             />
           </div>
         );

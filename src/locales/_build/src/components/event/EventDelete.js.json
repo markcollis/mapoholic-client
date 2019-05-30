@@ -7,7 +7,7 @@
       ]
     ]
   },
-  "Note: Deletion is only permitted if there are no runners at the event, or the user attempting to delete is the only runner. Deleting an event also removes all references in linked events.": {
+  "Note: Deletion is only permitted by standard users if there are no runners at the event, or you are the only runner. Deleting an event also removes all references to it in linked events.": {
     "origin": [
       [
         "src/components/event/EventDelete.js",

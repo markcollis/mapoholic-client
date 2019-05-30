@@ -3,7 +3,15 @@
     "origin": [
       [
         "src/components/club/ClubDelete.js",
-        16
+        15
+      ]
+    ]
+  },
+  "This will delete all records relating to this club, including connections with users (as members) and events (as organisers).": {
+    "origin": [
+      [
+        "src/components/club/ClubDelete.js",
+        17
       ]
     ]
   },
@@ -11,7 +19,7 @@
     "origin": [
       [
         "src/components/club/ClubDelete.js",
-        35
+        31
       ]
     ]
   },
@@ -19,7 +27,7 @@
     "origin": [
       [
         "src/components/club/ClubDelete.js",
-        42
+        38
       ]
     ]
   }

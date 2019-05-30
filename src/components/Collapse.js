@@ -37,17 +37,10 @@ class Collapse extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { children, refreshCollapse } = prevState;
     const { children: newChildren, refreshCollapse: newRefreshCollapse } = nextProps;
-    // const { title } = nextProps;
     if (newRefreshCollapse !== refreshCollapse) {
-      // console.log('have props changed?, prevState, nextProps:',
-      // title.props.id, prevState, nextProps);
-      // console.log('yes, refreshCollapse has!');
       return { propsChanged: true, refreshCollapse: newRefreshCollapse };
     }
     if (newChildren !== children) { // does this compare deeply enough?
-      // console.log('have props changed?, prevState, nextProps:',
-      // title.props.id, prevState, nextProps);
-      // console.log('yes, children has!');
       return { propsChanged: true, children: newChildren };
     }
     return null;
@@ -75,7 +68,6 @@ class Collapse extends Component {
 
   render() {
     const { title, children } = this.props;
-    // console.log('this.contentRef', this.contentRef);
     // console.log('props and state in Collapse', title, this.props, this.state);
     const { hideContent, contentHeight, propsChanged } = this.state;
     const currentHeight = `${(hideContent) ? 0 : contentHeight}px`;
