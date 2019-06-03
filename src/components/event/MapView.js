@@ -579,20 +579,16 @@ class MapView extends Component {
     return (
       <div className="ui vertically padded stackable grid">
         {this.renderError()}
-        <div className="eight wide column">
-          {this.renderEventRunnerDetails()}
-        </div>
-        <div className="eight wide column">
-          {this.renderEventRunners()}
-        </div>
         <div className="sixteen wide column">
           {this.renderEventMapViewer()}
         </div>
         <div className="eight wide column">
           {this.renderEventDetails()}
+          {this.renderEventRunners()}
           {this.renderLinkedEvents()}
         </div>
         <div className="eight wide column">
+          {this.renderEventRunnerDetails()}
           {this.renderEventComments()}
           {this.renderEventResults()}
         </div>

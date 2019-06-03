@@ -84,20 +84,25 @@ const Welcome = ({ auth, currentUser }) => {
               {' (EventDetails trigger when thumbnail image loaded 30/5)'}
             </li>
             <li>
+              <del>Improve layout of MapView to put map first</del>
+              {' (done 31/5)'}
+            </li>
+            <li>
               Choose a better name... how about MapOholic, or is it too contrived?
               (O)MapArchive? (O)MapBrowser? (O)MapStore?
             </li>
             <li>Add some more introductory/help text on this page</li>
             <li>Add a component here to show recent activity (own or all?)</li>
-            <li>Investigate making results editable/uploadable if not on ORIS</li>
             <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
             <li>Complete the translations and check that nothing is missing</li>
             <li>Centre rotation on current view when zoomed in</li>
+            <li>Load background image on event list when first uploaded</li>
             <li>Add some real sample data/maps</li>
             <li>Test it out on a real Internet-facing server</li>
           </ol>
           <p>Other ideas for the future (non-essential):</p>
           <ol>
+            <li>Investigate making results editable/uploadable if not on ORIS</li>
             <li>Web services interface to take direct feed from QuickRoute</li>
             <li>User-specific preferences (e.g. language)</li>
             <li>Some sort of image on club details (map of where they are based? logo?)</li>

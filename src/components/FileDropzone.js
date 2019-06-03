@@ -89,6 +89,7 @@ class FileDropzone extends Component {
         const { width, height } = mapImage;
         borderCanvas.width = width + 2;
         borderCanvas.height = height + 67;
+        borderCanvas.getContext('2d').fillStyle = 'white';
         // borderCanvas.getContext('2d').fillStyle = 'black';
         // black would be consistent with QuickRoute, but I think white looks better
         borderCanvas.getContext('2d').fillRect(0, 0, borderCanvas.width, borderCanvas.height);
