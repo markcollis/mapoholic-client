@@ -8,7 +8,13 @@ import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
-const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
+const UserDetails = ({
+  refreshCollapse,
+  requestRefreshCollapse,
+  showOptional,
+  selectedUser,
+  setUserViewMode,
+}) => {
   const { _id: userId } = selectedUser;
   if (!userId) {
     return (
@@ -66,7 +72,12 @@ const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
   const displayProfile = (
     <div>
       <div>
-        <img className="profile-forest" alt="forest" src={forest} />
+        <img
+          className="profile-forest"
+          alt="forest"
+          src={forest}
+          onLoad={() => requestRefreshCollapse()}
+        />
         <div>
           <img
             className="profile-image"
@@ -128,6 +139,8 @@ const UserDetails = ({ selectedUser, showOptional, setUserViewMode }) => {
 };
 
 UserDetails.propTypes = {
+  refreshCollapse: PropTypes.number.isRequired,
+  requestRefreshCollapse: PropTypes.func.isRequired,
   selectedUser: PropTypes.objectOf(PropTypes.any),
   setUserViewMode: PropTypes.func.isRequired,
   showOptional: PropTypes.bool,

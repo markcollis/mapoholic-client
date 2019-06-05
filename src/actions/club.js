@@ -26,7 +26,6 @@ export const setClubViewModeAction = (mode) => {
       payload: mode,
     });
   }
-  // console.log('Warning: Invalid club view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // track changes to the club search field
@@ -82,10 +81,10 @@ const toQueryString = (obj) => {
 // retrieve a list of all clubs (ids) matching specified criteria
 // app.get('/clubs', publicRoute, Clubs.getClubList);
 export const getClubListAction = (searchCriteria, callback) => async (dispatch) => {
-  const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
   // console.log('getClubListAction called.');
   // console.log('callback in getClubList', callback);
   try {
+    const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
     const response = await axios.get(`${OMAPFOLDER_SERVER}/clubs${queryString}`);
     dispatch({ type: CLUB_GOT_LIST, payload: [...response.data, queryString] });
     if (callback) callback(true);
@@ -98,9 +97,12 @@ export const getClubListAction = (searchCriteria, callback) => async (dispatch) 
 // create a club
 // autopopulate Czech clubs from abbreviation
 // app.post('/clubs', requireAuth, Clubs.createClub);
-export const createClubAction = (formValues, callback) => async (dispatch) => {
+export const createClubAction = (formValues, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/clubs`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -130,14 +132,17 @@ export const getClubByIdAction = (userId, callback) => async (dispatch) => {
 };
 
 // get a list of users that are members of the specified club
-export const getClubMembersAction = (clubId, callback) => async (dispatch) => {
+export const getClubMembersAction = (clubId, callback) => async (dispatch, getState) => {
   if (!clubId) {
     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
   } else {
-    const queryString = toQueryString({ memberOf: clubId });
     // console.log('getClubMembersAction called.');
     try {
-      const token = localStorage.getItem('omapfolder-auth-token');
+      const state = getState();
+      const { auth } = state;
+      const queryString = toQueryString({ memberOf: clubId });
+      const token = auth.authenticated;
+      // const token = localStorage.getItem('omapfolder-auth-token');
       // console.log('token:', token);
       let response;
       if (token) {
@@ -163,14 +168,17 @@ export const getClubMembersAction = (clubId, callback) => async (dispatch) => {
 };
 
 // get a list of events organised by the specified club
-export const getClubEventsAction = (clubId, callback) => async (dispatch) => {
+export const getClubEventsAction = (clubId, callback) => async (dispatch, getState) => {
   if (!clubId) {
     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
   } else {
-    const queryString = toQueryString({ organisedBy: clubId });
     // console.log('getClubEventsAction called.');
     try {
-      const token = localStorage.getItem('omapfolder-auth-token');
+      const state = getState();
+      const { auth } = state;
+      const queryString = toQueryString({ organisedBy: clubId });
+      const token = auth.authenticated;
+      // const token = localStorage.getItem('omapfolder-auth-token');
       // console.log('token:', token);
       let response;
       if (token) {
@@ -198,9 +206,12 @@ export const getClubEventsAction = (clubId, callback) => async (dispatch) => {
 // update the specified club (multiple amendment not supported)
 // try to populate ORIS if abbreviation changes and looks Czech
 // app.patch('/clubs/:id', requireAuth, Clubs.updateClub);
-export const updateClubAction = (clubId, formValues, callback) => async (dispatch) => {
+export const updateClubAction = (clubId, formValues, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.patch(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -214,9 +225,12 @@ export const updateClubAction = (clubId, formValues, callback) => async (dispatc
 
 // delete the specified club (multiple deletion not supported)
 // app.delete('/clubs/:id', requireAuth, Clubs.deleteClub);
-export const deleteClubAction = (clubId, callback) => async (dispatch) => {
+export const deleteClubAction = (clubId, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, {
       headers: { Authorization: `bearer ${token}` },
     });

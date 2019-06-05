@@ -118,7 +118,7 @@ class EventEdit extends Component {
       regionOptions,
       tagsOptions,
     } = this.state;
-    // console.log('state:', this.state);
+    console.log('state in EventEdit:', this.state);
     const {
       language,
       eventMode,

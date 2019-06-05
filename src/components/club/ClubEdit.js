@@ -232,21 +232,21 @@ const formikClubEdit = withFormik({
       : { ...values, country: '' };
     if (values.owner) valuesToSubmit.owner = values.owner.value;
     if (viewMode === 'add') {
-      setTimeout(() => createClub(valuesToSubmit, (didSucceed) => {
+      createClub(valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           getClubList(null, () => setClubViewMode('view'));
         } else {
           setSubmitting(false);
         }
-      }), 2000); // simulate network delay
+      });
     } else {
-      setTimeout(() => updateClub(selectedClub._id, valuesToSubmit, (didSucceed) => {
+      updateClub(selectedClub._id, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           getClubList(null, () => setClubViewMode('view'));
         } else {
           setSubmitting(false);
         }
-      }), 2000); // simulate network delay
+      });
     }
   },
 })(ClubEdit);

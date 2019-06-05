@@ -9,7 +9,7 @@ import { OMAPFOLDER_SERVER } from '../config';
 // log out current user
 export const logoutAction = () => {
   localStorage.removeItem('omapfolder-auth-token');
-  return { type: AUTH_USER, payload: '' };
+  return { type: AUTH_USER, payload: null };
 };
 // cancel a displayed error message
 export const cancelAuthErrorAction = () => ({

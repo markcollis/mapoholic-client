@@ -128,9 +128,12 @@ const toQueryString = (obj) => {
 // query string ids need to be more explicit as there are several types used
 // create an event (event level fields)
 // app.post('/events', requireAuth, Events.createEvent);
-export const createEventAction = (formValues, callback) => async (dispatch) => {
+export const createEventAction = (formValues, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/events`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -145,9 +148,12 @@ export const createEventAction = (formValues, callback) => async (dispatch) => {
 
 // create a new event linkage between the specified events (must be at least one event)
 // app.post('/events/links', requireAuth, Events.createEventLink);
-export const createEventLinkAction = (formValues, callback) => async (dispatch) => {
+export const createEventLinkAction = (formValues, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/events/links`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -162,9 +168,12 @@ export const createEventLinkAction = (formValues, callback) => async (dispatch) 
 
 // add current user as a runner at the specified event
 // app.post('/events/:eventid/maps', requireAuth, Events.addEventRunner);
-export const addEventRunnerAction = (eventId, callback) => async (dispatch) => {
+export const addEventRunnerAction = (eventId, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/events/${eventId}/maps`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -178,9 +187,12 @@ export const addEventRunnerAction = (eventId, callback) => async (dispatch) => {
 };
 // app.post('/events/:eventid/oris', requireAuth, Events.orisAddEventRunner);
 // *** autopopulate fields from ORIS for current user then call addEventRunner ***
-export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch) => {
+export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/events/${eventId}/oris`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -199,7 +211,7 @@ export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch) 
 // app.post('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?', requireAuth,
 //   Events.validateMapUploadPermission, images.uploadMap.single('upload'),
 //   Events.postMap, images.errorHandler);
-export const postMapAction = (parameters, file, callback) => async (dispatch) => {
+export const postMapAction = (parameters, file, callback) => async (dispatch, getState) => {
   // console.log('postMapAction called.');
   // console.log('file submitted:', file);
   const {
@@ -216,7 +228,10 @@ export const postMapAction = (parameters, file, callback) => async (dispatch) =>
     const formData = new FormData();
     formData.append('upload', file, file.name);
     // console.log('formData:', formData);
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(
       `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
       formData,
@@ -244,24 +259,29 @@ export const postMapAction = (parameters, file, callback) => async (dispatch) =>
 
 // Post a new comment against the specified user's map in this event
 // app.post('/events/:eventid/comments/:userid', requireAuth, Events.postComment);
-export const postCommentAction = (eventId, userId, formValues, callback) => async (dispatch) => {
-  try {
-    const token = localStorage.getItem('omapfolder-auth-token');
-    const response = await axios.post(
-      `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}`,
-      formValues,
-      { headers: { Authorization: `bearer ${token}` } },
-    );
-    dispatch({
-      type: EVENT_COMMENT_ADDED,
-      payload: { eventId, userId, comments: response.data },
-    });
-    // console.log('callback', callback);
-    if (callback) callback(true);
-  } catch (err) {
-    handleError(EVENT_ERROR)(err, dispatch);
-    if (callback) callback(false);
-  }
+export const postCommentAction = (eventId, userId, formValues, callback) => {
+  return async (dispatch, getState) => {
+    try {
+      const state = getState();
+      const { auth } = state;
+      const token = auth.authenticated;
+      // const token = localStorage.getItem('omapfolder-auth-token');
+      const response = await axios.post(
+        `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}`,
+        formValues,
+        { headers: { Authorization: `bearer ${token}` } },
+      );
+      dispatch({
+        type: EVENT_COMMENT_ADDED,
+        payload: { eventId, userId, comments: response.data },
+      });
+      // console.log('callback', callback);
+      if (callback) callback(true);
+    } catch (err) {
+      handleError(EVENT_ERROR)(err, dispatch);
+      if (callback) callback(false);
+    }
+  };
 };
 
 // create a new event using oris data *eventid is ORIS event id*
@@ -269,9 +289,12 @@ export const postCommentAction = (eventId, userId, formValues, callback) => asyn
 // create runner fields for logged in user if found in ORIS (i.e. can use to add user to event)
 // app.post('/events/oris/:oriseventid', requireAuth, Events.orisCreateEvent);
 // *** DONE EXCEPT HANDLING MULTI-DAY EVENTS ***
-export const createEventOrisAction = (orisEventId, callback) => async (dispatch) => {
+export const createEventOrisAction = (orisEventId, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/events/oris/${orisEventId}`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -294,10 +317,13 @@ export const createEventOrisAction = (orisEventId, callback) => async (dispatch)
 // app.get('/events', requireAuth, Events.getEventList);
 // retrieve a list of events as an anonymous browser
 // app.get('/events/public', publicRoute, Events.getEventList);
-export const getEventListAction = (searchCriteria, callback) => async (dispatch) => {
+export const getEventListAction = (searchCriteria, callback) => async (dispatch, getState) => {
   const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     let response;
     if (token) {
       response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
@@ -333,9 +359,12 @@ export const getEventLinkListAction = (searchCriteria, callback) => async (dispa
 // assumption is that front end will use this to provide a list to select from
 // before calling POST /events/oris/:oriseventid
 // app.get('/events/oris', requireAuth, Events.orisGetUserEvents);
-export const getEventListOrisAction = callback => async (dispatch) => {
+export const getEventListOrisAction = callback => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.get(`${OMAPFOLDER_SERVER}/events/oris`, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -353,9 +382,12 @@ export const getEventListOrisAction = callback => async (dispatch) => {
 // app.get('/events/:eventid', requireAuth, Events.getEvent);
 // retrieve all visible details for the specified event as an anonymous browser
 // app.get('/events/:eventid/public', publicRoute, Events.getEvent);
-export const getEventByIdAction = (eventId, callback) => async (dispatch) => {
+export const getEventByIdAction = (eventId, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     let response;
     if (token) {
       response = await axios.get(`${OMAPFOLDER_SERVER}/events/${eventId}`, {
@@ -374,9 +406,12 @@ export const getEventByIdAction = (eventId, callback) => async (dispatch) => {
 
 // update the specified event (multiple amendment not supported)
 // app.patch('/events/:eventid', requireAuth, Events.updateEvent);
-export const updateEventAction = (eventId, formValues, callback) => async (dispatch) => {
+export const updateEventAction = (eventId, formValues, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/${eventId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -395,9 +430,12 @@ export const updateEventRunnerAction = (
   userId,
   formValues,
   callback,
-) => async (dispatch) => {
+) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -411,26 +449,34 @@ export const updateEventRunnerAction = (
 
 // update the specified link between events (multiple amendment not supported)
 // app.patch('/events/links/:eventlinkid', requireAuth, Events.updateEventLink);
-export const updateEventLinkAction = (eventLinkId, formValues, callback) => async (dispatch) => {
-  try {
-    const token = localStorage.getItem('omapfolder-auth-token');
-    const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/links/${eventLinkId}`, formValues, {
-      headers: { Authorization: `bearer ${token}` },
-    });
-    dispatch({ type: EVENT_LINK_UPDATED, payload: response.data });
-    if (callback) callback(true);
-  } catch (err) {
-    handleError(EVENT_ERROR)(err, dispatch);
-    if (callback) callback(false);
-  }
+export const updateEventLinkAction = (eventLinkId, formValues, callback) => {
+  return async (dispatch, getState) => {
+    try {
+      const state = getState();
+      const { auth } = state;
+      const token = auth.authenticated;
+      // const token = localStorage.getItem('omapfolder-auth-token');
+      const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/links/${eventLinkId}`, formValues, {
+        headers: { Authorization: `bearer ${token}` },
+      });
+      dispatch({ type: EVENT_LINK_UPDATED, payload: response.data });
+      if (callback) callback(true);
+    } catch (err) {
+      handleError(EVENT_ERROR)(err, dispatch);
+      if (callback) callback(false);
+    }
+  };
 };
 
 // edit the specified comment (multiple amendment not supported)
 // app.patch('/events/:eventid/comments/:userid/:commentid', requireAuth, Events.updateComment);
 export const updateCommentAction = (eventId, userId, commentId, formValues, callback) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const token = localStorage.getItem('omapfolder-auth-token');
+      const state = getState();
+      const { auth } = state;
+      const token = auth.authenticated;
+      // const token = localStorage.getItem('omapfolder-auth-token');
       const response = await axios.patch(
         `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
         formValues,
@@ -453,9 +499,12 @@ export const updateCommentAction = (eventId, userId, commentId, formValues, call
 // delete the specified event (multiple delete not supported)
 // [will fail if other users have records attached to event, unless admin]
 // app.delete('/events/:eventid', requireAuth, Events.deleteEvent);
-export const deleteEventAction = (eventId, callback) => async (dispatch) => {
+export const deleteEventAction = (eventId, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/${eventId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -469,24 +518,29 @@ export const deleteEventAction = (eventId, callback) => async (dispatch) => {
 
 // delete the specified runner and map data (multiple deletion not supported)
 // app.delete('/events/:eventid/maps/:userid', requireAuth, Events.deleteEventRunner);
-export const deleteEventRunnerAction = (eventId, userId, callback) => async (dispatch) => {
-  try {
-    const token = localStorage.getItem('omapfolder-auth-token');
-    const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}`, {
-      headers: { Authorization: `bearer ${token}` },
-    });
-    dispatch({ type: EVENT_RUNNER_DELETED, payload: response.data });
-    if (callback) callback(true);
-  } catch (err) {
-    handleError(EVENT_ERROR)(err, dispatch);
-    if (callback) callback(false);
-  }
+export const deleteEventRunnerAction = (eventId, userId, callback) => {
+  return async (dispatch, getState) => {
+    try {
+      const state = getState();
+      const { auth } = state;
+      const token = auth.authenticated;
+      // const token = localStorage.getItem('omapfolder-auth-token');
+      const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}`, {
+        headers: { Authorization: `bearer ${token}` },
+      });
+      dispatch({ type: EVENT_RUNNER_DELETED, payload: response.data });
+      if (callback) callback(true);
+    } catch (err) {
+      handleError(EVENT_ERROR)(err, dispatch);
+      if (callback) callback(false);
+    }
+  };
 };
 
 // delete the specified map (multiple deletion not supported)
 // app.delete('/events/:eventid/maps/:userid/:maptype(course|route)/:maptitle?',
 // requireAuth, Events.deleteMap);
-export const deleteMapAction = (parameters, callback) => async (dispatch) => {
+export const deleteMapAction = (parameters, callback) => async (dispatch, getState) => {
   // console.log('deleteMapAction called.');
   const {
     eventId,
@@ -495,9 +549,12 @@ export const deleteMapAction = (parameters, callback) => async (dispatch) => {
     mapTitle,
   } = parameters;
   try {
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const validMapType = (mapType === 'course') || (mapType === 'route');
     if (!eventId || !userId || !validMapType) throw new Error('invalid parameters');
-    const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(
       `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
       {
@@ -524,9 +581,12 @@ export const deleteMapAction = (parameters, callback) => async (dispatch) => {
 // removal approach will be through editing the event to remove it from the linked set
 // *hence this route will be constrained to admin users only*
 // app.delete('/events/links/:eventlinkid', requireAuth, Events.deleteEventLink);
-export const deleteEventLinkAction = (eventLinkId, callback) => async (dispatch) => {
+export const deleteEventLinkAction = (eventLinkId, callback) => async (dispatch, getState) => {
   try {
-    const token = localStorage.getItem('omapfolder-auth-token');
+    const state = getState();
+    const { auth } = state;
+    const token = auth.authenticated;
+    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/links/${eventLinkId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -541,9 +601,12 @@ export const deleteEventLinkAction = (eventLinkId, callback) => async (dispatch)
 // delete the specified comment (multiple deletion not supported)
 // app.delete('/events/:eventid/comments/:userid/:commentid', requireAuth, Events.deleteComment);
 export const deleteCommentAction = (eventId, userId, commentId, callback) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const token = localStorage.getItem('omapfolder-auth-token');
+      const state = getState();
+      const { auth } = state;
+      const token = auth.authenticated;
+      // const token = localStorage.getItem('omapfolder-auth-token');
       const response = await axios.delete(
         `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
         { headers: { Authorization: `bearer ${token}` } },

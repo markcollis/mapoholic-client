@@ -14,7 +14,8 @@ import EventLinkedManage from './EventLinkedManage';
 import EventList from './EventList';
 import EventMap from './EventMap';
 import EventRunners from './EventRunners';
-import { testOrisList } from '../../common/data'; // support dev without repeatedly calling ORIS API
+// support dev without repeatedly calling ORIS API
+// import { testOrisList } from '../../common/data';
 import { reformatDate } from '../../common/conversions';
 import {
   addEventRunnerAction,
@@ -61,12 +62,13 @@ class EventView extends Component {
     createEventOris: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
-    getClubList: PropTypes.func.isRequired,
+    // getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
+    getEventListOris: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
-    getUserList: PropTypes.func.isRequired,
+    // getUserList: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
@@ -88,22 +90,22 @@ class EventView extends Component {
 
   // get summary data from API if not available
   componentDidMount() {
-    const {
-      club,
-      user,
-      oevent,
-      getClubList,
-      getEventList,
-      getEventLinkList,
-      getUserList,
-    } = this.props;
-    const { list: clubList } = club;
-    const { list: userList } = user;
-    const { list, linkList } = oevent;
-    if (!clubList) getClubList();
-    if (!userList) getUserList();
-    if (!list) getEventList();
-    if (!linkList) getEventLinkList();
+    // const {
+    //   club,
+    //   user,
+    //   oevent,
+    //   getClubList,
+    //   getEventList,
+    //   getEventLinkList,
+    //   getUserList,
+    // } = this.props;
+    // const { list: clubList } = club;
+    // const { list: userList } = user;
+    // const { list, linkList } = oevent;
+    // if (!clubList) getClubList();
+    // if (!userList) getUserList();
+    // if (!list) getEventList();
+    // if (!linkList) getEventLinkList();
   }
 
   // helper to create event list if relevant props change
@@ -195,6 +197,19 @@ class EventView extends Component {
     return organisingClubs;
   });
 
+  // helper to get list of events from ORIS if input props have changed
+  getOrisList = memoize((current, orisList, eventMode) => {
+    const { getEventListOris } = this.props;
+    const currentHasOrisList = current && current.orisId && current.orisId !== '' && current.role !== 'guest';
+    // populate ORIS event list when adding event with a current user for the first time
+    if (currentHasOrisList && eventMode === 'add' && !orisList) {
+      console.log('getting list of events from ORIS');
+      getEventListOris();
+      return [];
+    }
+    return orisList;
+  });
+
   // update a prop in EventDetails to trigger refresh of Collapse component to new size
   refreshCollapseEventDetails = () => {
     const { refreshCollapseEventDetails } = this.state;
@@ -213,6 +228,7 @@ class EventView extends Component {
       createEventOris, // different to MapView version
       deleteEvent,
       getEventList,
+      // getEventListOris,
       getEventLinkList,
       selectEventForDetails,
       selectEventToDisplay,
@@ -238,10 +254,9 @@ class EventView extends Component {
     const canEdit = this.getCanEditEvent(current, selectedEvent);
     // console.log('canEdit, current, selectedEvent:', canEdit, current, selectedEvent);
     const organisingClubs = this.getOrganisingClubs(selectedEvent, clubDetails);
-    const orisList = testOrisList; // different to MapView version, temporary while developing
-    // const { orisList } = oevent;
-    // populate ORIS event list when rendered with a current user for the first time
-    // if (!orisList && current && current.orisId !== '') getEventListOris();
+    // const orisList = testOrisList; // different to MapView version, temporary while developing
+    const { orisList } = oevent;
+    const orisEventsList = this.getOrisList(current, orisList, eventMode);
 
     switch (eventMode) {
       case 'none':
@@ -267,7 +282,7 @@ class EventView extends Component {
             eventList={(list) ? list.slice(0, -1) : []}
             eventLinkList={(linkList) ? linkList.slice(0, -1) : []}
             clubList={(clubList) ? clubList.slice(0, -1) : []}
-            orisList={orisList || []}
+            orisList={orisEventsList}
           />
         );
       case 'view':

@@ -59,12 +59,16 @@ class UserView extends Component {
     ownProfile: false,
   }
 
+  state = {
+    refreshCollapseUserDetails: 0,
+  }
+
   componentDidMount() {
-    const {
-      getUserList,
-      user,
-    } = this.props;
-    if (!user.list) getUserList();
+    // const {
+    //   getUserList,
+    //   user,
+    // } = this.props;
+    // if (!user.list) getUserList();
   }
 
   // helper to create filtered user list if relevant props change
@@ -74,6 +78,7 @@ class UserView extends Component {
       return (eachUser.displayName.toLowerCase().includes(searchField.toLowerCase())
         || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase()));
     });
+    console.log('filteredList in UserView:', filteredList);
     return filteredList;
   });
 
@@ -82,10 +87,10 @@ class UserView extends Component {
 
   // helper to return current user's id for own profile page irrespective of selectedUserId prop
   getUserId = memoize((current, ownProfile, selectedUserId) => {
-    const {
-      _id: currentUserId,
-    } = current;
-    if (ownProfile) {
+    if (current && ownProfile) {
+      const {
+        _id: currentUserId,
+      } = current;
       return currentUserId || '';
     }
     return selectedUserId;
@@ -123,6 +128,12 @@ class UserView extends Component {
     }
     return eventsList || [];
   });
+
+  // update a prop in UserDetails to trigger refresh of Collapse component to new size
+  requestRefreshCollapseUserDetails = () => {
+    const { refreshCollapseUserDetails } = this.state;
+    this.setState({ refreshCollapseUserDetails: refreshCollapseUserDetails + 1 });
+  }
 
   renderError = () => {
     const {
@@ -198,6 +209,7 @@ class UserView extends Component {
   }
 
   renderUserDetails = () => {
+    const { refreshCollapseUserDetails } = this.state;
     const {
       ownProfile,
       setUserViewMode,
@@ -218,6 +230,8 @@ class UserView extends Component {
 
     return (
       <UserDetails
+        refreshCollapse={refreshCollapseUserDetails} // state (value increments to trigger)
+        requestRefreshCollapse={this.requestRefreshCollapseUserDetails} // defined here
         selectedUser={selectedUser} // derived
         setUserViewMode={(ownProfile) ? setUserViewModeSelf : setUserViewMode} // props
         showOptional={showOptional} // derived

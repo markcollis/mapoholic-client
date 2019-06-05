@@ -14,9 +14,8 @@ import UserView from './user/UserView';
 import ClubView from './club/ClubView';
 
 // This component limits access to certain components for users who are not logged in
-const RouteHandler = ({ user }) => {
-  const { current } = user;
-  if (current) {
+const RouteHandler = ({ auth }) => {
+  if (auth) {
     return (
       <div>
         <Route path="/" component={Header} />
@@ -60,10 +59,13 @@ const RouteHandler = ({ user }) => {
 };
 
 RouteHandler.propTypes = {
-  user: PropTypes.objectOf(PropTypes.any).isRequired,
+  auth: PropTypes.string,
+};
+RouteHandler.defaultProps = {
+  auth: null,
 };
 
-const mapStateToProps = ({ user }) => {
-  return { user };
+const mapStateToProps = ({ auth }) => {
+  return { auth: auth.authenticated };
 };
 export default connect(mapStateToProps)(RouteHandler);

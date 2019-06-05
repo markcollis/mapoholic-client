@@ -65,12 +65,12 @@ class MapView extends Component {
     deleteEventLink: PropTypes.func.isRequired,
     deleteEventRunner: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
-    getClubList: PropTypes.func.isRequired,
+    // getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
-    getUserList: PropTypes.func.isRequired,
+    // getUserList: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
@@ -93,22 +93,22 @@ class MapView extends Component {
 
   // get summary data from API if not already available
   componentDidMount() {
-    const {
-      club,
-      user,
-      oevent,
-      getClubList,
-      getEventList,
-      getEventLinkList,
-      getUserList,
-    } = this.props;
-    const { list: clubList } = club;
-    const { list: eventList, linkList } = oevent;
-    const { list: userList } = user;
-    if (!clubList) getClubList();
-    if (!eventList) getEventList();
-    if (!linkList) getEventLinkList();
-    if (!userList) getUserList();
+    // const {
+    //   club,
+    //   user,
+    //   oevent,
+    //   getClubList,
+    //   getEventList,
+    //   getEventLinkList,
+    //   getUserList,
+    // } = this.props;
+    // const { list: clubList } = club;
+    // const { list: eventList, linkList } = oevent;
+    // const { list: userList } = user;
+    // if (!clubList) getClubList();
+    // if (!eventList) getEventList();
+    // if (!linkList) getEventLinkList();
+    // if (!userList) getUserList();
   }
 
   // helper to get details of selected event if input props have changed

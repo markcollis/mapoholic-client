@@ -43,7 +43,7 @@ class ClubView extends Component {
     getClubEvents: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
     getClubMembers: PropTypes.func.isRequired,
-    getEventList: PropTypes.func.isRequired,
+    // getEventList: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
@@ -62,20 +62,20 @@ class ClubView extends Component {
 
   // get summary data from API if not available
   componentDidMount() {
-    const {
-      club,
-      oevent,
-      user,
-      getClubList,
-      getEventList,
-      getUserList,
-    } = this.props;
-    const { list: clubList } = club;
-    const { list: eventList } = oevent;
-    const { list: userList } = user;
-    if (!clubList) getClubList();
-    if (!userList) getUserList();
-    if (!eventList) getEventList();
+    // const {
+    //   club,
+    //   oevent,
+    //   user,
+    //   getClubList,
+    //   getEventList,
+    //   getUserList,
+    // } = this.props;
+    // const { list: clubList } = club;
+    // const { list: eventList } = oevent;
+    // const { list: userList } = user;
+    // if (!clubList) getClubList();
+    // if (!userList) getUserList();
+    // if (!eventList) getEventList();
   }
 
   componentDidUpdate() {

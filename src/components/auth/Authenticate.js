@@ -156,21 +156,21 @@ const formikAuthenticate = withFormik({
     } = props;
     const route = location.pathname.slice(1);
     if (route === 'signup') {
-      setTimeout(() => signup(values, (didSucceed) => {
+      signup(values, (didSucceed) => {
         if (didSucceed) {
           history.push('/me');
         } else {
           setSubmitting(false);
         }
-      }), 1000); // simulate network delay
+      });
     } else {
-      setTimeout(() => login(values, (didSucceed) => {
+      login(values, (didSucceed) => {
         if (didSucceed) {
           history.push('/mymaps');
         } else {
           setSubmitting(false);
         }
-      }), 1000); // simulate network delay
+      });
     }
   },
 });

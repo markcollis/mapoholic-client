@@ -63,7 +63,7 @@
       ]
     ]
   },
-  "See below for results ({0} runners)": {
+  "See below for detailed results ({0} runners)": {
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
