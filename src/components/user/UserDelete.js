@@ -22,8 +22,8 @@ class UserDelete extends Component {
   };
 
   render() {
-    console.log('this.props in UserDelete', this.props);
-    console.log('this.state in UserDelete', this.state);
+    // console.log('this.props in UserDelete', this.props);
+    // console.log('this.state in UserDelete', this.state);
     const { redirectToLogout } = this.state;
     if (redirectToLogout) return <Redirect to="/logout" push />;
     const {

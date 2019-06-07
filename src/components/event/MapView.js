@@ -28,12 +28,10 @@ import {
   deleteEventLinkAction,
   deleteEventRunnerAction,
   deleteMapAction,
-  getClubListAction,
   getEventByIdAction,
   getEventLinkListAction,
   getEventListAction,
   getUserByIdAction,
-  getUserListAction,
   postCommentAction,
   postMapAction,
   selectEventForDetailsAction,
@@ -65,12 +63,10 @@ class MapView extends Component {
     deleteEventLink: PropTypes.func.isRequired,
     deleteEventRunner: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
-    // getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
-    // getUserList: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
@@ -89,26 +85,6 @@ class MapView extends Component {
   state = {
     refreshCollapseEventComments: 0,
     refreshCollapseEventDetails: 0,
-  }
-
-  // get summary data from API if not already available
-  componentDidMount() {
-    // const {
-    //   club,
-    //   user,
-    //   oevent,
-    //   getClubList,
-    //   getEventList,
-    //   getEventLinkList,
-    //   getUserList,
-    // } = this.props;
-    // const { list: clubList } = club;
-    // const { list: eventList, linkList } = oevent;
-    // const { list: userList } = user;
-    // if (!clubList) getClubList();
-    // if (!eventList) getEventList();
-    // if (!linkList) getEventLinkList();
-    // if (!userList) getUserList();
   }
 
   // helper to get details of selected event if input props have changed
@@ -343,9 +319,9 @@ class MapView extends Component {
       case 'edit':
         return (
           <EventEdit
-            clubList={(clubList) ? clubList.slice(0, -1) : []} // prop (club)
-            eventLinkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
-            eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
+            clubList={clubList} // prop (club)
+            eventLinkList={linkList} // prop (oevent)
+            eventList={list} // prop (oevent)
             eventMode={eventMode} // prop (oevent)
             getEventList={getEventList} // prop
             isAdmin={isAdmin} // derived
@@ -353,7 +329,7 @@ class MapView extends Component {
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
             updateEvent={updateEvent} // prop
-            userList={(userList) ? userList.slice(0, -1) : []} // prop (user)
+            userList={userList} // prop (user)
           />
         );
       case 'delete':
@@ -436,13 +412,13 @@ class MapView extends Component {
               createEventLink={createEventLink} // prop
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
-              eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
+              eventList={list} // prop (oevent)
               getEventById={getEventById} // prop
               getEventLinkList={getEventLinkList} // prop
               getEventList={getEventList} // prop
               language={language} // prop (config)
               linkDetails={linkDetails} // prop (oevent)
-              linkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
+              linkList={linkList} // prop (oevent)
               selectedEvent={selectedEvent} // derived
               selectedEventDetails={selectedEventDetails} // prop (oevent)
               selectedEventDisplay={selectedEventDisplay} // prop (oevent)
@@ -620,12 +596,10 @@ const mapDispatchToProps = {
   deleteEventLink: deleteEventLinkAction,
   deleteEventRunner: deleteEventRunnerAction,
   deleteMap: deleteMapAction,
-  getClubList: getClubListAction,
   getEventById: getEventByIdAction,
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getUserById: getUserByIdAction,
-  getUserList: getUserListAction,
   postComment: postCommentAction,
   postMap: postMapAction,
   selectEventForDetails: selectEventForDetailsAction,

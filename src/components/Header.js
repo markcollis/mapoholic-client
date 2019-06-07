@@ -42,14 +42,14 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchDataIfRequired();
   }
 
   componentDidUpdate() {
-    this.fetchData();
+    this.fetchDataIfRequired();
   }
 
-  fetchData = () => {
+  fetchDataIfRequired = () => {
     // fetch data to display if not already available
     const {
       isGettingClubList,

@@ -19,7 +19,7 @@ import { OMAPFOLDER_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
 
 
-// Local Actions
+// *** Local Actions ***
 // change user view mode
 export const setUserViewModeAction = (mode) => {
   const validModes = ['none', 'view', 'edit', 'delete'];
@@ -29,7 +29,6 @@ export const setUserViewModeAction = (mode) => {
       payload: mode,
     });
   }
-  // console.log('Warning: Invalid user view mode! There\'s a typo somewhere', mode);
   return null;
 };
 // change user view mode for own profile
@@ -84,20 +83,18 @@ const toQueryString = (obj) => {
   }).join('&'));
 };
 
+// *** API actions ***
 // reset password of specified user
 // app.post('/users/:id/password', requireAuth, Authentication.passwordChange);
 export const changePasswordAction = (userId, formValues, callback) => {
   return async (dispatch, getState) => {
-    // console.log('changePasswordAction called.');
     const state = getState();
     const { auth } = state;
     try {
       const token = auth.authenticated;
-      // const token = localStorage.getItem('omapfolder-auth-token');
       const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/password`, formValues, {
         headers: { Authorization: `bearer ${token}` },
       });
-      // console.log('response:', response.data);
       dispatch({ type: USER_CHANGED_PASSWORD, payload: response.data });
       if (callback) callback(true);
     } catch (err) {
@@ -113,23 +110,17 @@ export const changePasswordAction = (userId, formValues, callback) => {
 export const postProfileImageAction = (userId, file, callback) => async (dispatch, getState) => {
   const state = getState();
   const { auth } = state;
-  // console.log('postProfileImageAction called.');
-  // console.log('file submitted:', file);
   try {
     const now = new Date();
-    // console.log('now', now.getTime());
     const formData = new FormData();
     formData.append('upload', file, file.name);
-    // console.log('formData:', formData);
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, formData, {
       headers: {
         Authorization: `bearer ${token}`,
         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
       },
     });
-    // console.log('response:', response.data);
     dispatch({
       type: USER_POSTED_IMAGE,
       payload: {
@@ -151,11 +142,8 @@ export const getUserListAction = (searchCriteria, callback) => async (dispatch, 
   const state = getState();
   const { auth } = state;
   const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
-  // console.log('getUserListAction called.');
   try {
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
-    // console.log('token:', token);
     let response;
     if (token) {
       response = await axios.get(`${OMAPFOLDER_SERVER}/users${queryString}`, {
@@ -164,7 +152,7 @@ export const getUserListAction = (searchCriteria, callback) => async (dispatch, 
     } else {
       response = await axios.get(`${OMAPFOLDER_SERVER}/users/public${queryString}`);
     }
-    dispatch({ type: USER_GOT_LIST, payload: [...response.data, queryString] });
+    dispatch({ type: USER_GOT_LIST, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
     handleError(USER_ERROR)(err, dispatch);
@@ -177,14 +165,11 @@ export const getUserListAction = (searchCriteria, callback) => async (dispatch, 
 export const getCurrentUserAction = callback => async (dispatch, getState) => {
   const state = getState();
   const { auth } = state;
-  // console.log('getCurrentUserAction called.');
   try {
     const token = auth.authenticated;
-    // console.log('token:', token);
     const response = await axios.get(`${OMAPFOLDER_SERVER}/users/me`, {
       headers: { Authorization: `bearer ${token}` },
     });
-    // console.log('response:', response.data);
     dispatch({ type: USER_GOT_CURRENT, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
@@ -199,22 +184,16 @@ export const getCurrentUserAction = callback => async (dispatch, getState) => {
 export const getUserByIdAction = (userId, callback) => async (dispatch, getState) => {
   const state = getState();
   const { auth } = state;
-  // console.log('getUserByIdAction called.');
   try {
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
-    // console.log('token:', token);
     let response;
     if (token) {
-      // console.log('logged in route with token');
       response = await axios.get(`${OMAPFOLDER_SERVER}/users/${userId}`, {
         headers: { Authorization: `bearer ${token}` },
       });
     } else {
-      // console.log('public route');
       response = await axios.get(`${OMAPFOLDER_SERVER}/users/public/${userId}`);
     }
-    // console.log('response:', response.data);
     dispatch({ type: USER_GOT_BY_ID, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
@@ -231,10 +210,8 @@ export const getUserEventsAction = (userId, callback) => async (dispatch, getSta
     const state = getState();
     const { auth } = state;
     const queryString = toQueryString({ runners: userId });
-    // console.log('getUserEventsAction called.');
     try {
       const token = auth.authenticated;
-      // const token = localStorage.getItem('omapfolder-auth-token');
       let response;
       if (token) {
         response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
@@ -263,14 +240,11 @@ export const getUserEventsAction = (userId, callback) => async (dispatch, getSta
 export const updateUserAction = (userId, formValues, callback) => async (dispatch, getState) => {
   const state = getState();
   const { auth } = state;
-  // console.log('updateUserAction called.');
   try {
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.patch(`${OMAPFOLDER_SERVER}/users/${userId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
-    // console.log('response:', response.data);
     dispatch({ type: USER_UPDATED, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
@@ -284,18 +258,14 @@ export const updateUserAction = (userId, formValues, callback) => async (dispatc
 export const deleteUserAction = (userId, callback) => async (dispatch, getState) => {
   const state = getState();
   const { auth } = state;
-  // console.log('deleteUserAction called.');
   try {
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
-    // console.log('response:', response.data);
     dispatch({ type: USER_DELETED, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
-    // console.log('error in delete user:', err);
     handleError(USER_ERROR)(err, dispatch);
     if (callback) callback(false);
   }
@@ -306,14 +276,11 @@ export const deleteUserAction = (userId, callback) => async (dispatch, getState)
 export const deleteProfileImageAction = (userId, callback) => async (dispatch, getState) => {
   const state = getState();
   const { auth } = state;
-  // console.log('deleteProfileImageAction called.');
   try {
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
     await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, {
       headers: { Authorization: `bearer ${token}` },
     });
-    // console.log('response:', response.data);
     dispatch({ type: USER_DELETED_IMAGE, payload: userId });
     if (callback) callback(true);
   } catch (err) {

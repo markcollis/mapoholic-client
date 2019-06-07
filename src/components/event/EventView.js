@@ -26,13 +26,11 @@ import {
   createEventOrisAction,
   deleteEventAction,
   deleteEventLinkAction,
-  getClubListAction,
   getEventByIdAction,
   getEventLinkListAction,
   getEventListAction,
   getEventListOrisAction,
   getUserByIdAction,
-  getUserListAction,
   selectEventForDetailsAction,
   selectEventToDisplayAction,
   selectRunnerToDisplayAction,
@@ -62,13 +60,11 @@ class EventView extends Component {
     createEventOris: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
-    // getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
-    // getUserList: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
@@ -88,32 +84,13 @@ class EventView extends Component {
     refreshCollapseEventDetails: 0,
   }
 
-  // get summary data from API if not available
-  componentDidMount() {
-    // const {
-    //   club,
-    //   user,
-    //   oevent,
-    //   getClubList,
-    //   getEventList,
-    //   getEventLinkList,
-    //   getUserList,
-    // } = this.props;
-    // const { list: clubList } = club;
-    // const { list: userList } = user;
-    // const { list, linkList } = oevent;
-    // if (!clubList) getClubList();
-    // if (!userList) getUserList();
-    // if (!list) getEventList();
-    // if (!linkList) getEventLinkList();
-  }
-
   // helper to create event list if relevant props change
   getEventListArray = memoize((list, searchField, current, mineOnly) => {
-    // console.log('refreshing event list array');
+    console.log('refreshing event list array');
+    console.log('list:', list);
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
-    return list.slice(0, -1)
+    return list
       .filter((eachEvent) => { // if mineOnly, select only those with current user as runner
         const { runners } = eachEvent;
         const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
@@ -279,9 +256,9 @@ class EventView extends Component {
             selectEventForDetails={selectEventForDetails}
             selectEventToDisplay={selectEventToDisplay}
             getEventList={getEventList}
-            eventList={(list) ? list.slice(0, -1) : []}
-            eventLinkList={(linkList) ? linkList.slice(0, -1) : []}
-            clubList={(clubList) ? clubList.slice(0, -1) : []}
+            eventList={list}
+            eventLinkList={linkList}
+            clubList={clubList}
             orisList={orisEventsList}
           />
         );
@@ -300,9 +277,9 @@ class EventView extends Component {
       case 'edit':
         return (
           <EventEdit
-            clubList={(clubList) ? clubList.slice(0, -1) : []} // prop (club)
-            eventLinkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
-            eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
+            clubList={clubList} // prop (club)
+            eventLinkList={linkList} // prop (oevent)
+            eventList={list} // prop (oevent)
             eventMode={eventMode} // prop (oevent)
             getEventList={getEventList} // prop
             isAdmin={isAdmin} // derived
@@ -310,7 +287,7 @@ class EventView extends Component {
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
             updateEvent={updateEvent} // prop
-            userList={(userList) ? userList.slice(0, -1) : []} // prop (user)
+            userList={userList} // prop (user)
           />
         );
       case 'delete':
@@ -395,13 +372,13 @@ class EventView extends Component {
               createEventLink={createEventLink} // prop
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
-              eventList={(list) ? list.slice(0, -1) : []} // prop (oevent)
+              eventList={list} // prop (oevent)
               getEventById={getEventById} // prop
               getEventLinkList={getEventLinkList} // prop
               getEventList={getEventList} // prop
               language={language} // prop (config)
               linkDetails={linkDetails} // prop (oevent)
-              linkList={(linkList) ? linkList.slice(0, -1) : []} // prop (oevent)
+              linkList={linkList} // prop (oevent)
               selectedEvent={selectedEvent} // derived
               selectedEventDetails={selectedEventDetails} // prop (oevent)
               selectedEventDisplay={selectedEventDisplay} // prop (oevent)
@@ -618,13 +595,11 @@ const mapDispatchToProps = {
   createEventOris: createEventOrisAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
-  getClubList: getClubListAction,
   getEventById: getEventByIdAction,
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,
   getUserById: getUserByIdAction,
-  getUserList: getUserListAction,
   selectEventForDetails: selectEventForDetailsAction,
   selectEventToDisplay: selectEventToDisplayAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,

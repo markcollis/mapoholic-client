@@ -111,18 +111,28 @@ const Welcome = ({ auth, currentUser, eventList }) => {
         </li>
         <li>
           <del>Re-enable live check of ORIS for recent events</del>
-          &nbsp;(done 4/6 with much refactoring required, refined 5/6)
+          &nbsp;(done 4/6 with much refactoring required - check for null lists now done
+          in Header component, further refinement 5/6 and 6/6)
         </li>
         <li>
           <del>Check that all temporary setTimeouts have been removed</del>
           &nbsp;(done 5/6)
+        </li>
+        <li>
+          <del>Simplify list handling in actions/reducers/container components</del>
+          &nsbp;(completed 6/6)
+        </li>
+        <li>
+          <del>Load background image on event list when first uploaded</del>
+          &nbsp;(done 6/6 - refresh event list within map upload/delete actions;
+          further improvement 7/6 to avoid unnecessary network traffic)
         </li>
         <li>Add some more introductory/help text on this page</li>
         <li>Add a component here to show recent activity (own or all?)</li>
         <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
         <li>Complete the translations and check that nothing is missing</li>
         <li>Centre rotation on current view when zoomed in</li>
-        <li>Load background image on event list when first uploaded</li>
+        <li>Add new events to own event list when you add yourself as a runner</li>
         <li>Add some real sample data/maps (started 4/6)</li>
         <li>Design a logo, control colours on the O</li>
         <li>Draw my own version of the tree background, or find a royalty free one</li>
@@ -142,7 +152,7 @@ const Welcome = ({ auth, currentUser, eventList }) => {
 
   // check number of events and maps for current user
   const ownEvents = (eventList)
-    ? eventList.slice(0, -1)
+    ? eventList
       .filter((eachEvent) => {
         const { runners } = eachEvent;
         const runnerIds = (runners) ? runners.map(runner => runner.user) : [];

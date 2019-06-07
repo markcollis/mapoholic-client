@@ -15,7 +15,6 @@ import {
   changePasswordAction,
   deleteProfileImageAction,
   deleteUserAction,
-  getClubListAction,
   getClubMembersAction,
   getUserByIdAction,
   getUserEventsAction,
@@ -40,7 +39,6 @@ class UserView extends Component {
     changePassword: PropTypes.func.isRequired,
     deleteProfileImage: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
-    getClubList: PropTypes.func.isRequired,
     getClubMembers: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
     getUserEvents: PropTypes.func.isRequired,
@@ -63,22 +61,14 @@ class UserView extends Component {
     refreshCollapseUserDetails: 0,
   }
 
-  componentDidMount() {
-    // const {
-    //   getUserList,
-    //   user,
-    // } = this.props;
-    // if (!user.list) getUserList();
-  }
-
   // helper to create filtered user list if relevant props change
   getUserListArray = memoize((list, searchField) => {
     if (!list) return [];
-    const filteredList = list.slice(0, -1).filter((eachUser) => {
+    const filteredList = list.filter((eachUser) => {
       return (eachUser.displayName.toLowerCase().includes(searchField.toLowerCase())
         || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase()));
     });
-    console.log('filteredList in UserView:', filteredList);
+    // console.log('filteredList in UserView:', filteredList);
     return filteredList;
   });
 
@@ -245,10 +235,8 @@ class UserView extends Component {
       club,
       config,
       deleteProfileImage,
-      getClubList,
       getClubMembers,
       getUserById,
-      getUserList,
       ownProfile,
       postProfileImage,
       selectUserToDisplay,
@@ -277,12 +265,10 @@ class UserView extends Component {
     return (
       <UserEdit
         changePassword={changePassword} // prop
-        clubList={(clubList) ? clubList.slice(0, -1) : []} // prop (club)
+        clubList={clubList} // prop (club)
         deleteProfileImage={deleteProfileImage} // prop
-        getClubList={getClubList} // prop
         getClubMembers={getClubMembers} // prop
         getUserById={getUserById} // prop
-        getUserList={getUserList} // prop
         isAdmin={isAdmin} // derived
         language={language} // prop (config)
         postProfileImage={postProfileImage} // prop
@@ -290,7 +276,7 @@ class UserView extends Component {
         selectUserToDisplay={selectUserToDisplay} // prop
         setUserViewMode={(ownProfile) ? setUserViewModeSelf : setUserViewMode} // props
         updateUser={updateUser} // prop
-        userList={(list) ? list.slice(0, -1) : []} // prop (user)
+        userList={list} // prop (user)
       />
     );
   }
@@ -431,7 +417,6 @@ const mapDispatchToProps = {
   changePassword: changePasswordAction,
   deleteProfileImage: deleteProfileImageAction,
   deleteUser: deleteUserAction,
-  getClubList: getClubListAction,
   getClubMembers: getClubMembersAction,
   getUserById: getUserByIdAction,
   getUserEvents: getUserEventsAction,

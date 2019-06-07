@@ -75,20 +75,20 @@ const userReducer = (state = INITIAL_STATE, action) => {
       // console.log('USER_POSTED_IMAGE payload:', action.payload);
       return {
         ...state,
-        list: [...state.list].map((user) => {
-          if (user.user_id && user.user_id === action.payload.userId) {
-            return { ...user, profileImage: action.payload.profileImage };
-          }
-          return user;
-        }),
+        list: (state.list)
+          ? state.list.map((user) => {
+            if (user.user_id && user.user_id === action.payload.userId) {
+              return { ...user, profileImage: action.payload.profileImage };
+            }
+            return user;
+          })
+          : null,
         current: (state.current._id === action.payload.userId)
-          // ? { ...state.current, profileImage: '' }
           ? { ...state.current, profileImage: action.payload.profileImage }
           : { ...state.current },
         details: {
           ...state.details,
           [action.payload.userId]: {
-            // ...state.details[action.payload.userId], profileImage: '',
             ...state.details[action.payload.userId], profileImage: action.payload.profileImage,
           },
         },
@@ -98,7 +98,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       // console.log('USER_CHANGED_PASSWORD payload:', action.payload);
       return state;
     case USER_DELETED:
-    // console.log('USER_DELETED payload:', action.payload);
+      // console.log('USER_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
@@ -106,15 +106,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_DELETED_IMAGE:
-    // console.log('USER_DELETED_IMAGE payload:', action.payload);
+      // console.log('USER_DELETED_IMAGE payload:', action.payload);
       return {
         ...state,
-        list: [...state.list].map((user) => {
-          if (user.user_id && user.user_id === action.payload) {
-            return { ...user, profileImage: '' };
-          }
-          return user;
-        }),
+        list: (state.list)
+          ? state.list.map((user) => {
+            if (user.user_id && user.user_id === action.payload) {
+              return { ...user, profileImage: '' };
+            }
+            return user;
+          })
+          : null,
         current: (state.current._id === action.payload)
           ? { ...state.current, profileImage: '' }
           : { ...state.current },

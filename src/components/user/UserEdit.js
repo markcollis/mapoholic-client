@@ -24,7 +24,6 @@ class UserEdit extends Component {
     changePassword: PropTypes.func.isRequired,
     clubList: PropTypes.arrayOf(PropTypes.object),
     deleteProfileImage: PropTypes.func.isRequired,
-    getClubList: PropTypes.func.isRequired,
     isAdmin: PropTypes.bool,
     language: PropTypes.string,
     postProfileImage: PropTypes.func.isRequired,
@@ -42,11 +41,6 @@ class UserEdit extends Component {
     showUpdatePassword: false,
     showUpdateProfileImage: false,
   };
-
-  componentDidMount() {
-    const { clubList, getClubList } = this.props;
-    if (clubList.length === 0) getClubList();
-  }
 
   renderUpdatePassword() {
     const {

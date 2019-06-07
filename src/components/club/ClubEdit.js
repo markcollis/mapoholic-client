@@ -18,7 +18,6 @@ class ClubEdit extends Component {
     setFieldValue: PropTypes.func.isRequired,
     touched: PropTypes.objectOf(PropTypes.any).isRequired,
     values: PropTypes.objectOf(PropTypes.any).isRequired,
-    getUserList: PropTypes.func,
     isAdmin: PropTypes.bool,
     language: PropTypes.string,
     setClubViewMode: PropTypes.func.isRequired,
@@ -29,14 +28,8 @@ class ClubEdit extends Component {
   static defaultProps = {
     isAdmin: false,
     language: 'en',
-    getUserList: () => {},
     userList: [],
   };
-
-  componentDidMount() {
-    const { userList, getUserList, viewMode } = this.props;
-    if (userList && userList.length === 0 && viewMode === 'edit') getUserList();
-  }
 
   componentDidUpdate(prevProps) {
     const { viewMode, resetForm } = this.props;
@@ -60,11 +53,9 @@ class ClubEdit extends Component {
       viewMode,
     } = this.props;
     const buttonText = (viewMode === 'add') ? <Trans>Create</Trans> : <Trans>Update</Trans>;
-    // console.log('userList:', userList);
     const ownerOptions = userList.map((user) => {
       return { value: user.user_id, label: user.displayName };
     });
-    // console.log('ownerOptions', ownerOptions);
     const countryOptions = countryOptionsLocale[language];
     const validationErrors = validationErrorsLocale[language];
 
@@ -178,7 +169,6 @@ class ClubEdit extends Component {
 
   render() {
     const { viewMode } = this.props;
-    // console.log(viewMode, selectedClub);
     const headerText = (viewMode === 'add')
       ? 'Create Club'
       : 'Edit Club Details';
@@ -190,11 +180,9 @@ class ClubEdit extends Component {
     );
   }
 }
-// {(viewMode === 'edit') ? `${selectedClub._id}, ${selectedClub.orisId}` : null}
 
 const formikClubEdit = withFormik({
   mapPropsToValues({ language = 'en', selectedClub, viewMode }) {
-    // const source = selectedClub || {};
     if (viewMode === 'edit' && selectedClub) {
       return {
         shortName: selectedClub.shortName || '',

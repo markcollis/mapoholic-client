@@ -18,9 +18,7 @@ import {
   getClubEventsAction,
   getClubListAction,
   getClubMembersAction,
-  getEventListAction,
   getUserByIdAction,
-  getUserListAction,
   selectClubToDisplayAction,
   selectEventForDetailsAction,
   selectUserToDisplayAction,
@@ -43,8 +41,6 @@ class ClubView extends Component {
     getClubEvents: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
     getClubMembers: PropTypes.func.isRequired,
-    // getEventList: PropTypes.func.isRequired,
-    getUserList: PropTypes.func.isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectUserToDisplay: PropTypes.func.isRequired,
@@ -59,24 +55,6 @@ class ClubView extends Component {
     gettingEventList: '',
     gettingMemberList: '',
   };
-
-  // get summary data from API if not available
-  componentDidMount() {
-    // const {
-    //   club,
-    //   oevent,
-    //   user,
-    //   getClubList,
-    //   getEventList,
-    //   getUserList,
-    // } = this.props;
-    // const { list: clubList } = club;
-    // const { list: eventList } = oevent;
-    // const { list: userList } = user;
-    // if (!clubList) getClubList();
-    // if (!userList) getUserList();
-    // if (!eventList) getEventList();
-  }
 
   componentDidUpdate() {
     // console.log('state', this.state);
@@ -107,15 +85,11 @@ class ClubView extends Component {
     }
   }
 
-  // helper to return current user's id if input prop has changed
-  // getCurrentUserId = memoize(current => ((current) ? current._id : null));
-
   // helper to check if current user is administrator if input prop has changed
   getIsAdmin = memoize(current => (current && current.role === 'admin'));
 
   // helper to determine if current user can edit club details if input props have changed
   getCanEditClub = memoize((current, selectedClub) => {
-    // console.log('current, selectedClub in getCanEditClub:', current, selectedClub);
     if (!current || !current.role || !selectedClub || !selectedClub.owner) return false;
     const isAdmin = (current.role === 'admin');
     if (isAdmin) return true;
@@ -127,7 +101,7 @@ class ClubView extends Component {
   // helper to return filtered list of clubs based on search criteria
   getClubList = memoize((list, searchField) => {
     if (!list) return [];
-    return list.slice(0, -1).filter((eachClub) => {
+    return list.filter((eachClub) => {
       const {
         fullName,
         shortName,
@@ -137,8 +111,6 @@ class ClubView extends Component {
       const matchShortName = shortName.toLowerCase().includes(searchField.toLowerCase());
       const matchCountry = country.toLowerCase().includes(searchField.toLowerCase());
       return (matchFullName || matchShortName || matchCountry);
-      // return (eachClub.shortName.toLowerCase().includes(searchField.toLowerCase())
-      // || eachClub.fullName.toLowerCase().includes(searchField.toLowerCase()));
     });
   });
 
@@ -153,7 +125,6 @@ class ClubView extends Component {
       oevent,
       user,
       getClubList,
-      getUserList,
       selectClubToDisplay,
       selectEventForDetails,
       selectUserToDisplay,
@@ -209,7 +180,7 @@ class ClubView extends Component {
               setEventViewModeEvent={setEventViewModeEvent} // prop
             />
             <ClubMembers
-              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
+              fullEventList={fullEventList} // prop (oevent)
               membersList={membersList} // derived
               selectUserToDisplay={selectUserToDisplay} // prop
               setUserViewMode={setUserViewMode} // prop
@@ -221,14 +192,13 @@ class ClubView extends Component {
           <div className="ten wide column">
             <ClubEdit // same form component handles both create and update
               getClubList={getClubList} // prop
-              getUserList={getUserList} // prop
               isAdmin={isAdmin} // derived
               language={language} // prop (config)
               selectClubToDisplay={selectClubToDisplay} // prop
               selectedClub={selectedClub} // derived
               setClubViewMode={setClubViewMode} // prop
               updateClub={updateClub} // prop
-              userList={(userList) ? userList.slice(0, -1) : []} // prop (user)
+              userList={userList} // prop (user)
               viewMode={viewMode} // prop (club)
             />
             <ClubEvents
@@ -238,7 +208,7 @@ class ClubView extends Component {
               setEventViewModeEvent={setEventViewModeEvent} // prop
             />
             <ClubMembers
-              fullEventList={(fullEventList) ? fullEventList.slice(0, -1) : []} // prop (oevent)
+              fullEventList={fullEventList} // prop (oevent)
               membersList={membersList} // derived
               selectUserToDisplay={selectUserToDisplay} // prop
               setUserViewMode={setUserViewMode} // prop
@@ -361,9 +331,7 @@ const mapDispatchToProps = {
   getClubById: getClubByIdAction,
   getClubMembers: getClubMembersAction,
   getClubEvents: getClubEventsAction,
-  getEventList: getEventListAction,
   getUserById: getUserByIdAction,
-  getUserList: getUserListAction,
   selectClubToDisplay: selectClubToDisplayAction,
   selectEventForDetails: selectEventForDetailsAction,
   selectUserToDisplay: selectUserToDisplayAction,

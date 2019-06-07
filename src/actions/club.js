@@ -16,7 +16,7 @@ import {
 } from './types';
 import { OMAPFOLDER_SERVER } from '../config';
 
-// Local Actions
+// *** Local Actions ***
 // change club view mode
 export const setClubViewModeAction = (mode) => {
   const validModes = ['none', 'view', 'add', 'edit', 'delete'];
@@ -78,15 +78,14 @@ const toQueryString = (obj) => {
   }).join('&'));
 };
 
+// *** API functions ***
 // retrieve a list of all clubs (ids) matching specified criteria
 // app.get('/clubs', publicRoute, Clubs.getClubList);
 export const getClubListAction = (searchCriteria, callback) => async (dispatch) => {
-  // console.log('getClubListAction called.');
-  // console.log('callback in getClubList', callback);
   try {
     const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
     const response = await axios.get(`${OMAPFOLDER_SERVER}/clubs${queryString}`);
-    dispatch({ type: CLUB_GOT_LIST, payload: [...response.data, queryString] });
+    dispatch({ type: CLUB_GOT_LIST, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
     handleError(CLUB_ERROR)(err, dispatch);
@@ -102,12 +101,10 @@ export const createClubAction = (formValues, callback) => async (dispatch, getSt
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.post(`${OMAPFOLDER_SERVER}/clubs`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: CLUB_CREATED, payload: response.data });
-    // console.log('callback', callback);
     if (callback) callback(true);
   } catch (err) {
     handleError(CLUB_ERROR)(err, dispatch);
@@ -119,10 +116,8 @@ export const createClubAction = (formValues, callback) => async (dispatch, getSt
 // *** NOT CURRENTLY NEEDED AS LIST CONTAINS FULL DETAILS FOR EACH CLUB IN IT ***
 // app.get('/clubs/:id', publicRoute, Clubs.getClubById);
 export const getClubByIdAction = (userId, callback) => async (dispatch) => {
-  // console.log('getClubByIdAction called.');
   try {
     const response = await axios.get(`${OMAPFOLDER_SERVER}/clubs/${userId}`);
-    // console.log('response:', response.data);
     dispatch({ type: CLUB_GOT_BY_ID, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
@@ -136,14 +131,11 @@ export const getClubMembersAction = (clubId, callback) => async (dispatch, getSt
   if (!clubId) {
     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
   } else {
-    // console.log('getClubMembersAction called.');
     try {
       const state = getState();
       const { auth } = state;
       const queryString = toQueryString({ memberOf: clubId });
       const token = auth.authenticated;
-      // const token = localStorage.getItem('omapfolder-auth-token');
-      // console.log('token:', token);
       let response;
       if (token) {
         response = await axios.get(`${OMAPFOLDER_SERVER}/users${queryString}`, {
@@ -172,14 +164,11 @@ export const getClubEventsAction = (clubId, callback) => async (dispatch, getSta
   if (!clubId) {
     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
   } else {
-    // console.log('getClubEventsAction called.');
     try {
       const state = getState();
       const { auth } = state;
       const queryString = toQueryString({ organisedBy: clubId });
       const token = auth.authenticated;
-      // const token = localStorage.getItem('omapfolder-auth-token');
-      // console.log('token:', token);
       let response;
       if (token) {
         response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
@@ -211,7 +200,6 @@ export const updateClubAction = (clubId, formValues, callback) => async (dispatc
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.patch(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
@@ -230,7 +218,6 @@ export const deleteClubAction = (clubId, callback) => async (dispatch, getState)
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    // const token = localStorage.getItem('omapfolder-auth-token');
     const response = await axios.delete(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
