@@ -46,9 +46,9 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       // console.log('newDetails:', newDetails);
       return {
         ...state,
-        list: action.payload,
         details: newDetails,
         errorMessage: '',
+        list: action.payload,
       };
     }
     case CLUB_GOT_BY_ID:
@@ -62,8 +62,8 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
-        selectedClubId: action.payload._id,
         errorMessage: '',
+        selectedClubId: action.payload._id,
       };
     case CLUB_UPDATED:
       // console.log('CLUB_UPDATED payload:', action.payload);
@@ -77,32 +77,41 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
-        selectedClubId: '',
         errorMessage: '',
+        selectedClubId: '',
       };
     case CLUB_GOT_MEMBERS:
       // console.log('CLUB_GOT_MEMBERS payload:', action.payload);
       return {
         ...state,
-        memberLists: { ...state.memberLists, [action.payload.clubId]: action.payload.memberList },
         errorMessage: '',
+        memberLists: { ...state.memberLists, [action.payload.clubId]: action.payload.memberList },
       };
     case CLUB_GOT_EVENTS:
       // console.log('CLUB_GOT_EVENTS payload:', action.payload);
       return {
         ...state,
-        eventLists: { ...state.eventLists, [action.payload.clubId]: action.payload.eventList },
         errorMessage: '',
+        eventLists: { ...state.eventLists, [action.payload.clubId]: action.payload.eventList },
       };
     case CLUB_ERROR:
       // console.log('CLUB_ERROR payload:', action.payload);
-      return { ...state, errorMessage: action.payload };
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
     case CLUB_CHANGE_SEARCH_FIELD:
       // console.log('CLUB_CHANGE_SEARCH_FIELD payload:', action.payload);
-      return { ...state, searchField: action.payload };
+      return {
+        ...state,
+        searchField: action.payload,
+      };
     case CLUB_CHANGE_VIEW_MODE:
       // console.log('CLUB_CHANGE_VIEW_MODE payload:', action.payload);
-      return { ...state, viewMode: action.payload };
+      return {
+        ...state,
+        viewMode: action.payload,
+      };
     case CLUB_SELECT_CLUB:
       // console.log('CLUB_SELECT_CLUB payload:', action.payload);
       if (state.selectedClubId === action.payload) {
@@ -116,10 +125,16 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       };
     case CLUB_SELECT_CLUB_MEMBER:
       // console.log('CLUB_SELECT_CLUB_MEMBER payload:', action.payload);
-      return { ...state, selectedMember: action.payload };
+      return {
+        ...state,
+        selectedMember: action.payload,
+      };
     case CLUB_SELECT_CLUB_EVENT:
       // console.log('CLUB_SELECT_CLUB_EVENT payload:', action.payload);
-      return { ...state, selectedEvent: action.payload };
+      return {
+        ...state,
+        selectedEvent: action.payload,
+      };
     default:
       return state;
   }

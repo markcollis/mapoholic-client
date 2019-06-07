@@ -131,7 +131,7 @@ const UserDetails = ({
   const title = <Trans>User profile</Trans>;
   return (
     <div className="ui segment">
-      <Collapse title={title}>
+      <Collapse title={title} refreshCollapse={refreshCollapse}>
         {displayProfile}
       </Collapse>
     </div>

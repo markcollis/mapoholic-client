@@ -73,7 +73,7 @@ const EventDetails = ({
     : null;
   const showEdit = (canEdit)
     ? (
-      <div>
+      <div className="event-details-canedit">
         <hr className="divider" />
         <div className=""><Trans>{`Owner: ${owner.displayName}`}</Trans></div>
         {(orisId)
@@ -121,6 +121,8 @@ const EventDetails = ({
   const locUrl = (locLat && locLong)
     ? `https://www.google.com/maps/@?api=1&map_action=map&center=${locLat},${locLong}&zoom=13&basemap=terrain`
     : null;
+  const place = (locPlace && locPlace !== '') ? locPlace : null;
+  const country = (locCountry && locCountry !== '') ? locCountry : null;
   const displayEventDetails = (
     <div>
       {renderThumbnail}
@@ -137,25 +139,23 @@ const EventDetails = ({
             </div>
           )
           : null}
-        {(locUrl)
+        {(place || country)
           ? (
             <div className="item">
               <i className="marker icon" />
               <div className="content">
-                <a href={locUrl} target="_blank" rel="noopener noreferrer">
-                  {`${locPlace}, ${locCountry}`}
-                </a>
+                {(locUrl)
+                  ? (
+                    <a href={locUrl} target="_blank" rel="noopener noreferrer">
+                      {`${place || ''}${(place && country) ? ', ' : ''}${country || ''}`}
+                    </a>
+                  )
+                  : `${place || ''}${(place && country) ? ', ' : ''}${country || ''}`
+                }
               </div>
             </div>
           )
-          : (
-            <div className="item">
-              <i className="marker icon" />
-              <div className="content">
-                {`${locPlace}, ${locCountry}`}
-              </div>
-            </div>
-          )}
+          : null}
         {(mapName)
           ? (
             <div className="item">

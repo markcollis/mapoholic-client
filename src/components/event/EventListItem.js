@@ -23,6 +23,51 @@ const EventListItem = ({
     tags,
   } = oevent;
   const typesOptions = typesOptionsLocale[language];
+  let mapExtractToDisplay = null;
+  if (runners && runners.length > 0) {
+    runners.forEach((runner) => {
+      if (!mapExtractToDisplay && runner.mapExtract) {
+        mapExtractToDisplay = runner.mapExtract;
+      }
+    });
+  }
+  const extractUrl = (mapExtractToDisplay)
+    ? `${OMAPFOLDER_SERVER}/${mapExtractToDisplay}`
+    : null;
+  const cardStyle = (mapExtractToDisplay)
+    ? (
+      {
+        backgroundImage: `url(${extractUrl})`,
+        backgroundSize: 'cover',
+      }
+    )
+    : {};
+  const textClassName = (mapExtractToDisplay)
+    ? 'event-list-text'
+    : '';
+
+  const place = (locPlace && locPlace !== '') ? locPlace : null;
+  const country = (locCountry && locCountry !== '') ? locCountry : null;
+  const renderPlace = (place || country)
+    ? (
+      <div>
+        <span className={textClassName}>
+          <Trans>Place</Trans>
+          {`: ${place || ''}${(place && country) ? ', ' : ''}${country || ''}`}
+        </span>
+      </div>
+    )
+    : null;
+  const renderMapName = (mapName && mapName !== '')
+    ? (
+      <p>
+        <span className={textClassName}>
+          <Trans>Map</Trans>
+          {`: ${mapName}`}
+        </span>
+      </p>
+    )
+    : null;
   const renderOrganisedBy = (organisedBy && organisedBy.length > 0)
     ? (
       <span>
@@ -55,37 +100,6 @@ const EventListItem = ({
   const renderTotalRunners = (runners && runners.length > 0)
     ? <span className="ui label circular floatedright">{runners.length}</span>
     : <span className="ui label floatedright"><Trans>none</Trans></span>;
-  let mapExtractToDisplay = null;
-  if (runners && runners.length > 0) {
-    runners.forEach((runner) => {
-      if (!mapExtractToDisplay && runner.mapExtract) {
-        mapExtractToDisplay = runner.mapExtract;
-      }
-    });
-  }
-  const extractUrl = (mapExtractToDisplay)
-    ? `${OMAPFOLDER_SERVER}/${mapExtractToDisplay}`
-    : null;
-  const cardStyle = (mapExtractToDisplay)
-    ? (
-      {
-        backgroundImage: `url(${extractUrl})`,
-        backgroundSize: 'cover',
-      }
-    )
-    : {};
-  const textClassName = (mapExtractToDisplay)
-    ? 'event-list-text'
-    : '';
-  // const renderExtract = (mapExtractToDisplay)
-  //   ? (
-  //     <img
-  //       className="ui image"
-  //       alt="map extract"
-  //       src={`${OMAPFOLDER_SERVER}/${mapExtractToDisplay}`}
-  //     />
-  //   )
-  //   : null;
 
   return (
     <div
@@ -99,18 +113,8 @@ const EventListItem = ({
       <div className="content">
         <div className="header"><span className={textClassName}>{`${reformatDate(date)} - ${name}`}</span></div>
         <div className="meta">
-          <div>
-            <span className={textClassName}>
-              <Trans>Place</Trans>
-              {`: ${locPlace}, ${locCountry}`}
-            </span>
-          </div>
-          <p>
-            <span className={textClassName}>
-              <Trans>Map</Trans>
-              {`: ${mapName}`}
-            </span>
-          </p>
+          {renderPlace}
+          {renderMapName}
           {renderOrganisedBy}
           {renderTypes}
           {renderTags}

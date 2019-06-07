@@ -9,10 +9,9 @@ const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_USER:
       // console.log('AUTH_USER with:', action.payload);
-      // console.log('auth:', state);
       return { ...state, authenticated: action.payload, errorMessage: '' };
     case AUTH_ERROR:
-      // console.log(action.payload);
+      // console.log('AUTH_ERROR with:', action.payload);
       return { ...state, errorMessage: action.payload };
     default:
       return state;

@@ -97,6 +97,9 @@
 .event-details .item:after {
   clear: left !important;
 }
+.event-details-canedit {
+  clear: both;
+}
 
 /* settings for EventListItem */
 .event-list-text {

@@ -32,6 +32,7 @@ class Collapse extends Component {
   componentDidMount() {
     const { children, refreshCollapse } = this.props;
     this.setState({ children, refreshCollapse });
+    window.addEventListener('resize', this.onResizeWindow);
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -54,7 +55,16 @@ class Collapse extends Component {
     }
   }
 
-  swapVisibility(e) {
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResizeWindow);
+  }
+
+  onResizeWindow = () => {
+    console.log('onResizeWindow triggered => re-render');
+    this.setState({ propsChanged: true });
+  }
+
+  swapVisibility = (e) => {
     e.preventDefault();
     const { hideContent, contentHeight } = this.state;
     const currentHeight = this.contentRef.current.clientHeight;

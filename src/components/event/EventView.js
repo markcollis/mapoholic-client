@@ -86,8 +86,8 @@ class EventView extends Component {
 
   // helper to create event list if relevant props change
   getEventListArray = memoize((list, searchField, current, mineOnly) => {
-    console.log('refreshing event list array');
-    console.log('list:', list);
+    // console.log('refreshing event list array');
+    // console.log('list:', list);
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
     return list

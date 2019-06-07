@@ -27,6 +27,19 @@ const Welcome = ({ auth, currentUser, eventList }) => {
       <hr />
       <p>Checklist of things still to do:</p>
       <ol>
+        <li>Add some more introductory/help text on this page</li>
+        <li>Add a component here to show recent activity (own or all?)</li>
+        <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
+        <li>Complete the translations and check that nothing is missing</li>
+        <li>Centre rotation on current view when zoomed in</li>
+        <li>Add some real sample data/maps (started 4/6)</li>
+        <li>Design a logo, control colours on the O</li>
+        <li>Draw my own version of the tree background, or find a royalty free one</li>
+        <li>Take a photo of a pile of O maps to use as a background</li>
+        <li>Test it out on a real Internet-facing server</li>
+      </ol>
+      <p>What has already been done:</p>
+      <ol>
         <li>
           <del>Investigate unauthorized /users/me request when logging in</del>
           {' (fixed 18/5)'}
@@ -95,10 +108,6 @@ const Welcome = ({ auth, currentUser, eventList }) => {
           {' (added flags and tree background to Club page 30/5, others look OK for now)'}
         </li>
         <li>
-          Check for other components that could use CollapseTrigger function
-          {' (EventDetails trigger when thumbnail image loaded 30/5, need to do the same for UserDetails)'}
-        </li>
-        <li>
           <del>Improve layout of MapView to put map first</del>
           {' (done 31/5)'}
         </li>
@@ -127,17 +136,26 @@ const Welcome = ({ auth, currentUser, eventList }) => {
           &nbsp;(done 6/6 - refresh event list within map upload/delete actions;
           further improvement 7/6 to avoid unnecessary network traffic)
         </li>
-        <li>Add some more introductory/help text on this page</li>
-        <li>Add a component here to show recent activity (own or all?)</li>
-        <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
-        <li>Complete the translations and check that nothing is missing</li>
-        <li>Centre rotation on current view when zoomed in</li>
-        <li>Add new events to own event list when you add yourself as a runner</li>
-        <li>Add some real sample data/maps (started 4/6)</li>
-        <li>Design a logo, control colours on the O</li>
-        <li>Draw my own version of the tree background, or find a royalty free one</li>
-        <li>Take a photo of a pile of O maps to use as a background</li>
-        <li>Test it out on a real Internet-facing server</li>
+        <li>
+          <del>
+          Fix appearance of EventListItem and EventDetails when there is a map
+          but not much other information
+          </del>
+          &nbsp;(done 7/6)
+        </li>
+        <li>
+          <del>Add new events to own event list when you add yourself as a runner</del>
+          &nbsp;(done 7/6)
+        </li>
+        <li>
+          <del>Check for other components that could use CollapseTrigger function</del>
+          &nbsp;(EventDetails trigger when thumbnail image loaded 30/5, UserDetails trigger
+          when forest background loaded 7/6)
+        </li>
+        <li>
+          <del>Trigger a Collapse refresh on window resize</del>
+          &nbsp;(done 7/6)
+        </li>
       </ol>
       <p>Other ideas for the future (non-essential):</p>
       <ol>

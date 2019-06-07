@@ -35,7 +35,6 @@ const getUpdatedEventList = (list, payload) => {
   if (!list) return null;
   const newList = list.map((listedEvent) => {
     if (listedEvent._id === payload._id) {
-      console.log('matching event found');
       const {
         date,
         linkedTo,
@@ -71,9 +70,7 @@ const getUpdatedEventList = (list, payload) => {
         types,
         _id,
       };
-      console.log('eventDetails:', eventDetails);
       const newRunners = runners.map((runner) => {
-        console.log('runner in getUpdatedEventList:', runner);
         const mapFiles = [];
         runner.maps.forEach((map) => {
           const { course, route } = map;
@@ -83,7 +80,6 @@ const getUpdatedEventList = (list, payload) => {
             mapFiles.push(route);
           }
         });
-        console.log('mapFiles:', mapFiles);
         const extractName = (mapFiles.length > 0)
           ? mapFiles[0].slice(0, -4).concat('-extract').concat(mapFiles[0].slice(-4))
           : null;
@@ -163,7 +159,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         orisList: action.payload,
       };
     case EVENT_GOT_BY_ID:
-      console.log('EVENT_GOT_BY_ID payload:', action.payload);
+      // console.log('EVENT_GOT_BY_ID payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -195,13 +191,22 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     case EVENT_ERROR:
       // console.log('EVENT_ERROR payload:', action.payload);
-      return { ...state, errorMessage: action.payload };
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
     case EVENT_CHANGE_SEARCH_FIELD:
       // console.log('EVENT_CHANGE_SEARCH_FIELD payload:', action.payload);
-      return { ...state, searchField: action.payload };
+      return {
+        ...state,
+        searchField: action.payload,
+      };
     case EVENT_CHANGE_VIEW_EVENT:
       // console.log('EVENT_CHANGE_VIEW_EVENT payload:', action.payload);
-      return { ...state, eventMode: action.payload };
+      return {
+        ...state,
+        eventMode: action.payload,
+      };
     case EVENT_CHANGE_VIEW_EVENT_LINK:
       // console.log('EVENT_CHANGE_VIEW_EVENT_LINK payload:', action.payload);
       return {
@@ -211,22 +216,37 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     case EVENT_CHANGE_VIEW_RUNNER:
       // console.log('EVENT_CHANGE_VIEW_RUNNER payload:', action.payload);
-      return { ...state, runnerMode: action.payload };
+      return {
+        ...state,
+        runnerMode: action.payload,
+      };
     case EVENT_SELECT_EVENT_DETAILS:
       // console.log('EVENT_SELECT_EVENT_DETAILS payload:', action.payload);
-      return { ...state, selectedEventDetails: action.payload };
+      return {
+        ...state,
+        selectedEventDetails: action.payload,
+      };
     case EVENT_SELECT_EVENT_DISPLAY:
       // console.log('EVENT_SELECT_EVENT_DISPLAY payload:', action.payload);
-      return { ...state, selectedEventDisplay: action.payload };
+      return {
+        ...state,
+        selectedEventDisplay: action.payload,
+      };
     case EVENT_SELECT_RUNNER:
       // console.log('EVENT_SELECT_RUNNER payload:', action.payload);
-      return { ...state, selectedRunner: action.payload };
+      return {
+        ...state,
+        selectedRunner: action.payload,
+      };
     case EVENT_SELECT_MAP:
       // console.log('EVENT_SELECT_MAP payload:', action.payload);
-      return { ...state, selectedMap: action.payload };
+      return {
+        ...state,
+        selectedMap: action.payload,
+      };
     case EVENT_MAP_DELETED: // same as uploaded, refresh event details record
     case EVENT_MAP_UPLOADED: {
-      console.log('EVENT_MAP_UPLOADED payload:', action.payload);
+      // console.log('EVENT_MAP_UPLOADED payload:', action.payload);
       const { parameters, updatedEvent } = action.payload;
       const {
         eventId,
@@ -234,7 +254,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         mapTitle,
       } = parameters;
       const updatedEventDetails = state.details[eventId];
-      console.log('updatedEventDetails', updatedEventDetails);
       updatedEventDetails.locCornerNE = updatedEvent.locCornerNE;
       updatedEventDetails.locCornerSW = updatedEvent.locCornerSW;
       updatedEventDetails.locLat = updatedEvent.locLat;
@@ -276,15 +295,12 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       // console.log('EVENT_COMMENT_ADDED payload:', action.payload);
       const { eventId, userId, comments } = action.payload;
       const runnersInState = state.details[eventId].runners;
-      // console.log('runnersInState:', runnersInState);
       const updatedRunners = runnersInState.map((runner) => {
         return { ...runner };
       }); // copy each runner object
-      // const updatedRunners = JSON.parse(JSON.stringify(runnersInState)); // copy
       const runnerToUpdate = updatedRunners
         .find(runner => runner.user._id === userId);
       runnerToUpdate.comments = comments;
-      // console.log('updatedRunners', updatedRunners);
       return {
         ...state,
         details: {
