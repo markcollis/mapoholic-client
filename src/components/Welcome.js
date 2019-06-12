@@ -28,8 +28,11 @@ const Welcome = ({ auth, currentUser, eventList }) => {
       <p>Checklist of things still to do:</p>
       <ol>
         <li>Add some more introductory/help text on this page</li>
+        <li>Remember list/map tab in MyMaps and Events when moving away</li>
+        <li>Remember overview map position when moving away (is it possible?)</li>
+        <li>Separate Redux state for Events/MyMaps</li>
+        <li>Hide &apos;runners at event&apos; for MyMaps</li>
         <li>Add a component here to show recent activity (own or all?)</li>
-        <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
         <li>Complete the translations and check that nothing is missing</li>
         <li>Centre rotation on current view when zoomed in</li>
         <li>Add some real sample data/maps (started 4/6)</li>
@@ -156,14 +159,26 @@ const Welcome = ({ auth, currentUser, eventList }) => {
           <del>Trigger a Collapse refresh on window resize</del>
           &nbsp;(done 7/6)
         </li>
+        <li>
+          <del>Go to map directly from list selection when viewing MyMaps</del>
+          &nbsp;(done 12/6)
+        </li>
       </ol>
       <p>Other ideas for the future (non-essential):</p>
       <ol>
+        <li>
+          Investigate overlays - drawing own route, adding annotations, etc. =&gt;
+          need to be able to save too... *react-canvas-draw*
+        </li>
         <li>Investigate making results editable/uploadable if not on ORIS</li>
+        <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
         <li>Web services interface to take direct feed from QuickRoute</li>
         <li>User-specific preferences (e.g. language)</li>
-        <li>Some sort of image on club details (map of where they are based? logo?)</li>
         <li>Real-time (non-persistent) chat??</li>
+        <li>
+        View multiple routes for the same course together? (e.g. 50% opacity for each?)
+        Only works in general if course is an overlay not complete image
+        </li>
       </ol>
     </>
   );
@@ -244,19 +259,71 @@ const Welcome = ({ auth, currentUser, eventList }) => {
 
   const whatIsIt = (
     <>
-      <p><Trans>to add</Trans></p>
+      <p>
+        <Trans>
+          The core functionality of MapOholic is to provide an online repository for scanned
+          images of your orienteering maps, together with your routes if you have them
+          (whether drawn manually or using a GPS watch/tracker and a tool such as&nbsp;
+          <a href="http://www.matstroeng.se/quickroute/en/">QuickRoute</a>*).
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          But there is much more to it than that. The maps can be linked to detailed information
+          about the event and your performance, and you can quickly see how other users did
+          at the same race. For Czech events registered on ORIS, event details, course details
+          and results can be added automatically. You can also tag your maps in any way you like
+          and add comments to both your own and other users&apos; maps.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          <em>
+            * QuickRoute is an excellent tool and I use it for all races where I have a GPS track.
+            The JPG images of routes exported from it include track data and MapOholic can use
+            this to determine the location of a map without needing to enter it manually. When
+            no accompanying GPS track is available, any simple graphics editor can be used to draw
+            a route on a scanned map. Capturing and displaying vector route overlays is on the
+            future feature list!
+          </em>
+        </Trans>
+      </p>
     </>
   );
 
   const howToUseIt = (
     <>
-      <p><Trans>to add</Trans></p>
+      <p>
+        <Trans>
+          Browsing or searching for maps is easy.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          xxx
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          xxx
+        </Trans>
+      </p>
     </>
   );
 
   const aboutMe = (
     <>
       <p><Trans>to add</Trans></p>
+      <p>
+        <Trans>
+          xxx
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          xxx
+        </Trans>
+      </p>
     </>
   );
 

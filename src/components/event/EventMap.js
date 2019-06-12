@@ -31,7 +31,7 @@ class EventMap extends Component {
 
   componentDidMount() {
     const { events } = this.props;
-    // console.log('Event Map mounted - events:', events);
+    console.log('Event Map mounted - events:', events);
     const eventBounds = events
       .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
       .map((eventDetails) => {
@@ -63,7 +63,7 @@ class EventMap extends Component {
   componentDidUpdate(prevProps) {
     const { events } = this.props;
     if (events !== prevProps.events) {
-      // console.log('Event Map updated - events:', events);
+      console.log('Event Map updated - events:', events);
       const eventBounds = events
         .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
         .map((eventDetails) => {
@@ -102,7 +102,8 @@ class EventMap extends Component {
 
   renderMapLocations = (events) => {
     const { mapZoomLevel } = this.state;
-    const { selectEventForDetails, setEventViewModeEvent } = this.props;
+    const { handleSelectEvent } = this.props;
+    // const { selectEventForDetails, setEventViewModeEvent } = this.props;
     return (
       events
         .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
@@ -130,10 +131,7 @@ class EventMap extends Component {
                 position={flagMarkerPos}
                 opacity={0.8}
                 icon={iconFlag}
-                onClick={() => {
-                  selectEventForDetails(eventId);
-                  setEventViewModeEvent('view');
-                }}
+                onClick={() => handleSelectEvent(eventId)}
               >
                 <Tooltip direction="center" offset={[0, 30]} className="event-map-flag-tooltip">
                   <div>{name}</div>
@@ -149,10 +147,7 @@ class EventMap extends Component {
               <Rectangle
                 bounds={rectangleBounds}
                 color="blue"
-                onClick={() => {
-                  selectEventForDetails(eventId);
-                  setEventViewModeEvent('view');
-                }}
+                onClick={() => handleSelectEvent(eventId)}
               />
               <Marker
                 position={rectangleMarkerPos}
@@ -194,8 +189,9 @@ class EventMap extends Component {
 
 EventMap.propTypes = {
   events: PropTypes.arrayOf(PropTypes.any),
-  selectEventForDetails: PropTypes.func.isRequired,
-  setEventViewModeEvent: PropTypes.func.isRequired,
+  handleSelectEvent: PropTypes.func.isRequired,
+  // selectEventForDetails: PropTypes.func.isRequired,
+  // setEventViewModeEvent: PropTypes.func.isRequired,
 };
 EventMap.defaultProps = {
   events: [],

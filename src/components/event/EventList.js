@@ -7,8 +7,9 @@ import Collapse from '../Collapse';
 const EventList = ({
   language,
   events,
-  selectEventForDetails,
-  setEventViewModeEvent,
+  handleSelectEvent,
+  // selectEventForDetails,
+  // setEventViewModeEvent,
 }) => {
   const noMatchingEventsMessage = <Trans>{'Sorry, there aren\'t any matching events to display!'}</Trans>;
   const title = <Trans>Event List</Trans>;
@@ -19,10 +20,10 @@ const EventList = ({
       </div>
     );
   }
-  const handleSelectEvent = (eventId) => {
-    selectEventForDetails(eventId);
-    setEventViewModeEvent('view');
-  };
+  // const handleSelectEvent = (eventId) => {
+  //   selectEventForDetails(eventId);
+  //   setEventViewModeEvent('view');
+  // };
   const eventsArray = [...events]
     .sort((a, b) => {
       return (a.date < b.date) ? 0 : -1;
@@ -35,8 +36,8 @@ const EventList = ({
           language={language}
           oevent={oevent}
           handleSelectEvent={handleSelectEvent}
-          selectEventForDetails={selectEventForDetails}
-          setEventViewModeEvent={setEventViewModeEvent}
+          // selectEventForDetails={selectEventForDetails}
+          // setEventViewModeEvent={setEventViewModeEvent}
         />
       );
     });
@@ -48,14 +49,16 @@ const EventList = ({
           role="button"
           onClick={(e) => {
             if (e.target.classList.contains('cards')) {
-              selectEventForDetails('');
-              setEventViewModeEvent('none');
+              handleSelectEvent('');
+              // selectEventForDetails('');
+              // setEventViewModeEvent('none');
             }
           }}
           onKeyPress={(e) => {
             if (e.target.classList.contains('cards')) {
-              selectEventForDetails('');
-              setEventViewModeEvent('none');
+              handleSelectEvent('');
+              // selectEventForDetails('');
+              // setEventViewModeEvent('none');
             }
           }}
           tabIndex="0"
@@ -70,8 +73,9 @@ const EventList = ({
 EventList.propTypes = {
   events: PropTypes.arrayOf(PropTypes.object),
   language: PropTypes.string,
-  selectEventForDetails: PropTypes.func.isRequired,
-  setEventViewModeEvent: PropTypes.func.isRequired,
+  handleSelectEvent: PropTypes.func.isRequired,
+  // selectEventForDetails: PropTypes.func.isRequired,
+  // setEventViewModeEvent: PropTypes.func.isRequired,
 };
 EventList.defaultProps = {
   events: [],

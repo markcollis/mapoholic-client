@@ -187,6 +187,40 @@ class EventView extends Component {
     return orisList;
   });
 
+  // switch to MapView when a runner is selected
+  handleSelectEventRunner = (eventId, userId) => {
+    const {
+      history,
+      selectEventToDisplay,
+      selectRunnerToDisplay,
+    } = this.props;
+    selectEventToDisplay(eventId);
+    selectRunnerToDisplay(userId);
+    history.push('/mapview');
+    window.scrollTo(0, 0);
+  };
+
+  // select an event to display details of, switching to MapView if in MyMaps section
+  handleSelectEvent = (eventId) => {
+    const {
+      mineOnly,
+      selectEventForDetails,
+      setEventViewModeEvent,
+      user,
+    } = this.props;
+    const { current } = user;
+    const { _id: userId } = current;
+    selectEventForDetails(eventId);
+    if (eventId === '') {
+      setEventViewModeEvent('none');
+    } else {
+      setEventViewModeEvent('view');
+    }
+    if (mineOnly) {
+      this.handleSelectEventRunner(eventId, userId);
+    }
+  };
+
   // update a prop in EventDetails to trigger refresh of Collapse component to new size
   refreshCollapseEventDetails = () => {
     const { refreshCollapseEventDetails } = this.state;
@@ -395,7 +429,8 @@ class EventView extends Component {
   // render EventRunners component
   renderEventRunners = () => {
     const {
-      history,
+      // history,
+      mineOnly,
       oevent,
       user,
       addEventRunner,
@@ -410,17 +445,17 @@ class EventView extends Component {
       selectedEventDetails, // only difference from version in MapView
     } = oevent;
     const { current, details: userDetails, errorMessage: userErrorMessage } = user;
-
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
     const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
-    const handleSelectEventRunner = (eventId, userId) => {
-      selectEventToDisplay(eventId);
-      selectRunnerToDisplay(userId);
-      history.push('/mapview');
-      window.scrollTo(0, 0);
-    };
+    // const handleSelectEventRunner = (eventId, userId) => {
+    //   selectEventToDisplay(eventId);
+    //   selectRunnerToDisplay(userId);
+    //   history.push('/mapview');
+    //   window.scrollTo(0, 0);
+    // };
 
+    if (mineOnly) return null;
     return (
       <EventRunners
         addEventRunner={addEventRunner} // prop
@@ -428,7 +463,7 @@ class EventView extends Component {
         currentUserId={currentUserId} // derived
         currentUserOrisId={currentUserOrisId} // derived
         getUserById={getUserById} // prop
-        handleSelectEventRunner={handleSelectEventRunner} // defined here
+        handleSelectEventRunner={this.handleSelectEventRunner} // derived
         selectedEvent={selectedEvent} // derived
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
@@ -491,8 +526,8 @@ class EventView extends Component {
       config,
       oevent,
       user,
-      setEventViewModeEvent,
-      selectEventForDetails,
+      // setEventViewModeEvent,
+      // selectEventForDetails,
     } = this.props;
     const { language } = config;
     const { searchField, list } = oevent;
@@ -503,10 +538,11 @@ class EventView extends Component {
     return (
       <div className="list-limit-height">
         <EventList
-          language={language}
-          events={eventListArray}
-          selectEventForDetails={selectEventForDetails}
-          setEventViewModeEvent={setEventViewModeEvent}
+          language={language} // prop (config)
+          events={eventListArray} // derived
+          handleSelectEvent={this.handleSelectEvent} // derived
+          // selectEventForDetails={selectEventForDetails}
+          // setEventViewModeEvent={setEventViewModeEvent}
         />
       </div>
     );
@@ -517,8 +553,8 @@ class EventView extends Component {
       mineOnly,
       oevent,
       user,
-      setEventViewModeEvent,
-      selectEventForDetails,
+      // setEventViewModeEvent,
+      // selectEventForDetails,
     } = this.props;
     const { searchField, list } = oevent;
     const { current } = user;
@@ -527,8 +563,9 @@ class EventView extends Component {
     return (
       <EventMap
         events={eventListArray}
-        selectEventForDetails={selectEventForDetails}
-        setEventViewModeEvent={setEventViewModeEvent}
+        handleSelectEvent={this.handleSelectEvent} // derived
+        // selectEventForDetails={selectEventForDetails}
+        // setEventViewModeEvent={setEventViewModeEvent}
       />
     );
   }

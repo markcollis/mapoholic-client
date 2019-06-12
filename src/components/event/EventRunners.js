@@ -75,7 +75,7 @@ const EventRunners = ({
         <Trans>Add yourself as a runner</Trans>
       </button>
     );
-  const title = <Trans>Runners at event</Trans>;
+  const title = <Trans>Runners at event (select to see their maps)</Trans>;
   return (
     <div className="ui segment">
       <Collapse title={title}>
