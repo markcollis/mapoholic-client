@@ -31,7 +31,7 @@ const EventResults = ({ selectedEvent, selectedRunner }) => {
         } = result;
         const isCurrent = (regNumber === runnerData.user.regNumber);
         return (
-          <tr key={regNumber} className={(isCurrent) ? 'active' : ''}>
+          <tr key={place.concat(regNumber)} className={(isCurrent) ? 'active' : ''}>
             <td>{place}</td>
             <td>{name}</td>
             <td>{clubShort}</td>

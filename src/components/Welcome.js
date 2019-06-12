@@ -30,7 +30,6 @@ const Welcome = ({ auth, currentUser, eventList }) => {
         <li>Add some more introductory/help text on this page</li>
         <li>Remember list/map tab in MyMaps and Events when moving away</li>
         <li>Remember overview map position when moving away (is it possible?)</li>
-        <li>Separate Redux state for Events/MyMaps</li>
         <li>Hide &apos;runners at event&apos; for MyMaps</li>
         <li>Add a component here to show recent activity (own or all?)</li>
         <li>Complete the translations and check that nothing is missing</li>
@@ -161,6 +160,12 @@ const Welcome = ({ auth, currentUser, eventList }) => {
         </li>
         <li>
           <del>Go to map directly from list selection when viewing MyMaps</del>
+          &nbsp;(done 12/6)
+        </li>
+        <li>
+          <del>
+          Separate Redux state for Events/MyMaps (selected event and view mode recorded separately)
+          </del>
           &nbsp;(done 12/6)
         </li>
       </ol>

@@ -20,11 +20,11 @@ import {
   getClubMembersAction,
   getUserByIdAction,
   selectClubToDisplayAction,
-  selectEventForDetailsAction,
+  selectEventForDetailsEventsAction,
   selectUserToDisplayAction,
   setClubSearchFieldAction,
   setClubViewModeAction,
-  setEventViewModeEventAction,
+  setEventViewModeEventEventsAction,
   setUserViewModeAction,
   updateClubAction,
 } from '../../actions';
@@ -333,9 +333,9 @@ const mapDispatchToProps = {
   getClubEvents: getClubEventsAction,
   getUserById: getUserByIdAction,
   selectClubToDisplay: selectClubToDisplayAction,
-  selectEventForDetails: selectEventForDetailsAction,
+  selectEventForDetails: selectEventForDetailsEventsAction, // forwards to Events view
   selectUserToDisplay: selectUserToDisplayAction,
-  setEventViewModeEvent: setEventViewModeEventAction,
+  setEventViewModeEvent: setEventViewModeEventEventsAction, // forwards to Events view
   setUserViewMode: setUserViewModeAction,
   createClub: createClubAction,
   updateClub: updateClubAction,

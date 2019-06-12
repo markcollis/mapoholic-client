@@ -31,11 +31,15 @@ import {
   getEventListAction,
   getEventListOrisAction,
   getUserByIdAction,
-  selectEventForDetailsAction,
+  selectEventForDetailsEventsAction,
+  selectEventForDetailsMyMapsAction,
   selectEventToDisplayAction,
   selectRunnerToDisplayAction,
-  setEventSearchFieldAction,
-  setEventViewModeEventAction,
+  setEventSearchFieldEventsAction,
+  setEventSearchFieldMyMapsAction,
+  setEventViewModeEventEventsAction,
+  setEventViewModeEventMyMapsAction,
+  setEventViewModeEventMapViewAction,
   setEventViewModeEventLinkAction,
   updateEventAction,
   updateEventLinkAction,
@@ -54,7 +58,8 @@ class EventView extends Component {
     addEventRunner: PropTypes.func.isRequired,
     addEventRunnerOris: PropTypes.func.isRequired,
     cancelEventError: PropTypes.func.isRequired,
-    clearEventSearchField: PropTypes.func.isRequired,
+    clearEventSearchFieldEvents: PropTypes.func.isRequired,
+    clearEventSearchFieldMyMaps: PropTypes.func.isRequired,
     createEvent: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
     createEventOris: PropTypes.func.isRequired,
@@ -65,11 +70,15 @@ class EventView extends Component {
     getEventList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
-    selectEventForDetails: PropTypes.func.isRequired,
+    selectEventForDetailsEvents: PropTypes.func.isRequired,
+    selectEventForDetailsMyMaps: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
-    setEventSearchField: PropTypes.func.isRequired,
-    setEventViewModeEvent: PropTypes.func.isRequired,
+    setEventSearchFieldEvents: PropTypes.func.isRequired,
+    setEventSearchFieldMyMaps: PropTypes.func.isRequired,
+    setEventViewModeEventEvents: PropTypes.func.isRequired,
+    setEventViewModeEventMyMaps: PropTypes.func.isRequired,
+    setEventViewModeEventMapView: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
@@ -193,8 +202,10 @@ class EventView extends Component {
       history,
       selectEventToDisplay,
       selectRunnerToDisplay,
+      setEventViewModeEventMapView,
     } = this.props;
     selectEventToDisplay(eventId);
+    setEventViewModeEventMapView('view');
     selectRunnerToDisplay(userId);
     history.push('/mapview');
     window.scrollTo(0, 0);
@@ -204,20 +215,29 @@ class EventView extends Component {
   handleSelectEvent = (eventId) => {
     const {
       mineOnly,
-      selectEventForDetails,
-      setEventViewModeEvent,
+      selectEventForDetailsEvents,
+      selectEventForDetailsMyMaps,
+      setEventViewModeEventEvents,
+      setEventViewModeEventMyMaps,
       user,
     } = this.props;
     const { current } = user;
     const { _id: userId } = current;
-    selectEventForDetails(eventId);
-    if (eventId === '') {
-      setEventViewModeEvent('none');
-    } else {
-      setEventViewModeEvent('view');
-    }
     if (mineOnly) {
+      selectEventForDetailsMyMaps(eventId);
+      if (eventId === '') {
+        setEventViewModeEventMyMaps('none');
+      } else {
+        setEventViewModeEventMyMaps('view');
+      }
       this.handleSelectEventRunner(eventId, userId);
+    } else {
+      selectEventForDetailsEvents(eventId);
+      if (eventId === '') {
+        setEventViewModeEventEvents('none');
+      } else {
+        setEventViewModeEventEvents('view');
+      }
     }
   };
 
@@ -241,23 +261,39 @@ class EventView extends Component {
       getEventList,
       // getEventListOris,
       getEventLinkList,
-      selectEventForDetails,
+      mineOnly,
+      selectEventForDetailsEvents,
+      selectEventForDetailsMyMaps,
       selectEventToDisplay,
-      setEventViewModeEvent,
+      setEventViewModeEventEvents,
+      setEventViewModeEventMyMaps,
       updateEvent,
     } = this.props;
     const {
       details,
       errorMessage, // different to MapView version
-      eventMode,
+      eventModeEvents,
+      eventModeMyMaps,
       linkList,
       list,
-      selectedEventDetails, // different to MapView version
+      selectedEventDetailsEvents, // different to MapView version
+      selectedEventDetailsMyMaps,
       selectedEventDisplay,
     } = oevent;
     const { details: clubDetails, list: clubList } = club;
     const { language } = config;
     const { current, list: userList } = user;
+    // select appropriate props for Events or MyMaps view
+    const selectEventForDetails = (mineOnly)
+      ? selectEventForDetailsMyMaps
+      : selectEventForDetailsEvents;
+    const setEventViewModeEvent = (mineOnly)
+      ? setEventViewModeEventMyMaps
+      : setEventViewModeEventEvents;
+    const eventMode = (mineOnly) ? eventModeMyMaps : eventModeEvents;
+    const selectedEventDetails = (mineOnly)
+      ? selectedEventDetailsMyMaps
+      : selectedEventDetailsEvents;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
     // different to MapView version
@@ -354,8 +390,11 @@ class EventView extends Component {
       getEventById,
       getEventLinkList,
       getEventList,
-      selectEventForDetails,
-      setEventViewModeEvent,
+      mineOnly,
+      selectEventForDetailsEvents,
+      selectEventForDetailsMyMaps,
+      setEventViewModeEventEvents,
+      setEventViewModeEventMyMaps,
       setEventViewModeEventLink,
       updateEventLink,
     } = this.props;
@@ -367,11 +406,22 @@ class EventView extends Component {
       list,
       linkDetails,
       linkList,
-      selectedEventDetails,
+      selectedEventDetailsEvents,
+      selectedEventDetailsMyMaps,
       selectedEventDisplay,
       selectedEventLink,
     } = oevent;
     const { current } = user;
+    // select appropriate props for Events or MyMaps view
+    const selectEventForDetails = (mineOnly)
+      ? selectEventForDetailsMyMaps
+      : selectEventForDetailsEvents;
+    const setEventViewModeEvent = (mineOnly)
+      ? setEventViewModeEventMyMaps
+      : setEventViewModeEventEvents;
+    const selectedEventDetails = (mineOnly)
+      ? selectedEventDetailsMyMaps
+      : selectedEventDetailsEvents;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
     // different from MapView version
@@ -442,11 +492,16 @@ class EventView extends Component {
     const {
       details,
       errorMessage,
-      selectedEventDetails, // only difference from version in MapView
+      selectedEventDetailsEvents, // only difference from version in MapView
+      selectedEventDetailsMyMaps,
     } = oevent;
     const { current, details: userDetails, errorMessage: userErrorMessage } = user;
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
+    // select appropriate props for Events or MyMaps view
+    const selectedEventDetails = (mineOnly)
+      ? selectedEventDetailsMyMaps
+      : selectedEventDetailsEvents;
     const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
     // const handleSelectEventRunner = (eventId, userId) => {
     //   selectEventToDisplay(eventId);
@@ -499,13 +554,35 @@ class EventView extends Component {
       oevent,
       user,
       getEventList,
-      clearEventSearchField,
-      setEventSearchField,
-      setEventViewModeEvent,
-      selectEventForDetails,
+      clearEventSearchFieldEvents,
+      clearEventSearchFieldMyMaps,
+      mineOnly,
+      setEventSearchFieldEvents,
+      setEventSearchFieldMyMaps,
+      setEventViewModeEventEvents,
+      setEventViewModeEventMyMaps,
+      selectEventForDetailsEvents,
+      selectEventForDetailsMyMaps,
     } = this.props;
-    const { searchField } = oevent;
+    const {
+      searchFieldEvents,
+      searchFieldMyMaps,
+    } = oevent;
     const { current } = user;
+    // select appropriate props for Events or MyMaps view
+    const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
+    const selectEventForDetails = (mineOnly)
+      ? selectEventForDetailsMyMaps
+      : selectEventForDetailsEvents;
+    const setEventViewModeEvent = (mineOnly)
+      ? setEventViewModeEventMyMaps
+      : setEventViewModeEventEvents;
+    const setEventSearchField = (mineOnly)
+      ? setEventSearchFieldMyMaps
+      : setEventSearchFieldEvents;
+    const clearEventSearchField = (mineOnly)
+      ? clearEventSearchFieldMyMaps
+      : clearEventSearchFieldEvents;
 
     return (
       <EventFilter
@@ -530,8 +607,14 @@ class EventView extends Component {
       // selectEventForDetails,
     } = this.props;
     const { language } = config;
-    const { searchField, list } = oevent;
+    const {
+      searchFieldEvents,
+      searchFieldMyMaps,
+      list,
+    } = oevent;
     const { current } = user;
+    // select appropriate props for Events or MyMaps view
+    const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
     // need to consider reducing the number shown if there are many many events...
     const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
 
@@ -556,8 +639,14 @@ class EventView extends Component {
       // setEventViewModeEvent,
       // selectEventForDetails,
     } = this.props;
-    const { searchField, list } = oevent;
+    const {
+      searchFieldEvents,
+      searchFieldMyMaps,
+      list,
+    } = oevent;
     const { current } = user;
+    // select appropriate props for Events or MyMaps view
+    const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
     const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
 
     return (
@@ -626,7 +715,8 @@ const mapDispatchToProps = {
   addEventRunner: addEventRunnerAction,
   addEventRunnerOris: addEventRunnerOrisAction,
   cancelEventError: cancelEventErrorAction,
-  clearEventSearchField: () => setEventSearchFieldAction(''),
+  clearEventSearchFieldEvents: () => setEventSearchFieldEventsAction(''),
+  clearEventSearchFieldMyMaps: () => setEventSearchFieldMyMapsAction(''),
   createEvent: createEventAction,
   createEventLink: createEventLinkAction,
   createEventOris: createEventOrisAction,
@@ -637,11 +727,15 @@ const mapDispatchToProps = {
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,
   getUserById: getUserByIdAction,
-  selectEventForDetails: selectEventForDetailsAction,
+  selectEventForDetailsEvents: selectEventForDetailsEventsAction,
+  selectEventForDetailsMyMaps: selectEventForDetailsMyMapsAction,
   selectEventToDisplay: selectEventToDisplayAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
-  setEventSearchField: event => setEventSearchFieldAction(event.target.value),
-  setEventViewModeEvent: setEventViewModeEventAction,
+  setEventSearchFieldEvents: event => setEventSearchFieldEventsAction(event.target.value),
+  setEventSearchFieldMyMaps: event => setEventSearchFieldMyMapsAction(event.target.value),
+  setEventViewModeEventEvents: setEventViewModeEventEventsAction,
+  setEventViewModeEventMapView: setEventViewModeEventMapViewAction,
+  setEventViewModeEventMyMaps: setEventViewModeEventMyMapsAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,

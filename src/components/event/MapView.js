@@ -34,11 +34,11 @@ import {
   getUserByIdAction,
   postCommentAction,
   postMapAction,
-  selectEventForDetailsAction,
+  selectEventForDetailsMapViewAction,
   selectEventToDisplayAction,
   selectMapToDisplayAction,
   selectRunnerToDisplayAction,
-  setEventViewModeEventAction,
+  setEventViewModeEventMapViewAction,
   setEventViewModeEventLinkAction,
   setEventViewModeRunnerAction,
   updateCommentAction,
@@ -162,6 +162,7 @@ class MapView extends Component {
       addEventRunner,
       addEventRunnerOris,
       getUserById,
+      // setEventViewModeEvent,
       selectEventToDisplay,
       selectRunnerToDisplay,
     } = this.props;
@@ -177,6 +178,7 @@ class MapView extends Component {
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
     const handleSelectEventRunner = (eventId, userId) => {
       selectEventToDisplay(eventId);
+      // setEventViewModeEvent('view');
       selectRunnerToDisplay(userId);
     };
 
@@ -282,7 +284,7 @@ class MapView extends Component {
     const {
       details,
       errorMessage,
-      eventMode,
+      eventModeMapView,
       linkList,
       list,
       selectedEventDisplay,
@@ -290,13 +292,12 @@ class MapView extends Component {
     const { details: clubDetails, list: clubList } = club;
     const { language } = config;
     const { current, list: userList } = user;
-
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
     const organisingClubs = this.getOrganisingClubs(selectedEvent, clubDetails);
 
-    switch (eventMode) {
+    switch (eventModeMapView) {
       case 'none':
         return (
           <div className="ui segment">
@@ -322,7 +323,7 @@ class MapView extends Component {
             clubList={clubList} // prop (club)
             eventLinkList={linkList} // prop (oevent)
             eventList={list} // prop (oevent)
-            eventMode={eventMode} // prop (oevent)
+            eventMode={eventModeMapView} // prop (oevent)
             getEventList={getEventList} // prop
             isAdmin={isAdmin} // derived
             language={language} // prop (config)
@@ -602,11 +603,11 @@ const mapDispatchToProps = {
   getUserById: getUserByIdAction,
   postComment: postCommentAction,
   postMap: postMapAction,
-  selectEventForDetails: selectEventForDetailsAction,
+  selectEventForDetails: selectEventForDetailsMapViewAction,
   selectEventToDisplay: selectEventToDisplayAction,
   selectMapToDisplay: selectMapToDisplayAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
-  setEventViewModeEvent: setEventViewModeEventAction,
+  setEventViewModeEvent: setEventViewModeEventMapViewAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
   setEventViewModeRunner: setEventViewModeRunnerAction,
   updateComment: updateCommentAction,

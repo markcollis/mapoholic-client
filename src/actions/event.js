@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import {
   EVENT_GOT_LIST,
@@ -20,25 +19,56 @@ import {
   EVENT_LINK_DELETED,
   EVENT_COMMENT_DELETED,
   EVENT_ERROR,
-  EVENT_CHANGE_SEARCH_FIELD,
-  EVENT_CHANGE_VIEW_EVENT,
+  EVENT_CHANGE_SEARCH_FIELD_EVENTS,
+  EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
+  EVENT_CHANGE_VIEW_EVENT_EVENTS,
+  EVENT_CHANGE_VIEW_EVENT_MYMAPS,
+  EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
   EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_SELECT_EVENT_DETAILS,
+  EVENT_SELECT_EVENT_DETAILS_EVENTS,
+  EVENT_SELECT_EVENT_DETAILS_MYMAPS,
+  EVENT_SELECT_EVENT_DETAILS_MAPVIEW,
   EVENT_SELECT_EVENT_DISPLAY,
   EVENT_SELECT_RUNNER,
   EVENT_SELECT_MAP,
+  EVENT_MAP_SET_BOUNDS_EVENTS,
+  EVENT_MAP_SET_BOUNDS_MYMAPS,
+  EVENT_MAP_SET_ZOOM_EVENTS,
+  EVENT_MAP_SET_ZOOM_MYMAPS,
 } from './types';
 import { OMAPFOLDER_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
 
 // *** Local Actions ***
-// change event view mode (events)
-export const setEventViewModeEventAction = (mode) => {
+// change event view mode (events - Events view)
+export const setEventViewModeEventEventsAction = (mode) => {
   const validModes = ['none', 'view', 'add', 'edit', 'delete'];
   if (validModes.includes(mode)) {
     return ({
-      type: EVENT_CHANGE_VIEW_EVENT,
+      type: EVENT_CHANGE_VIEW_EVENT_EVENTS,
+      payload: mode,
+    });
+  }
+  return null;
+};
+// change event view mode (events - MyMaps view)
+export const setEventViewModeEventMyMapsAction = (mode) => {
+  const validModes = ['none', 'view', 'add', 'edit', 'delete'];
+  if (validModes.includes(mode)) {
+    return ({
+      type: EVENT_CHANGE_VIEW_EVENT_MYMAPS,
+      payload: mode,
+    });
+  }
+  return null;
+};
+// change event view mode (events - Map view)
+export const setEventViewModeEventMapViewAction = (mode) => {
+  const validModes = ['none', 'view', 'add', 'edit', 'delete'];
+  if (validModes.includes(mode)) {
+    return ({
+      type: EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
       payload: mode,
     });
   }
@@ -66,14 +96,29 @@ export const setEventViewModeRunnerAction = (mode) => {
   }
   return null;
 };
-// track changes to the event search field
-export const setEventSearchFieldAction = text => ({
-  type: EVENT_CHANGE_SEARCH_FIELD,
+// track changes to the event search field (Events view)
+export const setEventSearchFieldEventsAction = text => ({
+  type: EVENT_CHANGE_SEARCH_FIELD_EVENTS,
   payload: text,
 });
-// select an event to show additional details in list/map view
-export const selectEventForDetailsAction = eventId => ({
-  type: EVENT_SELECT_EVENT_DETAILS,
+// track changes to the event search field (MyMaps view)
+export const setEventSearchFieldMyMapsAction = text => ({
+  type: EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
+  payload: text,
+});
+// select an event to show additional details (Events view)
+export const selectEventForDetailsEventsAction = eventId => ({
+  type: EVENT_SELECT_EVENT_DETAILS_EVENTS,
+  payload: eventId,
+});
+// select an event to show additional details (MyMaps view)
+export const selectEventForDetailsMyMapsAction = eventId => ({
+  type: EVENT_SELECT_EVENT_DETAILS_MYMAPS,
+  payload: eventId,
+});
+// select an event to show additional details (Map view)
+export const selectEventForDetailsMapViewAction = eventId => ({
+  type: EVENT_SELECT_EVENT_DETAILS_MAPVIEW,
   payload: eventId,
 });
 // select an event to display maps for
@@ -90,6 +135,26 @@ export const selectRunnerToDisplayAction = userId => ({
 export const selectMapToDisplayAction = mapId => ({
   type: EVENT_SELECT_MAP,
   payload: mapId,
+});
+// set lat/long bounds for overview map (Events view)
+export const setMapBoundsEventsAction = bounds => ({
+  type: EVENT_MAP_SET_BOUNDS_EVENTS,
+  payload: bounds,
+});
+// set lat/long bounds for overview map (MyMaps view)
+export const setMapBoundsMyMapsAction = bounds => ({
+  type: EVENT_MAP_SET_BOUNDS_MYMAPS,
+  payload: bounds,
+});
+// set zoom level for overview map (Events view)
+export const setMapZoomEventsAction = zoomLevel => ({
+  type: EVENT_MAP_SET_ZOOM_EVENTS,
+  payload: zoomLevel,
+});
+// set zoom level for overview map (MyMaps view)
+export const setMapZoomMyMapsAction = zoomLevel => ({
+  type: EVENT_MAP_SET_ZOOM_MYMAPS,
+  payload: zoomLevel,
 });
 // cancel a displayed error message
 export const cancelEventErrorAction = () => ({
@@ -202,7 +267,7 @@ export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch, 
 // retrieve a list of events as an anonymous browser
 // app.get('/events/public', publicRoute, Events.getEventList);
 export const getEventListAction = (searchCriteria, callback) => async (dispatch, getState) => {
-  console.log('getEventListAction triggered');
+  // console.log('getEventListAction triggered');
   const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
   try {
     const state = getState();

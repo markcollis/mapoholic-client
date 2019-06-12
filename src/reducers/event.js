@@ -19,14 +19,23 @@ import {
   EVENT_LINK_DELETED,
   EVENT_COMMENT_DELETED,
   EVENT_ERROR,
-  EVENT_CHANGE_SEARCH_FIELD,
-  EVENT_CHANGE_VIEW_EVENT,
+  EVENT_CHANGE_SEARCH_FIELD_EVENTS,
+  EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
+  EVENT_CHANGE_VIEW_EVENT_EVENTS,
+  EVENT_CHANGE_VIEW_EVENT_MYMAPS,
+  EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
   EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_SELECT_EVENT_DETAILS,
+  EVENT_SELECT_EVENT_DETAILS_EVENTS,
+  EVENT_SELECT_EVENT_DETAILS_MYMAPS,
+  EVENT_SELECT_EVENT_DETAILS_MAPVIEW,
   EVENT_SELECT_EVENT_DISPLAY,
   EVENT_SELECT_RUNNER,
   EVENT_SELECT_MAP,
+  EVENT_MAP_SET_BOUNDS_EVENTS,
+  EVENT_MAP_SET_BOUNDS_MYMAPS,
+  EVENT_MAP_SET_ZOOM_EVENTS,
+  EVENT_MAP_SET_ZOOM_MYMAPS,
 } from '../actions/types';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
@@ -107,8 +116,11 @@ const removeEventFromList = (list, eventId) => {
 };
 
 const INITIAL_STATE = {
-  searchField: '', // contents of search box in EventFilter
-  eventMode: 'none', // none, view, add, edit, delete
+  searchFieldEvents: '', // contents of search box in EventFilter (Events view)
+  searchFieldMyMaps: '', // contents of search box in EventFilter (MyMaps view)
+  eventModeEvents: 'none', // none, view, add, edit, delete (Events view)
+  eventModeMyMaps: 'none', // none, view, add, edit, delete (MyMaps view)
+  eventModeMapView: 'view', // view, add, edit, delete (Map view)
   eventLinkMode: 'view', // view, add, edit, delete
   runnerMode: 'view', // none, view, edit, delete
   list: null, // replaced each time API is queried, also populates corresponding details
@@ -116,11 +128,17 @@ const INITIAL_STATE = {
   linkDetails: {}, // all link list records downloaded/updated
   orisList: null, // replaced each time API is queried, list specific to current user
   details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
-  selectedEventDetails: '', // eventId of event to show details of in list/map view
+  selectedEventDetailsEvents: '', // eventId of event to show details of (Events view)
+  selectedEventDetailsMyMaps: '', // eventId of event to show details of (MyMaps view)
+  selectedEventDetailsMapView: '', // eventId of event to show details of (Map view)
   selectedEventDisplay: '', // eventId of event to display maps for (can browse events without reset)
   selectedEventLink: '', // eventLinkId of event link to edit or delete
   selectedRunner: '', // userId of runner to display maps for
   selectedMap: '', // mapId of map to display
+  mapBoundsEvents: [[50, 14], [50.2, 14.2]],
+  mapBoundsMyMaps: [[50, 14], [50.2, 14.2]],
+  mapZoomLevelEvents: undefined,
+  mapZoomLevelMyMaps: undefined,
   errorMessage: '', // empty unless an error occurs
 };
 
@@ -195,17 +213,35 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         ...state,
         errorMessage: action.payload,
       };
-    case EVENT_CHANGE_SEARCH_FIELD:
-      // console.log('EVENT_CHANGE_SEARCH_FIELD payload:', action.payload);
+    case EVENT_CHANGE_SEARCH_FIELD_EVENTS:
+      // console.log('EVENT_CHANGE_SEARCH_FIELD_EVENTS payload:', action.payload);
       return {
         ...state,
-        searchField: action.payload,
+        searchFieldEvents: action.payload,
       };
-    case EVENT_CHANGE_VIEW_EVENT:
-      // console.log('EVENT_CHANGE_VIEW_EVENT payload:', action.payload);
+    case EVENT_CHANGE_SEARCH_FIELD_MYMAPS:
+      // console.log('EVENT_CHANGE_SEARCH_FIELD_MYMAPS payload:', action.payload);
       return {
         ...state,
-        eventMode: action.payload,
+        searchFieldMyMaps: action.payload,
+      };
+    case EVENT_CHANGE_VIEW_EVENT_EVENTS:
+      // console.log('EVENT_CHANGE_VIEW_EVENT_EVENTS payload:', action.payload);
+      return {
+        ...state,
+        eventModeEvents: action.payload,
+      };
+    case EVENT_CHANGE_VIEW_EVENT_MYMAPS:
+      // console.log('EVENT_CHANGE_VIEW_EVENT_MYMAPS payload:', action.payload);
+      return {
+        ...state,
+        eventModeMyMaps: action.payload,
+      };
+    case EVENT_CHANGE_VIEW_EVENT_MAPVIEW:
+      // console.log('EVENT_CHANGE_VIEW_EVENT_MAPVIEW payload:', action.payload);
+      return {
+        ...state,
+        eventModeMapView: action.payload,
       };
     case EVENT_CHANGE_VIEW_EVENT_LINK:
       // console.log('EVENT_CHANGE_VIEW_EVENT_LINK payload:', action.payload);
@@ -220,11 +256,23 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         ...state,
         runnerMode: action.payload,
       };
-    case EVENT_SELECT_EVENT_DETAILS:
-      // console.log('EVENT_SELECT_EVENT_DETAILS payload:', action.payload);
+    case EVENT_SELECT_EVENT_DETAILS_EVENTS:
+      // console.log('EVENT_SELECT_EVENT_DETAILS_EVENTS payload:', action.payload);
       return {
         ...state,
-        selectedEventDetails: action.payload,
+        selectedEventDetailsEvents: action.payload,
+      };
+    case EVENT_SELECT_EVENT_DETAILS_MYMAPS:
+      // console.log('EVENT_SELECT_EVENT_DETAILS_MYMAPS payload:', action.payload);
+      return {
+        ...state,
+        selectedEventDetailsMyMaps: action.payload,
+      };
+    case EVENT_SELECT_EVENT_DETAILS_MAPVIEW:
+      // console.log('EVENT_SELECT_EVENT_DETAILS_MAPVIEW payload:', action.payload);
+      return {
+        ...state,
+        selectedEventDetailsMapView: action.payload,
       };
     case EVENT_SELECT_EVENT_DISPLAY:
       // console.log('EVENT_SELECT_EVENT_DISPLAY payload:', action.payload);
@@ -243,6 +291,30 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         selectedMap: action.payload,
+      };
+    case EVENT_MAP_SET_BOUNDS_EVENTS:
+      // console.log('EVENT_MAP_SET_BOUNDS_EVENTS:', action.payload);
+      return {
+        ...state,
+        mapBoundsEvents: action.payload,
+      };
+    case EVENT_MAP_SET_BOUNDS_MYMAPS:
+      // console.log('EVENT_MAP_SET_BOUNDS_MYMAPS:', action.payload);
+      return {
+        ...state,
+        mapBoundsMyMaps: action.payload,
+      };
+    case EVENT_MAP_SET_ZOOM_EVENTS:
+      // console.log('EVENT_MAP_SET_ZOOM_EVENTS:', action.payload);
+      return {
+        ...state,
+        mapZoomLevelEvents: action.payload,
+      };
+    case EVENT_MAP_SET_ZOOM_MYMAPS:
+      // console.log('EVENT_MAP_SET_ZOOM_MYMAPS:', action.payload);
+      return {
+        ...state,
+        mapZoomLevelMyMaps: action.payload,
       };
     case EVENT_MAP_DELETED: // same as uploaded, refresh event details record
     case EVENT_MAP_UPLOADED: {
