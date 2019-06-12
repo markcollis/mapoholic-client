@@ -34,8 +34,8 @@ import {
   EVENT_SELECT_MAP,
   EVENT_MAP_SET_BOUNDS_EVENTS,
   EVENT_MAP_SET_BOUNDS_MYMAPS,
-  EVENT_MAP_SET_ZOOM_EVENTS,
-  EVENT_MAP_SET_ZOOM_MYMAPS,
+  // EVENT_MAP_SET_ZOOM_EVENTS,
+  // EVENT_MAP_SET_ZOOM_MYMAPS,
 } from '../actions/types';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
@@ -135,10 +135,10 @@ const INITIAL_STATE = {
   selectedEventLink: '', // eventLinkId of event link to edit or delete
   selectedRunner: '', // userId of runner to display maps for
   selectedMap: '', // mapId of map to display
-  mapBoundsEvents: [[50, 14], [50.2, 14.2]],
-  mapBoundsMyMaps: [[50, 14], [50.2, 14.2]],
-  mapZoomLevelEvents: undefined,
-  mapZoomLevelMyMaps: undefined,
+  mapBoundsEvents: null, // [[50, 14], [50.2, 14.2]],
+  mapBoundsMyMaps: null, // [[50, 14], [50.2, 14.2]],
+  // mapZoomLevelEvents: undefined,
+  // mapZoomLevelMyMaps: undefined,
   errorMessage: '', // empty unless an error occurs
 };
 
@@ -304,18 +304,18 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         ...state,
         mapBoundsMyMaps: action.payload,
       };
-    case EVENT_MAP_SET_ZOOM_EVENTS:
-      // console.log('EVENT_MAP_SET_ZOOM_EVENTS:', action.payload);
-      return {
-        ...state,
-        mapZoomLevelEvents: action.payload,
-      };
-    case EVENT_MAP_SET_ZOOM_MYMAPS:
-      // console.log('EVENT_MAP_SET_ZOOM_MYMAPS:', action.payload);
-      return {
-        ...state,
-        mapZoomLevelMyMaps: action.payload,
-      };
+    // case EVENT_MAP_SET_ZOOM_EVENTS:
+    //   // console.log('EVENT_MAP_SET_ZOOM_EVENTS:', action.payload);
+    //   return {
+    //     ...state,
+    //     mapZoomLevelEvents: action.payload,
+    //   };
+    // case EVENT_MAP_SET_ZOOM_MYMAPS:
+    //   // console.log('EVENT_MAP_SET_ZOOM_MYMAPS:', action.payload);
+    //   return {
+    //     ...state,
+    //     mapZoomLevelMyMaps: action.payload,
+    //   };
     case EVENT_MAP_DELETED: // same as uploaded, refresh event details record
     case EVENT_MAP_UPLOADED: {
       // console.log('EVENT_MAP_UPLOADED payload:', action.payload);

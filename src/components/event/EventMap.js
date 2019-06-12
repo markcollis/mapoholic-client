@@ -30,40 +30,45 @@ class EventMap extends Component {
   }
 
   componentDidMount() {
-    const { events } = this.props;
-    console.log('Event Map mounted - events:', events);
-    const eventBounds = events
-      .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
-      .map((eventDetails) => {
-        const {
-          locLat,
-          locLong,
-        } = eventDetails;
-        return [locLat, locLong];
-      });
-    // console.log('eventBounds:', eventBounds);
-    if (eventBounds.length > 0) {
-      const mapBounds = eventBounds.reduce((acc, val) => {
-        const low = [
-          (val[0] < acc[0][0]) ? val[0] : acc[0][0],
-          (val[1] < acc[0][1]) ? val[1] : acc[0][1],
-        ];
-        const high = [
-          (val[0] > acc[1][0]) ? val[0] : acc[1][0],
-          (val[1] > acc[1][1]) ? val[1] : acc[1][1],
-        ];
-        return [low, high];
-      }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
-        [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
-      // console.log('mapBounds:', mapBounds);
+    const { events, mapBounds } = this.props;
+    // console.log('Event Map mounted - events:', events);
+    // console.log('mapBounds:', mapBounds);
+    if (mapBounds) {
       this.setState({ mapBounds });
+    } else {
+      const eventBounds = events
+        .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
+        .map((eventDetails) => {
+          const {
+            locLat,
+            locLong,
+          } = eventDetails;
+          return [locLat, locLong];
+        });
+      // console.log('eventBounds:', eventBounds);
+      if (eventBounds.length > 0) {
+        const mapBoundsToSet = eventBounds.reduce((acc, val) => {
+          const low = [
+            (val[0] < acc[0][0]) ? val[0] : acc[0][0],
+            (val[1] < acc[0][1]) ? val[1] : acc[0][1],
+          ];
+          const high = [
+            (val[0] > acc[1][0]) ? val[0] : acc[1][0],
+            (val[1] > acc[1][1]) ? val[1] : acc[1][1],
+          ];
+          return [low, high];
+        }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
+          [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
+        // console.log('mapBounds:', mapBounds);
+        this.setState({ mapBounds: mapBoundsToSet });
+      }
     }
   }
 
   componentDidUpdate(prevProps) {
     const { events } = this.props;
     if (events !== prevProps.events) {
-      console.log('Event Map updated - events:', events);
+      // console.log('Event Map updated - events:', events);
       const eventBounds = events
         .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
         .map((eventDetails) => {
@@ -91,6 +96,20 @@ class EventMap extends Component {
         /* eslint react/no-did-update-set-state: 0 */
         this.setState({ mapBounds }); // safe to use due to prevProps check
       }
+    }
+  }
+
+  componentWillUnmount() {
+    const { setMapBounds } = this.props;
+    if (this.mapRef.current) {
+      const leafletMap = this.mapRef.current.leafletElement;
+      const currentBounds = leafletMap.getBounds();
+      // console.log('current bounds on unmounting:', currentBounds);
+      const { _southWest: sw, _northEast: ne } = currentBounds;
+      const currentBoundsAsArray = [[sw.lat, sw.lng], [ne.lat, ne.lng]];
+      // console.log('current bounds on unmounting:', currentBoundsAsArray);
+      // console.log('centre, zoom:', leafletMap.getCenter(), leafletMap.getZoom());
+      setMapBounds(currentBoundsAsArray);
     }
   }
 
@@ -170,7 +189,14 @@ class EventMap extends Component {
     // console.log('current zoom:', this.state.mapZoomLevel);
     const { events } = this.props;
     const { mapBounds } = this.state;
-    // console.log('mapBounds', mapBounds);
+    // console.log('mapBounds in state', mapBounds);
+    // if (this.mapRef.current) {
+    //   const leafletMap = this.mapRef.current.leafletElement;
+    //   console.log('current bounds:', leafletMap.getBounds());
+    //   // console.log('centre, zoom:', leafletMap.getCenter(), leafletMap.getZoom());
+    // } else {
+    //   console.log('no mapRef yet');
+    // }
     // <p>is it here</p>
     return (
       <div className="ui segment">
@@ -190,11 +216,14 @@ class EventMap extends Component {
 EventMap.propTypes = {
   events: PropTypes.arrayOf(PropTypes.any),
   handleSelectEvent: PropTypes.func.isRequired,
+  mapBounds: PropTypes.arrayOf(PropTypes.array),
+  setMapBounds: PropTypes.func.isRequired,
   // selectEventForDetails: PropTypes.func.isRequired,
   // setEventViewModeEvent: PropTypes.func.isRequired,
 };
 EventMap.defaultProps = {
   events: [],
+  mapBounds: null,
 };
 
 export default EventMap;

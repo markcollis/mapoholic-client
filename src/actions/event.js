@@ -34,8 +34,8 @@ import {
   EVENT_SELECT_MAP,
   EVENT_MAP_SET_BOUNDS_EVENTS,
   EVENT_MAP_SET_BOUNDS_MYMAPS,
-  EVENT_MAP_SET_ZOOM_EVENTS,
-  EVENT_MAP_SET_ZOOM_MYMAPS,
+  // EVENT_MAP_SET_ZOOM_EVENTS,
+  // EVENT_MAP_SET_ZOOM_MYMAPS,
 } from './types';
 import { OMAPFOLDER_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
@@ -146,16 +146,16 @@ export const setMapBoundsMyMapsAction = bounds => ({
   type: EVENT_MAP_SET_BOUNDS_MYMAPS,
   payload: bounds,
 });
-// set zoom level for overview map (Events view)
-export const setMapZoomEventsAction = zoomLevel => ({
-  type: EVENT_MAP_SET_ZOOM_EVENTS,
-  payload: zoomLevel,
-});
-// set zoom level for overview map (MyMaps view)
-export const setMapZoomMyMapsAction = zoomLevel => ({
-  type: EVENT_MAP_SET_ZOOM_MYMAPS,
-  payload: zoomLevel,
-});
+// // set zoom level for overview map (Events view)
+// export const setMapZoomEventsAction = zoomLevel => ({
+//   type: EVENT_MAP_SET_ZOOM_EVENTS,
+//   payload: zoomLevel,
+// });
+// // set zoom level for overview map (MyMaps view)
+// export const setMapZoomMyMapsAction = zoomLevel => ({
+//   type: EVENT_MAP_SET_ZOOM_MYMAPS,
+//   payload: zoomLevel,
+// });
 // cancel a displayed error message
 export const cancelEventErrorAction = () => ({
   type: EVENT_ERROR,

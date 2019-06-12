@@ -41,6 +41,10 @@ import {
   setEventViewModeEventMyMapsAction,
   setEventViewModeEventMapViewAction,
   setEventViewModeEventLinkAction,
+  setMapBoundsEventsAction,
+  setMapBoundsMyMapsAction,
+  // setMapZoomEventsAction,
+  // setMapZoomMyMapsAction,
   updateEventAction,
   updateEventLinkAction,
 } from '../../actions';
@@ -80,6 +84,10 @@ class EventView extends Component {
     setEventViewModeEventMyMaps: PropTypes.func.isRequired,
     setEventViewModeEventMapView: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
+    setMapBoundsEvents: PropTypes.func.isRequired,
+    setMapBoundsMyMaps: PropTypes.func.isRequired,
+    // setMapZoomEvents: PropTypes.func.isRequired,
+    // setMapZoomMyMaps: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
   }
@@ -638,21 +646,37 @@ class EventView extends Component {
       user,
       // setEventViewModeEvent,
       // selectEventForDetails,
+      setMapBoundsEvents,
+      setMapBoundsMyMaps,
+      // setMapZoomEvents,
+      // setMapZoomMyMaps,
     } = this.props;
     const {
+      mapBoundsEvents,
+      mapBoundsMyMaps,
+      // mapZoomLevelEvents,
+      // mapZoomLevelMyMaps,
       searchFieldEvents,
       searchFieldMyMaps,
       list,
     } = oevent;
     const { current } = user;
     // select appropriate props for Events or MyMaps view
+    const setMapBounds = (mineOnly) ? setMapBoundsMyMaps : setMapBoundsEvents;
+    // const setMapZoom = (mineOnly) ? setMapZoomMyMaps : setMapZoomEvents;
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
+    const mapBounds = (mineOnly) ? mapBoundsMyMaps : mapBoundsEvents;
+    // const mapZoomLevel = (mineOnly) ? mapZoomLevelMyMaps : mapZoomLevelEvents;
     const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
 
     return (
       <EventMap
         events={eventListArray}
         handleSelectEvent={this.handleSelectEvent} // derived
+        mapBounds={mapBounds}
+        // mapZoomLevel={mapZoomLevel}
+        setMapBounds={setMapBounds}
+        // setMapZoom={setMapZoom}
         // selectEventForDetails={selectEventForDetails}
         // setEventViewModeEvent={setEventViewModeEvent}
       />
@@ -737,6 +761,10 @@ const mapDispatchToProps = {
   setEventViewModeEventMapView: setEventViewModeEventMapViewAction,
   setEventViewModeEventMyMaps: setEventViewModeEventMyMapsAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
+  setMapBoundsEvents: setMapBoundsEventsAction,
+  setMapBoundsMyMaps: setMapBoundsMyMapsAction,
+  // setMapZoomEvents: setMapZoomEventsAction,
+  // setMapZoomMyMaps: setMapZoomMyMapsAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,
 };
