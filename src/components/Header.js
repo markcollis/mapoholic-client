@@ -39,14 +39,28 @@ class Header extends Component {
     isGettingEventList: false,
     isGettingEventLinkList: false,
     isGettingUserList: false,
+    linkEvents: '/events',
+    linkMyMaps: '/mymaps',
   }
 
   componentDidMount() {
     this.fetchDataIfRequired();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.fetchDataIfRequired();
+    const { location: oldLocation } = prevProps;
+    const { location: newLocation } = this.props;
+    const newPath = newLocation.pathname;
+    /* eslint react/no-did-update-set-state: 0 */
+    if (oldLocation.pathname !== newPath) { // OK to use setState inside condition
+      if (newPath === '/events' || newPath === '/eventsmap') {
+        this.setState({ linkEvents: newPath });
+      }
+      if (newPath === '/mymaps' || newPath === '/mymapsmap') {
+        this.setState({ linkMyMaps: newPath });
+      }
+    }
   }
 
   fetchDataIfRequired = () => {
@@ -100,6 +114,10 @@ class Header extends Component {
   };
 
   render() {
+    const {
+      linkEvents,
+      linkMyMaps,
+    } = this.state;
     // console.log('props in Header:', this.props);
     // console.log('state in Header:', this.state);
     const {
@@ -111,7 +129,6 @@ class Header extends Component {
     } = this.props;
     const { current } = user;
     const { selectedEventDisplay, selectedRunner } = oevent;
-
     const userDetails = (current)
       ? (
         <div>
@@ -137,6 +154,9 @@ class Header extends Component {
     const isUsers = (location.pathname === '/users');
     const isClubs = (location.pathname === '/clubs');
     const isCurrentUser = (location.pathname === '/me');
+
+    // const linkEvents = '/events';
+    // const linkMyMaps = '/mymaps';
 
     const selectLanguage = (
       <div className="item">
@@ -195,10 +215,10 @@ class Header extends Component {
                 </Link>
               )
               : null}
-            <Link to="/mymaps" className={(isMyMapsGroup) ? 'active blue item' : 'item'}>
+            <Link to={linkMyMaps} className={(isMyMapsGroup) ? 'active blue item' : 'item'}>
               <Trans>My Maps</Trans>
             </Link>
-            <Link to="/events" className={(isEventsGroup) ? 'active blue item' : 'item'}>
+            <Link to={linkEvents} className={(isEventsGroup) ? 'active blue item' : 'item'}>
               <Trans>Events</Trans>
             </Link>
             <Link to="/users" className={(isUsers) ? 'active blue item' : 'item'}>
@@ -224,7 +244,7 @@ class Header extends Component {
       <div>
         <div className="ui menu secondary pointing">
           <Link to="/" className={(isHome) ? 'active blue item' : 'item'}><i className="icon home" /></Link>
-          <Link to="/events" className={(isEventsGroup) ? 'active blue item' : 'item'}>
+          <Link to={linkEvents} className={(isEventsGroup) ? 'active blue item' : 'item'}>
             <Trans>Browse Public Maps</Trans>
           </Link>
           <div className="right menu">

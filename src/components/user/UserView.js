@@ -237,6 +237,7 @@ class UserView extends Component {
       deleteProfileImage,
       getClubMembers,
       getUserById,
+      getUserList,
       ownProfile,
       postProfileImage,
       selectUserToDisplay,
@@ -269,6 +270,7 @@ class UserView extends Component {
         deleteProfileImage={deleteProfileImage} // prop
         getClubMembers={getClubMembers} // prop
         getUserById={getUserById} // prop
+        getUserList={getUserList} // prop
         isAdmin={isAdmin} // derived
         language={language} // prop (config)
         postProfileImage={postProfileImage} // prop

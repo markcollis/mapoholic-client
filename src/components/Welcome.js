@@ -28,10 +28,19 @@ const Welcome = ({ auth, currentUser, eventList }) => {
       <p>Checklist of things still to do:</p>
       <ol>
         <li>Add some more introductory/help text on this page</li>
-        <li>Remember list/map tab in MyMaps and Events when moving away</li>
-        <li>Remember overview map position when moving away (is it possible?)</li>
-        <li>Hide &apos;runners at event&apos; for MyMaps</li>
-        <li>Add a component here to show recent activity (own or all?)</li>
+        <li>
+          <del>Remember list/map tab in MyMaps and Events when moving away</del>
+          &nbsp;(done 13/6, using state in Header component)
+        </li>
+        <li>
+          <del>Remember overview map position when moving away</del>
+          &nbsp;(done 12/6, record bounds on unmounting)
+        </li>
+        <li>
+          <del>Hide &apos;runners at event&apos; for MyMaps</del>
+          &nbsp;(done 12/6)
+        </li>
+        <li>Add a component to Welcome to show recent activity (own or all?)</li>
         <li>Complete the translations and check that nothing is missing</li>
         <li>Centre rotation on current view when zoomed in</li>
         <li>Add some real sample data/maps (started 4/6)</li>

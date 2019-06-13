@@ -671,6 +671,7 @@ class EventView extends Component {
 
     return (
       <EventMap
+        key={mineOnly} // to force remounting when switching between Events and MyMaps views
         events={eventListArray}
         handleSelectEvent={this.handleSelectEvent} // derived
         mapBounds={mapBounds}
@@ -684,6 +685,7 @@ class EventView extends Component {
   }
 
   render() {
+    // console.log('state in EventView:', this.state);
     // console.log('props in EventView:', this.props);
     const { showMap } = this.props;
     if (showMap) {
