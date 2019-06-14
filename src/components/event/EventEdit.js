@@ -13,6 +13,7 @@ import cs from '../../common/cs';
 import {
   countryOptionsLocale,
   regionOptionSets,
+  roleOptionsLocale,
   typesOptionsLocale,
   validationErrorsLocale,
 } from '../../common/data';
@@ -135,20 +136,40 @@ class EventEdit extends Component {
       setEventViewModeEvent,
     } = this.props;
     const buttonText = (eventMode === 'add') ? <Trans>Create</Trans> : <Trans>Update</Trans>;
-    const ownerOptions = (userList.length > 0)
-      ? userList.map((user) => {
-        return { value: user.user_id, label: user.displayName };
-      })
-      : [{ value: null, label: 'no users in list' }];
-    const organisedByOptions = clubList.map((club) => {
-      return { value: club._id, label: club.shortName };
-    });
-    const linkedToOptions = eventLinkList.map((link) => {
-      return { value: link._id, label: link.displayName };
-    });
     const countryOptions = countryOptionsLocale[language];
+    const roleOptions = roleOptionsLocale[language];
     const typesOptions = typesOptionsLocale[language];
     const validationErrors = validationErrorsLocale[language];
+    const ownerOptions = userList
+      .map((user) => {
+        const roleOption = roleOptions.find((el => el.value === user.role));
+        const role = roleOption.label;
+        const label = `${user.displayName} (${role})`;
+        return { value: user.user_id, label };
+      })
+      .sort((a, b) => {
+        if (a.label > b.label) return 1;
+        if (a.label < b.label) return -1;
+        return 0;
+      });
+    const organisedByOptions = clubList
+      .map((club) => {
+        return { value: club._id, label: club.shortName };
+      })
+      .sort((a, b) => {
+        if (a.label > b.label) return 1;
+        if (a.label < b.label) return -1;
+        return 0;
+      });
+    const linkedToOptions = eventLinkList
+      .map((link) => {
+        return { value: link._id, label: link.displayName };
+      })
+      .sort((a, b) => {
+        if (a.label > b.label) return 1;
+        if (a.label < b.label) return -1;
+        return 0;
+      });
 
     return (
       <Form className="ui warning form" noValidate>

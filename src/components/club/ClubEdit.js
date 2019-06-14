@@ -5,7 +5,11 @@ import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
-import { countryOptionsLocale, validationErrorsLocale } from '../../common/data';
+import {
+  countryOptionsLocale,
+  roleOptionsLocale,
+  validationErrorsLocale,
+} from '../../common/data';
 /* eslint no-underscore-dangle: 0 */
 
 // renders form to submit credentials either for login or creating account
@@ -53,9 +57,19 @@ class ClubEdit extends Component {
       viewMode,
     } = this.props;
     const buttonText = (viewMode === 'add') ? <Trans>Create</Trans> : <Trans>Update</Trans>;
-    const ownerOptions = userList.map((user) => {
-      return { value: user.user_id, label: user.displayName };
-    });
+    const roleOptions = roleOptionsLocale[language];
+    const ownerOptions = userList
+      .map((user) => {
+        const roleOption = roleOptions.find((el => el.value === user.role));
+        const role = roleOption.label;
+        const label = `${user.displayName} (${role})`;
+        return { value: user.user_id, label };
+      })
+      .sort((a, b) => {
+        if (a.label > b.label) return 1;
+        if (a.label < b.label) return -1;
+        return 0;
+      });
     const countryOptions = countryOptionsLocale[language];
     const validationErrors = validationErrorsLocale[language];
 

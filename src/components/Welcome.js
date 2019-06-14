@@ -29,20 +29,14 @@ const Welcome = ({ auth, currentUser, eventList }) => {
       <ol>
         <li>Add some more introductory/help text on this page</li>
         <li>
-          <del>Remember list/map tab in MyMaps and Events when moving away</del>
-          &nbsp;(done 13/6, using state in Header component)
-        </li>
-        <li>
-          <del>Remember overview map position when moving away</del>
-          &nbsp;(done 12/6, record bounds on unmounting)
-        </li>
-        <li>
-          <del>Hide &apos;runners at event&apos; for MyMaps</del>
-          &nbsp;(done 12/6)
+          <del>Sort list ordering in ClubEdit, EventEdit, UserEdit&nbsp;</del>
+          (done 14/6)
         </li>
         <li>Add a component to Welcome to show recent activity (own or all?)</li>
-        <li>Complete the translations and check that nothing is missing</li>
+        <li>Complete lingui translations and check that nothing is missing</li>
+        <li>Complete common/data translations and check that nothing is missing</li>
         <li>Centre rotation on current view when zoomed in</li>
+        <li>Define a default set of event tags</li>
         <li>Add some real sample data/maps (started 4/6)</li>
         <li>Design a logo, control colours on the O</li>
         <li>Draw my own version of the tree background, or find a royalty free one</li>
@@ -177,6 +171,18 @@ const Welcome = ({ auth, currentUser, eventList }) => {
           </del>
           &nbsp;(done 12/6)
         </li>
+        <li>
+          <del>Remember overview map position when moving away</del>
+          &nbsp;(done 12/6, record bounds on unmounting)
+        </li>
+        <li>
+          <del>Hide &apos;runners at event&apos; for MyMaps</del>
+          &nbsp;(done 12/6)
+        </li>
+        <li>
+          <del>Remember list/map tab in MyMaps and Events when moving away</del>
+          &nbsp;(done 13/6, using state in Header component)
+        </li>
       </ol>
       <p>Other ideas for the future (non-essential):</p>
       <ol>
@@ -278,7 +284,7 @@ const Welcome = ({ auth, currentUser, eventList }) => {
           The core functionality of MapOholic is to provide an online repository for scanned
           images of your orienteering maps, together with your routes if you have them
           (whether drawn manually or using a GPS watch/tracker and a tool such as&nbsp;
-          <a href="http://www.matstroeng.se/quickroute/en/">QuickRoute</a>*).
+          <a href="http://www.matstroeng.se/quickroute/en/" target="_blank" rel="noopener noreferrer">QuickRoute</a>*).
         </Trans>
       </p>
       <p>

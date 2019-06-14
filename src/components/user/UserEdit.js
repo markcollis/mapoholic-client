@@ -93,9 +93,15 @@ class UserEdit extends Component {
     } = this.props;
     // console.log('values:', values);
     // console.log('clubList:', clubList);
-    const memberOfOptions = clubList.map((club) => {
-      return { value: club._id, label: club.shortName };
-    });
+    const memberOfOptions = clubList
+      .map((club) => {
+        return { value: club._id, label: club.shortName };
+      })
+      .sort((a, b) => {
+        if (a.label > b.label) return 1;
+        if (a.label < b.label) return -1;
+        return 0;
+      });
     // console.log('memberOfOptions', memberOfOptions);
     const validationErrors = validationErrorsLocale[language];
     const roleOptions = roleOptionsLocale[language];
