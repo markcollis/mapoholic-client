@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
+import activityReducer from './activity';
 import authReducer from './auth';
-import userReducer from './user';
 import clubReducer from './club';
-import eventReducer from './event';
 import configReducer from './config';
+import eventReducer from './event';
+import userReducer from './user';
 
 export default combineReducers({
+  activity: activityReducer,
   auth: authReducer,
   club: clubReducer,
   config: configReducer,

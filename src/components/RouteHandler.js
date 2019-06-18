@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Header from './Header';
 import Footer from './Footer';
-import Welcome from './Welcome';
+import HomeView from './home/HomeView';
 import Authenticate from './auth/Authenticate';
 import Logout from './auth/Logout';
 import EventView from './event/EventView';
@@ -20,7 +20,7 @@ const RouteHandler = ({ auth }) => {
       <div>
         <Route path="/" component={Header} />
         <Switch>
-          <Route path="/" exact component={Welcome} />
+          <Route path="/" exact component={HomeView} />
           <Route path="/signup" component={Authenticate} />
           <Route path="/login" component={Authenticate} />
           <Route path="/logout" component={Logout} />
@@ -32,7 +32,7 @@ const RouteHandler = ({ auth }) => {
           <Route path="/users" component={UserView} />
           <Route path="/clubs" component={ClubView} />
           <Route path="/me" render={props => <UserView {...props} ownProfile />} />
-          <Route component={Welcome} />
+          <Route component={HomeView} />
         </Switch>
         <Route path="/" component={Footer} />
       </div>
@@ -44,14 +44,14 @@ const RouteHandler = ({ auth }) => {
     <div>
       <Route path="/" component={Header} />
       <Switch>
-        <Route path="/" exact component={Welcome} />
+        <Route path="/" exact component={HomeView} />
         <Route path="/signup" component={Authenticate} />
         <Route path="/login" component={Authenticate} />
         <Route path="/logout" component={Logout} />
         <Route path="/events" component={EventView} />
         <Route path="/eventsmap" render={props => <EventView {...props} showMap />} />
         <Route path="/mapview" component={MapView} />
-        <Route component={Welcome} />
+        <Route component={HomeView} />
       </Switch>
       <Route path="/" component={Footer} />
     </div>

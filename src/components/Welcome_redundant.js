@@ -32,7 +32,10 @@ const Welcome = ({ auth, currentUser, eventList }) => {
           <del>Sort list ordering in ClubEdit, EventEdit, UserEdit&nbsp;</del>
           (done 14/6)
         </li>
-        <li>Add a component to Welcome to show recent activity (own or all?)</li>
+        <li>
+        Add a component to Welcome to show recent activity (own or all?)
+        (server-side development 14-17/6, exploit in client 18?)
+        </li>
         <li>Complete lingui translations and check that nothing is missing</li>
         <li>Complete common/data translations and check that nothing is missing</li>
         <li>Centre rotation on current view when zoomed in</li>

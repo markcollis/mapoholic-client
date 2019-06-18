@@ -1,5 +1,10 @@
 // app configuration
 export const CONFIG_SET_LANGUAGE = 'CONFIG_SET_LANGUAGE';
+// home view (activities)
+export const ACTIVITY_GOT_ADMIN = 'ACTIVITY_GOT_ADMIN';
+export const ACTIVITY_GOT_ALL = 'ACTIVITY_GOT_ALL';
+export const ACTIVITY_GOT_OWN = 'ACTIVITY_GOT_OWN';
+export const ACTIVITY_ERROR = 'ACTIVITY_ERROR';
 // login/logout
 export const AUTH_USER = 'AUTH_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
