@@ -37,14 +37,21 @@ class HomeView extends Component {
     eventList: null,
   };
 
-
   state = {
     gettingActivityAdmin: false,
     gettingActivityAll: false,
     gettingActivityOwn: false,
   };
 
+  componentDidMount() {
+    this.getActivityLists();
+  }
+
   componentDidUpdate() {
+    this.getActivityLists();
+  }
+
+  getActivityLists = () => {
     // console.log('state', this.state);
     const {
       gettingActivityAdmin,
@@ -64,7 +71,6 @@ class HomeView extends Component {
       activityOwn,
     } = activity;
     const DEFAULT_ACTIVITY_LENGTH = 10; // set here for now, could make config option later
-    /* eslint react/no-did-update-set-state: 0 */
     if (currentUser) {
       if (currentUser.role === 'admin') {
         if (!activityAdmin && !gettingActivityAdmin) {
@@ -194,21 +200,40 @@ class HomeView extends Component {
     );
   }
 
-  renderHomeRecentOwn = () => {
+  renderHomeRecent = () => {
+    const { activity, currentUser } = this.props;
+    const { activityOwn, activityAll } = activity;
+    if (!currentUser) return null;
+    const { role } = currentUser;
+    if (role === 'guest') {
+      return (
+        <div className="sixteen wide column">
+          <HomeRecent activityList={activityAll} />
+        </div>
+      );
+    }
     return (
-      <HomeRecent />
-    );
-  }
-
-  renderHomeRecentAll = () => {
-    return (
-      <HomeRecent />
+      <div className="row">
+        <div className="eight wide column">
+          <HomeRecent activityList={activityOwn} isOwn />
+        </div>
+        <div className="eight wide column">
+          <HomeRecent activityList={activityAll} isAll />
+        </div>
+      </div>
     );
   }
 
   renderHomeAdminPanel = () => {
+    const { activity, currentUser } = this.props;
+    if (!currentUser) return null;
+    const { role } = currentUser;
+    if (role !== 'admin') return null;
+    const { activityAdmin } = activity;
     return (
-      <HomeAdminPanel />
+      <div className="sixteen wide column">
+        <HomeAdminPanel activityList={activityAdmin} />
+      </div>
     );
   }
 
@@ -226,14 +251,7 @@ class HomeView extends Component {
             {this.renderHomeWelcomeImage()}
           </div>
         </div>
-        <div className="row">
-          <div className="eight wide column">
-            {this.renderHomeRecentOwn()}
-          </div>
-          <div className="eight wide column">
-            {this.renderHomeRecentAll()}
-          </div>
-        </div>
+        {this.renderHomeRecent()}
         {this.renderHomeAdminPanel()}
         <div className="row">
           <div className="four wide column">

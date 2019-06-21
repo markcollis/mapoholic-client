@@ -6,14 +6,8 @@ const HomeAdminNotes = () => {
       <p>Checklist of things still to do:</p>
       <ol>
         <li>Add some more introductory/help text on this page</li>
-        <li>
-          <del>Sort list ordering in ClubEdit, EventEdit, UserEdit&nbsp;</del>
-          (done 14/6)
-        </li>
-        <li>
-        Add a component to Welcome to show recent activity (own or all?)
-        (server-side development 14-17/6, exploit in client 18?)
-        </li>
+        <li>Investigate issue with loading thumbnail after uploading map (timing?)</li>
+        <li>On MapView, highlight *currently selected* runner as well as yourself</li>
         <li>Complete lingui translations and check that nothing is missing</li>
         <li>Complete common/data translations and check that nothing is missing</li>
         <li>Centre rotation on current view when zoomed in</li>
@@ -163,6 +157,14 @@ const HomeAdminNotes = () => {
         <li>
           <del>Remember list/map tab in MyMaps and Events when moving away</del>
           &nbsp;(done 13/6, using state in Header component)
+        </li>
+        <li>
+          <del>Sort list ordering in ClubEdit, EventEdit, UserEdit&nbsp;</del>
+          &nbsp;(done 14/6)
+        </li>
+        <li>
+          <del>Add a component to Welcome to show recent activity (own or all)</del>
+          &nbsp;(server-side development 14-17/6, client-side 18-21/6)
         </li>
       </ol>
       <p>Other ideas for the future (non-essential):</p>

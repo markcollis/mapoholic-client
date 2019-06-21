@@ -4,6 +4,10 @@
   border: solid 2px red; /* to emphasise the need to put in place the right images*/
 }
 
+/* settings for HomeRecent */
+.recent-activity-list {
+  padding: 0 20px;
+}
 
 /* settings for ClubDetails component */
 .club-details-floating {
