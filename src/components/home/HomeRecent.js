@@ -6,7 +6,12 @@ import HomeRecentListItem from './HomeRecentListItem';
 import Collapse from '../Collapse';
 // import { reformatTimestamp } from '../../common/conversions';
 
-const HomeRecent = ({ activityList, isOwn, isAll }) => {
+const HomeRecent = ({
+  activityList,
+  isOwn,
+  isAll,
+  language,
+}) => {
   // activityList should only be null if it hasn't loaded yet
   if (!activityList) {
     return (
@@ -31,7 +36,7 @@ const HomeRecent = ({ activityList, isOwn, isAll }) => {
   const renderActivityList = activityList.map((activity) => {
     const { timestamp } = activity;
     return (
-      <HomeRecentListItem key={timestamp} activity={activity} />
+      <HomeRecentListItem key={timestamp} activity={activity} language={language} />
     );
   });
 
@@ -50,6 +55,7 @@ HomeRecent.propTypes = {
   activityList: PropTypes.arrayOf(PropTypes.object),
   isAll: PropTypes.bool,
   isOwn: PropTypes.bool,
+  language: PropTypes.string.isRequired,
 };
 HomeRecent.defaultProps = {
   activityList: null,

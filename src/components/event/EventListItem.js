@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { typesOptionsLocale } from '../../common/data';
-import { reformatDate } from '../../common/conversions';
+import { reformatTimestampDateOnly } from '../../common/conversions';
 import { OMAPFOLDER_SERVER } from '../../config';
 
 const EventListItem = ({
   handleSelectEvent,
   language,
   oevent,
+  selectedEventId,
 }) => {
   const {
     _id: eventId,
@@ -42,7 +43,10 @@ const EventListItem = ({
       }
     )
     : {};
-  const textClassName = (mapExtractToDisplay)
+  const cardClass = (selectedEventId === eventId)
+    ? 'ui fluid centered card item-selected'
+    : 'ui fluid centered card';
+  const textClass = (mapExtractToDisplay)
     ? 'event-list-text'
     : '';
 
@@ -51,7 +55,7 @@ const EventListItem = ({
   const renderPlace = (place || country)
     ? (
       <div>
-        <span className={textClassName}>
+        <span className={textClass}>
           <Trans>Place</Trans>
           {`: ${place || ''}${(place && country) ? ', ' : ''}${country || ''}`}
         </span>
@@ -61,7 +65,7 @@ const EventListItem = ({
   const renderMapName = (mapName && mapName !== '')
     ? (
       <p>
-        <span className={textClassName}>
+        <span className={textClass}>
           <Trans>Map</Trans>
           {`: ${mapName}`}
         </span>
@@ -103,7 +107,7 @@ const EventListItem = ({
 
   return (
     <div
-      className="ui fluid centered card"
+      className={cardClass}
       role="button"
       style={cardStyle}
       onClick={() => handleSelectEvent(eventId)}
@@ -111,7 +115,9 @@ const EventListItem = ({
       tabIndex="0"
     >
       <div className="content">
-        <div className="header"><span className={textClassName}>{`${reformatDate(date)} - ${name}`}</span></div>
+        <div className="header">
+          <span className={textClass}>{`${reformatTimestampDateOnly(date, language)} - ${name}`}</span>
+        </div>
         <div className="meta">
           {renderPlace}
           {renderMapName}
@@ -129,6 +135,7 @@ EventListItem.propTypes = {
   language: PropTypes.string.isRequired,
   oevent: PropTypes.objectOf(PropTypes.any).isRequired,
   handleSelectEvent: PropTypes.func.isRequired,
+  selectedEventId: PropTypes.string.isRequired,
 };
 
 export default EventListItem;

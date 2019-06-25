@@ -10,13 +10,12 @@ import {
   Tooltip,
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
-import { reformatDate } from '../../common/conversions';
+import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const osmTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const osmAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 // const stamenTonerTiles = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 // const stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-// const mapCenter = [];
 
 class EventMap extends Component {
   constructor(props) {
@@ -24,7 +23,6 @@ class EventMap extends Component {
     this.mapRef = React.createRef();
     this.state = {
       mapBounds: [[50, 14], [50.2, 14.2]],
-      // mapCenter: [50.08, 14.42],
       mapZoomLevel: undefined,
     };
   }
@@ -45,7 +43,6 @@ class EventMap extends Component {
           } = eventDetails;
           return [locLat, locLong];
         });
-      // console.log('eventBounds:', eventBounds);
       if (eventBounds.length > 0) {
         const mapBoundsToSet = eventBounds.reduce((acc, val) => {
           const low = [
@@ -59,7 +56,6 @@ class EventMap extends Component {
           return [low, high];
         }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
           [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
-        // console.log('mapBounds:', mapBounds);
         this.setState({ mapBounds: mapBoundsToSet });
       }
     }
@@ -78,7 +74,6 @@ class EventMap extends Component {
           } = eventDetails;
           return [locLat, locLong];
         });
-      // console.log('eventBounds:', eventBounds);
       if (eventBounds.length > 0) {
         const mapBounds = eventBounds.reduce((acc, val) => {
           const low = [
@@ -92,7 +87,6 @@ class EventMap extends Component {
           return [low, high];
         }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
           [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
-        // console.log('mapBounds:', mapBounds);
         /* eslint react/no-did-update-set-state: 0 */
         this.setState({ mapBounds }); // safe to use due to prevProps check
       }
@@ -104,25 +98,20 @@ class EventMap extends Component {
     if (this.mapRef.current) {
       const leafletMap = this.mapRef.current.leafletElement;
       const currentBounds = leafletMap.getBounds();
-      // console.log('current bounds on unmounting:', currentBounds);
       const { _southWest: sw, _northEast: ne } = currentBounds;
       const currentBoundsAsArray = [[sw.lat, sw.lng], [ne.lat, ne.lng]];
-      // console.log('current bounds on unmounting:', currentBoundsAsArray);
-      // console.log('centre, zoom:', leafletMap.getCenter(), leafletMap.getZoom());
       setMapBounds(currentBoundsAsArray);
     }
   }
 
   handleZoomEnd = () => {
     const leafletMap = this.mapRef.current.leafletElement;
-    // console.log('Zoom level changed to: ', leafletMap.getZoom());
     this.setState({ mapZoomLevel: leafletMap.getZoom() });
   }
 
   renderMapLocations = (events) => {
     const { mapZoomLevel } = this.state;
-    const { handleSelectEvent } = this.props;
-    // const { selectEventForDetails, setEventViewModeEvent } = this.props;
+    const { handleSelectEvent, language } = this.props;
     return (
       events
         .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
@@ -154,7 +143,7 @@ class EventMap extends Component {
               >
                 <Tooltip direction="center" offset={[0, 30]} className="event-map-flag-tooltip">
                   <div>{name}</div>
-                  <div>{reformatDate(date)}</div>
+                  <div>{reformatTimestampDateOnly(date, language)}</div>
                 </Tooltip>
               </Marker>
             );
@@ -175,7 +164,7 @@ class EventMap extends Component {
               >
                 <Tooltip direction="center" permanent className="event-map-box-tooltip">
                   <div>{name}</div>
-                  <div>{reformatDate(date)}</div>
+                  <div>{reformatTimestampDateOnly(date, language)}</div>
                 </Tooltip>
               </Marker>
             </div>
@@ -216,6 +205,7 @@ class EventMap extends Component {
 EventMap.propTypes = {
   events: PropTypes.arrayOf(PropTypes.any),
   handleSelectEvent: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired,
   mapBounds: PropTypes.arrayOf(PropTypes.array),
   setMapBounds: PropTypes.func.isRequired,
   // selectEventForDetails: PropTypes.func.isRequired,

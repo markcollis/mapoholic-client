@@ -40,7 +40,7 @@ class EventRunnerEdit extends Component {
   };
 
   componentDidMount() {
-    console.log('EventRunnerEdit mounted, props:', this.props);
+    // console.log('EventRunnerEdit mounted, props:', this.props);
     const {
       selectedEvent,
       selectedRunner,
@@ -61,8 +61,8 @@ class EventRunnerEdit extends Component {
       // selectedRunnerDetails,
       tagsOptions,
     } = this.state;
-    console.log('props:', this.props);
-    console.log('state:', this.state);
+    // console.log('props:', this.props);
+    // console.log('state:', this.state);
     const {
       language,
       errors,
@@ -319,10 +319,10 @@ const formikEventRunnerEdit = withFormik({
     valuesToSubmit.tags = (values.tags.length > 0)
       ? values.tags.map(el => el.value)
       : [];
-    console.log('valuesToSubmit:', valuesToSubmit);
+    // console.log('valuesToSubmit:', valuesToSubmit);
     updateEventRunner(selectedEvent._id, selectedRunner, valuesToSubmit, (didSucceed) => {
       if (didSucceed) {
-        console.log('updated runner successfully - is anything else needed?');
+        // console.log('updated runner successfully - is anything else needed?');
         setEventViewModeRunner('view');
       } else {
         setSubmitting(false);

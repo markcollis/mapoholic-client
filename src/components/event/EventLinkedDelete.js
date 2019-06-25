@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
-import { reformatDate } from '../../common/conversions';
+import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const EventLinkedDelete = ({
   deleteEventLink,
   getEventById,
   getEventList,
   getEventLinkList,
+  language,
   linkDetails,
   selectedEventDetails,
   selectedEventDisplay,
@@ -20,7 +21,7 @@ const EventLinkedDelete = ({
   const eventListToDisplay = includes.map((includedEvent) => {
     const { name, date } = includedEvent;
     return (
-      <li key={name.concat(date)}>{`${name} (${reformatDate(date)})`}</li>
+      <li key={name.concat(date)}>{`${name} (${reformatTimestampDateOnly(date, language)})`}</li>
     );
   });
   return (
@@ -65,6 +66,7 @@ EventLinkedDelete.propTypes = {
   getEventById: PropTypes.func.isRequired,
   getEventList: PropTypes.func.isRequired,
   getEventLinkList: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired,
   linkDetails: PropTypes.objectOf(PropTypes.any),
   selectedEventDetails: PropTypes.string,
   selectedEventDisplay: PropTypes.string,

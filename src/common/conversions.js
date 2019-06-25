@@ -27,6 +27,7 @@ export const dateStringToDate = (dateString) => {
 };
 
 // convert YYYY-MM-DD to (D)D/(M)M/YYYY
+// *** probably better to use reformatTimestampDateOnly instead ***
 export const reformatDate = (dateString) => {
   const day = (dateString.charAt(8) === '0') ? dateString.charAt(9) : dateString.slice(8);
   const month = (dateString.charAt(5) === '0') ? dateString.charAt(6) : dateString.slice(5, 7);
@@ -38,6 +39,8 @@ export const reformatDate = (dateString) => {
 // convert YYYY-MM-DDThh:mm:ss.xxxZ to DD/MM/YYYY
 // e.g. '2019-05-15T05:41:44.478Z' to '15/05/2019' (en-GB) or '15. 5. 2019' (cs)
 export const reformatTimestampDateOnly = (timestamp, locale = 'default') => {
+  let localeToUse = locale;
+  if (locale === 'en') localeToUse = 'en-GB';
   const newDate = new Date(timestamp);
   // const locale = 'default';
   const options = {
@@ -45,7 +48,7 @@ export const reformatTimestampDateOnly = (timestamp, locale = 'default') => {
     month: 'numeric',
     day: 'numeric',
   };
-  const reformattedTimestamp = new Intl.DateTimeFormat(locale, options).format(newDate);
+  const reformattedTimestamp = new Intl.DateTimeFormat(localeToUse, options).format(newDate);
   return reformattedTimestamp;
   // const today = new Date();
   // const yesterday = (new Date()).setDate(today.getDate() - 1);
@@ -74,9 +77,12 @@ export const reformatTimestamp = (timestamp, locale = 'default') => {
   const reformattedTimestamp = date.concat(' ').concat(time);
   return reformattedTimestamp;
 
-  // if (navigator.language === 'en-GB') { // manual adjustment as en-GB doesn't have the exact format I want...
-  //   const day = (intlTimestamp.charAt(0) === '0') ? intlTimestamp.charAt(1) : intlTimestamp.slice(0, 2);
-  //   const month = (intlTimestamp.charAt(3) === '0') ? intlTimestamp.charAt(4) : intlTimestamp.slice(3, 5);
+  // if (navigator.language === 'en-GB') {
+  // manual adjustment as en-GB doesn't have the exact format I want...
+  //   const day = (intlTimestamp.charAt(0) === '0')
+  // ? intlTimestamp.charAt(1) : intlTimestamp.slice(0, 2);
+  //   const month = (intlTimestamp.charAt(3) === '0')
+  // ? intlTimestamp.charAt(4) : intlTimestamp.slice(3, 5);
   //   const year = intlTimestamp.slice(6, 10);
   //   const time = intlTimestamp.slice(-6);
   //   reformattedTimestamp = day
@@ -104,9 +110,12 @@ export const reformatTimestamp = (timestamp, locale = 'default') => {
 //   };
 //   const intlTimestamp = new Intl.DateTimeFormat('default', options).format(newDate);
 //   let reformattedTimestamp;
-//   if (navigator.language === 'en-GB') { // manual adjustment as en-GB doesn't have the exact format I want...
-//     const day = (intlTimestamp.charAt(0) === '0') ? intlTimestamp.charAt(1) : intlTimestamp.slice(0, 2);
-//     const month = (intlTimestamp.charAt(3) === '0') ? intlTimestamp.charAt(4) : intlTimestamp.slice(3, 5);
+//   if (navigator.language === 'en-GB') {
+// manual adjustment as en-GB doesn't have the exact format I want...
+//     const day = (intlTimestamp.charAt(0) === '0')
+// ? intlTimestamp.charAt(1) : intlTimestamp.slice(0, 2);
+//     const month = (intlTimestamp.charAt(3) === '0')
+// ? intlTimestamp.charAt(4) : intlTimestamp.slice(3, 5);
 //     const year = intlTimestamp.slice(6, 10);
 //     const time = intlTimestamp.slice(-6);
 //     reformattedTimestamp = day

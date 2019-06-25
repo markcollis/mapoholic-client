@@ -6,9 +6,8 @@ import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
 import {
-  reformatDate,
   reformatTimestamp,
-  // reformatTimestampDateOnly,
+  reformatTimestampDateOnly,
 } from '../../common/conversions';
 import {
   selectClubToDisplayAction,
@@ -30,6 +29,7 @@ class HomeRecentListItem extends Component {
     // eventList: PropTypes.arrayOf(PropTypes.object).isRequired,
     // eventLinkList: PropTypes.arrayOf(PropTypes.object).isRequired,
     history: PropTypes.objectOf(PropTypes.any).isRequired,
+    language: PropTypes.string.isRequired,
     // userList: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
     selectEventForDetailsEvents: PropTypes.func.isRequired,
@@ -148,7 +148,7 @@ class HomeRecentListItem extends Component {
       date,
       name,
     } = event;
-    const eventName = `${name} (${reformatDate(date)})`;
+    const eventName = `${name} (${reformatTimestampDateOnly(date)})`;
     if (!active) return eventName;
     return (
       <a
@@ -183,7 +183,7 @@ class HomeRecentListItem extends Component {
 
   renderLinkedEventLink = (activity) => {
     const { linkedEvent } = activity;
-    if (!linkedEvent) return '!!!';
+    if (!linkedEvent) return '...';
     const { displayName } = linkedEvent;
     return displayName; // no obvious page to link to, we don't know what events are included
   };
@@ -205,7 +205,7 @@ class HomeRecentListItem extends Component {
     );
   };
 
-  renderActivityDetail = memoize((activity) => {
+  renderActivityDetail = memoize((activity, language) => {
     const {
       // actionBy,
       actionType,
@@ -267,7 +267,7 @@ class HomeRecentListItem extends Component {
             {this.renderEventRunnerLink(activity)}
             <Trans>&apos;s run at</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>by</Trans>
             &nbsp;
@@ -283,7 +283,7 @@ class HomeRecentListItem extends Component {
             {this.renderEventRunnerLink(activity)}
             <Trans>&apos;s run at</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>was updated by</Trans>
             &nbsp;
@@ -299,7 +299,7 @@ class HomeRecentListItem extends Component {
             {this.renderEventRunnerLink(activity)}
             <Trans>&apos;s run at</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>was deleted by</Trans>
             &nbsp;
@@ -312,7 +312,7 @@ class HomeRecentListItem extends Component {
           <>
             <Trans>The new event</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>was created by</Trans>
             &nbsp;
@@ -325,7 +325,7 @@ class HomeRecentListItem extends Component {
           <>
             <Trans>The event</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>was updated by</Trans>
             &nbsp;
@@ -338,7 +338,7 @@ class HomeRecentListItem extends Component {
           <>
             <Trans>The event</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>was deleted by</Trans>
             &nbsp;
@@ -354,7 +354,7 @@ class HomeRecentListItem extends Component {
             &nbsp;
             <Trans>uploaded a map from</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
           </>
         );
       case 'EVENT_MAP_DELETED':
@@ -366,7 +366,7 @@ class HomeRecentListItem extends Component {
             &nbsp;
             <Trans>deleted a map from</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
           </>
         );
       case 'EVENT_RUNNER_ADDED':
@@ -377,7 +377,7 @@ class HomeRecentListItem extends Component {
             &nbsp;
             <Trans>ran at</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
           </>
         );
       case 'EVENT_RUNNER_UPDATED':
@@ -387,7 +387,7 @@ class HomeRecentListItem extends Component {
             {this.renderEventRunnerLink(activity)}
             <Trans>&apos;s record for</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>was updated by</Trans>
             &nbsp;
@@ -401,7 +401,7 @@ class HomeRecentListItem extends Component {
             {this.renderEventRunnerLink(activity)}
             <Trans>&apos;s record for</Trans>
             &nbsp;
-            {this.renderEventLink(activity)}
+            {this.renderEventLink(activity, language)}
             &nbsp;
             <Trans>was deleted by</Trans>
             &nbsp;
@@ -488,10 +488,10 @@ class HomeRecentListItem extends Component {
   });
 
   render() {
-    console.log('props in HomeRecentListItem:', this.props);
-    const { activity } = this.props;
+    // console.log('props in HomeRecentListItem:', this.props);
+    const { activity, language } = this.props;
     const { timestamp } = activity;
-    const activityTime = reformatTimestamp(timestamp);
+    const activityTime = reformatTimestamp(timestamp, language);
 
     return (
       <li>

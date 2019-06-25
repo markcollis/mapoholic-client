@@ -170,6 +170,7 @@ class ClubView extends Component {
           <div className="ten wide column">
             <ClubDetails
               canEdit={canEdit} // derived
+              language={language} // prop (config)
               selectedClub={selectedClub} // derived
               setClubViewMode={setClubViewMode} // prop
             />
@@ -284,13 +285,14 @@ class ClubView extends Component {
 
   renderClubList = () => {
     const { club, selectClubToDisplay, setClubViewMode } = this.props;
-    const { list, searchField } = club;
+    const { list, searchField, selectedClubId } = club;
     const clubList = this.getClubList(list, searchField);
     return (
       <div className="list-limit-height">
         <ClubList
           clubList={clubList}
           selectClubToDisplay={selectClubToDisplay}
+          selectedClubId={selectedClubId}
           setClubViewMode={setClubViewMode}
         />
       </div>

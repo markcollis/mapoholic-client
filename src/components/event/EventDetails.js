@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { typesOptionsLocale } from '../../common/data';
-import { reformatDate } from '../../common/conversions';
+import { reformatTimestampDateOnly } from '../../common/conversions';
 import { OMAPFOLDER_SERVER } from '../../config';
 
 import Collapse from '../Collapse';
@@ -79,8 +79,16 @@ const EventDetails = ({
         {(orisId)
           ? <div>{`ORIS ID: ${orisId}`}</div>
           : null}
-        <div className="item"><Trans>{`Created: ${createdAt.slice(0, 10)}`}</Trans></div>
-        <div className="item"><Trans>{`Last updated: ${updatedAt.slice(0, 10)}`}</Trans></div>
+        <div className="item">
+          <Trans>
+            {`Created: ${reformatTimestampDateOnly(createdAt.slice(0, 10), language)}`}
+          </Trans>
+        </div>
+        <div className="item">
+          <Trans>
+            {`Last updated: ${reformatTimestampDateOnly(updatedAt.slice(0, 10), language)}`}
+          </Trans>
+        </div>
         <hr className="divider" />
         <button type="button" className="ui red tiny button right floated" onClick={() => setEventViewModeEvent('delete')}>
           <Trans>Delete event</Trans>
@@ -129,7 +137,7 @@ const EventDetails = ({
       <h3 className="header">
         {name}
         <br />
-        {reformatDate(date)}
+        {reformatTimestampDateOnly(date, language)}
       </h3>
       <div className="ui list event-details">
         {(regionLabels)

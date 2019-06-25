@@ -15,6 +15,7 @@ const EventRunners = ({
   handleSelectEventRunner,
   history,
   selectedEvent,
+  selectedRunner,
   selectEventToDisplay,
   selectRunnerToDisplay,
   userDetails,
@@ -37,6 +38,7 @@ const EventRunners = ({
           getUserById={getUserById}
           handleSelectEventRunner={handleSelectEventRunner}
           runner={runner}
+          selectedRunner={selectedRunner}
           userDetails={userDetails}
           userErrorMessage={userErrorMessage}
         />
@@ -97,6 +99,7 @@ EventRunners.propTypes = {
   handleSelectEventRunner: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
+  selectedRunner: PropTypes.string,
   selectEventToDisplay: PropTypes.func.isRequired,
   selectRunnerToDisplay: PropTypes.func.isRequired,
   userDetails: PropTypes.objectOf(PropTypes.any),
@@ -106,6 +109,7 @@ EventRunners.defaultProps = {
   currentUserId: null,
   currentUserOrisId: null,
   selectedEvent: {},
+  selectedRunner: '',
   userDetails: {},
   userErrorMessage: '',
 };

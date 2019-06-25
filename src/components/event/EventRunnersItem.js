@@ -10,6 +10,7 @@ const EventRunnersItem = ({
   getUserById,
   handleSelectEventRunner,
   runner,
+  selectedRunner,
   userDetails,
   userErrorMessage,
 }) => {
@@ -27,9 +28,9 @@ const EventRunnersItem = ({
   const headerClass = (isDeleted)
     ? 'header event-runners-deleted'
     : 'header';
-  const cardClass = (currentUserId === userId)
-    ? 'ui fluid centered card event-runners-item event-runners-current'
-    : 'ui fluid centered card event-runners-item';
+  let cardClass = 'ui fluid centered card event-runners-item';
+  if (currentUserId === userId) cardClass = cardClass.concat(' item-current-user');
+  if (selectedRunner === userId) cardClass = cardClass.concat(' item-selected');
   const clubsToShow = (memberOf && memberOf.length > 0)
     ? (
       <span>
@@ -83,6 +84,7 @@ EventRunnersItem.propTypes = {
   getUserById: PropTypes.func.isRequired,
   handleSelectEventRunner: PropTypes.func.isRequired,
   runner: PropTypes.objectOf(PropTypes.any).isRequired,
+  selectedRunner: PropTypes.string.isRequired,
   userDetails: PropTypes.objectOf(PropTypes.any),
   userErrorMessage: PropTypes.string,
 };

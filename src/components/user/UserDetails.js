@@ -9,6 +9,7 @@ import { OMAPFOLDER_SERVER } from '../../config';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const UserDetails = ({
+  language,
   refreshCollapse,
   requestRefreshCollapse,
   showOptional,
@@ -50,7 +51,7 @@ const UserDetails = ({
         {(orisId)
           ? <div><Trans>{`ORIS ID: ${orisId}`}</Trans></div>
           : null}
-        <div className="item"><Trans>{`Last updated: ${reformatTimestampDateOnly(updatedAt)}`}</Trans></div>
+        <div className="item"><Trans>{`Last updated: ${reformatTimestampDateOnly(updatedAt, language)}`}</Trans></div>
         <hr className="divider" />
         <button
           type="button"
@@ -122,7 +123,7 @@ const UserDetails = ({
             )
             : null
           }
-          <div className="item"><Trans>{`Joined: ${reformatTimestampDateOnly(createdAt)}`}</Trans></div>
+          <div className="item"><Trans>{`Joined: ${reformatTimestampDateOnly(createdAt, language)}`}</Trans></div>
           {optionalItems}
         </div>
       </div>
@@ -139,6 +140,7 @@ const UserDetails = ({
 };
 
 UserDetails.propTypes = {
+  language: PropTypes.string.isRequired,
   refreshCollapse: PropTypes.number.isRequired,
   requestRefreshCollapse: PropTypes.func.isRequired,
   selectedUser: PropTypes.objectOf(PropTypes.any),

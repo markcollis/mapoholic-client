@@ -42,11 +42,13 @@ class EventLinkedManage extends Component {
 
   renderEventLinkedList = () => {
     const {
+      language,
       linkList,
       setEventViewModeEventLink,
     } = this.props;
     return (
       <EventLinkedList
+        language={language}
         linkList={linkList}
         setEventViewModeEventLink={setEventViewModeEventLink}
       />
@@ -127,6 +129,7 @@ class EventLinkedManage extends Component {
       getEventById,
       getEventList,
       getEventLinkList,
+      language,
       linkDetails,
       selectedEventDetails,
       selectedEventDisplay,
@@ -139,6 +142,7 @@ class EventLinkedManage extends Component {
         getEventById={getEventById}
         getEventLinkList={getEventLinkList}
         getEventList={getEventList}
+        language={language}
         linkDetails={linkDetails}
         selectedEventDetails={selectedEventDetails}
         selectedEventDisplay={selectedEventDisplay}

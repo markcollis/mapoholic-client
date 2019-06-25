@@ -16,7 +16,7 @@ import EventMap from './EventMap';
 import EventRunners from './EventRunners';
 // support dev without repeatedly calling ORIS API
 // import { testOrisList } from '../../common/data';
-import { reformatDate } from '../../common/conversions';
+import { reformatTimestampDateOnly } from '../../common/conversions';
 import {
   addEventRunnerAction,
   addEventRunnerOrisAction,
@@ -102,7 +102,7 @@ class EventView extends Component {
   }
 
   // helper to create event list if relevant props change
-  getEventListArray = memoize((list, searchField, current, mineOnly) => {
+  getEventListArray = memoize((list, searchField, current, mineOnly, language) => {
     // console.log('refreshing event list array');
     // console.log('list:', list);
     const currentUserId = (current) ? current._id : '';
@@ -125,7 +125,7 @@ class EventView extends Component {
           tags,
           types,
         } = eachEvent;
-        const reformattedDate = reformatDate(date);
+        const reformattedDate = reformatTimestampDateOnly(date, language);
         const matchName = name.toLowerCase().includes(searchField.toLowerCase());
         const matchMapName = mapName.toLowerCase().includes(searchField.toLowerCase());
         const matchDate = (date.includes(searchField) || reformattedDate.includes(searchField));
@@ -230,8 +230,8 @@ class EventView extends Component {
       user,
     } = this.props;
     const { current } = user;
-    const { _id: userId } = current;
-    if (mineOnly) {
+    if (current && mineOnly) {
+      const { _id: userId } = current;
       selectEventForDetailsMyMaps(eventId);
       if (eventId === '') {
         setEventViewModeEventMyMaps('none');
@@ -448,6 +448,7 @@ class EventView extends Component {
                   canEdit={canEdit} // derived
                   eventLinkMode={eventLinkMode} // prop (oevent)
                   isAdmin={isAdmin} // derived
+                  language={language} // prop (config)
                   link={link} // derived (selectedEvent)
                   linkDetails={linkDetails} // prop (oevent)
                   selectedEvent={selectedEvent} // derived
@@ -618,22 +619,24 @@ class EventView extends Component {
     const {
       searchFieldEvents,
       searchFieldMyMaps,
+      selectedEventDetailsEvents,
+      selectedEventDetailsMyMaps,
       list,
     } = oevent;
     const { current } = user;
     // select appropriate props for Events or MyMaps view
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
+    const selectedEventId = (mineOnly) ? selectedEventDetailsMyMaps : selectedEventDetailsEvents;
     // need to consider reducing the number shown if there are many many events...
-    const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
-
+    const eventListArray = this.getEventListArray(list, searchField, current, mineOnly, language);
+    // console.log('eventListArray', eventListArray);
     return (
       <div className="list-limit-height">
         <EventList
           language={language} // prop (config)
           events={eventListArray} // derived
           handleSelectEvent={this.handleSelectEvent} // derived
-          // selectEventForDetails={selectEventForDetails}
-          // setEventViewModeEvent={setEventViewModeEvent}
+          selectedEventId={selectedEventId} // derived
         />
       </div>
     );
@@ -642,6 +645,7 @@ class EventView extends Component {
   renderEventMap = () => {
     const {
       mineOnly,
+      config,
       oevent,
       user,
       // setEventViewModeEvent,
@@ -660,6 +664,7 @@ class EventView extends Component {
       searchFieldMyMaps,
       list,
     } = oevent;
+    const { language } = config;
     const { current } = user;
     // select appropriate props for Events or MyMaps view
     const setMapBounds = (mineOnly) ? setMapBoundsMyMaps : setMapBoundsEvents;
@@ -674,6 +679,7 @@ class EventView extends Component {
         key={mineOnly} // to force remounting when switching between Events and MyMaps views
         events={eventListArray}
         handleSelectEvent={this.handleSelectEvent} // derived
+        language={language}
         mapBounds={mapBounds}
         // mapZoomLevel={mapZoomLevel}
         setMapBounds={setMapBounds}

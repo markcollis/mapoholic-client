@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans, Plural } from '@lingui/macro';
-import { reformatDate } from '../../common/conversions';
+import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const EventLinkedList = ({
+  language,
   linkList,
   setEventViewModeEventLink,
 }) => {
@@ -23,7 +24,7 @@ const EventLinkedList = ({
       ? includes.map(includedEvent => includedEvent.date).sort()
       : null;
     const dateRange = (eventDates)
-      ? ` (${reformatDate(eventDates[0])} - ${reformatDate(eventDates[eventCount - 1])})`
+      ? ` (${reformatTimestampDateOnly(eventDates[0], language)} - ${reformatTimestampDateOnly(eventDates[eventCount - 1], language)})`
       : null;
     const detailsToDisplay = (
       <span>
@@ -63,6 +64,7 @@ const EventLinkedList = ({
 };
 
 EventLinkedList.propTypes = {
+  language: PropTypes.string.isRequired,
   linkList: PropTypes.arrayOf(PropTypes.any).isRequired,
   setEventViewModeEventLink: PropTypes.func.isRequired,
 };

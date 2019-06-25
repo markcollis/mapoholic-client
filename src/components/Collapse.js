@@ -9,12 +9,14 @@ class Collapse extends Component {
     ]),
     children: PropTypes.node,
     refreshCollapse: PropTypes.number, // used to trigger re-render, value unimportant
+    startHidden: PropTypes.bool,
   };
 
   static defaultProps = {
     title: '[no title provided]',
     children: [],
     refreshCollapse: 0,
+    startHidden: false,
   }
 
   constructor(props) {
@@ -30,8 +32,8 @@ class Collapse extends Component {
   }
 
   componentDidMount() {
-    const { children, refreshCollapse } = this.props;
-    this.setState({ children, refreshCollapse });
+    const { children, refreshCollapse, startHidden } = this.props;
+    this.setState({ children, refreshCollapse, hideContent: startHidden });
     window.addEventListener('resize', this.onResizeWindow);
   }
 
@@ -60,7 +62,7 @@ class Collapse extends Component {
   }
 
   onResizeWindow = () => {
-    console.log('onResizeWindow triggered => re-render');
+    // console.log('onResizeWindow triggered => re-render');
     this.setState({ propsChanged: true });
   }
 
@@ -91,7 +93,9 @@ class Collapse extends Component {
           tabIndex="0"
         >
           <span className="ui header">{title}</span>
-          {(hideContent) ? <i className="icon dropdown" /> : null}
+          {(hideContent)
+            ? <i className="icon angle down large floatedright" />
+            : <i className="icon angle up large floatedright" />}
         </div>
         <div ref={this.contentRef} style={contentStyle} className={(hideContent) ? 'hide' : 'show'}>
           <div className="ui divider" />

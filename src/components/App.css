@@ -9,6 +9,12 @@
   padding: 0 20px;
 }
 
+/* settings for HomeAdminPanel */
+.admin-panel-divider {
+  border-color: blue;
+  margin-bottom: 1.5em;
+}
+
 /* settings for ClubDetails component */
 .club-details-floating {
   position: absolute;
@@ -85,20 +91,21 @@
   white-space: pre-line;
 }
 
+/* settings for card lists (ClubListItem, EventListItem, EventRunnersItem, */
+/* EventLinkedItem, UserListItem) */
+.item-current-user { /* runner is logged in user (in MapView and EventView) */
+  background-color: #e9f3fc !important;
+}
+.item-selected { /* currently selected runner (in MapView only)*/
+  box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
+}
+
 /* settings for EventRunnersItem */
 .event-runners-item .label {
   margin-right: 0.3em !important;
 }
-.event-runners-current {
-  box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
-}
-.event-runners-deleted {
+.event-runners-deleted { /* only admin users should ever see this */
   color: red !important;
-}
-
-/* settings for EventLinkedItem */
-.event-link-current {
-  box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
 }
 
 /* settings for EventDetails */

@@ -8,6 +8,7 @@ const EventLinked = ({
   canEdit,
   eventLinkMode,
   isAdmin,
+  language,
   link,
   linkDetails,
   selectedEvent,
@@ -47,6 +48,7 @@ const EventLinked = ({
       <EventLinkedItem
         key={linkedEventId}
         eventId={eventId}
+        language={language}
         linkedEvent={linkedEvent}
         selectEvent={selectEvent}
         setEventViewModeEvent={setEventViewModeEvent}
@@ -103,6 +105,7 @@ EventLinked.propTypes = {
   canEdit: PropTypes.bool,
   eventLinkMode: PropTypes.string,
   isAdmin: PropTypes.bool,
+  language: PropTypes.string.isRequired,
   link: PropTypes.objectOf(PropTypes.any),
   linkDetails: PropTypes.objectOf(PropTypes.any),
   selectedEvent: PropTypes.objectOf(PropTypes.any),

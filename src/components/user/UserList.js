@@ -5,8 +5,10 @@ import UserListItem from './UserListItem';
 import Collapse from '../Collapse';
 
 const UserList = ({
+  currentUserId,
   language,
   selectUserToDisplay,
+  selectedUserId,
   setUserViewMode,
   users,
 }) => {
@@ -28,9 +30,11 @@ const UserList = ({
       return (
         <UserListItem
           key={userId}
+          currentUserId={currentUserId}
           language={language}
           user={user}
           selectUserToDisplay={selectUserToDisplay}
+          selectedUserId={selectedUserId}
           setUserViewMode={setUserViewMode}
         />
       );
@@ -64,8 +68,10 @@ const UserList = ({
 };
 
 UserList.propTypes = {
+  currentUserId: PropTypes.string.isRequired,
   language: PropTypes.string,
   selectUserToDisplay: PropTypes.func.isRequired,
+  selectedUserId: PropTypes.string.isRequired,
   setUserViewMode: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(PropTypes.object),
 };

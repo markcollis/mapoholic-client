@@ -170,6 +170,7 @@ class MapView extends Component {
       details,
       errorMessage,
       selectedEventDisplay,
+      selectedRunner,
     } = oevent;
     const { current, details: userDetails, errorMessage: userErrorMessage } = user;
 
@@ -191,6 +192,7 @@ class MapView extends Component {
         getUserById={getUserById} // prop
         handleSelectEventRunner={handleSelectEventRunner} // defined here
         selectedEvent={selectedEvent} // derived
+        selectedRunner={selectedRunner} // prop (oevent)
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
         userDetails={userDetails}
@@ -255,6 +257,7 @@ class MapView extends Component {
         return (
           <EventRunnerDelete
             deleteEventRunner={deleteEventRunner} // prop
+            language={language} // prop (config)
             selectedEvent={selectedEvent} // derived
             selectedRunner={selectedRunner} // prop (oevent)
             setEventViewModeRunner={setEventViewModeRunner} // prop

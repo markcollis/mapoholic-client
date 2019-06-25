@@ -178,9 +178,16 @@ class UserView extends Component {
       user,
     } = this.props;
     const {
+      current,
       list,
       searchField,
+      selectedUserId,
     } = user;
+    let currentUserId = '';
+    if (current) {
+      const { _id: currentId } = current;
+      currentUserId = currentId;
+    }
     const {
       language,
     } = config;
@@ -189,8 +196,10 @@ class UserView extends Component {
     return (
       <div className="list-limit-height">
         <UserList
+          currentUserId={currentUserId} // prop (user/current)
           language={language} // prop (config)
           selectUserToDisplay={selectUserToDisplay} // prop
+          selectedUserId={selectedUserId} // prop (user)
           setUserViewMode={setUserViewMode} // prop
           users={userListArray} // derived
         />
@@ -201,11 +210,13 @@ class UserView extends Component {
   renderUserDetails = () => {
     const { refreshCollapseUserDetails } = this.state;
     const {
+      config,
       ownProfile,
       setUserViewMode,
       setUserViewModeSelf,
       user,
     } = this.props;
+    const { language } = config;
     const {
       current,
       details,
@@ -220,6 +231,7 @@ class UserView extends Component {
 
     return (
       <UserDetails
+        language={language} // prop (config)
         refreshCollapse={refreshCollapseUserDetails} // state (value increments to trigger)
         requestRefreshCollapse={this.requestRefreshCollapseUserDetails} // defined here
         selectedUser={selectedUser} // derived

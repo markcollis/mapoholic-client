@@ -8,8 +8,7 @@ const EventList = ({
   language,
   events,
   handleSelectEvent,
-  // selectEventForDetails,
-  // setEventViewModeEvent,
+  selectedEventId,
 }) => {
   const noMatchingEventsMessage = <Trans>{'Sorry, there aren\'t any matching events to display!'}</Trans>;
   const title = <Trans>Event List</Trans>;
@@ -20,10 +19,6 @@ const EventList = ({
       </div>
     );
   }
-  // const handleSelectEvent = (eventId) => {
-  //   selectEventForDetails(eventId);
-  //   setEventViewModeEvent('view');
-  // };
   const eventsArray = [...events]
     .sort((a, b) => {
       return (a.date < b.date) ? 0 : -1;
@@ -36,8 +31,7 @@ const EventList = ({
           language={language}
           oevent={oevent}
           handleSelectEvent={handleSelectEvent}
-          // selectEventForDetails={selectEventForDetails}
-          // setEventViewModeEvent={setEventViewModeEvent}
+          selectedEventId={selectedEventId}
         />
       );
     });
@@ -50,15 +44,11 @@ const EventList = ({
           onClick={(e) => {
             if (e.target.classList.contains('cards')) {
               handleSelectEvent('');
-              // selectEventForDetails('');
-              // setEventViewModeEvent('none');
             }
           }}
           onKeyPress={(e) => {
             if (e.target.classList.contains('cards')) {
               handleSelectEvent('');
-              // selectEventForDetails('');
-              // setEventViewModeEvent('none');
             }
           }}
           tabIndex="0"
@@ -74,12 +64,12 @@ EventList.propTypes = {
   events: PropTypes.arrayOf(PropTypes.object),
   language: PropTypes.string,
   handleSelectEvent: PropTypes.func.isRequired,
-  // selectEventForDetails: PropTypes.func.isRequired,
-  // setEventViewModeEvent: PropTypes.func.isRequired,
+  selectedEventId: PropTypes.string,
 };
 EventList.defaultProps = {
   events: [],
   language: 'en',
+  selectedEventId: '',
 };
 
 export default EventList;

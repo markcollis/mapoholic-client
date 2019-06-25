@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
-import { reformatDate } from '../../common/conversions';
+import { reformatTimestampDateOnly } from '../../common/conversions';
 /* eslint no-underscore-dangle: 0 */
 
 class EventRunnerDelete extends Component {
   static propTypes = {
+    deleteEventRunner: PropTypes.func.isRequired,
+    language: PropTypes.string.isRequired,
     selectedEvent: PropTypes.objectOf(PropTypes.any),
     selectedRunner: PropTypes.string,
-    deleteEventRunner: PropTypes.func.isRequired,
     setEventViewModeRunner: PropTypes.func.isRequired,
   };
 
@@ -26,9 +27,10 @@ class EventRunnerDelete extends Component {
     const { redirectToEventsList } = this.state;
     if (redirectToEventsList) return <Redirect to="/events" push />;
     const {
+      deleteEventRunner,
+      language,
       selectedEvent,
       selectedRunner,
-      deleteEventRunner,
       setEventViewModeRunner,
     } = this.props;
     if (!selectedEvent || !selectedRunner) return null;
@@ -47,7 +49,7 @@ class EventRunnerDelete extends Component {
         <h3><Trans>Delete Runner</Trans></h3>
         <p>
           <Trans>
-            {`You are about to delete ${runnerName} from ${name} (${reformatDate(date)}).`}
+            {`You are about to delete ${runnerName} from ${name} (${reformatTimestampDateOnly(date, language)}).`}
           </Trans>
         </p>
         <button

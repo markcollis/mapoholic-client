@@ -6,8 +6,10 @@ import noAvatar from '../../graphics/no-avatar.png';
 import { OMAPFOLDER_SERVER } from '../../config';
 
 const UserListItem = ({
+  currentUserId,
   language,
   selectUserToDisplay,
+  selectedUserId,
   setUserViewMode,
   user,
 }) => {
@@ -22,10 +24,13 @@ const UserListItem = ({
   const roleOptions = roleOptionsLocale[language];
   const roleAdminName = roleOptions.find(el => el.value === 'admin').label;
   const roleGuestName = roleOptions.find(el => el.value === 'guest').label;
+  let cardClass = 'ui fluid centered card';
+  if (currentUserId === userId) cardClass = cardClass.concat(' item-current-user');
+  if (selectedUserId === userId) cardClass = cardClass.concat(' item-selected');
 
   return (
     <div
-      className="ui centered card"
+      className={cardClass}
       role="button"
       onClick={() => {
         selectUserToDisplay(userId);
@@ -73,13 +78,12 @@ const UserListItem = ({
 };
 
 UserListItem.propTypes = {
-  language: PropTypes.string,
+  currentUserId: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
   user: PropTypes.objectOf(PropTypes.any).isRequired,
   selectUserToDisplay: PropTypes.func.isRequired,
+  selectedUserId: PropTypes.string.isRequired,
   setUserViewMode: PropTypes.func.isRequired,
-};
-UserListItem.defaultProps = {
-  language: 'en',
 };
 
 export default UserListItem;

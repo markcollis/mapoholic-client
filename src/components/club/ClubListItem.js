@@ -2,18 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { countryCodesConversion } from '../../common/data';
 
-const ClubListItem = ({ club, selectClubToDisplay, setClubViewMode }) => {
+const ClubListItem = ({
+  club,
+  selectClubToDisplay,
+  selectedClubId,
+  setClubViewMode,
+}) => {
   const {
     _id: clubId,
     shortName,
     fullName,
     country,
   } = club;
-  const flagStyle = `${countryCodesConversion[country]} flag floatedright`;
-  // console.log('club:', club);
+  const flagClass = `${countryCodesConversion[country]} flag floatedright`;
+  const cardClass = (selectedClubId === clubId)
+    ? 'ui fluid centered card item-selected'
+    : 'ui fluid centered card';
   return (
     <div
-      className="ui centered card"
+      className={cardClass}
       role="button"
       onClick={() => {
         selectClubToDisplay(clubId);
@@ -26,7 +33,7 @@ const ClubListItem = ({ club, selectClubToDisplay, setClubViewMode }) => {
       tabIndex="0"
     >
       <div className="content">
-        <i className={flagStyle} />
+        <i className={flagClass} />
         <div className="header">
           {shortName}
         </div>
@@ -41,6 +48,7 @@ const ClubListItem = ({ club, selectClubToDisplay, setClubViewMode }) => {
 ClubListItem.propTypes = {
   club: PropTypes.objectOf(PropTypes.any).isRequired,
   selectClubToDisplay: PropTypes.func.isRequired,
+  selectedClubId: PropTypes.string.isRequired,
   setClubViewMode: PropTypes.func.isRequired,
 };
 

@@ -32,8 +32,9 @@ const ClubEvents = ({
         <EventListItem
           key={eventId}
           language={language}
-          oevent={oevent}
           handleSelectEvent={handleSelectEvent}
+          oevent={oevent}
+          selectedEventId=""
         />
       );
     });

@@ -29,6 +29,7 @@ class HomeView extends Component {
     getActivityLogAdmin: PropTypes.func.isRequired,
     getActivityLogAll: PropTypes.func.isRequired,
     getActivityLogOwn: PropTypes.func.isRequired,
+    language: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -160,7 +161,10 @@ class HomeView extends Component {
 
   renderHomeWelcomeImage = () => {
     return (
-      <img className="home-image" src={forest} alt="welcome" />
+      <>
+        <img className="home-image" src={forest} alt="welcome" />
+        <p>inspiring O related photo</p>
+      </>
     );
   }
 
@@ -172,7 +176,10 @@ class HomeView extends Component {
 
   renderHomeWhatIsItImage = () => {
     return (
-      <img className="home-image" src={forest} alt="screenshot" />
+      <>
+        <img className="home-image" src={forest} alt="screenshot" />
+        <p>screenshot(s)</p>
+      </>
     );
   }
 
@@ -184,7 +191,10 @@ class HomeView extends Component {
 
   renderHomeHowToUseImage = () => {
     return (
-      <img className="home-image" src={forest} alt="screenshot" />
+      <>
+        <img className="home-image" src={forest} alt="screenshot" />
+        <p>screenshot(s)</p>
+      </>
     );
   }
 
@@ -196,50 +206,53 @@ class HomeView extends Component {
 
   renderHomeAboutAuthorImage = () => {
     return (
-      <img className="home-image" src={forest} alt="author" />
+      <>
+        <img className="home-image" src={forest} alt="author" />
+        <p>picture of me running</p>
+      </>
     );
   }
 
   renderHomeRecent = () => {
-    const { activity, currentUser } = this.props;
+    const { activity, currentUser, language } = this.props;
     const { activityOwn, activityAll } = activity;
     if (!currentUser) return null;
     const { role } = currentUser;
     if (role === 'guest') {
       return (
         <div className="sixteen wide column">
-          <HomeRecent activityList={activityAll} />
+          <HomeRecent activityList={activityAll} language={language} />
         </div>
       );
     }
     return (
       <div className="row">
         <div className="eight wide column">
-          <HomeRecent activityList={activityOwn} isOwn />
+          <HomeRecent activityList={activityOwn} language={language} isOwn />
         </div>
         <div className="eight wide column">
-          <HomeRecent activityList={activityAll} isAll />
+          <HomeRecent activityList={activityAll} language={language} isAll />
         </div>
       </div>
     );
   }
 
   renderHomeAdminPanel = () => {
-    const { activity, currentUser } = this.props;
+    const { activity, currentUser, language } = this.props;
     if (!currentUser) return null;
     const { role } = currentUser;
     if (role !== 'admin') return null;
     const { activityAdmin } = activity;
     return (
       <div className="sixteen wide column">
-        <HomeAdminPanel activityList={activityAdmin} />
+        <HomeAdminPanel activityList={activityAdmin} language={language} />
       </div>
     );
   }
 
   render() {
     // console.log('state in HomeView', this.state);
-    console.log('props in HomeView', this.props);
+    // console.log('props in HomeView', this.props);
     return (
       <div className="ui vertically padded stackable grid">
         {this.renderError()}
@@ -285,6 +298,7 @@ class HomeView extends Component {
 const mapStateToProps = ({
   activity,
   auth,
+  config,
   oevent,
   user,
 }) => {
@@ -293,6 +307,7 @@ const mapStateToProps = ({
     auth: auth.authenticated,
     currentUser: user.current,
     eventList: oevent.list,
+    language: config.language,
   };
 };
 const mapDispatchToProps = {

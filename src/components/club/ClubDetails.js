@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
+import { reformatTimestampDateOnly } from '../../common/conversions';
 import Collapse from '../Collapse';
 import forest from '../../graphics/silhouette.jpg';
 
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const ClubDetails = ({
-  selectedClub,
   canEdit,
+  language,
+  selectedClub,
   setClubViewMode,
 }) => {
   // console.log(selectedClub);
@@ -29,6 +31,8 @@ const ClubDetails = ({
     orisId,
     country,
     website,
+    createdAt,
+    updatedAt,
   } = selectedClub;
   const showEdit = (canEdit)
     ? (
@@ -38,6 +42,16 @@ const ClubDetails = ({
         {(orisId)
           ? <div><Trans>{`ORIS ID: ${orisId}`}</Trans></div>
           : null}
+        <div className="item">
+          <Trans>
+            {`Created: ${reformatTimestampDateOnly(createdAt.slice(0, 10), language)}`}
+          </Trans>
+        </div>
+        <div className="item">
+          <Trans>
+            {`Last updated: ${reformatTimestampDateOnly(updatedAt.slice(0, 10), language)}`}
+          </Trans>
+        </div>
         <hr className="divider" />
         <button type="button" className="ui red tiny button right floated" onClick={() => setClubViewMode('delete')}>
           <Trans>Delete club</Trans>
@@ -81,8 +95,9 @@ const ClubDetails = ({
 };
 
 ClubDetails.propTypes = {
-  selectedClub: PropTypes.objectOf(PropTypes.any),
   canEdit: PropTypes.bool,
+  language: PropTypes.string.isRequired,
+  selectedClub: PropTypes.objectOf(PropTypes.any),
   setClubViewMode: PropTypes.func.isRequired,
 };
 ClubDetails.defaultProps = {
