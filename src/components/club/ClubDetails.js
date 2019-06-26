@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import { reformatTimestampDateOnly } from '../../common/conversions';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 import forest from '../../graphics/silhouette.jpg';
 
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */

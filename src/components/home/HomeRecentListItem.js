@@ -139,7 +139,7 @@ class HomeRecentListItem extends Component {
     );
   };
 
-  renderEventLink = (activity) => {
+  renderEventLink = (activity, language) => {
     const { event } = activity;
     if (!event) return '...';
     const {
@@ -148,7 +148,7 @@ class HomeRecentListItem extends Component {
       date,
       name,
     } = event;
-    const eventName = `${name} (${reformatTimestampDateOnly(date)})`;
+    const eventName = `${name} (${reformatTimestampDateOnly(date, language)})`;
     if (!active) return eventName;
     return (
       <a
@@ -496,7 +496,7 @@ class HomeRecentListItem extends Component {
     return (
       <li>
         {`${activityTime}: `}
-        {this.renderActivityDetail(activity)}
+        {this.renderActivityDetail(activity, language)}
       </li>
     );
   }

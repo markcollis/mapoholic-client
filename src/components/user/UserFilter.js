@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 
 const UserFilter = ({
   searchField,

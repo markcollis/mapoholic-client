@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 // Component displays results if present in event record (e.g. from ORIS)

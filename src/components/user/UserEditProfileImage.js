@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
-import FileDropzone from '../FileDropzone';
+import FileDropzone from '../generic/FileDropzone';
 
 class UserEditProfileImage extends Component {
   static propTypes = {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import HomeRecentListItem from './HomeRecentListItem';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 // import { reformatTimestamp } from '../../common/conversions';
 
 const HomeRecent = ({

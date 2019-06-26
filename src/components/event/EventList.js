@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import EventListItem from './EventListItem';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 
 const EventList = ({
   language,

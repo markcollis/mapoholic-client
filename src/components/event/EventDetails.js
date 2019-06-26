@@ -5,7 +5,7 @@ import { typesOptionsLocale } from '../../common/data';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import { OMAPFOLDER_SERVER } from '../../config';
 
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventDetails = ({

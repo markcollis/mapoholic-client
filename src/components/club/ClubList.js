@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import ClubListItem from './ClubListItem';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 
 const ClubList = ({
   clubList,

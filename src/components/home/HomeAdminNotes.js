@@ -1,5 +1,5 @@
 import React from 'react';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 
 const HomeAdminNotes = () => {
   return (
@@ -9,6 +9,7 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do:">
         <ol>
           <li>Add some more introductory/help text on this page</li>
+          <li>Add detailed activity log for administrators</li>
           <li>Investigate issue with loading thumbnail after uploading map (timing?)</li>
           <li>Complete lingui translations and check that nothing is missing</li>
           <li>Complete common/data translations and check that nothing is missing</li>
@@ -186,6 +187,10 @@ const HomeAdminNotes = () => {
           <li>
             <del>Highlight currently selected club in ClubView</del>
             &nbsp;(done 24/6)
+          </li>
+          <li>
+            <del>Consistent date presentation (localised, follows selected language)</del>
+            &nbsp;(done 25/6)
           </li>
         </ol>
       </Collapse>

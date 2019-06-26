@@ -42,6 +42,7 @@ class HomeView extends Component {
     gettingActivityAdmin: false,
     gettingActivityAll: false,
     gettingActivityOwn: false,
+    refreshCollapseAdminActivity: 0,
   };
 
   componentDidMount() {
@@ -116,6 +117,12 @@ class HomeView extends Component {
     });
     return ownEventList;
   });
+
+  // update a prop in AdminActivity to trigger refresh of Collapse component to new size
+  requestRefreshCollapseAdminActivity = () => {
+    const { refreshCollapseAdminActivity } = this.state;
+    this.setState({ refreshCollapseAdminActivity: refreshCollapseAdminActivity + 1 });
+  }
 
   renderError = () => {
     const {
@@ -240,12 +247,18 @@ class HomeView extends Component {
   renderHomeAdminPanel = () => {
     const { activity, currentUser, language } = this.props;
     if (!currentUser) return null;
+    const { refreshCollapseAdminActivity } = this.state;
     const { role } = currentUser;
     if (role !== 'admin') return null;
     const { activityAdmin } = activity;
     return (
       <div className="sixteen wide column">
-        <HomeAdminPanel activityList={activityAdmin} language={language} />
+        <HomeAdminPanel
+          activityList={activityAdmin}
+          language={language}
+          refreshCollapse={refreshCollapseAdminActivity}
+          requestRefreshCollapse={this.requestRefreshCollapseAdminActivity}
+        />
       </div>
     );
   }

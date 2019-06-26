@@ -27,14 +27,14 @@ export const dateStringToDate = (dateString) => {
 };
 
 // convert YYYY-MM-DD to (D)D/(M)M/YYYY
-// *** probably better to use reformatTimestampDateOnly instead ***
-export const reformatDate = (dateString) => {
-  const day = (dateString.charAt(8) === '0') ? dateString.charAt(9) : dateString.slice(8);
-  const month = (dateString.charAt(5) === '0') ? dateString.charAt(6) : dateString.slice(5, 7);
-  const year = dateString.slice(0, 4);
-  const reformattedDate = day.concat('/').concat(month).concat('/').concat(year);
-  return reformattedDate;
-};
+// *** use reformatTimestampDateOnly instead to support localisation ***
+// export const reformatDate = (dateString) => {
+//   const day = (dateString.charAt(8) === '0') ? dateString.charAt(9) : dateString.slice(8);
+//   const month = (dateString.charAt(5) === '0') ? dateString.charAt(6) : dateString.slice(5, 7);
+//   const year = dateString.slice(0, 4);
+//   const reformattedDate = day.concat('/').concat(month).concat('/').concat(year);
+//   return reformattedDate;
+// };
 
 // convert YYYY-MM-DDThh:mm:ss.xxxZ to DD/MM/YYYY
 // e.g. '2019-05-15T05:41:44.478Z' to '15/05/2019' (en-GB) or '15. 5. 2019' (cs)
@@ -66,13 +66,15 @@ export const reformatTimestampDateOnly = (timestamp, locale = 'default') => {
 // e.g. en-GB '2019-05-15T05:41:44.478Z' to '15/05/2019, 07:41'
 // e.g. cs '2019-05-15T05:41:44.478Z' to '15. 5. 2019 07:41'
 export const reformatTimestamp = (timestamp, locale = 'default') => {
+  let localeToUse = locale;
+  if (locale === 'en') localeToUse = 'en-GB';
   const newDate = new Date(timestamp);
   const options = {
     hour: '2-digit',
     minute: '2-digit',
   };
-  const time = new Intl.DateTimeFormat(locale, options).format(newDate);
-  const date = reformatTimestampDateOnly(timestamp, locale);
+  const time = new Intl.DateTimeFormat(localeToUse, options).format(newDate);
+  const date = reformatTimestampDateOnly(timestamp, localeToUse);
   // console.log('time, date', time, date);
   const reformattedTimestamp = date.concat(' ').concat(time);
   return reformattedTimestamp;

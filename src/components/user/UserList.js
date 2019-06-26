@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import UserListItem from './UserListItem';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 
 const UserList = ({
   currentUserId,

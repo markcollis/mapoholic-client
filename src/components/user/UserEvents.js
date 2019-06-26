@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 import EventListItem from '../event/EventListItem';
 
 const UserEvents = ({
@@ -35,6 +35,7 @@ const UserEvents = ({
           language={language}
           oevent={oevent}
           handleSelectEvent={handleSelectEvent}
+          selectedEventId=""
         />
       );
     });

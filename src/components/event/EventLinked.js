@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
-import Collapse from '../Collapse';
+import Collapse from '../generic/Collapse';
 import EventLinkedItem from './EventLinkedItem';
 
 const EventLinked = ({

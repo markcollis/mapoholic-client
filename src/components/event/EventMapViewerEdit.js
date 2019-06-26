@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
-import FileDropzone from '../FileDropzone';
+import FileDropzone from '../generic/FileDropzone';
 import { OMAPFOLDER_SERVER } from '../../config';
 
 class EventMapViewerEdit extends Component {
