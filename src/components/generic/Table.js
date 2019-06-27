@@ -5,6 +5,8 @@
 //  sorting (on any column)
 //  highlighting (row or single element)
 
+// initially developed for HomeAdminActivity, can also be used for EventResults
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
@@ -14,26 +16,30 @@ import TableHeader from './TableHeader';
 import TablePagination from './TablePagination';
 import TableRow from './TableRow';
 
+/* eslint react/destructuring-assignment: 0 */
+/* eslint no-console: 0 */
 class Table extends Component {
   state = {
     filter: '',
+    pageNumber: 1,
+    rowsPerPage: this.props.defaultRowsPerPage,
     sortColumn: null,
     sortAscending: true,
   };
 
   static propTypes = {
     requestRefreshCollapse: PropTypes.func,
-    rowsPerPage: PropTypes.number,
+    defaultRowsPerPage: PropTypes.number,
     showPagination: PropTypes.bool,
     showFilter: PropTypes.bool,
     tableData: PropTypes.arrayOf(PropTypes.object),
-    // highlightRow: boolean, rowData: [ element, sortvalue, highlight ]
-    tableHead: PropTypes.arrayOf(PropTypes.string),
+    // highlightRow: boolean, rowData: [ { render:node, sort:string, highlight:boolean} ]
+    tableHead: PropTypes.arrayOf(PropTypes.node),
   };
 
   static defaultProps = {
-    requestRefreshCollapse: null,
-    rowsPerPage: 10,
+    requestRefreshCollapse: () => {},
+    defaultRowsPerPage: 10,
     showPagination: true,
     showFilter: true,
     tableData: [],
@@ -89,7 +95,6 @@ class Table extends Component {
       const sortValueA = rowDataA[sortColumn].sort;
       const { rowData: rowDataB } = b;
       const sortValueB = rowDataB[sortColumn].sort;
-      // console.log('sort values', a, b, sortValueA, sortValueB);
       if (sortValueA === sortValueB) return 0;
       if (sortValueA === '') return 1; // always send blank fields to the bottom
       if (sortValueB === '') return -1;
@@ -105,19 +110,49 @@ class Table extends Component {
     return sortedData;
   });
 
+  getPageData = memoize((sortedData, pageNumber, rowsPerPage) => {
+    console.log('getting page data', pageNumber, rowsPerPage);
+    const first = rowsPerPage * (pageNumber - 1);
+    const last = first + rowsPerPage;
+    const pageData = sortedData.slice(first, last);
+    return pageData;
+  });
+
+  getTotalPages = memoize((sortedData, rowsPerPage) => {
+    console.log('getting total pages');
+    const totalPages = Math.ceil(sortedData.length / rowsPerPage);
+    return totalPages;
+  });
+
   renderTableData = (data) => {
     console.log('rendering table data');
     if (!data) return <tr />;
     const tableRowArray = data.map((row) => {
       const { highlightRow, id, rowData } = row;
-      // console.log('a row!', id);
       if (highlightRow) return <TableRow key={id} highlightRow rowData={rowData} />;
       return <TableRow key={id} rowData={rowData} />;
     });
     return tableRowArray;
   }
 
+  setPageNumber = (page) => {
+    if (typeof page !== 'number') throw new Error('page must be a number');
+    console.log('Changing page number to:', page);
+    this.setState({ pageNumber: page });
+    const { requestRefreshCollapse } = this.props;
+    requestRefreshCollapse();
+  };
+
+  setRowsPerPage = (rows) => {
+    if (typeof rows !== 'number') throw new Error('number of rows must be a number');
+    console.log('Changing number of rows to:', rows);
+    this.setState({ rowsPerPage: rows });
+    const { requestRefreshCollapse } = this.props;
+    requestRefreshCollapse();
+  };
+
   setSortColumn = (colIndex) => {
+    if (typeof colIndex !== 'number') throw new Error('column index must be a number');
     const { sortColumn, sortAscending } = this.state;
     if (sortColumn === colIndex) {
       if (sortAscending) {
@@ -139,6 +174,8 @@ class Table extends Component {
     } = this.props;
     const {
       filter,
+      pageNumber,
+      rowsPerPage,
       sortColumn,
       sortAscending,
     } = this.state;
@@ -149,6 +186,17 @@ class Table extends Component {
     console.log('filteredData:', filteredData);
     const sortedData = this.getSortedData(filteredData, sortColumn, sortAscending);
     console.log('sortedData:', sortedData);
+    const totalPages = (showPagination)
+      ? this.getTotalPages(sortedData, rowsPerPage)
+      : 1;
+    console.log('totalPages:', totalPages);
+    // need this check as filtering may have reduced the total number of pages
+    const pageNumberToUse = (pageNumber > totalPages) ? totalPages : pageNumber;
+    const pageData = (showPagination)
+      ? this.getPageData(sortedData, pageNumberToUse, rowsPerPage)
+      : sortedData;
+    console.log('pageData:', pageData);
+    // if (pageNumber > totalPages) this.setPageNumber(totalPages);
 
     return (
       <div>
@@ -156,7 +204,15 @@ class Table extends Component {
           ? <TableFilter filter={filter} setTableFilter={this.setTableFilter} />
           : ''}
         {(showPagination)
-          ? <TablePagination />
+          ? (
+            <TablePagination
+              pageNumber={pageNumberToUse}
+              rowsPerPage={rowsPerPage}
+              setPageNumber={this.setPageNumber}
+              setRowsPerPage={this.setRowsPerPage}
+              totalPages={totalPages}
+            />
+          )
           : ''}
         <table className="ui celled sortable unstackable compact small table">
           <thead>
@@ -168,7 +224,7 @@ class Table extends Component {
             />
           </thead>
           <tbody>
-            {this.renderTableData(sortedData)}
+            {this.renderTableData(pageData)}
           </tbody>
         </table>
       </div>

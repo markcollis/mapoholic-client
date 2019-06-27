@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { renderToString } from 'react-dom/server';
 
 const TableHeader = ({
   setSortColumn,
@@ -12,7 +13,7 @@ const TableHeader = ({
     if (sortColumn === index && sortAscending) className = 'sorted ascending';
     if (sortColumn === index && !sortAscending) className = 'sorted descending';
     return (
-      <th className={className} key={item} onClick={() => setSortColumn(index)}>
+      <th className={className} key={renderToString(item)} onClick={() => setSortColumn(index)}>
         {item}
       </th>
     );
@@ -28,7 +29,7 @@ TableHeader.propTypes = {
   setSortColumn: PropTypes.func,
   sortColumn: PropTypes.number,
   sortAscending: PropTypes.bool,
-  tableHead: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tableHead: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 TableHeader.defaultProps = {
   setSortColumn: null,

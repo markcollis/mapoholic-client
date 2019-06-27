@@ -85,6 +85,7 @@ class MapView extends Component {
   state = {
     refreshCollapseEventComments: 0,
     refreshCollapseEventDetails: 0,
+    refreshCollapseEventResults: 0,
   }
 
   // helper to get details of selected event if input props have changed
@@ -152,6 +153,12 @@ class MapView extends Component {
   requestRefreshCollapseEventDetails = () => {
     const { refreshCollapseEventDetails } = this.state;
     this.setState({ refreshCollapseEventDetails: refreshCollapseEventDetails + 1 });
+  }
+
+  // update a prop in EventResults to trigger refresh of Collapse component to new size
+  requestRefreshCollapseEventResults = () => {
+    const { refreshCollapseEventResults } = this.state;
+    this.setState({ refreshCollapseEventResults: refreshCollapseEventResults + 1 });
   }
 
   // render EventRunners component
@@ -400,6 +407,7 @@ class MapView extends Component {
                   canEdit={canEdit} // derived
                   eventLinkMode={eventLinkMode} // prop (oevent)
                   isAdmin={isAdmin} // derived
+                  language={language} // prop (config)
                   link={link} // derived (selectedEvent)
                   linkDetails={linkDetails} // prop (oevent)
                   selectedEvent={selectedEvent} // derived
@@ -509,6 +517,7 @@ class MapView extends Component {
   // render EventResults component (self-contained with add/edit/delete)
   // *** consider whether add/edit might need wider screen? ***
   renderEventResults = () => { // simple viewer done, not editable yet
+    const { refreshCollapseEventResults } = this.state;
     const { oevent } = this.props;
     const {
       details,
@@ -521,6 +530,8 @@ class MapView extends Component {
 
     return (
       <EventResults
+        refreshCollapse={refreshCollapseEventResults} // state (value increments to trigger)
+        requestRefreshCollapse={this.requestRefreshCollapseEventResults} // defined here
         selectedEvent={selectedEvent} // derived
         selectedRunner={selectedRunner} // prop (oevent)
       />

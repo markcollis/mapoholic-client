@@ -5,7 +5,7 @@ import { t } from '@lingui/macro';
 
 const TableFilter = ({ filter, setTableFilter }) => {
   return (
-    <div className="ui icon input">
+    <span className="ui icon input">
       <I18n>
         {({ i18n }) => (
           <input
@@ -17,7 +17,7 @@ const TableFilter = ({ filter, setTableFilter }) => {
         )}
       </I18n>
       <i className="circular search icon" />
-    </div>
+    </span>
   );
 };
 
