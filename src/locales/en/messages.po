@@ -13,15 +13,35 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/FileDropzone.js:161
+#: src/components/generic/FileDropzone.js:161
 msgid "(to match QuickRoute output)"
 msgstr "(to match QuickRoute output)"
+
+#: src/components/home/HomeWhatIsIt.js:27
+msgid "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
+msgstr "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
 
 #: src/components/user/UserEdit.js:180
 msgid "A brief user profile"
 msgstr "A brief user profile"
 
-#: src/components/club/ClubEdit.js:75
+#: src/components/home/HomeRecentListItem.js:234
+msgid "A comment about {0}'s run at {1} was deleted by {2}"
+msgstr "A comment about {0}'s run at {1} was deleted by {2}"
+
+#: src/components/home/HomeRecentListItem.js:229
+msgid "A comment about {0}'s run at {1} was updated by {2}"
+msgstr "A comment about {0}'s run at {1} was updated by {2}"
+
+#: src/components/home/HomeRecentListItem.js:224
+msgid "A new comment was posted about {0}'s run at {1} by {2}"
+msgstr "A new comment was posted about {0}'s run at {1} by {2}"
+
+#: src/components/home/HomeRecentListItem.js:296
+msgid "A new link between events {0} was created by {1}"
+msgstr "A new link between events {0} was created by {1}"
+
+#: src/components/club/ClubEdit.js:80
 msgid "Abbreviation"
 msgstr "Abbreviation"
 
@@ -33,15 +53,11 @@ msgstr "About"
 msgid "Add a comment"
 msgstr "Add a comment"
 
-#: src/components/event/EventLinkedManage.js:159
+#: src/components/event/EventLinkedManage.js:163
 msgid "Add a new link"
 msgstr "Add a new link"
 
-#: src/components/event/EventLinkedManage.js:156
-#~ msgid "Add a new link between events"
-#~ msgstr "Add a new link between events"
-
-#: src/components/FileDropzone.js:159
+#: src/components/generic/FileDropzone.js:159
 msgid "Add border"
 msgstr "Add border"
 
@@ -53,7 +69,7 @@ msgstr "Add new club"
 msgid "Add new event"
 msgstr "Add new event"
 
-#: src/components/event/EventLinkedManage.js:194
+#: src/components/event/EventLinkedManage.js:198
 msgid "Add new event link"
 msgstr "Add new event link"
 
@@ -69,41 +85,57 @@ msgstr "Add or change maps"
 msgid "Add or change user profile image"
 msgstr "Add or change user profile image"
 
-#: src/components/event/EventRunners.js:75
+#: src/components/event/EventRunners.js:77
 msgid "Add yourself as a runner"
 msgstr "Add yourself as a runner"
 
-#: src/components/club/ClubEdit.js:133
+#: src/components/home/HomeAdminPanel.js:17
+msgid "Additional information for administrators"
+msgstr "Additional information for administrators"
+
+#: src/components/club/ClubEdit.js:138
 msgid "Address of club website"
 msgstr "Address of club website"
 
-#: src/components/event/EventEdit.js:382
+#: src/components/event/EventEdit.js:403
 msgid "Address of event website"
 msgstr "Address of event website"
 
-#: src/components/event/EventLinkedDelete.js:28
+#: src/components/home/HomeRecent.js:33
+msgid "All Recent Activity"
+msgstr "All Recent Activity"
+
+#: src/components/event/EventLinkedDelete.js:29
 msgid "Are you sure you want to delete \"{displayName}\"?"
 msgstr "Are you sure you want to delete \"{displayName}\"?"
 
-#: src/components/Welcome.js:152
-msgid "As a guest user, you are able to browse or search for maps {eventsListLink} or {eventsMapLink} , but can not upload or comment on them. If you would like to add some maps of your own, please {signUpLink} for an individual account."
-msgstr "As a guest user, you are able to browse or search for maps {eventsListLink} or {eventsMapLink} , but can not upload or comment on them. If you would like to add some maps of your own, please {signUpLink} for an individual account."
+#: src/components/home/HomeWelcome.js:40
+msgid "As a guest user, you are able to browse or search for maps {eventsListLink} or {eventsMapLink}, but can not upload or comment on them. If you would like to add some maps of your own, please {signUpLink} for an individual account."
+msgstr "As a guest user, you are able to browse or search for maps {eventsListLink} or {eventsMapLink}, but can not upload or comment on them. If you would like to add some maps of your own, please {signUpLink} for an individual account."
 
-#: src/components/Header.js:219
+#: src/components/event/EventResults.js:28
+msgid "Behind"
+msgstr "Behind"
+
+#: src/components/Header.js:248
 msgid "Browse Public Maps"
 msgstr "Browse Public Maps"
 
+#: src/components/home/HomeWhatIsIt.js:18
+msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps."
+msgstr "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps."
+
 #: src/components/club/ClubDelete.js:38
-#: src/components/club/ClubEdit.js:173
+#: src/components/club/ClubEdit.js:178
 #: src/components/event/EventCommentsAdd.js:93
 #: src/components/event/EventCommentsItem.js:163
 #: src/components/event/EventCommentsItem.js:176
 #: src/components/event/EventDelete.js:51
-#: src/components/event/EventEdit.js:482
-#: src/components/event/EventLinkedDelete.js:57
+#: src/components/event/EventEdit.js:503
+#: src/components/event/EventLinkedDelete.js:58
 #: src/components/event/EventLinkedEdit.js:117
 #: src/components/event/EventMapViewerEdit.js:280
-#: src/components/event/EventRunnerDelete.js:72
+#: src/components/event/EventRunnerDelete.js:74
 #: src/components/event/EventRunnerEdit.js:261
 #: src/components/user/UserChangePassword.js:63
 #: src/components/user/UserDelete.js:73
@@ -128,11 +160,15 @@ msgstr "Change title"
 msgid "Climb on course (m)"
 msgstr "Climb on course (m)"
 
-#: src/components/club/ClubDetails.js:73
+#: src/components/event/EventResults.js:28
+msgid "Club"
+msgstr "Club"
+
+#: src/components/club/ClubDetails.js:87
 msgid "Club details"
 msgstr "Club details"
 
-#: src/components/club/ClubList.js:33
+#: src/components/club/ClubList.js:39
 msgid "Club list"
 msgstr "Club list"
 
@@ -140,11 +176,11 @@ msgstr "Club list"
 msgid "Club search filter"
 msgstr "Club search filter"
 
-#: src/components/Header.js:199
+#: src/components/Header.js:228
 msgid "Clubs"
 msgstr "Clubs"
 
-#: src/components/event/EventEdit.js:414
+#: src/components/event/EventEdit.js:435
 msgid "Clubs that event is organised by"
 msgstr "Clubs that event is organised by"
 
@@ -160,12 +196,12 @@ msgstr "Comments"
 msgid "Confirm change"
 msgstr "Confirm change"
 
-#: src/components/club/ClubEdit.js:107
-#: src/components/event/EventEdit.js:249
+#: src/components/club/ClubEdit.js:112
+#: src/components/event/EventEdit.js:270
 msgid "Country"
 msgstr "Country"
 
-#: src/components/club/ClubEdit.js:112
+#: src/components/club/ClubEdit.js:117
 msgid "Country in which club is based"
 msgstr "Country in which club is based"
 
@@ -189,25 +225,26 @@ msgstr "Course title"
 msgid "Course: <0>{courseTitle}</0>"
 msgstr "Course: <0>{courseTitle}</0>"
 
-#: src/components/club/ClubEdit.js:62
-#: src/components/event/EventEdit.js:137
+#: src/components/club/ClubEdit.js:59
+#: src/components/event/EventEdit.js:138
 #: src/components/event/EventLinkedEdit.js:53
 msgid "Create"
 msgstr "Create"
 
-#: src/components/event/EventEdit.js:491
+#: src/components/event/EventEdit.js:512
 msgid "Create Event"
 msgstr "Create Event"
 
-#: src/components/event/EventEdit.js:159
+#: src/components/event/EventEdit.js:180
 msgid "Create event using ORIS data"
 msgstr "Create event using ORIS data"
 
-#: src/components/event/EventDetails.js:82
+#: src/components/club/ClubDetails.js:46
+#: src/components/event/EventDetails.js:83
 msgid "Created: {0}"
 msgstr "Created: {0}"
 
-#: src/components/Header.js:185
+#: src/components/Header.js:214
 msgid "Current Map"
 msgstr "Current Map"
 
@@ -215,23 +252,23 @@ msgstr "Current Map"
 msgid "Current password"
 msgstr "Current password"
 
-#: src/components/event/EventEdit.js:188
+#: src/components/event/EventEdit.js:209
 msgid "Date"
 msgstr "Date"
 
+#: src/components/home/HomeWelcome.js:87
+msgid "Dedicated to those that know you can never have too many maps..."
+msgstr "Dedicated to those that know you can never have too many maps..."
+
 #: src/components/event/EventCommentsItem.js:110
-#: src/components/event/EventLinkedDelete.js:50
-#: src/components/event/EventLinkedList.js:42
+#: src/components/event/EventLinkedDelete.js:51
+#: src/components/event/EventLinkedList.js:43
 msgid "Delete"
 msgstr "Delete"
 
 #: src/components/club/ClubDelete.js:15
 msgid "Delete Club"
 msgstr "Delete Club"
-
-#: src/components/event/EventDelete.js:19
-#~ msgid "Delete Event"
-#~ msgstr "Delete Event"
 
 #: src/components/event/EventDelete.js:20
 msgid "Delete Event: {name} ({date})"
@@ -241,7 +278,7 @@ msgstr "Delete Event: {name} ({date})"
 msgid "Delete Event?"
 msgstr "Delete Event?"
 
-#: src/components/event/EventRunnerDelete.js:47
+#: src/components/event/EventRunnerDelete.js:49
 msgid "Delete Runner"
 msgstr "Delete Runner"
 
@@ -249,7 +286,7 @@ msgstr "Delete Runner"
 msgid "Delete User"
 msgstr "Delete User"
 
-#: src/components/club/ClubDetails.js:43
+#: src/components/club/ClubDetails.js:57
 msgid "Delete club"
 msgstr "Delete club"
 
@@ -263,15 +300,15 @@ msgstr "Delete comment"
 msgid "Delete current"
 msgstr "Delete current"
 
-#: src/components/event/EventDetails.js:86
+#: src/components/event/EventDetails.js:94
 msgid "Delete event"
 msgstr "Delete event"
 
-#: src/components/event/EventLinkedManage.js:196
+#: src/components/event/EventLinkedManage.js:200
 msgid "Delete event link"
 msgstr "Delete event link"
 
-#: src/components/event/EventLinked.js:67
+#: src/components/event/EventLinked.js:69
 msgid "Delete link"
 msgstr "Delete link"
 
@@ -279,7 +316,7 @@ msgstr "Delete link"
 msgid "Delete runner"
 msgstr "Delete runner"
 
-#: src/components/user/UserDetails.js:54
+#: src/components/user/UserDetails.js:61
 msgid "Delete user"
 msgstr "Delete user"
 
@@ -287,11 +324,7 @@ msgstr "Delete user"
 msgid "Delete {displayName}?"
 msgstr "Delete {displayName}?"
 
-#: src/components/event/EventDelete.js:43
-#~ msgid "Delete {name} ({date})?"
-#~ msgstr "Delete {name} ({date})?"
-
-#: src/components/event/EventRunnerDelete.js:65
+#: src/components/event/EventRunnerDelete.js:67
 msgid "Delete {runnerName}?"
 msgstr "Delete {runnerName}?"
 
@@ -303,16 +336,20 @@ msgstr "Delete {shortName}?"
 msgid "Deleting a user removes their details and all of their event records including maps. All that is retained is any comments that they have made on other users' maps."
 msgstr "Deleting a user removes their details and all of their event records including maps. All that is retained is any comments that they have made on other users' maps."
 
+#: src/components/home/HomeWelcome.js:65
+msgid "Do you have a large collection of orienteering maps neatly filed away? Can you never bear to throw away a map? Do you wish it was easier to search your collection? Do you have easy access to your route choices and results for each event? Are you interested in seeing your friends' maps and routes as well?"
+msgstr "Do you have a large collection of orienteering maps neatly filed away? Can you never bear to throw away a map? Do you wish it was easier to search your collection? Do you have easy access to your route choices and results for each event? Are you interested in seeing your friends' maps and routes as well?"
+
 #: src/components/event/EventMapViewerEdit.js:251
 msgid "Duplicate map title"
 msgstr "Duplicate map title"
 
 #: src/components/event/EventCommentsItem.js:115
-#: src/components/event/EventLinkedList.js:49
+#: src/components/event/EventLinkedList.js:50
 msgid "Edit"
 msgstr "Edit"
 
-#: src/components/event/EventEdit.js:492
+#: src/components/event/EventEdit.js:513
 msgid "Edit Event Details"
 msgstr "Edit Event Details"
 
@@ -324,19 +361,19 @@ msgstr "Edit Event Runner Details"
 msgid "Edit User Details"
 msgstr "Edit User Details"
 
-#: src/components/club/ClubDetails.js:46
+#: src/components/club/ClubDetails.js:60
 msgid "Edit club details"
 msgstr "Edit club details"
 
-#: src/components/event/EventDetails.js:89
+#: src/components/event/EventDetails.js:97
 msgid "Edit event details"
 msgstr "Edit event details"
 
-#: src/components/event/EventLinkedManage.js:195
+#: src/components/event/EventLinkedManage.js:199
 msgid "Edit event link"
 msgstr "Edit event link"
 
-#: src/components/event/EventLinked.js:83
+#: src/components/event/EventLinked.js:85
 msgid "Edit link details"
 msgstr "Edit link details"
 
@@ -344,7 +381,7 @@ msgstr "Edit link details"
 msgid "Edit runner details"
 msgstr "Edit runner details"
 
-#: src/components/user/UserDetails.js:61
+#: src/components/user/UserDetails.js:68
 msgid "Edit user details"
 msgstr "Edit user details"
 
@@ -356,7 +393,7 @@ msgstr "Email"
 msgid "Email address"
 msgstr "Email address"
 
-#: src/components/event/EventEdit.js:165
+#: src/components/event/EventEdit.js:186
 msgid "Enter ORIS event ID or select from your recent events"
 msgstr "Enter ORIS event ID or select from your recent events"
 
@@ -380,14 +417,14 @@ msgstr "Enter password"
 msgid "Enter user name (your email address will be used if left blank)"
 msgstr "Enter user name (your email address will be used if left blank)"
 
-#: src/components/club/ClubView.js:287
+#: src/components/club/ClubView.js:258
 msgid "Error (get user): {userErrorMessage}"
 msgstr "Error (get user): {userErrorMessage}"
 
-#: src/components/club/ClubView.js:284
-#: src/components/event/EventView.js:479
-#: src/components/event/MapView.js:565
-#: src/components/user/MyProfile_redundant.js:83
+#: src/components/club/ClubView.js:255
+#: src/components/event/EventView.js:555
+#: src/components/event/MapView.js:556
+#: src/components/home/HomeView.js:147
 #: src/components/user/UserView.js:148
 msgid "Error: {errorMessage}"
 msgstr "Error: {errorMessage}"
@@ -400,19 +437,19 @@ msgstr "Error: {errorMessage} Please try again."
 msgid "Event List"
 msgstr "Event List"
 
-#: src/components/event/EventDetails.js:221
+#: src/components/event/EventDetails.js:229
 msgid "Event details"
 msgstr "Event details"
 
-#: src/components/event/EventLinked.js:33
+#: src/components/event/EventLinked.js:34
 msgid "Event link details not found for {linkId}"
 msgstr "Event link details not found for {linkId}"
 
-#: src/components/event/EventEdit.js:306
+#: src/components/event/EventEdit.js:327
 msgid "Event location (latitude)"
 msgstr "Event location (latitude)"
 
-#: src/components/event/EventEdit.js:325
+#: src/components/event/EventEdit.js:346
 msgid "Event location (longitude)"
 msgstr "Event location (longitude)"
 
@@ -420,13 +457,13 @@ msgstr "Event location (longitude)"
 msgid "Event search filter"
 msgstr "Event search filter"
 
-#: src/components/event/EventDetails.js:195
+#: src/components/event/EventDetails.js:203
 msgid "Event website"
 msgstr "Event website"
 
-#: src/components/Header.js:193
-#: src/components/club/ClubEvents.js:40
-#: src/components/user/UserEvents.js:41
+#: src/components/Header.js:222
+#: src/components/club/ClubEvents.js:41
+#: src/components/user/UserEvents.js:42
 msgid "Events"
 msgstr "Events"
 
@@ -442,12 +479,16 @@ msgstr "Events included"
 msgid "Field size"
 msgstr "Field size"
 
-#: src/components/club/ClubEdit.js:91
+#: src/components/generic/TableFilter.js:13
+msgid "Filter table"
+msgstr "Filter table"
+
+#: src/components/club/ClubEdit.js:96
 #: src/components/user/UserEdit.js:137
 msgid "Full name"
 msgstr "Full name"
 
-#: src/components/club/ClubEdit.js:96
+#: src/components/club/ClubEdit.js:101
 msgid "Full name of club"
 msgstr "Full name of club"
 
@@ -455,32 +496,33 @@ msgstr "Full name of club"
 msgid "Full name of user"
 msgstr "Full name of user"
 
-#: src/components/event/EventEdit.js:433
+#: src/components/event/EventEdit.js:454
 msgid "Groups of other events that this event is linked to"
 msgstr "Groups of other events that this event is linked to"
 
-#: src/components/event/EventLinkedManage.js:170
+#: src/components/event/EventLinkedManage.js:174
 msgid "Hide event link list"
 msgstr "Hide event link list"
 
-#: src/components/user/UserDetails.js:43
+#: src/components/user/UserDetails.js:50
 msgid "Internal ID: {userId}"
 msgstr "Internal ID: {userId}"
 
-#: src/components/event/EventLinkedDelete.js:29
+#: src/components/event/EventLinkedDelete.js:30
 msgid "It links the following events:"
 msgstr "It links the following events:"
 
-#: src/components/user/UserDetails.js:114
+#: src/components/user/UserDetails.js:126
 msgid "Joined: {0}"
 msgstr "Joined: {0}"
 
-#: src/components/event/EventDetails.js:83
-#: src/components/user/UserDetails.js:47
+#: src/components/club/ClubDetails.js:51
+#: src/components/event/EventDetails.js:88
+#: src/components/user/UserDetails.js:54
 msgid "Last updated: {0}"
 msgstr "Last updated: {0}"
 
-#: src/components/event/EventEdit.js:298
+#: src/components/event/EventEdit.js:319
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -488,28 +530,28 @@ msgstr "Latitude"
 msgid "Length of course (km)"
 msgstr "Length of course (km)"
 
-#: src/components/event/EventEdit.js:398
+#: src/components/event/EventEdit.js:419
 msgid "Link to event results"
 msgstr "Link to event results"
 
-#: src/components/event/EventLinked.js:25
+#: src/components/event/EventLinked.js:26
 msgid "Linked events"
 msgstr "Linked events"
 
-#: src/components/event/EventLinked.js:88
+#: src/components/event/EventLinked.js:90
 msgid "Linked events: {displayName}"
 msgstr "Linked events: {displayName}"
 
-#: src/components/event/EventEdit.js:428
+#: src/components/event/EventEdit.js:449
 msgid "Linked to"
 msgstr "Linked to"
 
-#: src/components/Header.js:155
-#: src/components/Header.js:168
+#: src/components/Header.js:184
+#: src/components/Header.js:197
 msgid "List view"
 msgstr "List view"
 
-#: src/components/club/ClubDetails.js:20
+#: src/components/club/ClubDetails.js:22
 msgid "Loading club details..."
 msgstr "Loading club details..."
 
@@ -518,28 +560,32 @@ msgstr "Loading club details..."
 msgid "Loading event details..."
 msgstr "Loading event details..."
 
-#: src/components/user/UserDetails.js:17
+#: src/components/home/HomeRecent.js:19
+msgid "Loading recent activity..."
+msgstr "Loading recent activity..."
+
+#: src/components/user/UserDetails.js:24
 msgid "Loading user details..."
 msgstr "Loading user details..."
 
-#: src/components/event/EventEdit.js:234
+#: src/components/event/EventEdit.js:255
 #: src/components/user/UserEdit.js:192
 msgid "Location"
 msgstr "Location"
 
-#: src/components/event/EventEdit.js:254
+#: src/components/event/EventEdit.js:275
 msgid "Location (country)"
 msgstr "Location (country)"
 
-#: src/components/event/EventEdit.js:239
+#: src/components/event/EventEdit.js:260
 msgid "Location of event (e.g. nearest town)"
 msgstr "Location of event (e.g. nearest town)"
 
-#: src/components/Header.js:226
+#: src/components/Header.js:255
 msgid "Log In"
 msgstr "Log In"
 
-#: src/components/Header.js:204
+#: src/components/Header.js:233
 msgid "Log Out"
 msgstr "Log Out"
 
@@ -555,27 +601,23 @@ msgstr "Log in to OMapFolder"
 msgid "Logged out"
 msgstr "Logged out"
 
-#: src/components/event/EventEdit.js:317
+#: src/components/event/EventEdit.js:338
 msgid "Longitude"
 msgstr "Longitude"
 
-#: src/components/event/EventLinkedManage.js:193
+#: src/components/event/EventLinkedManage.js:197
 msgid "Manage linked events"
 msgstr "Manage linked events"
 
-#: src/components/event/EventListItem.js:110
+#: src/components/event/EventListItem.js:69
 msgid "Map"
 msgstr "Map"
-
-#: src/components/Header.js:86
-#~ msgid "Map View"
-#~ msgstr "Map View"
 
 #: src/components/event/EventMapViewer.js:226
 msgid "Map Viewer"
 msgstr "Map Viewer"
 
-#: src/components/event/EventEdit.js:219
+#: src/components/event/EventEdit.js:240
 msgid "Map name"
 msgstr "Map name"
 
@@ -583,8 +625,8 @@ msgstr "Map name"
 msgid "Map title"
 msgstr "Map title"
 
-#: src/components/Header.js:158
-#: src/components/Header.js:171
+#: src/components/Header.js:187
+#: src/components/Header.js:200
 msgid "Map view"
 msgstr "Map view"
 
@@ -596,16 +638,17 @@ msgstr "Member of"
 msgid "Members"
 msgstr "Members"
 
-#: src/components/Header.js:190
+#: src/components/Header.js:219
 msgid "My Maps"
 msgstr "My Maps"
 
-#: src/components/event/EventEdit.js:203
+#: src/components/event/EventEdit.js:224
 #: src/components/event/EventLinkedEdit.js:70
+#: src/components/event/EventResults.js:28
 msgid "Name"
 msgstr "Name"
 
-#: src/components/event/EventEdit.js:208
+#: src/components/event/EventEdit.js:229
 msgid "Name of event (required)"
 msgstr "Name of event (required)"
 
@@ -613,7 +656,7 @@ msgstr "Name of event (required)"
 msgid "Name of event link (required)"
 msgstr "Name of event link (required)"
 
-#: src/components/event/EventEdit.js:224
+#: src/components/event/EventEdit.js:245
 msgid "Name of map used for event"
 msgstr "Name of map used for event"
 
@@ -637,17 +680,9 @@ msgstr "No course details to display"
 msgid "No result to display"
 msgstr "No result to display"
 
-#: src/components/event/EventRunnerDelete.js:32
-#~ msgid "Note: Currently non-functional, server does not suspport this yet."
-#~ msgstr "Note: Currently non-functional, server does not suspport this yet."
-
 #: src/components/event/EventDelete.js:22
 msgid "Note: Deletion is only permitted by standard users if there are no runners at the event, or you are the only runner. Deleting an event also removes all references to it in linked events."
 msgstr "Note: Deletion is only permitted by standard users if there are no runners at the event, or you are the only runner. Deleting an event also removes all references to it in linked events."
-
-#: src/components/event/EventDelete.js:22
-#~ msgid "Note: Deletion is only permitted if there are no runners at the event, or the user attempting to delete is the only runner. Deleting an event also removes all references in linked events."
-#~ msgstr "Note: Deletion is only permitted if there are no runners at the event, or the user attempting to delete is the only runner. Deleting an event also removes all references in linked events."
 
 #: src/components/event/EventRunnerEdit.js:132
 msgid "Number of controls"
@@ -657,32 +692,36 @@ msgstr "Number of controls"
 msgid "Number of controls on course"
 msgstr "Number of controls on course"
 
-#: src/components/club/ClubDetails.js:39
-#: src/components/user/UserDetails.js:45
+#: src/components/club/ClubDetails.js:43
+#: src/components/user/UserDetails.js:52
 msgid "ORIS ID: {orisId}"
 msgstr "ORIS ID: {orisId}"
 
-#: src/components/event/EventEdit.js:409
+#: src/components/event/EventEdit.js:430
 msgid "Organised by"
 msgstr "Organised by"
 
-#: src/components/club/ClubEdit.js:146
-#: src/components/event/EventEdit.js:451
+#: src/components/club/ClubEdit.js:151
+#: src/components/event/EventEdit.js:472
 msgid "Owner"
 msgstr "Owner"
 
-#: src/components/club/ClubEdit.js:151
+#: src/components/club/ClubEdit.js:156
 msgid "Owner of club record in this database"
 msgstr "Owner of club record in this database"
 
-#: src/components/event/EventEdit.js:456
+#: src/components/event/EventEdit.js:477
 msgid "Owner of event record in this database"
 msgstr "Owner of event record in this database"
 
-#: src/components/club/ClubDetails.js:37
+#: src/components/club/ClubDetails.js:41
 #: src/components/event/EventDetails.js:78
 msgid "Owner: {0}"
 msgstr "Owner: {0}"
+
+#: src/components/generic/TablePagination.js:45
+msgid "Page"
+msgstr "Page"
 
 #: src/components/auth/Authenticate.js:77
 msgid "Password"
@@ -692,7 +731,7 @@ msgstr "Password"
 msgid "Personal tags for event"
 msgstr "Personal tags for event"
 
-#: src/components/event/EventListItem.js:104
+#: src/components/event/EventListItem.js:59
 #: src/components/event/EventRunnerEdit.js:164
 msgid "Place"
 msgstr "Place"
@@ -700,6 +739,10 @@ msgstr "Place"
 #: src/components/event/EventRunnerEdit.js:169
 msgid "Placing in field"
 msgstr "Placing in field"
+
+#: src/components/home/HomeWelcome.js:74
+msgid "Please {signUpLink} or {logInLink} to use all the exciting features of this site. If you would like to see more before you sign up, some of the maps are visible to unregistered visitors too, you can search for them {eventsListLink} or {eventsMapLink}."
+msgstr "Please {signUpLink} or {logInLink} to use all the exciting features of this site. If you would like to see more before you sign up, some of the maps are visible to unregistered visitors too, you can search for them {eventsListLink} or {eventsMapLink}."
 
 #: src/components/event/EventCommentsAdd.js:90
 msgid "Post comment"
@@ -709,9 +752,13 @@ msgstr "Post comment"
 msgid "Profile visibility"
 msgstr "Profile visibility"
 
-#: src/components/user/UserDetails.js:42
+#: src/components/user/UserDetails.js:49
 msgid "Profile visibility: {visibility}"
 msgstr "Profile visibility: {visibility}"
+
+#: src/components/home/HomeRecent.js:32
+msgid "Recent Activity"
+msgstr "Recent Activity"
 
 #: src/components/club/ClubFilter.js:35
 #: src/components/event/EventFilter.js:42
@@ -719,11 +766,11 @@ msgstr "Profile visibility: {visibility}"
 msgid "Refresh list"
 msgstr "Refresh list"
 
-#: src/components/event/EventEdit.js:277
+#: src/components/event/EventEdit.js:298
 msgid "Region(s) (customisable)"
 msgstr "Region(s) (customisable)"
 
-#: src/components/event/EventEdit.js:282
+#: src/components/event/EventEdit.js:303
 msgid "Region(s) associated with event"
 msgstr "Region(s) associated with event"
 
@@ -735,10 +782,9 @@ msgstr "Registration number"
 msgid "Result: <0>{time}</0>"
 msgstr "Result: <0>{time}</0>"
 
-#: src/components/event/EventDetails.js:207
-#: src/components/event/EventEdit.js:393
-#: src/components/event/EventResults.js:72
-#: src/components/event/EventResults_react-table.js:87
+#: src/components/event/EventDetails.js:215
+#: src/components/event/EventEdit.js:414
+#: src/components/event/EventResults.js:56
 msgid "Results"
 msgstr "Results"
 
@@ -758,9 +804,9 @@ msgstr "Route"
 msgid "Runner details"
 msgstr "Runner details"
 
-#: src/components/event/EventRunners.js:78
-msgid "Runners at event"
-msgstr "Runners at event"
+#: src/components/event/EventRunners.js:80
+msgid "Runners at event (select one to see their maps)"
+msgstr "Runners at event (select one to see their maps)"
 
 #: src/components/event/EventCommentsItem.js:160
 msgid "Save changes"
@@ -782,30 +828,17 @@ msgstr "Search for users"
 msgid "See below for detailed results ({0} runners)"
 msgstr "See below for detailed results ({0} runners)"
 
-#: src/components/event/EventRunnerDetails.js:133
-#~ msgid "See below for results ({0} runners)"
-#~ msgstr "See below for results ({0} runners)"
-
-#: src/components/club/ClubView.js:193
+#: src/components/club/ClubView.js:164
 msgid "Select a club from the list to show further details here"
 msgstr "Select a club from the list to show further details here"
 
-#: src/components/event/MapView.js:252
+#: src/components/event/MapView.js:239
 msgid "Select a runner from the list to show further details here"
 msgstr "Select a runner from the list to show further details here"
 
-#: src/components/user/UserView.js:392
+#: src/components/user/UserView.js:405
 msgid "Select a user from the list to show further details here"
 msgstr "Select a user from the list to show further details here"
-
-#: src/components/event/EventViewList_old.js:272
-#~ msgid "Select an event from the list to show further details here"
-#~ msgstr "Select an event from the list to show further details here"
-
-#: src/components/event/EventViewMap_old.js:221
-#: src/components/event/EventViewMap_redundant.js:221
-#~ msgid "Select an event on the map to show further details here"
-#~ msgstr "Select an event on the map to show further details here"
 
 #: src/components/event/EventMapViewerEdit.js:289
 msgid "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
@@ -819,11 +852,11 @@ msgstr "Select your file (drag and drop or click to open file dialogue). The fil
 msgid "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 
-#: src/components/event/EventLinkedManage.js:171
+#: src/components/event/EventLinkedManage.js:175
 msgid "Show event link list"
 msgstr "Show event link list"
 
-#: src/components/Header.js:223
+#: src/components/Header.js:252
 msgid "Sign Up"
 msgstr "Sign Up"
 
@@ -839,12 +872,12 @@ msgstr "Sign up for OMapFolder"
 msgid "Sorry to see you leave, come back again soon!"
 msgstr "Sorry to see you leave, come back again soon!"
 
-#: src/components/event/EventView.js:265
-#: src/components/event/MapView.js:327
+#: src/components/event/EventView.js:320
+#: src/components/event/MapView.js:314
 msgid "Sorry, no event is selected."
 msgstr "Sorry, no event is selected."
 
-#: src/components/event/EventLinkedList.js:11
+#: src/components/event/EventLinkedList.js:12
 msgid "Sorry, no event links found."
 msgstr "Sorry, no event links found."
 
@@ -856,12 +889,11 @@ msgstr "Sorry, no matching runner details were found."
 msgid "Sorry, there are no maps to display."
 msgstr "Sorry, there are no maps to display."
 
-#: src/components/event/EventResults.js:71
-#: src/components/event/EventResults_react-table.js:86
+#: src/components/event/EventResults.js:70
 msgid "Sorry, there are no results to display."
 msgstr "Sorry, there are no results to display."
 
-#: src/components/club/ClubList.js:13
+#: src/components/club/ClubList.js:18
 msgid "Sorry, there aren't any matching clubs to display!"
 msgstr "Sorry, there aren't any matching clubs to display!"
 
@@ -869,39 +901,84 @@ msgstr "Sorry, there aren't any matching clubs to display!"
 msgid "Sorry, there aren't any matching events to display!"
 msgstr "Sorry, there aren't any matching events to display!"
 
-#: src/components/user/UserList.js:17
+#: src/components/user/UserList.js:19
 msgid "Sorry, there aren't any matching users to display!"
 msgstr "Sorry, there aren't any matching users to display!"
 
-#: src/components/club/ClubEdit.js:80
+#: src/components/club/ClubEdit.js:85
 msgid "Standard abbreviation for club"
 msgstr "Standard abbreviation for club"
 
-#: src/components/event/EventEdit.js:358
+#: src/components/event/EventEdit.js:379
 #: src/components/event/EventRunnerEdit.js:212
 msgid "Tags (customisable)"
 msgstr "Tags (customisable)"
 
-#: src/components/event/EventEdit.js:363
+#: src/components/event/EventEdit.js:384
 msgid "Tags for event"
 msgstr "Tags for event"
 
-#: src/components/event/EventComments.js:50
-#~ msgid "There are no comments yet."
-#~ msgstr "There are no comments yet."
+#: src/components/home/HomeRecentListItem.js:219
+msgid "The club {0} was deleted by {1}"
+msgstr "The club {0} was deleted by {1}"
 
-#: src/components/event/EventLinked.js:26
+#: src/components/home/HomeRecentListItem.js:214
+msgid "The club {0} was updated by {1}"
+msgstr "The club {0} was updated by {1}"
+
+#: src/components/home/HomeWhatIsIt.js:9
+msgid "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*)."
+msgstr "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*)."
+
+#: src/components/home/HomeRecentListItem.js:249
+msgid "The event {0} was deleted by {1}"
+msgstr "The event {0} was deleted by {1}"
+
+#: src/components/home/HomeRecentListItem.js:244
+msgid "The event {0} was updated by {1}"
+msgstr "The event {0} was updated by {1}"
+
+#: src/components/home/HomeRecentListItem.js:306
+msgid "The link between events {0} was deleted by {1}"
+msgstr "The link between events {0} was deleted by {1}"
+
+#: src/components/home/HomeRecentListItem.js:301
+msgid "The link between events {0} was updated by {1}"
+msgstr "The link between events {0} was updated by {1}"
+
+#: src/components/home/HomeRecentListItem.js:209
+msgid "The new club {0} was created by {1}"
+msgstr "The new club {0} was created by {1}"
+
+#: src/components/home/HomeRecentListItem.js:239
+msgid "The new event {0} was created by {1}"
+msgstr "The new event {0} was created by {1}"
+
+#: src/components/home/HomeRecentListItem.js:291
+msgid "The user {0} was deleted by {1}"
+msgstr "The user {0} was deleted by {1}"
+
+#: src/components/home/HomeRecentListItem.js:286
+msgid "The user {0} was updated by {1}"
+msgstr "The user {0} was updated by {1}"
+
+#: src/components/home/HomeWelcome.js:72
+msgid "Then MapOholic might be for you!"
+msgstr "Then MapOholic might be for you!"
+
+#: src/components/home/HomeRecent.js:27
+msgid "There has been no recent activity."
+msgstr "There has been no recent activity."
+
+#: src/components/event/EventLinked.js:27
 msgid "This event is not currently linked to any others."
 msgstr "This event is not currently linked to any others."
-
-#: src/components/auth/Authenticate.js:137
-#~ msgid "This is not a valid email address."
-#~ msgstr "This is not a valid email address."
 
 #: src/components/club/ClubDelete.js:17
 msgid "This will delete all records relating to this club, including connections with users (as members) and events (as organisers)."
 msgstr "This will delete all records relating to this club, including connections with users (as members) and events (as organisers)."
 
+#: src/components/event/EventResults.js:28
 #: src/components/event/EventRunnerEdit.js:148
 msgid "Time"
 msgstr "Time"
@@ -930,16 +1007,20 @@ msgstr "Title of course"
 msgid "Total number of runners"
 msgstr "Total number of runners"
 
-#: src/components/event/EventEdit.js:342
+#: src/components/event/EventEdit.js:363
 msgid "Type of event"
 msgstr "Type of event"
 
-#: src/components/event/EventEdit.js:337
+#: src/components/event/EventEdit.js:358
 msgid "Type(s) of event"
 msgstr "Type(s) of event"
 
-#: src/components/club/ClubEdit.js:62
-#: src/components/event/EventEdit.js:137
+#: src/components/home/HomeRecentListItem.js:309
+msgid "Unknown actionType {actionType}"
+msgstr "Unknown actionType {actionType}"
+
+#: src/components/club/ClubEdit.js:59
+#: src/components/event/EventEdit.js:138
 #: src/components/event/EventLinkedEdit.js:53
 #: src/components/event/EventRunnerEdit.js:254
 #: src/components/user/UserEdit.js:263
@@ -952,7 +1033,7 @@ msgstr "Update"
 msgid "Upload selected"
 msgstr "Upload selected"
 
-#: src/components/user/UserList.js:38
+#: src/components/user/UserList.js:42
 msgid "User list"
 msgstr "User list"
 
@@ -961,7 +1042,7 @@ msgstr "User list"
 msgid "User name"
 msgstr "User name"
 
-#: src/components/user/UserDetails.js:120
+#: src/components/user/UserDetails.js:132
 msgid "User profile"
 msgstr "User profile"
 
@@ -969,11 +1050,11 @@ msgstr "User profile"
 msgid "User search filter"
 msgstr "User search filter"
 
-#: src/components/user/UserDetails.js:41
+#: src/components/user/UserDetails.js:48
 msgid "User type: {role}"
 msgstr "User type: {role}"
 
-#: src/components/Header.js:196
+#: src/components/Header.js:225
 msgid "Users"
 msgstr "Users"
 
@@ -985,57 +1066,53 @@ msgstr "Visibility"
 msgid "Visibility of your maps from this event to others"
 msgstr "Visibility of your maps from this event to others"
 
-#: src/components/club/ClubEdit.js:128
-#: src/components/event/EventEdit.js:377
+#: src/components/club/ClubEdit.js:133
+#: src/components/event/EventEdit.js:398
 msgid "Website"
 msgstr "Website"
 
-#: src/components/Welcome.js:108
-#~ msgid "Welcome back!"
-#~ msgstr "Welcome back!"
-
-#: src/components/Welcome.js:182
+#: src/components/home/HomeWelcome.js:86
 msgid "Welcome to MapOholic!"
 msgstr "Welcome to MapOholic!"
-
-#: src/components/Welcome.js:197
-msgid "Welcome!"
-msgstr "Welcome!"
 
 #: src/components/user/UserEdit.js:197
 msgid "Where user is based"
 msgstr "Where user is based"
 
-#: src/components/event/EventRunnerDelete.js:49
+#: src/components/event/EventRunnerDelete.js:51
 msgid "You are about to delete {runnerName} from {name} ({0})."
 msgstr "You are about to delete {runnerName} from {name} ({0})."
 
-#: src/components/Welcome.js:183
+#: src/components/home/HomeWelcome.js:88
 msgid "You are currently logged in."
 msgstr "You are currently logged in."
 
-#: src/components/Welcome.js:109
-#~ msgid "You are still logged in."
-#~ msgstr "You are still logged in."
+#: src/components/home/HomeWelcome.js:56
+msgid "You have already uploaded {uploadedMapsText} from {attendedEventsText}. You can browse or search for them either {myEventsListLink} or {myEventsMapLink}."
+msgstr "You have already uploaded {uploadedMapsText} from {attendedEventsText}. You can browse or search for them either {myEventsListLink} or {myEventsMapLink}."
 
-#: src/components/user/MyProfile_redundant.js:69
-#: src/components/user/UserView.js:340
+#: src/components/user/UserView.js:353
 msgid "You have not added any events yet."
 msgstr "You have not added any events yet."
+
+#: src/components/home/HomeWelcome.js:49
+msgid "You have not yet uploaded any maps. Why not start now?"
+msgstr "You have not yet uploaded any maps. Why not start now?"
+
+#: src/components/home/HomeRecent.js:34
+msgid "Your Own Recent Activity"
+msgstr "Your Own Recent Activity"
 
 #: src/components/user/UserChangePassword.js:25
 msgid "Your own password"
 msgstr "Your own password"
 
-#: src/components/Welcome.js:118
-#~ msgid "browse them here"
-#~ msgstr "browse them here"
-
-#: src/components/Welcome.js:147
+#: src/components/home/HomeWelcome.js:33
+#: src/components/home/HomeWelcome.js:35
 msgid "by name"
 msgstr "by name"
 
-#: src/components/Welcome.js:146
+#: src/components/home/HomeWelcome.js:32
 msgid "log in"
 msgstr "log in"
 
@@ -1048,7 +1125,7 @@ msgstr "no map yet"
 msgid "no maps found"
 msgstr "no maps found"
 
-#: src/components/event/EventListItem.js:57
+#: src/components/event/EventListItem.js:106
 msgid "none"
 msgstr "none"
 
@@ -1056,34 +1133,72 @@ msgstr "none"
 msgid "of {fieldSize}"
 msgstr "of {fieldSize}"
 
-#: src/components/Welcome.js:148
+#: src/components/generic/TablePagination.js:53
+msgid "of {totalPages}"
+msgstr "of {totalPages}"
+
+#: src/components/home/HomeWelcome.js:34
+#: src/components/home/HomeWelcome.js:36
 msgid "on a map"
 msgstr "on a map"
 
-#: src/components/Welcome.js:145
+#: src/components/generic/TablePagination.js:69
+msgid "rows per page"
+msgstr "rows per page"
+
+#: src/components/home/HomeWelcome.js:31
 msgid "sign up"
 msgstr "sign up"
+
+#: src/components/home/HomeRecentListItem.js:95
+#: src/components/home/HomeRecentListItem.js:99
+msgid "themselves"
+msgstr "themselves"
 
 #: src/components/event/EventCommentsList.js:27
 msgid "{0, plural, one {# comment} other {# comments}}"
 msgstr "{0, plural, one {# comment} other {# comments}}"
 
-#: src/components/event/EventLinkedList.js:14
-#~ msgid "{0, plural, one {# event} other {# events}}"
-#~ msgstr "{0, plural, one {# event} other {# events}}"
-
 #: src/components/club/ClubMembers.js:52
 msgid "{0, plural, one {# map} other {# maps}}"
 msgstr "{0, plural, one {# map} other {# maps}}"
 
-#: src/components/user/UserChangePassword.js:25
-#~ msgid "{0}"
-#~ msgstr "{0}"
+#: src/components/home/HomeRecentListItem.js:281
+msgid "{0} created an account"
+msgstr "{0} created an account"
+
+#: src/components/home/HomeRecentListItem.js:261
+msgid "{0} deleted a map from {1}"
+msgstr "{0} deleted a map from {1}"
+
+#: src/components/home/HomeRecentListItem.js:266
+msgid "{0} ran at {1}"
+msgstr "{0} ran at {1}"
+
+#: src/components/home/HomeRecentListItem.js:255
+msgid "{0} uploaded a map from {1}"
+msgstr "{0} uploaded a map from {1}"
+
+#: src/components/home/HomeRecentListItem.js:271
+msgid "{0}'s details for {1} were updated by {2}"
+msgstr "{0}'s details for {1} were updated by {2}"
+
+#: src/components/home/HomeRecentListItem.js:276
+msgid "{0}'s record for {1} was deleted by {2}"
+msgstr "{0}'s record for {1} was deleted by {2}"
+
+#: src/components/home/HomeWelcome.js:28
+msgid "{attendedEvents, plural, one {# event} other {# events}}"
+msgstr "{attendedEvents, plural, one {# event} other {# events}}"
 
 #: src/components/event/EventRunnerDetails.js:83
 msgid "{courseControls} controls"
 msgstr "{courseControls} controls"
 
-#: src/components/event/EventLinkedList.js:16
+#: src/components/event/EventLinkedList.js:17
 msgid "{eventCount, plural, one {# event} other {# events}}"
 msgstr "{eventCount, plural, one {# event} other {# events}}"
+
+#: src/components/home/HomeWelcome.js:27
+msgid "{uploadedMaps, plural, one {# map} other {# maps}}"
+msgstr "{uploadedMaps, plural, one {# map} other {# maps}}"

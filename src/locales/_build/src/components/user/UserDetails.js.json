@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        17
+        24
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        41
+        48
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        42
+        49
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        43
+        50
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        45
+        52
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        47
+        54
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        54
+        61
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        61
+        68
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        114
+        126
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        120
+        132
       ]
     ]
   }

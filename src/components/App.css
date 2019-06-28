@@ -1,135 +1,45 @@
-/* settings for TablePagination */
-.table-control-margin {
-  margin-left: 0.7em !important;
-  margin-right: 0.7em !important;
-}
+/* Style definitions to amend or override (with !important) the Semantic UI defaults
+Contents:
+ - general styles for use in any component
+ - styles for Header and Footer components
+ - styles for generic components (Collapse, FileDropzone, Table)
+ - styles for Club components
+ - styles for Event components
+ - styles for Home components
+ - styles for User components
+*/
 
-/* settings for HomeView */
-.home-image {
-  width: 100%;
-  border: solid 2px red; /* to emphasise the need to put in place the right images*/
-}
+/* General */
+/* ------- */
 
-/* settings for HomeRecent */
-.recent-activity-list {
-  padding: 0 20px;
+/* Remove outline for non-keyboard :focus */
+*:focus:not(.focus-visible) {
+  outline: none;
 }
-
-/* settings for HomeAdminPanel */
-.admin-panel-divider {
-  border-color: blue;
-  margin-bottom: 1.5em;
+/* Optional: Customize .focus-visible */
+.focus-visible {
+  outline-color: lightgreen;
 }
-
-/* settings for ClubDetails component */
-.club-details-floating {
-  position: absolute;
-  top: 6.5em;
-  left: 3em;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 0.5em;
-  box-shadow: 0 0 0.5em 0.5em rgba(255, 255, 255, 0.9);
-}
-
-/* settings for EventMap component (leaflet) */
-.leaflet-container {
-  height: 400px;
-  width: 100%;
-}
-.event-map-box-tooltip {
-  background-color: white;
-  border: none;
-  box-shadow: none;
-  color: blue;
-  padding: 5px;
-  text-align: center;
-}
-.event-map-flag-tooltip {
-  text-align: center;
-}
-
-/* settings for ClubView, EventView, UserView lists */
+/* scroll long lists (e.g. ClubView, EventView, UserView) */
 .list-limit-height {
   max-height: 50em;
   overflow-y: auto;
 }
-
-/* settings for EventMapViewerCanvas */
-.course-map-container {
-  height: 600px;
-  width: 100%;
-  overflow: hidden;
-}
-.event-course-map-loader {
-  margin-top: 10px !important;
-  height: 540px;
-}
-.event-course-map-canvas {
-  margin-top: 5px;
-  overflow: hidden;
-  height: 555px;
-}
-.event-course-map-toolbar {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-/* settings for EventCommentsItem */
-.comment-header {
-  padding-top: 0.3em !important;
-  padding-bottom: 0.5em !important;
-}
-.comment-author {
-  color: #2185d0 !important;
-}
-.comment-fullname {
-  font-size: 0.9em;
-  font-weight: normal;
-}
-.comment-date {
-  font-size: 0.9em;
-  font-style: italic;
-}
-.comment-editor {
-  padding-top: 1rem;
-}
-.comment-text {
-  white-space: pre-line;
-}
-
-/* settings for card lists (ClubListItem, EventListItem, EventRunnersItem, */
-/* EventLinkedItem, UserListItem) */
-.item-current-user { /* runner is logged in user (in MapView and EventView) */
+/* highlight entries in card lists (e.g. ClubListItem, EventListItem, EventRunnersItem,
+EventLinkedItem, UserListItem) */
+.item-current-user { /* card represents currently logged in user */
   background-color: #e9f3fc !important;
 }
-.item-selected { /* currently selected runner (in MapView only)*/
+.item-selected { /* card represents currently selected item */
   box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
 }
-
-/* settings for EventRunnersItem */
-.event-runners-item .label {
-  margin-right: 0.3em !important;
-}
-.event-runners-deleted { /* only admin users should ever see this */
-  color: red !important;
+/* float element right */
+.floatedright {
+  float: right;
 }
 
-/* settings for EventDetails */
-.event-details .label {
-  margin-right: 0.3em !important;
-}
-.event-details .item:after {
-  clear: left !important;
-}
-.event-details-canedit {
-  clear: both;
-}
-
-/* settings for EventListItem */
-.event-list-text {
-  background: rgba(255, 255, 255, 0.8);
-  color: #000;
-}
+/* Header and Footer */
+/* ----------------- */
 
 /* format common Footer text */
 .footer {
@@ -137,50 +47,33 @@
   font-style: italic;
   margin-bottom: 1rem;
 }
-
-/* settings for EventRunnerDetails */
-.course-title {
-  font-weight: bold;
-}
-.event-runner-profile-image {
-  width: 100px;
-  height: 100px;
-  float: right;
-}
-
-/* float right (initially intended for labels) */
-.floatedright {
-  float: right;
-}
-
 /* level position of current user with avatar in Header component */
 .header-current-user {
   padding-bottom: 0.3em !important;
 }
 
-/* control appearance of images in UserDetails component */
-.profile-forest {
-  z-index: 0;
-  width: 100%;
-}
-.profile-image {
-  width: 150px;
-  height: 150px;
-  position: relative;
-  float: left;
-  background-color: white;
-  margin: -70px 20px 0px 30px;
-  z-index: 1;
-  padding: 5px;
-}
+/* Generic components */
+/* ------------------ */
 
-/* control appearance of avatars in UserList component */
-.user-list-avatar {
-  width: 80px;
-  height: 80px;
-  margin-right: 1.5em;
+/* Collapse: set margins to avoid clipping when inside a Collapse component */
+.card-list {
+  margin: 0 0.1em 0 0.1em !important;
 }
-
+/* settings for Collapse: define smooth collapse and expand effects */
+.collapse .show {
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+  transition: max-height 500ms cubic-bezier(.525,.66,.495,1.4);
+}
+.collapse .hide {
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+  transition: max-height 500ms cubic-bezier(.525,.66,.495,1.4);
+}
 /* manage appearance of FileDropzone component */
 .filedropzone {
   align-items: center;
@@ -209,34 +102,160 @@
 .border-button {
   text-align: center;
 }
-
-/* set margins to avoid clipping when inside a Collapse component */
-.card-list {
-  margin: 0 0.1em 0 0.1em !important;
+/* settings for Table */
+.table-scrollx {
+  overflow-x: auto;
+}
+/* settings for TablePagination */
+.table-control-margin {
+  margin-left: 0.7em !important;
+  margin-right: 0.7em !important;
 }
 
-/* define smooth collapse and expand effects */
-.collapse .show {
-  padding-left: 0.1em;
-  padding-right: 0.1em;
-  padding-bottom: 0.1em;
+/* Club components */
+/* --------------- */
+
+/* settings for ClubDetails component */
+.club-details-floating {
+  position: absolute;
+  top: 6.5em;
+  left: 3em;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5em;
+  box-shadow: 0 0 0.5em 0.5em rgba(255, 255, 255, 0.9);
+}
+
+/* Event components */
+/* ---------------- */
+
+/* settings for EventCommentsItem */
+.comment-header {
+  padding-top: 0.3em !important;
+  padding-bottom: 0.5em !important;
+}
+.comment-author {
+  color: #2185d0 !important;
+}
+.comment-fullname {
+  font-size: 0.9em;
+  font-weight: normal;
+}
+.comment-date {
+  font-size: 0.9em;
+  font-style: italic;
+}
+.comment-editor {
+  padding-top: 1rem;
+}
+.comment-text {
+  white-space: pre-line;
+}
+/* settings for EventDetails */
+.event-details .label {
+  margin-right: 0.3em !important;
+}
+.event-details .item:after {
+  clear: left !important;
+}
+.event-details-canedit {
+  clear: both;
+}
+/* settings for EventListItem */
+.event-list-text {
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+/* settings for EventMap (leaflet) */
+.leaflet-container { /* essential for leaflet to render properly */
+  height: 400px;
+  width: 100%;
+}
+.event-map-box-tooltip {
+  background-color: white;
+  border: none;
+  box-shadow: none;
+  color: blue;
+  padding: 5px;
+  text-align: center;
+}
+.event-map-flag-tooltip {
+  text-align: center;
+}
+/* settings for EventMapViewerCanvas */
+.course-map-container {
+  height: 600px;
+  width: 100%;
   overflow: hidden;
-  transition: max-height 500ms cubic-bezier(.525,.66,.495,1.4);
 }
-.collapse .hide {
-  padding-left: 0.1em;
-  padding-right: 0.1em;
-  padding-bottom: 0.1em;
+.event-course-map-loader {
+  margin-top: 10px !important;
+  height: 540px;
+}
+.event-course-map-canvas {
+  margin-top: 5px;
   overflow: hidden;
-  transition: max-height 500ms cubic-bezier(.525,.66,.495,1.4);
+  height: 555px;
+}
+.event-course-map-toolbar {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/* settings for EventRunnerDetails */
+.course-title {
+  font-weight: bold;
+}
+.event-runner-profile-image {
+  width: 100px;
+  height: 100px;
+  float: right;
+}
+/* settings for EventRunnersItem */
+.event-runners-item .label {
+  margin-right: 0.3em !important;
+}
+.event-runners-deleted { /* only admin users should ever see this */
+  color: red !important;
 }
 
-/* Remove outline for non-keyboard :focus */
-*:focus:not(.focus-visible) {
-  outline: none;
+/* Home components */
+/* --------------- */
+
+/* settings for HomeAdminPanel */
+.admin-panel-divider {
+  border-color: blue;
+  margin-bottom: 1.5em;
+}
+/* settings for HomeRecent */
+.recent-activity-list {
+  padding: 0 20px;
+}
+/* settings for HomeView */
+.home-image {
+  width: 100%;
+  border: solid 2px red; /* temporary, to emphasise the need to put in place the right images*/
 }
 
-/* Optional: Customize .focus-visible */
-.focus-visible {
-  outline-color: lightgreen;
+/* User components */
+/* --------------- */
+
+/* settings for UserDetails: control appearance of images */
+.profile-forest {
+  z-index: 0;
+  width: 100%;
+}
+.profile-image {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  float: left;
+  background-color: white;
+  margin: -70px 20px 0px 30px;
+  z-index: 1;
+  padding: 5px;
+}
+/* settings for UserList: control appearance of avatars */
+.user-list-avatar {
+  width: 80px;
+  height: 80px;
+  margin-right: 1.5em;
 }

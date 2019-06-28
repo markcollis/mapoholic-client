@@ -24,13 +24,8 @@ import {
 class HomeRecentListItem extends Component {
   static propTypes = {
     activity: PropTypes.objectOf(PropTypes.any).isRequired,
-    // clubList: PropTypes.arrayOf(PropTypes.object).isRequired,
-    // config: PropTypes.objectOf(PropTypes.any).isRequired,
-    // eventList: PropTypes.arrayOf(PropTypes.object).isRequired,
-    // eventLinkList: PropTypes.arrayOf(PropTypes.object).isRequired,
     history: PropTypes.objectOf(PropTypes.any).isRequired,
     language: PropTypes.string.isRequired,
-    // userList: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
     selectEventForDetailsEvents: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
@@ -206,284 +201,112 @@ class HomeRecentListItem extends Component {
   };
 
   renderActivityDetail = memoize((activity, language) => {
-    const {
-      // actionBy,
-      actionType,
-      // timestamp,
-      // club,
-      // comment,
-      // event,
-      // eventRunner,
-      // linkedEvent,
-      // user,
-    } = activity;
-
+    const { actionType } = activity;
     switch (actionType) {
       case 'CLUB_CREATED':
         // The new club [club name] was created by [user name]
         return (
-          <>
-            <Trans>The new club</Trans>
-            &nbsp;
-            {this.renderClubLink(activity)}
-            &nbsp;
-            <Trans>was created by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The new club ${this.renderClubLink(activity)} was created by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'CLUB_UPDATED':
         // The club [club name] was updated by [user name]
         return (
-          <>
-            <Trans>The club</Trans>
-            &nbsp;
-            {this.renderClubLink(activity)}
-            &nbsp;
-            <Trans>was updated by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The club ${this.renderClubLink(activity)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'CLUB_DELETED':
         // The club [club name] was deleted by [user name]
         return (
-          <>
-            <Trans>Club</Trans>
-            &nbsp;
-            {this.renderClubLink(activity)}
-            &nbsp;
-            <Trans>deleted by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The club ${this.renderClubLink(activity)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'COMMENT_POSTED':
         // A new comment was posted about [runner name]'s run at [event name (date)] by [user name]
         return (
-          <>
-            <Trans>A new comment was posted about</Trans>
-            &nbsp;
-            {this.renderEventRunnerLink(activity)}
-            <Trans>&apos;s run at</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`A new comment was posted about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'COMMENT_UPDATED':
         // A comment about [runner name]'s run at [event name (date)] was updated by [user name]
         return (
-          <>
-            <Trans>A comment about</Trans>
-            &nbsp;
-            {this.renderEventRunnerLink(activity)}
-            <Trans>&apos;s run at</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>was updated by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`A comment about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'COMMENT_DELETED':
       // A comment about [runner name]'s run at [event name (date)] was deleted by [user name]
         return (
-          <>
-            <Trans>A comment about</Trans>
-            &nbsp;
-            {this.renderEventRunnerLink(activity)}
-            <Trans>&apos;s run at</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>was deleted by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`A comment about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_CREATED':
         // The new event [event name (date)] was created by [user name]
         return (
-          <>
-            <Trans>The new event</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>was created by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The new event ${this.renderEventLink(activity, language)} was created by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_UPDATED':
         // The event [event name (date)] was updated by [user name]
         return (
-          <>
-            <Trans>The event</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>was updated by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The event ${this.renderEventLink(activity, language)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_DELETED':
         // The event [event name (date)] was deleted by [user name]
         return (
-          <>
-            <Trans>The event</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>was deleted by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The event ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_MAP_UPLOADED':
         // [runner name] uploaded a map from [event name (date)]
-        // note: if an administrator uploads a map for another user it would not show here
+        // note: if an administrator uploads a map for another user that would not show here
         return (
-          <>
-            {this.renderEventRunnerLink(activity)}
-            &nbsp;
-            <Trans>uploaded a map from</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-          </>
+          <Trans>{`${this.renderEventRunnerLink(activity)} uploaded a map from ${this.renderEventLink(activity, language)}`}</Trans>
         );
       case 'EVENT_MAP_DELETED':
         // [runner name] deleted a map from [event name (date)]
         // note: if an administrator deletes another user's map it would not show here
         return (
-          <>
-            {this.renderEventRunnerLink(activity)}
-            &nbsp;
-            <Trans>deleted a map from</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-          </>
+          <Trans>{`${this.renderEventRunnerLink(activity)} deleted a map from ${this.renderEventLink(activity, language)}`}</Trans>
         );
       case 'EVENT_RUNNER_ADDED':
         // [runner name] ran at [event name (date)]
         return (
-          <>
-            {this.renderEventRunnerLink(activity)}
-            &nbsp;
-            <Trans>ran at</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-          </>
+          <Trans>{`${this.renderEventRunnerLink(activity)} ran at ${this.renderEventLink(activity, language)}`}</Trans>
         );
       case 'EVENT_RUNNER_UPDATED':
-        // [runner name]'s record for [event name (date)] was updated by [user name]
+        // [runner name]'s details for [event name (date)] were updated by [user name]
         return (
-          <>
-            {this.renderEventRunnerLink(activity)}
-            <Trans>&apos;s record for</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>was updated by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`${this.renderEventRunnerLink(activity)}'s details for ${this.renderEventLink(activity, language)} were updated by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_RUNNER_DELETED':
         // [runner name]'s record for [event name (date)] was deleted by [user name]
         return (
-          <>
-            {this.renderEventRunnerLink(activity)}
-            <Trans>&apos;s record for</Trans>
-            &nbsp;
-            {this.renderEventLink(activity, language)}
-            &nbsp;
-            <Trans>was deleted by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`${this.renderEventRunnerLink(activity)}'s record for ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'USER_CREATED':
         // [user name] created an account
         return (
-          <>
-            {this.renderUserLink(activity)}
-            &nbsp;
-            <Trans>created an account</Trans>
-          </>
+          <Trans>{`${this.renderUserLink(activity)} created an account`}</Trans>
         );
       case 'USER_UPDATED':
         // The user [user name] was updated by [user name]
         return (
-          <>
-            <Trans>The user</Trans>
-            &nbsp;
-            {this.renderUserLink(activity)}
-            &nbsp;
-            <Trans>was updated by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The user ${this.renderUserLink(activity)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'USER_DELETED':
         // The user [user name] was deleted by [user name]
         return (
-          <>
-            <Trans>The user</Trans>
-            &nbsp;
-            {this.renderUserLink(activity)}
-            &nbsp;
-            <Trans>was deleted by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The user ${this.renderUserLink(activity)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_LINK_CREATED':
         // A new link between events [event link name] was updated by [user name]
         return (
-          <>
-            <Trans>A new link between events</Trans>
-            &nbsp;
-            {this.renderLinkedEventLink(activity)}
-            &nbsp;
-            <Trans>was created by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`A new link between events ${this.renderLinkedEventLink(activity)} was created by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_LINK_UPDATED':
         // The link between events [event link name] was updated by [user name]
         return (
-          <>
-            <Trans>The link between events</Trans>
-            &nbsp;
-            {this.renderLinkedEventLink(activity)}
-            &nbsp;
-            <Trans>was updated by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The link between events ${this.renderLinkedEventLink(activity)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
         );
       case 'EVENT_LINK_DELETED':
         // The link between events [event link name] was deleted by [user name]
         return (
-          <>
-            <Trans>The link between events</Trans>
-            &nbsp;
-            {this.renderLinkedEventLink(activity)}
-            &nbsp;
-            <Trans>was deleted by</Trans>
-            &nbsp;
-            {this.renderActionByLink(activity)}
-          </>
+          <Trans>{`The link between events ${this.renderLinkedEventLink(activity)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
         );
       default:
-        return 'not defined yet';
+        return <Trans>{`Unknown actionType ${actionType}`}</Trans>; // should never be needed
     }
   });
 
@@ -501,20 +324,6 @@ class HomeRecentListItem extends Component {
     );
   }
 }
-// const mapStateToProps = ({
-//   club,
-//   config,
-//   oevent,
-//   user,
-// }) => {
-//   return {
-//     clubList: club.list,
-//     config,
-//     eventList: oevent.list,
-//     eventLinkList: oevent.linkList,
-//     userList: user.list,
-//   };
-// };
 const mapDispatchToProps = {
   selectClubToDisplay: selectClubToDisplayAction,
   selectEventForDetailsEvents: selectEventForDetailsEventsAction,

@@ -1,0 +1,130 @@
+{
+  "{uploadedMaps, plural, one {# map} other {# maps}}": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        27
+      ]
+    ]
+  },
+  "{attendedEvents, plural, one {# event} other {# events}}": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        28
+      ]
+    ]
+  },
+  "sign up": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        31
+      ]
+    ]
+  },
+  "log in": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        32
+      ]
+    ]
+  },
+  "by name": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        33
+      ],
+      [
+        "src/components/home/HomeWelcome.js",
+        35
+      ]
+    ]
+  },
+  "on a map": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        34
+      ],
+      [
+        "src/components/home/HomeWelcome.js",
+        36
+      ]
+    ]
+  },
+  "As a guest user, you are able to browse or search for maps {eventsListLink} or {eventsMapLink}, but can not upload or comment on them. If you would like to add some maps of your own, please {signUpLink} for an individual account.": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        40
+      ]
+    ]
+  },
+  "You have not yet uploaded any maps. Why not start now?": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        49
+      ]
+    ]
+  },
+  "You have already uploaded {uploadedMapsText} from {attendedEventsText}. You can browse or search for them either {myEventsListLink} or {myEventsMapLink}.": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        56
+      ]
+    ]
+  },
+  "Do you have a large collection of orienteering maps neatly filed away? Can you never bear to throw away a map? Do you wish it was easier to search your collection? Do you have easy access to your route choices and results for each event? Are you interested in seeing your friends' maps and routes as well?": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        65
+      ]
+    ]
+  },
+  "Then MapOholic might be for you!": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        72
+      ]
+    ]
+  },
+  "Please {signUpLink} or {logInLink} to use all the exciting features of this site. If you would like to see more before you sign up, some of the maps are visible to unregistered visitors too, you can search for them {eventsListLink} or {eventsMapLink}.": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        74
+      ]
+    ]
+  },
+  "Welcome to MapOholic!": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        86
+      ]
+    ]
+  },
+  "Dedicated to those that know you can never have too many maps...": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        87
+      ]
+    ]
+  },
+  "You are currently logged in.": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        88
+      ]
+    ]
+  }
+}

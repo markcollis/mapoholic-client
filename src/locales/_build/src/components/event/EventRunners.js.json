@@ -3,15 +3,15 @@
     "origin": [
       [
         "src/components/event/EventRunners.js",
-        75
+        77
       ]
     ]
   },
-  "Runners at event": {
+  "Runners at event (select one to see their maps)": {
     "origin": [
       [
         "src/components/event/EventRunners.js",
-        78
+        80
       ]
     ]
   }

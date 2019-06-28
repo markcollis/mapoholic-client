@@ -221,6 +221,7 @@ class HomeAdminActivity extends Component {
     return (
       <Collapse title="Site activity history" refreshCollapse={refreshCollapse}>
         <Table
+          language={language}
           tableHead={tableHead}
           tableData={tableData}
           requestRefreshCollapse={requestRefreshCollapse}

@@ -9,16 +9,17 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do:">
         <ol>
           <li>Add some more introductory/help text on this page</li>
-          <li>Add detailed activity log for administrators</li>
           <li>Investigate issue with loading thumbnail after uploading map (timing?)</li>
           <li>Complete lingui translations and check that nothing is missing</li>
-          <li>Complete common/data translations and check that nothing is missing</li>
+          <li>Check background image on ClubDetails on narrow screens</li>
           <li>Centre rotation on current view when zoomed in</li>
           <li>Define a default set of event tags</li>
+          <li>Make style names more consistent across components</li>
           <li>Add some real sample data/maps (started 4/6)</li>
-          <li>Design a logo, control colours on the O</li>
+          <li>Check permission to view ActionBy user&apos;s profile in HomeRecentListItem</li>
+          <li>Design a logo, e.g. map with control colours on the O</li>
           <li>Draw my own version of the tree background, or find a royalty free one</li>
-          <li>Take a photo of a pile of O maps to use as a background</li>
+          <li>Take a photo of a pile of O maps to use as a background/on home page</li>
           <li>Test it out on a real Internet-facing server</li>
         </ol>
       </Collapse>
@@ -27,45 +28,45 @@ const HomeAdminNotes = () => {
         <ol>
           <li>
             <del>Investigate unauthorized /users/me request when logging in</del>
-            {' (fixed 18/5)'}
+            &nbsp;(fixed 18/5)
           </li>
           <li>
+          &nbsp;(added thumbnail to EventDetails 18/5, extract to EventListItem 18/5)
             <del>Make use of map thumbnails/thin extracts</del>
-            {' (added thumbnail to EventDetails 18/5, extract to EventListItem 18/5)'}
           </li>
           <li>
             <del>Enable HTTPS</del>
-            {' (done 19/5)'}
+            &nbsp;(done 19/5)
           </li>
           <li>
             <del>
             Add option to process blank course maps used with QR
             (black border: top 66px, others 1px)
             </del>
-            {' (added 19/5)'}
+            &nbsp;(added 19/5)
           </li>
           <li>
             <del>Add translation hooks to all hardcoded text</del>
-            {' (first pass of all components complete 22/5)'}
+            &nbsp;(first pass of all components complete 22/5)
           </li>
           <li>
             <del>Investigate image resize bug if uploaded maps are too small</del>
-            {' (fixed 22/5)'}
+            &nbsp;(fixed 22/5)
           </li>
           <li>
             <del>Implement delete runner on server</del>
-            {' (done 23/5)'}
+            &nbsp;(done 23/5)
           </li>
           <li>
             <del>
             Clarify what happens to OrganisedBy and MemberOf references if club is deleted,
             updating ClubDelete as appropriate
             </del>
-            {' (implemented on back end 23/5)'}
+            &nbsp;(implemented on back end 23/5)
           </li>
           <li>
             <del>Add some links to Footer (Github, my email?)</del>
-            {' (added 23/5)'}
+            &nbsp;(added 23/5)
           </li>
           <li>
             <del>
@@ -75,33 +76,34 @@ const HomeAdminNotes = () => {
               to private (i.e. not actual deletion, admin can see/recover). Comments should stay
               - filter out `deleted` part of name.
             </del>
-            {' (Runner visibility change set up 23/5, inactive users stripped from runners returned by API 27/5, comment authors now include active and profileImage fields 28/5)'}
+            &nbsp;(Runner visibility change set up 23/5, inactive users stripped from runners
+            returned by API 27/5, comment authors now include active and profileImage fields 28/5)
           </li>
           <li>
             <del>
               Split up events controller on server into several smaller files
               (Comment/Event/EventLink/EventRunner/Map)
             </del>
-            {' (done 28/5)'}
+            &nbsp;(done 28/5)
           </li>
           <li>
             <del>Refactor User and Club pages to align with Event best practice</del>
-            {' (Club completed 20/5, User completed 30/5)'}
+            &nbsp;(Club completed 20/5, User completed 30/5)
           </li>
           <li>
             <del>Add a bit more visual identity</del>
-            {' (added flags and tree background to Club page 30/5, others look OK for now)'}
+            &nbsp;(added flags and tree background to Club page 30/5, others look OK for now)
           </li>
           <li>
             <del>Improve layout of MapView to put map first</del>
-            {' (done 31/5)'}
+            &nbsp;(done 31/5)
           </li>
           <li>
             <del>
             Choose a better name... how about MapOholic, or is it too contrived?
             (O)MapArchive? (O)MapBrowser? (O)MapStore?
             </del>
-            {' (MapOholic it is! 4/6)'}
+            &nbsp;(MapOholic it is! 4/6)
           </li>
           <li>
             <del>Re-enable live check of ORIS for recent events</del>
@@ -191,6 +193,14 @@ const HomeAdminNotes = () => {
           <li>
             <del>Consistent date presentation (localised, follows selected language)</del>
             &nbsp;(done 25/6)
+          </li>
+          <li>
+            <del>Add detailed activity log for administrators</del>
+            &nbsp;(completed 27/6, together with new reusable Table component)
+          </li>
+          <li>
+            <del>Complete common/data translations and check that nothing is missing</del>
+            &nbsp;(done 28/6)
           </li>
         </ol>
       </Collapse>

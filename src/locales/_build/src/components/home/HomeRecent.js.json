@@ -1,0 +1,42 @@
+{
+  "Loading recent activity...": {
+    "origin": [
+      [
+        "src/components/home/HomeRecent.js",
+        19
+      ]
+    ]
+  },
+  "There has been no recent activity.": {
+    "origin": [
+      [
+        "src/components/home/HomeRecent.js",
+        27
+      ]
+    ]
+  },
+  "Recent Activity": {
+    "origin": [
+      [
+        "src/components/home/HomeRecent.js",
+        32
+      ]
+    ]
+  },
+  "All Recent Activity": {
+    "origin": [
+      [
+        "src/components/home/HomeRecent.js",
+        33
+      ]
+    ]
+  },
+  "Your Own Recent Activity": {
+    "origin": [
+      [
+        "src/components/home/HomeRecent.js",
+        34
+      ]
+    ]
+  }
+}

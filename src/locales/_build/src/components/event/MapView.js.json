@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/MapView.js",
-        252
+        239
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/MapView.js",
-        327
+        314
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/MapView.js",
-        565
+        556
       ]
     ]
   }

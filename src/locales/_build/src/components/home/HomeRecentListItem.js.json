@@ -1,0 +1,182 @@
+{
+  "themselves": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        95
+      ],
+      [
+        "src/components/home/HomeRecentListItem.js",
+        99
+      ]
+    ]
+  },
+  "The new club {0} was created by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        209
+      ]
+    ]
+  },
+  "The club {0} was updated by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        214
+      ]
+    ]
+  },
+  "The club {0} was deleted by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        219
+      ]
+    ]
+  },
+  "A new comment was posted about {0}'s run at {1} by {2}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        224
+      ]
+    ]
+  },
+  "A comment about {0}'s run at {1} was updated by {2}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        229
+      ]
+    ]
+  },
+  "A comment about {0}'s run at {1} was deleted by {2}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        234
+      ]
+    ]
+  },
+  "The new event {0} was created by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        239
+      ]
+    ]
+  },
+  "The event {0} was updated by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        244
+      ]
+    ]
+  },
+  "The event {0} was deleted by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        249
+      ]
+    ]
+  },
+  "{0} uploaded a map from {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        255
+      ]
+    ]
+  },
+  "{0} deleted a map from {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        261
+      ]
+    ]
+  },
+  "{0} ran at {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        266
+      ]
+    ]
+  },
+  "{0}'s details for {1} were updated by {2}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        271
+      ]
+    ]
+  },
+  "{0}'s record for {1} was deleted by {2}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        276
+      ]
+    ]
+  },
+  "{0} created an account": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        281
+      ]
+    ]
+  },
+  "The user {0} was updated by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        286
+      ]
+    ]
+  },
+  "The user {0} was deleted by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        291
+      ]
+    ]
+  },
+  "A new link between events {0} was created by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        296
+      ]
+    ]
+  },
+  "The link between events {0} was updated by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        301
+      ]
+    ]
+  },
+  "The link between events {0} was deleted by {1}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        306
+      ]
+    ]
+  },
+  "Unknown actionType {actionType}": {
+    "origin": [
+      [
+        "src/components/home/HomeRecentListItem.js",
+        309
+      ]
+    ]
+  }
+}

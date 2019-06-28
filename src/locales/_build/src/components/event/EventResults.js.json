@@ -1,9 +1,33 @@
 {
-  "Sorry, there are no results to display.": {
+  "Name": {
     "origin": [
       [
         "src/components/event/EventResults.js",
-        71
+        28
+      ]
+    ]
+  },
+  "Club": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        28
+      ]
+    ]
+  },
+  "Time": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        28
+      ]
+    ]
+  },
+  "Behind": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        28
       ]
     ]
   },
@@ -11,7 +35,15 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        72
+        56
+      ]
+    ]
+  },
+  "Sorry, there are no results to display.": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        70
       ]
     ]
   }

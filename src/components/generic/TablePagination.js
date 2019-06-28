@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
+import { tableAllLocale } from '../../common/data';
 
 const TablePagination = ({
+  language,
   pageNumber,
   rowsPerPage,
   setPageNumber,
   setRowsPerPage,
   totalPages,
 }) => {
+  const tableAll = tableAllLocale[language];
   const prevButtonDisabled = (pageNumber === 1);
   const nextButtonDisabled = (pageNumber === totalPages);
   const handlePrevButtonClick = () => setPageNumber(pageNumber - 1);
@@ -20,12 +23,12 @@ const TablePagination = ({
     const pageSelected = parseInt(e.target.options[e.target.selectedIndex].value, 10);
     setPageNumber(pageSelected);
   };
-  const rowsPerPageOptions = ['10', '20', '50', '100', 'all'].map((option) => {
+  const rowsPerPageOptions = ['10', '20', '50', '100', tableAll].map((option) => {
     return (<option key={option} value={option}>{option}</option>);
   });
   const handleRowsPerPageSelectChange = (e) => {
     const selectedOption = e.target.options[e.target.selectedIndex].value;
-    const pageSelected = (selectedOption === 'all') ? 1000 : parseInt(selectedOption, 10);
+    const pageSelected = (selectedOption === tableAll) ? 1000 : parseInt(selectedOption, 10);
     setRowsPerPage(pageSelected);
   };
 
@@ -59,7 +62,7 @@ const TablePagination = ({
       <select
         className="ui dropdown table-control-margin"
         onChange={handleRowsPerPageSelectChange}
-        value={(rowsPerPage === 1000) ? 'all' : rowsPerPage}
+        value={(rowsPerPage === 1000) ? tableAll : rowsPerPage}
       >
         {rowsPerPageOptions}
       </select>
@@ -69,6 +72,7 @@ const TablePagination = ({
 };
 
 TablePagination.propTypes = {
+  language: PropTypes.string.isRequired,
   pageNumber: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   setPageNumber: PropTypes.func.isRequired,

@@ -1,0 +1,26 @@
+{
+  "Page": {
+    "origin": [
+      [
+        "src/components/generic/TablePagination.js",
+        45
+      ]
+    ]
+  },
+  "of {totalPages}": {
+    "origin": [
+      [
+        "src/components/generic/TablePagination.js",
+        53
+      ]
+    ]
+  },
+  "rows per page": {
+    "origin": [
+      [
+        "src/components/generic/TablePagination.js",
+        69
+      ]
+    ]
+  }
+}

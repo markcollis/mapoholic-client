@@ -28,8 +28,9 @@ class Table extends Component {
   };
 
   static propTypes = {
-    requestRefreshCollapse: PropTypes.func,
     defaultRowsPerPage: PropTypes.number,
+    language: PropTypes.string.isRequired,
+    requestRefreshCollapse: PropTypes.func,
     showPagination: PropTypes.bool,
     showFilter: PropTypes.bool,
     tableData: PropTypes.arrayOf(PropTypes.object),
@@ -167,6 +168,7 @@ class Table extends Component {
 
   render() {
     const {
+      language,
       showFilter,
       showPagination,
       tableData,
@@ -199,13 +201,14 @@ class Table extends Component {
     // if (pageNumber > totalPages) this.setPageNumber(totalPages);
 
     return (
-      <div>
+      <div className="table-scrollx">
         {(showFilter)
           ? <TableFilter filter={filter} setTableFilter={this.setTableFilter} />
           : ''}
         {(showPagination)
           ? (
             <TablePagination
+              language={language}
               pageNumber={pageNumberToUse}
               rowsPerPage={rowsPerPage}
               setPageNumber={this.setPageNumber}
