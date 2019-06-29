@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import Select from 'react-select';
 import { roleOptionsLocale, visibilityOptionsLocale, validationErrorsLocale } from '../../common/data';
 import noAvatar from '../../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 import UserChangePassword from './UserChangePassword';
 import UserEditProfileImage from './UserEditProfileImage';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
@@ -311,7 +311,7 @@ class UserEdit extends Component {
               </div>
               <img
                 alt="avatar"
-                src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
+                src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
               />
             </div>
           </div>

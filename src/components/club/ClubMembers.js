@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Trans, Plural } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import noAvatar from '../../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 
 const ClubMembers = ({
   history,
@@ -69,7 +69,7 @@ const ClubMembers = ({
           <img
             className="right floated ui avatar image"
             alt="avatar"
-            src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
+            src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
           />
           <div className="header  ">
             {displayName}

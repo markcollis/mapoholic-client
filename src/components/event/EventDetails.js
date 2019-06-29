@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { typesOptionsLocale } from '../../common/data';
 import { reformatTimestampDateOnly } from '../../common/conversions';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 
 import Collapse from '../generic/Collapse';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
@@ -66,7 +66,7 @@ const EventDetails = ({
           // console.log('image loaded!');
           requestRefreshCollapse();
         }}
-        src={`${OMAPFOLDER_SERVER}/${mapFiles[0]
+        src={`${MAPOHOLIC_SERVER}/${mapFiles[0]
           .slice(0, -4).concat('-thumb').concat(mapFiles[0].slice(-4))}`}
       />
     )

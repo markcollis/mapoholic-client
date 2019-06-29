@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { typesOptionsLocale } from '../../common/data';
 import { reformatTimestampDateOnly } from '../../common/conversions';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 
 const EventListItem = ({
   handleSelectEvent,
@@ -33,7 +33,7 @@ const EventListItem = ({
     });
   }
   const extractUrl = (mapExtractToDisplay)
-    ? `${OMAPFOLDER_SERVER}/${mapExtractToDisplay}`
+    ? `${MAPOHOLIC_SERVER}/${mapExtractToDisplay}`
     : null;
   const cardStyle = (mapExtractToDisplay)
     ? (

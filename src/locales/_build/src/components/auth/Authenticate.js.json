@@ -71,7 +71,7 @@
       ]
     ]
   },
-  "Sign up for OMapFolder": {
+  "Sign up for MapOholic": {
     "origin": [
       [
         "src/components/auth/Authenticate.js",
@@ -79,7 +79,7 @@
       ]
     ]
   },
-  "Log in to OMapFolder": {
+  "Log in to MapOholic": {
     "origin": [
       [
         "src/components/auth/Authenticate.js",

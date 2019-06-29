@@ -15,7 +15,7 @@ import {
   USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
 } from './types';
-import { OMAPFOLDER_SERVER } from '../config';
+import { MAPOHOLIC_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
 
 
@@ -92,7 +92,7 @@ export const changePasswordAction = (userId, formValues, callback) => {
     const { auth } = state;
     try {
       const token = auth.authenticated;
-      const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/password`, formValues, {
+      const response = await axios.post(`${MAPOHOLIC_SERVER}/users/${userId}/password`, formValues, {
         headers: { Authorization: `bearer ${token}` },
       });
       dispatch({ type: USER_CHANGED_PASSWORD, payload: response.data });
@@ -115,7 +115,7 @@ export const postProfileImageAction = (userId, file, callback) => async (dispatc
     const formData = new FormData();
     formData.append('upload', file, file.name);
     const token = auth.authenticated;
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, formData, {
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/users/${userId}/profileImage`, formData, {
       headers: {
         Authorization: `bearer ${token}`,
         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
@@ -146,11 +146,11 @@ export const getUserListAction = (searchCriteria, callback) => async (dispatch, 
     const token = auth.authenticated;
     let response;
     if (token) {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/users${queryString}`, {
+      response = await axios.get(`${MAPOHOLIC_SERVER}/users${queryString}`, {
         headers: { Authorization: `bearer ${token}` },
       });
     } else {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/users/public${queryString}`);
+      response = await axios.get(`${MAPOHOLIC_SERVER}/users/public${queryString}`);
     }
     dispatch({ type: USER_GOT_LIST, payload: response.data });
     if (callback) callback(true);
@@ -167,7 +167,7 @@ export const getCurrentUserAction = callback => async (dispatch, getState) => {
   const { auth } = state;
   try {
     const token = auth.authenticated;
-    const response = await axios.get(`${OMAPFOLDER_SERVER}/users/me`, {
+    const response = await axios.get(`${MAPOHOLIC_SERVER}/users/me`, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: USER_GOT_CURRENT, payload: response.data });
@@ -188,11 +188,11 @@ export const getUserByIdAction = (userId, callback) => async (dispatch, getState
     const token = auth.authenticated;
     let response;
     if (token) {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/users/${userId}`, {
+      response = await axios.get(`${MAPOHOLIC_SERVER}/users/${userId}`, {
         headers: { Authorization: `bearer ${token}` },
       });
     } else {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/users/public/${userId}`);
+      response = await axios.get(`${MAPOHOLIC_SERVER}/users/public/${userId}`);
     }
     dispatch({ type: USER_GOT_BY_ID, payload: response.data });
     if (callback) callback(true);
@@ -214,11 +214,11 @@ export const getUserEventsAction = (userId, callback) => async (dispatch, getSta
       const token = auth.authenticated;
       let response;
       if (token) {
-        response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
+        response = await axios.get(`${MAPOHOLIC_SERVER}/events${queryString}`, {
           headers: { Authorization: `bearer ${token}` },
         });
       } else {
-        response = await axios.get(`${OMAPFOLDER_SERVER}/events/public${queryString}`);
+        response = await axios.get(`${MAPOHOLIC_SERVER}/events/public${queryString}`);
       }
       dispatch({
         type: USER_GOT_EVENTS,
@@ -242,7 +242,7 @@ export const updateUserAction = (userId, formValues, callback) => async (dispatc
   const { auth } = state;
   try {
     const token = auth.authenticated;
-    const response = await axios.patch(`${OMAPFOLDER_SERVER}/users/${userId}`, formValues, {
+    const response = await axios.patch(`${MAPOHOLIC_SERVER}/users/${userId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: USER_UPDATED, payload: response.data });
@@ -260,7 +260,7 @@ export const deleteUserAction = (userId, callback) => async (dispatch, getState)
   const { auth } = state;
   try {
     const token = auth.authenticated;
-    const response = await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}`, {
+    const response = await axios.delete(`${MAPOHOLIC_SERVER}/users/${userId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: USER_DELETED, payload: response.data });
@@ -278,7 +278,7 @@ export const deleteProfileImageAction = (userId, callback) => async (dispatch, g
   const { auth } = state;
   try {
     const token = auth.authenticated;
-    await axios.delete(`${OMAPFOLDER_SERVER}/users/${userId}/profileImage`, {
+    await axios.delete(`${MAPOHOLIC_SERVER}/users/${userId}/profileImage`, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: USER_DELETED_IMAGE, payload: userId });

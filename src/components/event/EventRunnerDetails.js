@@ -5,7 +5,7 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import { visibilityOptionsLocale } from '../../common/data';
 import noAvatar from '../../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventRunnerDetails = ({
@@ -57,7 +57,7 @@ const EventRunnerDetails = ({
     <img
       className="ui tiny image right floated"
       alt="avatar"
-      src={(runnerDetails && runnerDetails.profileImage) ? `${OMAPFOLDER_SERVER}/${runnerDetails.profileImage}` : noAvatar}
+      src={(runnerDetails && runnerDetails.profileImage) ? `${MAPOHOLIC_SERVER}/${runnerDetails.profileImage}` : noAvatar}
     />
   );
   const renderHeader = (

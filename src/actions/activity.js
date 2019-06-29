@@ -5,7 +5,7 @@ import {
   ACTIVITY_GOT_OWN,
   ACTIVITY_ERROR,
 } from './types';
-import { OMAPFOLDER_SERVER } from '../config';
+import { MAPOHOLIC_SERVER } from '../config';
 
 // cancel a displayed error message
 export const cancelActivityErrorAction = () => ({
@@ -45,7 +45,7 @@ export const getActivityLogAdminAction = (searchCriteria, callback) => {
       const { auth } = state;
       const token = auth.authenticated;
       const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
-      const response = await axios.get(`${OMAPFOLDER_SERVER}/activity${queryString}`, {
+      const response = await axios.get(`${MAPOHOLIC_SERVER}/activity${queryString}`, {
         headers: { Authorization: `bearer ${token}` },
       });
       dispatch({ type: ACTIVITY_GOT_ADMIN, payload: response.data });
@@ -64,7 +64,7 @@ export const getActivityLogAllAction = (number, callback) => {
       const { auth } = state;
       const token = auth.authenticated;
       const queryString = (number) ? `?number=${number}` : '';
-      const response = await axios.get(`${OMAPFOLDER_SERVER}/activity${queryString}`, {
+      const response = await axios.get(`${MAPOHOLIC_SERVER}/activity${queryString}`, {
         headers: { Authorization: `bearer ${token}` },
       });
       dispatch({ type: ACTIVITY_GOT_ALL, payload: response.data });
@@ -83,7 +83,7 @@ export const getActivityLogOwnAction = (userId, number, callback) => {
       const { auth } = state;
       const token = auth.authenticated;
       const queryString = (number) ? `?actionBy=${userId}&number=${number}` : `?actionBy=${userId}`;
-      const response = await axios.get(`${OMAPFOLDER_SERVER}/activity${queryString}`, {
+      const response = await axios.get(`${MAPOHOLIC_SERVER}/activity${queryString}`, {
         headers: { Authorization: `bearer ${token}` },
       });
       dispatch({ type: ACTIVITY_GOT_OWN, payload: response.data });

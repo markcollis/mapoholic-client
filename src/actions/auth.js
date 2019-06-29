@@ -3,12 +3,12 @@ import {
   AUTH_USER,
   AUTH_ERROR,
 } from './types';
-import { OMAPFOLDER_SERVER } from '../config';
+import { MAPOHOLIC_SERVER } from '../config';
 
 // Local Actions
 // log out current user
 export const logoutAction = () => {
-  localStorage.removeItem('omapfolder-auth-token');
+  localStorage.removeItem('mapoholic-auth-token');
   return { type: AUTH_USER, payload: null };
 };
 // cancel a displayed error message
@@ -37,9 +37,9 @@ const handleError = errorType => (err, dispatch) => {
 // app.post('/users', publicRoute, Authentication.signup);
 export const signupAction = (formValues, callback) => async (dispatch) => {
   try {
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/users`, formValues);
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/users`, formValues);
     dispatch({ type: AUTH_USER, payload: response.data.token });
-    localStorage.setItem('omapfolder-auth-token', response.data.token);
+    localStorage.setItem('mapoholic-auth-token', response.data.token);
     callback(true);
   } catch (err) {
     handleError(AUTH_ERROR)(err, dispatch);
@@ -51,9 +51,9 @@ export const signupAction = (formValues, callback) => async (dispatch) => {
 // app.post('/users/login', requireLogin, Authentication.login);
 export const loginAction = (formValues, callback) => async (dispatch) => {
   try {
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/users/login`, formValues);
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/users/login`, formValues);
     dispatch({ type: AUTH_USER, payload: response.data.token });
-    localStorage.setItem('omapfolder-auth-token', response.data.token);
+    localStorage.setItem('mapoholic-auth-token', response.data.token);
     callback(true);
   } catch (err) {
     if (!err.response) {

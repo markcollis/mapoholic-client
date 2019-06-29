@@ -12,7 +12,7 @@ import {
   setLanguageAction,
 } from '../actions';
 import noAvatar from '../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../config';
+import { MAPOHOLIC_SERVER } from '../config';
 
 class Header extends Component {
   static propTypes = {
@@ -135,7 +135,7 @@ class Header extends Component {
           <img
             className="ui avatar image"
             alt="avatar"
-            src={(current && current.profileImage) ? `${OMAPFOLDER_SERVER}/${current.profileImage}` : noAvatar}
+            src={(current && current.profileImage) ? `${MAPOHOLIC_SERVER}/${current.profileImage}` : noAvatar}
           />
           {`  ${current.displayName}`}
         </div>

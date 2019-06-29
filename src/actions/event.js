@@ -37,7 +37,7 @@ import {
   // EVENT_MAP_SET_ZOOM_EVENTS,
   // EVENT_MAP_SET_ZOOM_MYMAPS,
 } from './types';
-import { OMAPFOLDER_SERVER } from '../config';
+import { MAPOHOLIC_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
 
 // *** Local Actions ***
@@ -196,7 +196,7 @@ export const createEventAction = (formValues, callback) => async (dispatch, getS
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/events`, formValues, {
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/events`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_CREATED, payload: response.data });
@@ -214,7 +214,7 @@ export const createEventLinkAction = (formValues, callback) => async (dispatch, 
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/links`, formValues, {
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/events/links`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_LINK_CREATED, payload: response.data });
@@ -232,7 +232,7 @@ export const addEventRunnerAction = (eventId, callback) => async (dispatch, getS
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/${eventId}/maps`, null, {
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/events/${eventId}/maps`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_RUNNER_ADDED, payload: response.data });
@@ -249,7 +249,7 @@ export const addEventRunnerOrisAction = (eventId, callback) => async (dispatch, 
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/${eventId}/oris`, null, {
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/events/${eventId}/oris`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_RUNNER_ADDED, payload: response.data });
@@ -275,11 +275,11 @@ export const getEventListAction = (searchCriteria, callback) => async (dispatch,
     const token = auth.authenticated;
     let response;
     if (token) {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
+      response = await axios.get(`${MAPOHOLIC_SERVER}/events${queryString}`, {
         headers: { Authorization: `bearer ${token}` },
       });
     } else {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/events/public${queryString}`);
+      response = await axios.get(`${MAPOHOLIC_SERVER}/events/public${queryString}`);
     }
     dispatch({ type: EVENT_GOT_LIST, payload: response.data });
     if (callback) callback(true);
@@ -311,7 +311,7 @@ export const postMapAction = (parameters, file, callback) => async (dispatch, ge
     const formData = new FormData();
     formData.append('upload', file, file.name);
     const response = await axios.post(
-      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
+      `${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
       formData,
       {
         headers: {
@@ -344,7 +344,7 @@ export const postCommentAction = (eventId, userId, formValues, callback) => {
       const { auth } = state;
       const token = auth.authenticated;
       const response = await axios.post(
-        `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}`,
+        `${MAPOHOLIC_SERVER}/events/${eventId}/comments/${userId}`,
         formValues,
         { headers: { Authorization: `bearer ${token}` } },
       );
@@ -370,7 +370,7 @@ export const createEventOrisAction = (orisEventId, callback) => async (dispatch,
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/events/oris/${orisEventId}`, null, {
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/events/oris/${orisEventId}`, null, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_CREATED, payload: response.data });
@@ -387,7 +387,7 @@ export const createEventOrisAction = (orisEventId, callback) => async (dispatch,
 export const getEventLinkListAction = (searchCriteria, callback) => async (dispatch) => {
   const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
   try {
-    const response = await axios.get(`${OMAPFOLDER_SERVER}/events/links${queryString}`);
+    const response = await axios.get(`${MAPOHOLIC_SERVER}/events/links${queryString}`);
     dispatch({ type: EVENT_GOT_EVENT_LINK_LIST, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
@@ -405,7 +405,7 @@ export const getEventListOrisAction = callback => async (dispatch, getState) => 
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.get(`${OMAPFOLDER_SERVER}/events/oris`, {
+    const response = await axios.get(`${MAPOHOLIC_SERVER}/events/oris`, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_GOT_ORIS_LIST, payload: response.data });
@@ -428,11 +428,11 @@ export const getEventByIdAction = (eventId, callback) => async (dispatch, getSta
     const token = auth.authenticated;
     let response;
     if (token) {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/events/${eventId}`, {
+      response = await axios.get(`${MAPOHOLIC_SERVER}/events/${eventId}`, {
         headers: { Authorization: `bearer ${token}` },
       });
     } else {
-      response = await axios.get(`${OMAPFOLDER_SERVER}/events/${eventId}/public`);
+      response = await axios.get(`${MAPOHOLIC_SERVER}/events/${eventId}/public`);
     }
     dispatch({ type: EVENT_GOT_BY_ID, payload: response.data });
     if (callback) callback(true);
@@ -449,7 +449,7 @@ export const updateEventAction = (eventId, formValues, callback) => async (dispa
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/${eventId}`, formValues, {
+    const response = await axios.patch(`${MAPOHOLIC_SERVER}/events/${eventId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_UPDATED, payload: response.data });
@@ -472,7 +472,7 @@ export const updateEventRunnerAction = (
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}`, formValues, {
+    const response = await axios.patch(`${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_RUNNER_UPDATED, payload: response.data });
@@ -491,7 +491,7 @@ export const updateEventLinkAction = (eventLinkId, formValues, callback) => {
       const state = getState();
       const { auth } = state;
       const token = auth.authenticated;
-      const response = await axios.patch(`${OMAPFOLDER_SERVER}/events/links/${eventLinkId}`, formValues, {
+      const response = await axios.patch(`${MAPOHOLIC_SERVER}/events/links/${eventLinkId}`, formValues, {
         headers: { Authorization: `bearer ${token}` },
       });
       dispatch({ type: EVENT_LINK_UPDATED, payload: response.data });
@@ -512,7 +512,7 @@ export const updateCommentAction = (eventId, userId, commentId, formValues, call
       const { auth } = state;
       const token = auth.authenticated;
       const response = await axios.patch(
-        `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
+        `${MAPOHOLIC_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
         formValues,
         { headers: { Authorization: `bearer ${token}` } },
       );
@@ -536,7 +536,7 @@ export const deleteEventAction = (eventId, callback) => async (dispatch, getStat
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/${eventId}`, {
+    const response = await axios.delete(`${MAPOHOLIC_SERVER}/events/${eventId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_DELETED, payload: response.data });
@@ -555,7 +555,7 @@ export const deleteEventRunnerAction = (eventId, userId, callback) => {
       const state = getState();
       const { auth } = state;
       const token = auth.authenticated;
-      const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}`, {
+      const response = await axios.delete(`${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}`, {
         headers: { Authorization: `bearer ${token}` },
       });
       dispatch({ type: EVENT_RUNNER_DELETED, payload: response.data });
@@ -584,7 +584,7 @@ export const deleteMapAction = (parameters, callback) => async (dispatch, getSta
     const validMapType = (mapType === 'course') || (mapType === 'route');
     if (!eventId || !userId || !validMapType) throw new Error('invalid parameters');
     const response = await axios.delete(
-      `${OMAPFOLDER_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
+      `${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
       {
         headers: { Authorization: `bearer ${token}` },
       },
@@ -614,7 +614,7 @@ export const deleteEventLinkAction = (eventLinkId, callback) => async (dispatch,
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.delete(`${OMAPFOLDER_SERVER}/events/links/${eventLinkId}`, {
+    const response = await axios.delete(`${MAPOHOLIC_SERVER}/events/links/${eventLinkId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_LINK_DELETED, payload: response.data });
@@ -634,7 +634,7 @@ export const deleteCommentAction = (eventId, userId, commentId, callback) => {
       const { auth } = state;
       const token = auth.authenticated;
       const response = await axios.delete(
-        `${OMAPFOLDER_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
+        `${MAPOHOLIC_SERVER}/events/${eventId}/comments/${userId}/${commentId}`,
         { headers: { Authorization: `bearer ${token}` } },
       );
       dispatch({

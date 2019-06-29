@@ -5,7 +5,7 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import forest from '../../graphics/silhouette.jpg';
 import noAvatar from '../../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const UserDetails = ({
@@ -83,7 +83,7 @@ const UserDetails = ({
           <img
             className="profile-image"
             alt="avatar"
-            src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
+            src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
           />
           <h3>{displayName}</h3>
           {(fullName !== displayName)

@@ -594,8 +594,8 @@ msgid "Log in"
 msgstr "Log in"
 
 #: src/components/auth/Authenticate.js:122
-msgid "Log in to OMapFolder"
-msgstr "Log in to OMapFolder"
+msgid "Log in to MapOholic"
+msgstr "Log in to MapOholic"
 
 #: src/components/auth/Logout.js:20
 msgid "Logged out"
@@ -865,8 +865,8 @@ msgid "Sign up"
 msgstr "Sign up"
 
 #: src/components/auth/Authenticate.js:121
-msgid "Sign up for OMapFolder"
-msgstr "Sign up for OMapFolder"
+msgid "Sign up for MapOholic"
+msgstr "Sign up for MapOholic"
 
 #: src/components/auth/Logout.js:21
 msgid "Sorry to see you leave, come back again soon!"

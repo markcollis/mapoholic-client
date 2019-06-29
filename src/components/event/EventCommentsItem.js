@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { reformatTimestamp } from '../../common/conversions';
 import noAvatar from '../../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 
 class EventCommentsItem extends Component {
   static propTypes = {
@@ -182,7 +182,7 @@ class EventCommentsItem extends Component {
       <img
         className="ui mini image left floated"
         alt="avatar"
-        src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
+        src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
       />
     );
     const header = (fullName === '')

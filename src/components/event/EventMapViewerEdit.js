@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 import FileDropzone from '../generic/FileDropzone';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 
 class EventMapViewerEdit extends Component {
   static propTypes = {
@@ -210,7 +210,7 @@ class EventMapViewerEdit extends Component {
       ? courseImg.slice(0, -4).concat('-thumb').concat(courseImg.slice(-4))
       : null;
     const renderCourseThumbnail = (courseThumbnail)
-      ? <img src={`${OMAPFOLDER_SERVER}/${courseThumbnail}${srcSuffix}`} alt="course thumbnail" />
+      ? <img src={`${MAPOHOLIC_SERVER}/${courseThumbnail}${srcSuffix}`} alt="course thumbnail" />
       : (
         <div>
           <i className="close icon" />
@@ -221,7 +221,7 @@ class EventMapViewerEdit extends Component {
       ? routeImg.slice(0, -4).concat('-thumb').concat(routeImg.slice(-4))
       : null;
     const renderRouteThumbnail = (routeThumbnail)
-      ? <img src={`${OMAPFOLDER_SERVER}/${routeThumbnail}${srcSuffix}`} alt="route thumbnail" />
+      ? <img src={`${MAPOHOLIC_SERVER}/${routeThumbnail}${srcSuffix}`} alt="route thumbnail" />
       : (
         <div>
           <i className="close icon" />

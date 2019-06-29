@@ -4,7 +4,7 @@ import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 import EventMapViewerCanvas from './EventMapViewerCanvas';
 import EventMapViewerDetails from './EventMapViewerDetails';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 class EventMapViewer extends Component {
@@ -102,9 +102,9 @@ class EventMapViewer extends Component {
           title,
           empty: false,
           preferType,
-          srcCourse: (hasCourseMap) ? `${OMAPFOLDER_SERVER}/${course}${srcSuffix}` : null,
+          srcCourse: (hasCourseMap) ? `${MAPOHOLIC_SERVER}/${course}${srcSuffix}` : null,
           altCourse: (hasCourseMap) ? `${title} - course` : null,
-          srcRoute: (hasRouteMap) ? `${OMAPFOLDER_SERVER}/${route}${srcSuffix}` : null,
+          srcRoute: (hasRouteMap) ? `${MAPOHOLIC_SERVER}/${route}${srcSuffix}` : null,
           altRoute: (hasRouteMap) ? `${title} - route` : null,
         };
       })

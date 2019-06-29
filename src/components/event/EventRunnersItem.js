@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import noAvatar from '../../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventRunnersItem = ({
@@ -51,7 +51,7 @@ const EventRunnersItem = ({
       className="ui mini image left floated"
       alt="avatar"
       src={(userDetails[userId] && userDetails[userId].profileImage)
-        ? `${OMAPFOLDER_SERVER}/${userDetails[userId].profileImage}`
+        ? `${MAPOHOLIC_SERVER}/${userDetails[userId].profileImage}`
         : noAvatar}
     />
   );

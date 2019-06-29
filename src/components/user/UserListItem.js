@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { roleOptionsLocale } from '../../common/data';
 import noAvatar from '../../graphics/no-avatar.png';
-import { OMAPFOLDER_SERVER } from '../../config';
+import { MAPOHOLIC_SERVER } from '../../config';
 
 const UserListItem = ({
   currentUserId,
@@ -46,7 +46,7 @@ const UserListItem = ({
         <img
           className="left floated ui tiny image"
           alt="avatar"
-          src={(profileImage) ? `${OMAPFOLDER_SERVER}/${profileImage}` : noAvatar}
+          src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
         />
         <div className="header">
           {displayName}

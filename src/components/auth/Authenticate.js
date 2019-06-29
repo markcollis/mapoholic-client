@@ -118,8 +118,8 @@ class Authenticate extends Component {
     const { location } = this.props;
     const route = location.pathname.slice(1);
     const headerText = (route === 'signup')
-      ? <Trans>Sign up for OMapFolder</Trans>
-      : <Trans>Log in to OMapFolder</Trans>;
+      ? <Trans>Sign up for MapOholic</Trans>
+      : <Trans>Log in to MapOholic</Trans>;
     return (
       <div className="ui segment">
         <h3 className="header">{headerText}</h3>

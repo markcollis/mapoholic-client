@@ -14,7 +14,7 @@ import {
   CLUB_SELECT_CLUB_MEMBER,
   CLUB_SELECT_CLUB_EVENT,
 } from './types';
-import { OMAPFOLDER_SERVER } from '../config';
+import { MAPOHOLIC_SERVER } from '../config';
 
 // *** Local Actions ***
 // change club view mode
@@ -84,7 +84,7 @@ const toQueryString = (obj) => {
 export const getClubListAction = (searchCriteria, callback) => async (dispatch) => {
   try {
     const queryString = (searchCriteria) ? toQueryString(searchCriteria) : '';
-    const response = await axios.get(`${OMAPFOLDER_SERVER}/clubs${queryString}`);
+    const response = await axios.get(`${MAPOHOLIC_SERVER}/clubs${queryString}`);
     dispatch({ type: CLUB_GOT_LIST, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
@@ -101,7 +101,7 @@ export const createClubAction = (formValues, callback) => async (dispatch, getSt
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.post(`${OMAPFOLDER_SERVER}/clubs`, formValues, {
+    const response = await axios.post(`${MAPOHOLIC_SERVER}/clubs`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: CLUB_CREATED, payload: response.data });
@@ -117,7 +117,7 @@ export const createClubAction = (formValues, callback) => async (dispatch, getSt
 // app.get('/clubs/:id', publicRoute, Clubs.getClubById);
 export const getClubByIdAction = (userId, callback) => async (dispatch) => {
   try {
-    const response = await axios.get(`${OMAPFOLDER_SERVER}/clubs/${userId}`);
+    const response = await axios.get(`${MAPOHOLIC_SERVER}/clubs/${userId}`);
     dispatch({ type: CLUB_GOT_BY_ID, payload: response.data });
     if (callback) callback(true);
   } catch (err) {
@@ -138,11 +138,11 @@ export const getClubMembersAction = (clubId, callback) => async (dispatch, getSt
       const token = auth.authenticated;
       let response;
       if (token) {
-        response = await axios.get(`${OMAPFOLDER_SERVER}/users${queryString}`, {
+        response = await axios.get(`${MAPOHOLIC_SERVER}/users${queryString}`, {
           headers: { Authorization: `bearer ${token}` },
         });
       } else {
-        response = await axios.get(`${OMAPFOLDER_SERVER}/users/public${queryString}`);
+        response = await axios.get(`${MAPOHOLIC_SERVER}/users/public${queryString}`);
       }
       dispatch({
         type: CLUB_GOT_MEMBERS,
@@ -171,11 +171,11 @@ export const getClubEventsAction = (clubId, callback) => async (dispatch, getSta
       const token = auth.authenticated;
       let response;
       if (token) {
-        response = await axios.get(`${OMAPFOLDER_SERVER}/events${queryString}`, {
+        response = await axios.get(`${MAPOHOLIC_SERVER}/events${queryString}`, {
           headers: { Authorization: `bearer ${token}` },
         });
       } else {
-        response = await axios.get(`${OMAPFOLDER_SERVER}/events/public${queryString}`);
+        response = await axios.get(`${MAPOHOLIC_SERVER}/events/public${queryString}`);
       }
       dispatch({
         type: CLUB_GOT_EVENTS,
@@ -200,7 +200,7 @@ export const updateClubAction = (clubId, formValues, callback) => async (dispatc
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.patch(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, formValues, {
+    const response = await axios.patch(`${MAPOHOLIC_SERVER}/clubs/${clubId}`, formValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: CLUB_UPDATED, payload: response.data });
@@ -218,7 +218,7 @@ export const deleteClubAction = (clubId, callback) => async (dispatch, getState)
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.delete(`${OMAPFOLDER_SERVER}/clubs/${clubId}`, {
+    const response = await axios.delete(`${MAPOHOLIC_SERVER}/clubs/${clubId}`, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: CLUB_DELETED, payload: response.data });

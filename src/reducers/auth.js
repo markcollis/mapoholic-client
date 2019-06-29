@@ -1,7 +1,7 @@
 import { AUTH_USER, AUTH_ERROR } from '../actions/types';
 
 const INITIAL_STATE = {
-  authenticated: localStorage.getItem('omapfolder-auth-token'), // null if not logged in, JWT token if logged in
+  authenticated: localStorage.getItem('mapoholic-auth-token'), // null if not logged in, JWT token if logged in
   errorMessage: '', // empty unless an error occurs
 };
 
