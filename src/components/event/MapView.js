@@ -518,7 +518,8 @@ class MapView extends Component {
   // *** consider whether add/edit might need wider screen? ***
   renderEventResults = () => { // simple viewer done, not editable yet
     const { refreshCollapseEventResults } = this.state;
-    const { oevent } = this.props;
+    const { config, oevent } = this.props;
+    const { language } = config;
     const {
       details,
       errorMessage,
@@ -530,6 +531,7 @@ class MapView extends Component {
 
     return (
       <EventResults
+        language={language} // prop (config)
         refreshCollapse={refreshCollapseEventResults} // state (value increments to trigger)
         requestRefreshCollapse={this.requestRefreshCollapseEventResults} // defined here
         selectedEvent={selectedEvent} // derived

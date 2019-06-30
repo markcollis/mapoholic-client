@@ -178,7 +178,7 @@ msgstr "Filtr vyhledávání klubů"
 
 #: src/components/Header.js:228
 msgid "Clubs"
-msgstr "Klubů"
+msgstr "Kluby"
 
 #: src/components/event/EventEdit.js:435
 msgid "Clubs that event is organised by"
@@ -1056,7 +1056,7 @@ msgstr "Druh užvatele: {role}"
 
 #: src/components/Header.js:225
 msgid "Users"
-msgstr "Uživatelů"
+msgstr "Uživatele"
 
 #: src/components/event/EventRunnerEdit.js:232
 msgid "Visibility"

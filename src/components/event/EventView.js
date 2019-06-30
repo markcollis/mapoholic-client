@@ -8,7 +8,7 @@ import memoize from 'memoize-one';
 import EventDelete from './EventDelete';
 import EventDetails from './EventDetails';
 import EventEdit from './EventEdit';
-import EventFilter from './EventFilter';
+import EventHeader from './EventHeader';
 import EventLinked from './EventLinked';
 import EventLinkedManage from './EventLinkedManage';
 import EventList from './EventList';
@@ -202,6 +202,46 @@ class EventView extends Component {
       return [];
     }
     return orisList;
+  });
+
+  getTagLists = memoize((list, mineOnly, current, language) => {
+    console.log('getting tag lists');
+    const emptyTagList = { eventTags: [], personalTags: [] };
+    if (!list) return emptyTagList;
+    // console.log('list:', list);
+    const currentUserId = (current) ? current._id : '';
+    const filteredList = list.filter((eachEvent) => {
+      // if mineOnly, select only those with current user as runner
+      const { runners } = eachEvent;
+      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      return !mineOnly || runnerIds.includes(currentUserId);
+    });
+    // const eventTags = [];
+    // const personalTags = [];
+    const tagLists = filteredList.reduce((acc, val) => {
+      const newEventTags = acc.eventTags;
+      const newPersonalTags = acc.personalTags;
+      const tagsFromEvent = val.tags;
+      tagsFromEvent.forEach((tag) => {
+        if (newEventTags.indexOf(tag) === -1) {
+          newEventTags.push(tag);
+        }
+      });
+      const runnerSelf = val.runners.find(runner => runner.user === currentUserId);
+      if (runnerSelf) {
+        const tagsFromRunner = runnerSelf.tags;
+        tagsFromRunner.forEach((tag) => {
+          if (newPersonalTags.indexOf(tag) === -1) {
+            newPersonalTags.push(tag);
+          }
+        });
+      }
+      return { eventTags: newEventTags, personalTags: newPersonalTags };
+    }, emptyTagList);
+    tagLists.eventTags.sort((a, b) => {
+      return a.localeCompare(b, language);
+    });
+    return tagLists;
   });
 
   // switch to MapView when a runner is selected
@@ -558,8 +598,9 @@ class EventView extends Component {
     );
   }
 
-  renderEventFilter = () => {
+  renderEventHeader = () => {
     const {
+      config,
       oevent,
       user,
       getEventList,
@@ -574,10 +615,14 @@ class EventView extends Component {
       selectEventForDetailsMyMaps,
     } = this.props;
     const {
+      list,
       searchFieldEvents,
       searchFieldMyMaps,
     } = oevent;
     const { current } = user;
+    const { language } = config;
+    const tagLists = this.getTagLists(list, mineOnly, current, language);
+    console.log('tagLists:', tagLists);
     // select appropriate props for Events or MyMaps view
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
     const selectEventForDetails = (mineOnly)
@@ -594,7 +639,7 @@ class EventView extends Component {
       : clearEventSearchFieldEvents;
 
     return (
-      <EventFilter
+      <EventHeader
         currentUser={current}
         searchField={searchField}
         clearEventSearchField={clearEventSearchField}
@@ -692,17 +737,19 @@ class EventView extends Component {
 
   render() {
     // console.log('state in EventView:', this.state);
-    // console.log('props in EventView:', this.props);
+    console.log('props in EventView:', this.props);
     const { showMap } = this.props;
     if (showMap) {
       return (
         <div className="ui vertically padded stackable grid">
           {this.renderError()}
+          <div className="sixteen wide column section-header">
+            {this.renderEventHeader()}
+          </div>
           <div className="sixteen wide column">
             {this.renderEventMap()}
           </div>
           <div className="eight wide column">
-            {this.renderEventFilter()}
             {this.renderLinkedEvents()}
           </div>
           <div className="eight wide column">
@@ -716,8 +763,10 @@ class EventView extends Component {
     return (
       <div className="ui vertically padded stackable grid">
         {this.renderError()}
+        <div className="sixteen wide column section-header">
+          {this.renderEventHeader()}
+        </div>
         <div className="eight wide column">
-          {this.renderEventFilter()}
           {this.renderEventList()}
         </div>
         <div className="eight wide column">

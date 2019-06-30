@@ -37,9 +37,43 @@ EventLinkedItem, UserListItem) */
 .floatedright {
   float: right;
 }
+/* reduce padding for section headers inside grids */
+.section-header {
+  padding-bottom: 0 !important;
+}
+/* float buttons right when columns are collapsed on small screens */
+@media only screen and (max-width: 767px) {
+  .ui[class*="right floated"].button {
+    float: none;
+  }
+}
 
 /* Header and Footer */
 /* ----------------- */
+
+/* settings to provide visual cues for List/Map view selection in main menu */
+.header-menu-divider {
+  align-self: center;
+  margin: 5px 0 0 0;
+  height: 20px;
+  width: 2px;
+  background-color: rgba(34, 36, 38, 0.15);
+}
+@media only screen and (max-width: 767px) {
+  .header-menu-divider {
+    height: 0; /* hide when stacked */
+  }
+}
+.header-parent {
+  padding-right: 0.3rem !important;
+}
+.header-child {
+  padding-left: 0.3rem !important;
+  padding-right: 0.3rem !important;
+}
+.header-child-right {
+  padding-left: 0.3rem !important;
+}
 
 /* format common Footer text */
 .footer {

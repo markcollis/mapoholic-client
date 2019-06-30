@@ -291,7 +291,7 @@ const formikEventRunnerEdit = withFormik({
       place: selectedRunnerDetails.place || '',
       timeBehind: selectedRunnerDetails.timeBehind || '',
       fieldSize: selectedRunnerDetails.fieldSize || '',
-      tags: selectedEvent.tags.map((tag) => {
+      tags: selectedRunnerDetails.tags.map((tag) => {
         return { value: tag, label: tag };
       }) || [],
       // maps: edit via EventMapViewer component

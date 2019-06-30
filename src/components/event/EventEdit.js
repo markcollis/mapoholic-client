@@ -106,10 +106,29 @@ class EventEdit extends Component {
   componentDidUpdate(prevProps) {
     const {
       eventMode,
+      orisList,
       resetForm,
     } = this.props;
     if (prevProps.eventMode === 'edit' && eventMode === 'add') {
       resetForm();
+    }
+
+    /* eslint react/no-did-update-set-state: 0 */
+    // state update can be used because it is conditional on prop change
+    if (prevProps.orisList !== orisList) {
+      const populatedOrisOptions = orisList
+        .filter(orisEvent => !orisEvent.includedEvents) // remove multi-day
+        .filter(orisEvent => orisEvent.date < dateToDateString(new Date())) // remove future
+        .sort((a, b) => { // sort so most recent are listed first
+          return (a.date < b.date) ? 0 : -1;
+        })
+        .map((orisEvent) => {
+          const { orisEventId, name, date } = orisEvent;
+          const value = orisEventId;
+          const label = `${orisEventId}: ${name} (${date})`;
+          return { value, label };
+        });
+      this.setState({ orisOptions: populatedOrisOptions });
     }
   }
 
@@ -178,22 +197,44 @@ class EventEdit extends Component {
             <div className="field">
               <label htmlFor="orisId">
                 <Trans>Create event using ORIS data</Trans>
-                <I18n>
-                  {({ i18n }) => (
-                    <CreatableSelect
-                      id="orisId"
-                      isClearable
-                      placeholder={i18n._(t`Enter ORIS event ID or select from your recent events`)}
-                      options={orisOptions}
-                      onChange={(value) => {
-                        setFieldValue('orisId', value);
-                        setFieldValue('name', value ? value.value : '');
-                      }}
-                      onBlur={() => setFieldTouched('orisId', true)}
-                      value={values.orisId}
-                    />
-                  )}
-                </I18n>
+                {(orisOptions.length === 0)
+                  ? (
+                    <I18n>
+                      {({ i18n }) => (
+                        <CreatableSelect
+                          id="orisId"
+                          isClearable
+                          placeholder={i18n._(t`Enter ORIS event ID (list of recent events loading or unavailable)`)}
+                          options={orisOptions}
+                          onChange={(value) => {
+                            setFieldValue('orisId', value);
+                            setFieldValue('name', value ? value.value : '');
+                          }}
+                          onBlur={() => setFieldTouched('orisId', true)}
+                          value={values.orisId}
+                        />
+                      )}
+                    </I18n>
+                  )
+                  : (
+                    <I18n>
+                      {({ i18n }) => (
+                        <CreatableSelect
+                          id="orisId"
+                          isClearable
+                          placeholder={i18n._(t`Enter ORIS event ID or select from your recent events`)}
+                          options={orisOptions}
+                          onChange={(value) => {
+                            setFieldValue('orisId', value);
+                            setFieldValue('name', value ? value.value : '');
+                          }}
+                          onBlur={() => setFieldTouched('orisId', true)}
+                          value={values.orisId}
+                        />
+                      )}
+                    </I18n>
+                  )
+                }
                 { touched.orisId && errors.orisId && <div className="ui warning message">{errors.orisId}</div> }
               </label>
             </div>

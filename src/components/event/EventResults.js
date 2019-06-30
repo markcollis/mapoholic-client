@@ -9,7 +9,12 @@ import Table from '../generic/Table';
 // Component displays results if present in event record (e.g. from ORIS)
 // (manual adding, editing, deleting results to be done later)
 // (consider also highlighting other registered users on same course?)
-const EventResults = ({ requestRefreshCollapse, selectedEvent, selectedRunner }) => {
+const EventResults = ({
+  language,
+  requestRefreshCollapse,
+  selectedEvent,
+  selectedRunner,
+}) => {
   // console.log('selectedEvent:', selectedEvent);
   // console.log('selectedRunner:', selectedRunner);
   const runnerData = (selectedEvent.runners)
@@ -61,6 +66,7 @@ const EventResults = ({ requestRefreshCollapse, selectedEvent, selectedRunner })
         {(hasResults)
           ? (
             <Table
+              language={language}
               requestRefreshCollapse={requestRefreshCollapse}
               showPagination={false}
               tableHead={tableHead}
@@ -74,6 +80,7 @@ const EventResults = ({ requestRefreshCollapse, selectedEvent, selectedRunner })
 };
 
 EventResults.propTypes = {
+  language: PropTypes.string.isRequired,
   requestRefreshCollapse: PropTypes.func.isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,

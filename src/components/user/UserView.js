@@ -8,7 +8,7 @@ import UserDelete from './UserDelete';
 import UserDetails from './UserDetails';
 import UserEdit from './UserEdit';
 import UserEvents from './UserEvents';
-import UserFilter from './UserFilter';
+import UserHeader from './UserHeader';
 import UserList from './UserList';
 import {
   cancelUserErrorAction,
@@ -151,7 +151,7 @@ class UserView extends Component {
     );
   }
 
-  renderUserFilter = () => {
+  renderUserHeader = () => {
     const {
       getUserList,
       setUserSearchField,
@@ -162,7 +162,7 @@ class UserView extends Component {
     } = user;
 
     return (
-      <UserFilter
+      <UserHeader
         getUserList={getUserList} // prop
         searchField={searchField} // prop (user)
         setUserSearchField={setUserSearchField} // prop
@@ -395,8 +395,10 @@ class UserView extends Component {
     return (
       <div className="ui vertically padded stackable grid">
         {this.renderError()}
+        <div className="sixteen wide column section-header">
+          {this.renderUserHeader()}
+        </div>
         <div className="seven wide column">
-          {this.renderUserFilter()}
           {this.renderUserList()}
         </div>
         <div className="nine wide column">

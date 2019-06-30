@@ -98,6 +98,7 @@ const getUpdatedEventList = (list, payload) => {
           courseTitle: runner.user.courseTitle,
           numberMaps: runner.maps.length,
           mapExtract: extractName,
+          tags: runner.tags,
         };
       });
       eventDetails.runners = newRunners;

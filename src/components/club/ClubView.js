@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
-import ClubFilter from './ClubFilter';
-import ClubList from './ClubList';
-import ClubDetails from './ClubDetails';
-import ClubMembers from './ClubMembers';
-import ClubEvents from './ClubEvents';
-import ClubEdit from './ClubEdit';
 import ClubDelete from './ClubDelete';
+import ClubDetails from './ClubDetails';
+import ClubEdit from './ClubEdit';
+import ClubEvents from './ClubEvents';
+// import ClubFilter from './ClubFilter';
+import ClubHeader from './ClubHeader';
+import ClubList from './ClubList';
+import ClubMembers from './ClubMembers';
 import {
   createClubAction,
   deleteClubAction,
@@ -263,7 +264,27 @@ class ClubView extends Component {
     return null;
   }
 
-  renderClubFilter = () => {
+  // renderClubFilter = () => {
+  //   const {
+  //     club,
+  //     getClubList,
+  //     setClubSearchField,
+  //     setClubViewMode,
+  //     selectClubToDisplay,
+  //   } = this.props;
+  //   const { searchField } = club;
+  //   return (
+  //     <ClubFilter
+  //       getClubList={getClubList} // prop
+  //       searchField={searchField} // prop (club)
+  //       selectClubToDisplay={selectClubToDisplay} // prop
+  //       setClubSearchField={setClubSearchField} // prop
+  //       setClubViewMode={setClubViewMode} // prop
+  //     />
+  //   );
+  // }
+
+  renderClubHeader = () => {
     const {
       club,
       getClubList,
@@ -273,7 +294,7 @@ class ClubView extends Component {
     } = this.props;
     const { searchField } = club;
     return (
-      <ClubFilter
+      <ClubHeader
         getClubList={getClubList} // prop
         searchField={searchField} // prop (club)
         selectClubToDisplay={selectClubToDisplay} // prop
@@ -303,8 +324,10 @@ class ClubView extends Component {
     return (
       <div className="ui vertically padded stackable grid">
         {this.renderError()}
+        <div className="sixteen wide column section-header">
+          {this.renderClubHeader()}
+        </div>
         <div className="six wide column">
-          {this.renderClubFilter()}
           {this.renderClubList()}
         </div>
         {this.renderClubDetails()}

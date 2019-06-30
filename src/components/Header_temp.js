@@ -177,109 +177,66 @@ class Header extends Component {
       </div>
     );
 
-    // const myMapsSubMenu = (isMyMapsGroup)
-    //   ? (
-    //     <div className="ui top attached tabular menu">
-    //       <Link to="/mymaps" className={(isMyMapsList) ? 'active item' : 'item'}>
-    //         <Trans>List view</Trans>
-    //       </Link>
-    //       <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active item' : 'item'}>
-    //         <Trans>Map view</Trans>
-    //       </Link>
-    //     </div>
-    //   )
-    //   : null;
-    //
-    // const eventsSubMenu = (isEventsGroup)
-    //   ? (
-    //     <div className="ui top attached tabular menu">
-    //       <Link to="/events" className={(isEventsList) ? 'active item' : 'item'}>
-    //         <Trans>List view</Trans>
-    //       </Link>
-    //       <Link to="/eventsmap" className={(isEventsMap) ? 'active item' : 'item'}>
-    //         <Trans>Map view</Trans>
-    //       </Link>
-    //     </div>
-    //   )
-    //   : null;
-
-    const renderEvents = (isEventsGroup)
+    const myMapsSubMenu = (isMyMapsGroup)
       ? (
-        <>
-          <Link to={linkEvents} className="active blue item header-parent">
-            <Trans>Events</Trans>
+        <div className="ui top attached tabular menu">
+          <Link to="/mymaps" className={(isMyMapsList) ? 'active item' : 'item'}>
+            <Trans>List view</Trans>
           </Link>
-          <Link to="/events" className={(isEventsList) ? 'active blue item header-child' : 'item header-child'}>
-            <Trans>&gt; List</Trans>
+          <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active item' : 'item'}>
+            <Trans>Map view</Trans>
           </Link>
-          <Link to="/eventsmap" className={(isEventsMap) ? 'active blue item header-child-right' : 'item header-child-right'}>
-            <Trans>&gt; Map</Trans>
-          </Link>
-        </>
+        </div>
       )
-      : (
-        <Link to={linkEvents} className="item">
-          <Trans>Events</Trans>
-        </Link>
-      );
+      : null;
 
-    const renderMyMaps = (isMyMapsGroup)
+    const eventsSubMenu = (isEventsGroup)
       ? (
-        <>
-          <Link to={linkMyMaps} className="active blue item header-parent">
-            <Trans>My Maps</Trans>
+        <div className="ui top attached tabular menu">
+          <Link to="/events" className={(isEventsList) ? 'active item' : 'item'}>
+            <Trans>List view</Trans>
           </Link>
-          <Link to="/mymaps" className={(isMyMapsList) ? 'active blue item header-child' : 'item header-child'}>
-            <Trans>&gt; List</Trans>
+          <Link to="/eventsmap" className={(isEventsMap) ? 'active item' : 'item'}>
+            <Trans>Map view</Trans>
           </Link>
-          <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active blue item header-child-right' : 'item header-child-right'}>
-            <Trans>&gt; Map</Trans>
-          </Link>
-        </>
+        </div>
       )
-      : (
-        <Link to={linkMyMaps} className="item">
-          <Trans>My Maps</Trans>
-        </Link>
-      );
+      : null;
 
     if (auth) {
       return (
         <div>
           <div className="ui menu secondary pointing stackable">
             <Link to="/" className={(isHome) ? 'active item' : 'item'}><i className="icon home" /></Link>
-            <span className="header-menu-divider" />
             {(selectedEventDisplay && selectedRunner)
               ? (
-                <>
-                  <Link to="/mapview" className={(isMapView) ? 'active blue item' : 'item'}>
-                    <Trans>Current Map</Trans>
-                  </Link>
-                  <span className="header-menu-divider" />
-                </>
+                <Link to="/mapview" className={(isMapView) ? 'active blue item' : 'item'}>
+                  <Trans>Current Map</Trans>
+                </Link>
               )
               : null}
-            {renderMyMaps}
-            <span className="header-menu-divider" />
-            {renderEvents}
-            <span className="header-menu-divider" />
+            <Link to={linkMyMaps} className={(isMyMapsGroup) ? 'active blue item' : 'item'}>
+              <Trans>My Maps</Trans>
+            </Link>
+            <Link to={linkEvents} className={(isEventsGroup) ? 'active blue item' : 'item'}>
+              <Trans>Events</Trans>
+            </Link>
             <Link to="/users" className={(isUsers) ? 'active blue item' : 'item'}>
               <Trans>Users</Trans>
             </Link>
-            <span className="header-menu-divider" />
             <Link to="/clubs" className={(isClubs) ? 'active blue item' : 'item'}>
               <Trans>Clubs</Trans>
             </Link>
             <div className="right menu">
               <Link to="/me" className={(isCurrentUser) ? 'active blue item header-current-user' : 'item header-current-user'}>{userDetails}</Link>
-              <span className="header-menu-divider" />
               <Link to="/logout" className="item right ">
                 <Trans>Log Out</Trans>
               </Link>
-              <span className="header-menu-divider" />
               {selectLanguage}
             </div>
           </div>
+          {myMapsSubMenu}
+          {eventsSubMenu}
         </div>
       );
     }
@@ -287,20 +244,20 @@ class Header extends Component {
       <div>
         <div className="ui menu secondary pointing">
           <Link to="/" className={(isHome) ? 'active blue item' : 'item'}><i className="icon home" /></Link>
-          <span className="header-menu-divider" />
-          {renderEvents}
+          <Link to={linkEvents} className={(isEventsGroup) ? 'active blue item' : 'item'}>
+            <Trans>Browse Public Maps</Trans>
+          </Link>
           <div className="right menu">
             <Link to="/signup" className={(isSignup) ? 'active blue item' : 'item'}>
               <Trans>Sign Up</Trans>
             </Link>
-            <span className="header-menu-divider" />
             <Link to="/login" className={(isLogin) ? 'active blue item' : 'item'}>
               <Trans>Log In</Trans>
             </Link>
-            <span className="header-menu-divider" />
             {selectLanguage}
           </div>
         </div>
+        {eventsSubMenu}
       </div>
     );
   }

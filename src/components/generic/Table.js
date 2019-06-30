@@ -17,7 +17,6 @@ import TablePagination from './TablePagination';
 import TableRow from './TableRow';
 
 /* eslint react/destructuring-assignment: 0 */
-/* eslint no-console: 0 */
 class Table extends Component {
   state = {
     filter: '',
@@ -54,7 +53,7 @@ class Table extends Component {
   };
 
   getKeyedData = memoize((tableData) => {
-    console.log('getting keyed data');
+    // console.log('getting keyed data');
     const keyedData = tableData.map((row, index) => {
       const keyedRowData = row.rowData.map((item, innerIndex) => {
         const { render, sort } = item;
@@ -74,7 +73,7 @@ class Table extends Component {
   });
 
   getFilteredData = memoize((keyedData, filter) => {
-    console.log('getting filtered data');
+    // console.log('getting filtered data');
     const target = filter.toLowerCase();
     const filteredData = keyedData.filter((data) => {
       const { rowData } = data;
@@ -89,7 +88,7 @@ class Table extends Component {
   });
 
   getSortedData = memoize((filteredData, sortColumn, sortAscending) => {
-    console.log('getting sorted data', sortColumn, sortAscending);
+    // console.log('getting sorted data', sortColumn, sortAscending);
     if (sortColumn === null) return filteredData;
     const sortedData = [...filteredData].sort((a, b) => {
       const { rowData: rowDataA } = a;
@@ -112,7 +111,7 @@ class Table extends Component {
   });
 
   getPageData = memoize((sortedData, pageNumber, rowsPerPage) => {
-    console.log('getting page data', pageNumber, rowsPerPage);
+    // console.log('getting page data', pageNumber, rowsPerPage);
     const first = rowsPerPage * (pageNumber - 1);
     const last = first + rowsPerPage;
     const pageData = sortedData.slice(first, last);
@@ -120,13 +119,13 @@ class Table extends Component {
   });
 
   getTotalPages = memoize((sortedData, rowsPerPage) => {
-    console.log('getting total pages');
+    // console.log('getting total pages');
     const totalPages = Math.ceil(sortedData.length / rowsPerPage);
     return totalPages;
   });
 
   renderTableData = (data) => {
-    console.log('rendering table data');
+    // console.log('rendering table data');
     if (!data) return <tr />;
     const tableRowArray = data.map((row) => {
       const { highlightRow, id, rowData } = row;
@@ -138,7 +137,7 @@ class Table extends Component {
 
   setPageNumber = (page) => {
     if (typeof page !== 'number') throw new Error('page must be a number');
-    console.log('Changing page number to:', page);
+    // console.log('Changing page number to:', page);
     this.setState({ pageNumber: page });
     const { requestRefreshCollapse } = this.props;
     requestRefreshCollapse();
@@ -146,7 +145,7 @@ class Table extends Component {
 
   setRowsPerPage = (rows) => {
     if (typeof rows !== 'number') throw new Error('number of rows must be a number');
-    console.log('Changing number of rows to:', rows);
+    // console.log('Changing number of rows to:', rows);
     this.setState({ rowsPerPage: rows });
     const { requestRefreshCollapse } = this.props;
     requestRefreshCollapse();
@@ -183,22 +182,21 @@ class Table extends Component {
     } = this.state;
     if (!tableData) return null;
     const keyedData = this.getKeyedData(tableData);
-    console.log('keyedData:', keyedData);
+    // console.log('keyedData:', keyedData);
     const filteredData = this.getFilteredData(keyedData, filter);
-    console.log('filteredData:', filteredData);
+    // console.log('filteredData:', filteredData);
     const sortedData = this.getSortedData(filteredData, sortColumn, sortAscending);
-    console.log('sortedData:', sortedData);
+    // console.log('sortedData:', sortedData);
     const totalPages = (showPagination)
       ? this.getTotalPages(sortedData, rowsPerPage)
       : 1;
-    console.log('totalPages:', totalPages);
+    // console.log('totalPages:', totalPages);
     // need this check as filtering may have reduced the total number of pages
     const pageNumberToUse = (pageNumber > totalPages) ? totalPages : pageNumber;
     const pageData = (showPagination)
       ? this.getPageData(sortedData, pageNumberToUse, rowsPerPage)
       : sortedData;
-    console.log('pageData:', pageData);
-    // if (pageNumber > totalPages) this.setPageNumber(totalPages);
+    // console.log('pageData:', pageData);
 
     return (
       <div className="table-scrollx">

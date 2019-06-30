@@ -10,16 +10,36 @@ const HomeAdminNotes = () => {
         <ol>
           <li>Add some more introductory/help text on this page</li>
           <li>Investigate issue with loading thumbnail after uploading map (timing?)</li>
-          <li>Complete lingui translations and check that nothing is missing</li>
+          <li>
+            <del>Restructure Header to remove space-wasting List/Map view tabs</del>
+            &nbsp;(done 30/6)
+          </li>
+          <li>
+            Complete lingui translations and check that nothing is missing
+            &nbsp;(done all except long paragraphs on Home page 29/6)
+          </li>
+          <li>
+            <del>Rewrite filter components as a control bar along the top</del>
+            &nbsp;(done 30/6)
+          </li>
+          <li>Incorporate extra filter (tags, country, etc. into new control toolbars)</li>
           <li>Check background image on ClubDetails on narrow screens</li>
           <li>Centre rotation on current view when zoomed in</li>
-          <li>Define a default set of event tags</li>
-          <li>Make style names more consistent across components</li>
-          <li>Add some real sample data/maps (started 4/6)</li>
+          <li>
+            Define a default set of event tags
+            &nbsp;(captured event and personal tags in EventView 30/6)
+          </li>
+          <li>Decide what to do with runner tags - not currently searchable...</li>
+          <li>
+            Remove refresh list buttons? Should only be needed if a different user has updated
+            something, how important is it?
+          </li>
           <li>Check permission to view ActionBy user&apos;s profile in HomeRecentListItem</li>
           <li>Design a logo, e.g. map with control colours on the O</li>
           <li>Draw my own version of the tree background, or find a royalty free one</li>
+          <li>Make style names more consistent across components</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
+          <li>Add some real sample data/maps (started 4/6)</li>
           <li>Test it out on a real Internet-facing server</li>
         </ol>
       </Collapse>
@@ -201,6 +221,10 @@ const HomeAdminNotes = () => {
           <li>
             <del>Complete common/data translations and check that nothing is missing</del>
             &nbsp;(done 28/6)
+          </li>
+          <li>
+            <del>Need to refresh EventEdit when ORIS list is loaded</del>
+            &nbsp;(fixed 29/6)
           </li>
         </ol>
       </Collapse>
