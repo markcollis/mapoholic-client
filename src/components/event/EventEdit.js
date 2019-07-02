@@ -30,24 +30,25 @@ registerLocale('en', enGB);
 // renders form to either create or edit an event record
 class EventEdit extends Component {
   static propTypes = {
-    touched: PropTypes.objectOf(PropTypes.any).isRequired,
+    clubList: PropTypes.arrayOf(PropTypes.object),
     errors: PropTypes.objectOf(PropTypes.any).isRequired, // input validation
-    values: PropTypes.objectOf(PropTypes.any).isRequired,
+    eventLinkList: PropTypes.arrayOf(PropTypes.object),
+    eventList: PropTypes.arrayOf(PropTypes.object),
+    eventMode: PropTypes.string.isRequired,
+    getEventList: PropTypes.func,
+    isAdmin: PropTypes.bool,
     isSubmitting: PropTypes.bool.isRequired,
     language: PropTypes.string,
-    isAdmin: PropTypes.bool,
-    userList: PropTypes.arrayOf(PropTypes.object),
-    clubList: PropTypes.arrayOf(PropTypes.object),
-    eventList: PropTypes.arrayOf(PropTypes.object),
-    eventLinkList: PropTypes.arrayOf(PropTypes.object),
     orisList: PropTypes.arrayOf(PropTypes.object),
-    selectedEvent: PropTypes.objectOf(PropTypes.any),
     resetForm: PropTypes.func.isRequired,
-    setFieldValue: PropTypes.func.isRequired,
-    setFieldTouched: PropTypes.func.isRequired,
-    getEventList: PropTypes.func,
-    eventMode: PropTypes.string.isRequired,
+    selectedEvent: PropTypes.objectOf(PropTypes.any),
     setEventViewModeEvent: PropTypes.func.isRequired,
+    setFieldTouched: PropTypes.func.isRequired,
+    setFieldValue: PropTypes.func.isRequired,
+    tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
+    touched: PropTypes.objectOf(PropTypes.any).isRequired,
+    userList: PropTypes.arrayOf(PropTypes.object),
+    values: PropTypes.objectOf(PropTypes.any).isRequired,
   };
 
   static defaultProps = {
@@ -75,17 +76,17 @@ class EventEdit extends Component {
       getEventList,
       orisList,
       selectedEvent,
+      tagList,
     } = this.props;
     if (eventList && eventList.length === 0 && eventMode === 'edit') getEventList();
     if (selectedEvent && selectedEvent.locCountry) {
       this.setState({ regionOptions: regionOptionSets[selectedEvent.locCountry] });
     }
-    const newTagsOptions = (selectedEvent.tags && selectedEvent.tags.length > 0)
-      ? selectedEvent.tags.map((tag) => {
-        return { value: tag, label: tag };
-      })
-      : [{ value: 'default', label: 'default set to be defined' }];
-    this.setState({ tagsOptions: newTagsOptions });
+    const tagsOptions = tagList.map((tag) => {
+      return { value: tag, label: tag };
+    });
+    this.setState({ tagsOptions });
+    // console.log('mounted with tagsOptions;', tagsOptions);
     if (orisList && orisList.length > 0) {
       const populatedOrisOptions = orisList
         .filter(orisEvent => !orisEvent.includedEvents) // remove multi-day
@@ -648,19 +649,19 @@ const formikEventEdit = withFormik({
     const valuesToSubmit = (values.locCountry)
       ? { ...values, locCountry: values.locCountry.value }
       : { ...values, locCountry: '' };
-    valuesToSubmit.locRegions = (values.locRegions.length > 0)
+    valuesToSubmit.locRegions = (values.locRegions && values.locRegions.length > 0)
       ? values.locRegions.map(el => el.value)
       : [];
-    valuesToSubmit.types = (values.types.length > 0)
+    valuesToSubmit.types = (values.types && values.types.length > 0)
       ? values.types.map(el => el.value)
       : [];
-    valuesToSubmit.tags = (values.tags.length > 0)
+    valuesToSubmit.tags = (values.tags && values.tags.length > 0)
       ? values.tags.map(el => el.value)
       : [];
-    valuesToSubmit.organisedBy = (values.organisedBy.length > 0)
+    valuesToSubmit.organisedBy = (values.organisedBy && values.organisedBy.length > 0)
       ? values.organisedBy.map(el => el.value)
       : [];
-    valuesToSubmit.linkedTo = (values.linkedTo.length > 0)
+    valuesToSubmit.linkedTo = (values.linkedTo && values.linkedTo.length > 0)
       ? values.linkedTo.map(el => el.value)
       : [];
     valuesToSubmit.date = dateToDateString(values.date);

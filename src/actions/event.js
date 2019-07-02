@@ -21,6 +21,8 @@ import {
   EVENT_ERROR,
   EVENT_CHANGE_SEARCH_FIELD_EVENTS,
   EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
+  EVENT_CHANGE_TAG_FILTER_EVENTS,
+  EVENT_CHANGE_TAG_FILTER_MYMAPS,
   EVENT_CHANGE_VIEW_EVENT_EVENTS,
   EVENT_CHANGE_VIEW_EVENT_MYMAPS,
   EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
@@ -34,8 +36,6 @@ import {
   EVENT_SELECT_MAP,
   EVENT_MAP_SET_BOUNDS_EVENTS,
   EVENT_MAP_SET_BOUNDS_MYMAPS,
-  // EVENT_MAP_SET_ZOOM_EVENTS,
-  // EVENT_MAP_SET_ZOOM_MYMAPS,
 } from './types';
 import { MAPOHOLIC_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
@@ -106,6 +106,16 @@ export const setEventSearchFieldMyMapsAction = text => ({
   type: EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
   payload: text,
 });
+// track changes to the event tag filter (Events view)
+export const setEventTagFilterEventsAction = text => ({
+  type: EVENT_CHANGE_TAG_FILTER_EVENTS,
+  payload: text,
+});
+// track changes to the event tag filter (Events view)
+export const setEventTagFilterMyMapsAction = text => ({
+  type: EVENT_CHANGE_TAG_FILTER_MYMAPS,
+  payload: text,
+});
 // select an event to show additional details (Events view)
 export const selectEventForDetailsEventsAction = eventId => ({
   type: EVENT_SELECT_EVENT_DETAILS_EVENTS,
@@ -146,16 +156,6 @@ export const setMapBoundsMyMapsAction = bounds => ({
   type: EVENT_MAP_SET_BOUNDS_MYMAPS,
   payload: bounds,
 });
-// // set zoom level for overview map (Events view)
-// export const setMapZoomEventsAction = zoomLevel => ({
-//   type: EVENT_MAP_SET_ZOOM_EVENTS,
-//   payload: zoomLevel,
-// });
-// // set zoom level for overview map (MyMaps view)
-// export const setMapZoomMyMapsAction = zoomLevel => ({
-//   type: EVENT_MAP_SET_ZOOM_MYMAPS,
-//   payload: zoomLevel,
-// });
 // cancel a displayed error message
 export const cancelEventErrorAction = () => ({
   type: EVENT_ERROR,

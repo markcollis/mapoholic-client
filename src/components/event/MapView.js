@@ -86,6 +86,7 @@ class MapView extends Component {
     refreshCollapseEventComments: 0,
     refreshCollapseEventDetails: 0,
     refreshCollapseEventResults: 0,
+    refreshCollapseRunnerDetails: 0,
   }
 
   // helper to get details of selected event if input props have changed
@@ -143,6 +144,53 @@ class MapView extends Component {
     return organisingClubs;
   });
 
+  // helper to extract list of event tags if input props have changed
+  getEventTagList = memoize((list, language) => {
+    console.log('getting event tag list');
+    if (!list) return [];
+    const tagList = list.reduce((acc, val) => {
+      val.tags.forEach((tag) => {
+        if (acc.indexOf(tag) === -1) {
+          acc.push(tag);
+        }
+      });
+      return acc;
+    }, []);
+    tagList.sort((a, b) => {
+      return a.localeCompare(b, language);
+    });
+    console.log('tagList to return:', tagList);
+    return tagList;
+  });
+
+  // helper to extract list of personal tags (from selected
+  // runner's entries) if input props have changed
+  getPersonalTagList = memoize((list, selectedRunner, language) => {
+    console.log('getting personal tag list');
+    if (!list) return [];
+    const filteredList = list.filter((eachEvent) => {
+      // select only those with current user as runner
+      const { runners } = eachEvent;
+      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      return runnerIds.includes(selectedRunner);
+    });
+    const tagList = filteredList.reduce((acc, val) => {
+      const selectedRunnerDetails = val.runners.find(runner => runner.user === selectedRunner);
+      const tagsFromRunner = selectedRunnerDetails.tags;
+      tagsFromRunner.forEach((tag) => {
+        if (acc.indexOf(tag) === -1) {
+          acc.push(tag);
+        }
+      });
+      return acc;
+    }, []);
+    tagList.sort((a, b) => {
+      return a.localeCompare(b, language);
+    });
+    console.log('tagList to return:', tagList);
+    return tagList;
+  });
+
   // update a prop in EventComments to trigger refresh of Collapse component to new size
   requestRefreshCollapseEventComments = () => {
     const { refreshCollapseEventComments } = this.state;
@@ -161,6 +209,12 @@ class MapView extends Component {
     this.setState({ refreshCollapseEventResults: refreshCollapseEventResults + 1 });
   }
 
+  // update a prop in RunnerDetails to trigger refresh of Collapse component to new size
+  requestRefreshCollapseRunnerDetails = () => {
+    const { refreshCollapseRunnerDetails } = this.state;
+    this.setState({ refreshCollapseRunnerDetails: refreshCollapseRunnerDetails + 1 });
+  }
+
   // render EventRunners component
   renderEventRunners = () => {
     const {
@@ -169,7 +223,7 @@ class MapView extends Component {
       addEventRunner,
       addEventRunnerOris,
       getUserById,
-      // setEventViewModeEvent,
+      setEventViewModeRunner,
       selectEventToDisplay,
       selectRunnerToDisplay,
     } = this.props;
@@ -186,7 +240,7 @@ class MapView extends Component {
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
     const handleSelectEventRunner = (eventId, userId) => {
       selectEventToDisplay(eventId);
-      // setEventViewModeEvent('view');
+      setEventViewModeRunner('view');
       selectRunnerToDisplay(userId);
     };
 
@@ -210,6 +264,7 @@ class MapView extends Component {
 
   // render EventRunnerDetails, EventRunnerEdit or EventRunnerDelete components as required
   renderEventRunnerDetails = () => {
+    const { refreshCollapseRunnerDetails } = this.state;
     const {
       config,
       oevent,
@@ -222,6 +277,7 @@ class MapView extends Component {
     const {
       details,
       errorMessage,
+      list,
       runnerMode,
       selectedEventDisplay,
       selectedRunner,
@@ -231,7 +287,7 @@ class MapView extends Component {
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
     const canEdit = this.getCanEditRunner(current, selectedRunner);
     const runnerDetails = this.getRunnerDetails(selectedRunner, userDetails, userErrorMessage);
-
+    const tagList = this.getPersonalTagList(list, selectedRunner, language);
     switch (runnerMode) {
       case 'none':
         return (
@@ -244,6 +300,8 @@ class MapView extends Component {
           <EventRunnerDetails
             canEdit={canEdit} // derived
             language={language} // prop (config)
+            refreshCollapse={refreshCollapseRunnerDetails} // state (value increments to trigger)
+            requestRefreshCollapse={this.requestRefreshCollapseRunnerDetails} // defined here
             runnerDetails={runnerDetails} // derived
             selectedEvent={selectedEvent} // derived
             selectedRunner={selectedRunner} // prop (oevent)
@@ -257,6 +315,7 @@ class MapView extends Component {
             selectedEvent={selectedEvent} // derived
             selectedRunner={selectedRunner} // prop (oevent)
             setEventViewModeRunner={setEventViewModeRunner} // prop
+            tagList={tagList} // derived
             updateEventRunner={updateEventRunner} // prop
           />
         );
@@ -306,6 +365,7 @@ class MapView extends Component {
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
     const organisingClubs = this.getOrganisingClubs(selectedEvent, clubDetails);
+    const tagList = this.getEventTagList(list, language);
 
     switch (eventModeMapView) {
       case 'none':
@@ -339,6 +399,7 @@ class MapView extends Component {
             language={language} // prop (config)
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
+            tagList={tagList} // derived
             updateEvent={updateEvent} // prop
             userList={userList} // prop (user)
           />

@@ -112,7 +112,7 @@ const EventDetails = ({
     : null;
   const renderTags = (tags && tags.length > 0)
     ? (
-      <span>
+      <span className="list-item-tags">
         {tags.map((tag) => {
           return <div key={tag} className="ui violet label">{tag}</div>;
         })}
@@ -121,9 +121,11 @@ const EventDetails = ({
     : null;
   const regionLabels = (locRegions && locRegions.length > 0)
     ? (
-      locRegions.map((region) => {
-        return <span key={region} className="ui basic label">{region}</span>;
-      })
+      <span className="list-item-tags">
+        {locRegions.map((region) => {
+          return <span key={region} className="ui basic label">{region}</span>;
+        })}
+      </span>
     )
     : null;
   const locUrl = (locLat && locLong)

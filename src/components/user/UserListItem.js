@@ -52,10 +52,10 @@ const UserListItem = ({
           {displayName}
         </div>
         <div className="meta">
-          <p>{fullName}</p>
+          {fullName}
           {(memberOf && memberOf.length > 0)
             ? (
-              <div>
+              <div className="list-item-tags">
                 {memberOf.map((club) => {
                   return <div key={club} className="ui label">{club}</div>;
                 })}

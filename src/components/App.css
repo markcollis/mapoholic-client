@@ -47,6 +47,14 @@ EventLinkedItem, UserListItem) */
     float: none;
   }
 }
+/* provide space between tags when they overflow onto another line */
+.list-item-tags {
+  line-height: 250%;
+}
+/* consistent font in dropdowns */
+select, optgroup {
+  font-family: Lato, "Helvetica Neue", Arial;
+}
 
 /* Header and Footer */
 /* ----------------- */
@@ -193,6 +201,35 @@ EventLinkedItem, UserListItem) */
 }
 .event-details-canedit {
   clear: both;
+}
+/* settings for EventHeader */
+.event-header-tag-default {
+  color: rgba(0, 0, 0, 0.3) !important;
+}
+.event-header-tag-event {
+  background-color: #6435c9 !important;
+  color: white !important;
+  /* font-size: 110%; */
+}
+.event-header-tag-personal {
+  background-color: #a333c8 !important;
+  color: white !important;
+  /* font-size: 110%; */
+}
+.event-header-tag-select {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.25rem;
+}
+.event-header-tag-select optgroup {
+  color: black;
+  background-color: white;
+}
+.event-header-tag-select div, select {
+    height: 36px !important;
+    border: none !important;
+}
+.event-header-tag-select div {
+  padding-left: 0.3rem !important;
 }
 /* settings for EventListItem */
 .event-list-text {

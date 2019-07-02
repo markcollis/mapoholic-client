@@ -21,6 +21,8 @@ import {
   EVENT_ERROR,
   EVENT_CHANGE_SEARCH_FIELD_EVENTS,
   EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
+  EVENT_CHANGE_TAG_FILTER_EVENTS,
+  EVENT_CHANGE_TAG_FILTER_MYMAPS,
   EVENT_CHANGE_VIEW_EVENT_EVENTS,
   EVENT_CHANGE_VIEW_EVENT_MYMAPS,
   EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
@@ -34,8 +36,6 @@ import {
   EVENT_SELECT_MAP,
   EVENT_MAP_SET_BOUNDS_EVENTS,
   EVENT_MAP_SET_BOUNDS_MYMAPS,
-  // EVENT_MAP_SET_ZOOM_EVENTS,
-  // EVENT_MAP_SET_ZOOM_MYMAPS,
 } from '../actions/types';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
@@ -117,8 +117,10 @@ const removeEventFromList = (list, eventId) => {
 };
 
 const INITIAL_STATE = {
-  searchFieldEvents: '', // contents of search box in EventFilter (Events view)
-  searchFieldMyMaps: '', // contents of search box in EventFilter (MyMaps view)
+  searchFieldEvents: '', // contents of search box in EventHeader (Events view)
+  searchFieldMyMaps: '', // contents of search box in EventHeader (MyMaps view)
+  tagFilterEvents: '', // contents of tag filter dropdown in EventHeader (Events view)
+  tagFilterMyMaps: '', // contents of tag filter dropdown in EventHeader (MyMaps view)
   eventModeEvents: 'none', // none, view, add, edit, delete (Events view)
   eventModeMyMaps: 'none', // none, view, add, edit, delete (MyMaps view)
   eventModeMapView: 'view', // view, add, edit, delete (Map view)
@@ -138,8 +140,6 @@ const INITIAL_STATE = {
   selectedMap: '', // mapId of map to display
   mapBoundsEvents: null, // [[50, 14], [50.2, 14.2]],
   mapBoundsMyMaps: null, // [[50, 14], [50.2, 14.2]],
-  // mapZoomLevelEvents: undefined,
-  // mapZoomLevelMyMaps: undefined,
   errorMessage: '', // empty unless an error occurs
 };
 
@@ -225,6 +225,18 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         searchFieldMyMaps: action.payload,
+      };
+    case EVENT_CHANGE_TAG_FILTER_EVENTS:
+      // console.log('EVENT_CHANGE_TAG_FILTER_EVENTS payload:', action.payload);
+      return {
+        ...state,
+        tagFilterEvents: action.payload,
+      };
+    case EVENT_CHANGE_TAG_FILTER_MYMAPS:
+      // console.log('EVENT_CHANGE_TAG_FILTER_MYMAPS payload:', action.payload);
+      return {
+        ...state,
+        tagFilterMyMaps: action.payload,
       };
     case EVENT_CHANGE_VIEW_EVENT_EVENTS:
       // console.log('EVENT_CHANGE_VIEW_EVENT_EVENTS payload:', action.payload);

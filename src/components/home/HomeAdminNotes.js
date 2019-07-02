@@ -9,31 +9,17 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do:">
         <ol>
           <li>Add some more introductory/help text on this page</li>
-          <li>Investigate issue with loading thumbnail after uploading map (timing?)</li>
-          <li>
-            <del>Restructure Header to remove space-wasting List/Map view tabs</del>
-            &nbsp;(done 30/6)
-          </li>
+          <li>Investigate issue with not loading thumbnail after uploading map (timing?)</li>
           <li>
             Complete lingui translations and check that nothing is missing
             &nbsp;(done all except long paragraphs on Home page 29/6)
           </li>
           <li>
-            <del>Rewrite filter components as a control bar along the top</del>
-            &nbsp;(done 30/6)
+            <del>Incorporate extra filter into new control toolbars (start with event tags)</del>
+            &nbsp;(tag filter implement 2/7)
           </li>
-          <li>Incorporate extra filter (tags, country, etc. into new control toolbars)</li>
           <li>Check background image on ClubDetails on narrow screens</li>
           <li>Centre rotation on current view when zoomed in</li>
-          <li>
-            Define a default set of event tags
-            &nbsp;(captured event and personal tags in EventView 30/6)
-          </li>
-          <li>Decide what to do with runner tags - not currently searchable...</li>
-          <li>
-            Remove refresh list buttons? Should only be needed if a different user has updated
-            something, how important is it?
-          </li>
           <li>Check permission to view ActionBy user&apos;s profile in HomeRecentListItem</li>
           <li>Design a logo, e.g. map with control colours on the O</li>
           <li>Draw my own version of the tree background, or find a royalty free one</li>
@@ -226,6 +212,27 @@ const HomeAdminNotes = () => {
             <del>Need to refresh EventEdit when ORIS list is loaded</del>
             &nbsp;(fixed 29/6)
           </li>
+          <li>
+            <del>Restructure Header to remove space-wasting List/Map view tabs</del>
+            &nbsp;(done 30/6)
+          </li>
+          <li>
+            <del>Rewrite filter components as a control bar along the top</del>
+            &nbsp;(done 30/6)
+          </li>
+          <li>
+            <del>Define a default set of event tags (EventEdit, EventRunnerEdit)</del>
+            &nbsp;(captured event and personal tags in EventView 30/6, set to use as default 1/7;
+            captured runner personal tags in MapView and set to use as default 1/7)
+          </li>
+          <li>
+            <del>Decide what to do with runner tags - not currently searchable...</del>
+            &nbsp;(now included in search filter 1/7)
+          </li>
+          <li>
+            <del>Add refreshCollapse to RunnerDetails</del>
+            &nbsp;(done 1/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -237,6 +244,10 @@ const HomeAdminNotes = () => {
           </li>
           <li>Investigate making results editable/uploadable if not on ORIS</li>
           <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
+          <li>
+            Remove refresh list buttons? Should only be needed if a different user has updated
+            something, how important is it? Definitely not needed if sockets implemented
+          </li>
           <li>Web services interface to take direct feed from QuickRoute</li>
           <li>User-specific preferences (e.g. language)</li>
           <li>Real-time (non-persistent) chat??</li>

@@ -22,17 +22,18 @@ class EventRunnerEdit extends Component {
     isSubmitting: PropTypes.bool.isRequired,
     setFieldValue: PropTypes.func.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
-    language: PropTypes.string,
-    selectedEvent: PropTypes.objectOf(PropTypes.any),
-    selectedRunner: PropTypes.string,
+    language: PropTypes.string.isRequired,
+    // selectedEvent: PropTypes.objectOf(PropTypes.any),
+    // selectedRunner: PropTypes.string,
     setEventViewModeRunner: PropTypes.func.isRequired,
+    tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
 
-  static defaultProps = {
-    language: 'en',
-    selectedEvent: {},
-    selectedRunner: '',
-  };
+  // static defaultProps = {
+  //   language: 'en',
+  //   selectedEvent: {},
+  //   selectedRunner: '',
+  // };
 
   state = {
     // selectedRunnerDetails: {},
@@ -42,18 +43,24 @@ class EventRunnerEdit extends Component {
   componentDidMount() {
     // console.log('EventRunnerEdit mounted, props:', this.props);
     const {
-      selectedEvent,
-      selectedRunner,
+      // selectedEvent,
+      // selectedRunner,
+      tagList,
     } = this.props;
-    const selectedRunnerDetails = selectedEvent.runners
-      .find(runner => runner.user._id === selectedRunner);
+    // const selectedRunnerDetails = selectedEvent.runners
+    //   .find(runner => runner.user._id === selectedRunner);
     // this.setState({ selectedRunnerDetails });
-    const newTagsOptions = (selectedRunnerDetails.tags && selectedRunnerDetails.tags.length > 0)
-      ? selectedRunnerDetails.tags.map((tag) => {
-        return { value: tag, label: tag };
-      })
-      : [{ value: 'default', label: 'default set to be defined' }];
-    this.setState({ tagsOptions: newTagsOptions });
+    const tagsOptions = tagList.map((tag) => {
+      return { value: tag, label: tag };
+    });
+    this.setState({ tagsOptions });
+    console.log('mounted with tagsOptions;', tagsOptions);
+    // const newTagsOptions = (selectedRunnerDetails.tags && selectedRunnerDetails.tags.length > 0)
+    //   ? selectedRunnerDetails.tags.map((tag) => {
+    //     return { value: tag, label: tag };
+    //   })
+    //   : [{ value: 'default', label: 'default set to be defined' }];
+    // this.setState({ tagsOptions: newTagsOptions });
   }
 
   renderForm() {
@@ -295,7 +302,7 @@ const formikEventRunnerEdit = withFormik({
         return { value: tag, label: tag };
       }) || [],
       // maps: edit via EventMapViewer component
-      // comments: edit via EventComments component (to do)
+      // comments: edit via EventComments component
     };
   },
   validationSchema: Yup.object().shape({
@@ -316,7 +323,7 @@ const formikEventRunnerEdit = withFormik({
       updateEventRunner,
     } = props;
     const valuesToSubmit = { ...values, visibility: values.visibility.value };
-    valuesToSubmit.tags = (values.tags.length > 0)
+    valuesToSubmit.tags = (values.tags && values.tags.length > 0)
       ? values.tags.map(el => el.value)
       : [];
     // console.log('valuesToSubmit:', valuesToSubmit);

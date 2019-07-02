@@ -5,6 +5,7 @@ import EventListItem from './EventListItem';
 import Collapse from '../generic/Collapse';
 
 const EventList = ({
+  currentUserId,
   language,
   events,
   handleSelectEvent,
@@ -28,6 +29,7 @@ const EventList = ({
       return (
         <EventListItem
           key={eventId}
+          currentUserId={currentUserId}
           language={language}
           oevent={oevent}
           handleSelectEvent={handleSelectEvent}
@@ -61,12 +63,14 @@ const EventList = ({
 };
 
 EventList.propTypes = {
+  currentUserId: PropTypes.string,
   events: PropTypes.arrayOf(PropTypes.object),
   language: PropTypes.string,
   handleSelectEvent: PropTypes.func.isRequired,
   selectedEventId: PropTypes.string,
 };
 EventList.defaultProps = {
+  currentUserId: null,
   events: [],
   language: 'en',
   selectedEventId: '',

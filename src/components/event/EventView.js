@@ -37,14 +37,14 @@ import {
   selectRunnerToDisplayAction,
   setEventSearchFieldEventsAction,
   setEventSearchFieldMyMapsAction,
+  setEventTagFilterEventsAction,
+  setEventTagFilterMyMapsAction,
   setEventViewModeEventEventsAction,
   setEventViewModeEventMyMapsAction,
   setEventViewModeEventMapViewAction,
   setEventViewModeEventLinkAction,
   setMapBoundsEventsAction,
   setMapBoundsMyMapsAction,
-  // setMapZoomEventsAction,
-  // setMapZoomMyMapsAction,
   updateEventAction,
   updateEventLinkAction,
 } from '../../actions';
@@ -64,6 +64,8 @@ class EventView extends Component {
     cancelEventError: PropTypes.func.isRequired,
     clearEventSearchFieldEvents: PropTypes.func.isRequired,
     clearEventSearchFieldMyMaps: PropTypes.func.isRequired,
+    clearEventTagFilterEvents: PropTypes.func.isRequired,
+    clearEventTagFilterMyMaps: PropTypes.func.isRequired,
     createEvent: PropTypes.func.isRequired,
     createEventLink: PropTypes.func.isRequired,
     createEventOris: PropTypes.func.isRequired,
@@ -80,14 +82,14 @@ class EventView extends Component {
     selectRunnerToDisplay: PropTypes.func.isRequired,
     setEventSearchFieldEvents: PropTypes.func.isRequired,
     setEventSearchFieldMyMaps: PropTypes.func.isRequired,
+    setEventTagFilterEvents: PropTypes.func.isRequired,
+    setEventTagFilterMyMaps: PropTypes.func.isRequired,
     setEventViewModeEventEvents: PropTypes.func.isRequired,
     setEventViewModeEventMyMaps: PropTypes.func.isRequired,
     setEventViewModeEventMapView: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
     setMapBoundsEvents: PropTypes.func.isRequired,
     setMapBoundsMyMaps: PropTypes.func.isRequired,
-    // setMapZoomEvents: PropTypes.func.isRequired,
-    // setMapZoomMyMaps: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
   }
@@ -102,8 +104,9 @@ class EventView extends Component {
   }
 
   // helper to create event list if relevant props change
-  getEventListArray = memoize((list, searchField, current, mineOnly, language) => {
-    // console.log('refreshing event list array');
+  getEventListArray = memoize((list, searchField, tagFilter, current, mineOnly, language) => {
+    console.log('refreshing event list array');
+    console.log('tagFilter:', tagFilter);
     // console.log('list:', list);
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
@@ -114,6 +117,13 @@ class EventView extends Component {
         // console.log(currentUserId, runnerIds);
         return !mineOnly || runnerIds.includes(currentUserId);
       })
+      .filter((eachEvent) => { // use tag filter if set
+        if (tagFilter === '') return true;
+        const { runners, tags } = eachEvent;
+        const runnerSelf = runners.find(runner => runner.user === currentUserId);
+        const tagsToCheck = tags.concat(runnerSelf.tags);
+        return (tagsToCheck.includes(tagFilter));
+      })
       .filter((eachEvent) => { // filter against search field
         const {
           date,
@@ -122,6 +132,7 @@ class EventView extends Component {
           mapName,
           name,
           organisedBy,
+          runners,
           tags,
           types,
         } = eachEvent;
@@ -140,8 +151,13 @@ class EventView extends Component {
         const matchTags = tags.length > 0 && tags.some((tag) => {
           return tag.toLowerCase().includes(searchField.toLowerCase());
         });
+        const runnerSelf = runners.find(runner => runner.user === currentUserId);
+        const matchOwnTags = (runnerSelf && runnerSelf.tags.length > 0
+          && runnerSelf.tags.some((tag) => {
+            return tag.toLowerCase().includes(searchField.toLowerCase());
+          }));
         return (matchName || matchMapName || matchDate || matchPlace || matchCountry
-          || matchOrganisedBy || matchTypes || matchTags);
+          || matchOrganisedBy || matchTypes || matchTags || matchOwnTags);
       });
   });
 
@@ -204,11 +220,12 @@ class EventView extends Component {
     return orisList;
   });
 
+  // helper to extract lists of event tags (all events) and personal tags (from user's
+  // own runner entries) if input props have changed
   getTagLists = memoize((list, mineOnly, current, language) => {
     console.log('getting tag lists');
     const emptyTagList = { eventTags: [], personalTags: [] };
     if (!list) return emptyTagList;
-    // console.log('list:', list);
     const currentUserId = (current) ? current._id : '';
     const filteredList = list.filter((eachEvent) => {
       // if mineOnly, select only those with current user as runner
@@ -216,8 +233,6 @@ class EventView extends Component {
       const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
       return !mineOnly || runnerIds.includes(currentUserId);
     });
-    // const eventTags = [];
-    // const personalTags = [];
     const tagLists = filteredList.reduce((acc, val) => {
       const newEventTags = acc.eventTags;
       const newPersonalTags = acc.personalTags;
@@ -239,6 +254,9 @@ class EventView extends Component {
       return { eventTags: newEventTags, personalTags: newPersonalTags };
     }, emptyTagList);
     tagLists.eventTags.sort((a, b) => {
+      return a.localeCompare(b, language);
+    });
+    tagLists.personalTags.sort((a, b) => {
       return a.localeCompare(b, language);
     });
     return tagLists;
@@ -343,6 +361,7 @@ class EventView extends Component {
       ? selectedEventDetailsMyMaps
       : selectedEventDetailsEvents;
 
+    const tagLists = this.getTagLists(list, mineOnly, current, language);
     const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
     // different to MapView version
     const isAdmin = this.getIsAdmin(current);
@@ -364,20 +383,21 @@ class EventView extends Component {
         // console.log('orisList prop for EventEdit:', orisList);
         return (
           <EventEdit // same form component handles both create and update
-            language={language}
-            isAdmin={isAdmin}
-            eventMode={eventMode}
-            selectedEvent={selectedEvent}
-            createEvent={createEvent}
-            createEventOris={createEventOris}
-            setEventViewModeEvent={setEventViewModeEvent}
-            selectEventForDetails={selectEventForDetails}
-            selectEventToDisplay={selectEventToDisplay}
-            getEventList={getEventList}
-            eventList={list}
-            eventLinkList={linkList}
-            clubList={clubList}
-            orisList={orisEventsList}
+            clubList={clubList} // prop (club)
+            createEvent={createEvent} // prop
+            createEventOris={createEventOris} // prop
+            eventLinkList={linkList} // prop (oevent)
+            eventList={list} // prop (oevent)
+            eventMode={eventMode} // prop (oevent)
+            getEventList={getEventList} // prop
+            isAdmin={isAdmin} // derived
+            language={language} // prop (config)
+            orisList={orisEventsList} // derived
+            selectedEvent={selectedEvent} // derived
+            selectEventForDetails={selectEventForDetails} // prop
+            selectEventToDisplay={selectEventToDisplay} // prop
+            setEventViewModeEvent={setEventViewModeEvent} // prop
+            tagList={tagLists.eventTags} // derived
           />
         );
       case 'view':
@@ -404,6 +424,7 @@ class EventView extends Component {
             language={language} // prop (config)
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
+            tagList={tagLists.eventTags} // derived
             updateEvent={updateEvent} // prop
             userList={userList} // prop (user)
           />
@@ -606,9 +627,13 @@ class EventView extends Component {
       getEventList,
       clearEventSearchFieldEvents,
       clearEventSearchFieldMyMaps,
+      clearEventTagFilterEvents,
+      clearEventTagFilterMyMaps,
       mineOnly,
       setEventSearchFieldEvents,
       setEventSearchFieldMyMaps,
+      setEventTagFilterEvents,
+      setEventTagFilterMyMaps,
       setEventViewModeEventEvents,
       setEventViewModeEventMyMaps,
       selectEventForDetailsEvents,
@@ -618,6 +643,8 @@ class EventView extends Component {
       list,
       searchFieldEvents,
       searchFieldMyMaps,
+      tagFilterEvents,
+      tagFilterMyMaps,
     } = oevent;
     const { current } = user;
     const { language } = config;
@@ -625,6 +652,7 @@ class EventView extends Component {
     console.log('tagLists:', tagLists);
     // select appropriate props for Events or MyMaps view
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
+    const tagFilter = (mineOnly) ? tagFilterMyMaps : tagFilterEvents;
     const selectEventForDetails = (mineOnly)
       ? selectEventForDetailsMyMaps
       : selectEventForDetailsEvents;
@@ -637,13 +665,23 @@ class EventView extends Component {
     const clearEventSearchField = (mineOnly)
       ? clearEventSearchFieldMyMaps
       : clearEventSearchFieldEvents;
+    const setEventTagFilter = (mineOnly)
+      ? setEventTagFilterMyMaps
+      : setEventTagFilterEvents;
+    const clearEventTagFilter = (mineOnly)
+      ? clearEventTagFilterMyMaps
+      : clearEventTagFilterEvents;
 
     return (
       <EventHeader
         currentUser={current}
         searchField={searchField}
+        tagFilter={tagFilter}
+        tagLists={tagLists}
         clearEventSearchField={clearEventSearchField}
+        clearEventTagFilter={clearEventTagFilter}
         setEventSearchField={setEventSearchField}
+        setEventTagFilter={setEventTagFilter}
         setEventViewModeEvent={setEventViewModeEvent}
         getEventList={getEventList}
         selectEventForDetails={selectEventForDetails}
@@ -657,8 +695,6 @@ class EventView extends Component {
       config,
       oevent,
       user,
-      // setEventViewModeEvent,
-      // selectEventForDetails,
     } = this.props;
     const { language } = config;
     const {
@@ -667,17 +703,23 @@ class EventView extends Component {
       selectedEventDetailsEvents,
       selectedEventDetailsMyMaps,
       list,
+      tagFilterEvents,
+      tagFilterMyMaps,
     } = oevent;
     const { current } = user;
+    const currentUserId = this.getCurrentUserId(current);
     // select appropriate props for Events or MyMaps view
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
+    const tagFilter = (mineOnly) ? tagFilterMyMaps : tagFilterEvents;
     const selectedEventId = (mineOnly) ? selectedEventDetailsMyMaps : selectedEventDetailsEvents;
     // need to consider reducing the number shown if there are many many events...
-    const eventListArray = this.getEventListArray(list, searchField, current, mineOnly, language);
+    const eventListArray = this.getEventListArray(list, searchField, tagFilter,
+      current, mineOnly, language);
     // console.log('eventListArray', eventListArray);
     return (
       <div className="list-limit-height">
         <EventList
+          currentUserId={currentUserId} // derived
           language={language} // prop (config)
           events={eventListArray} // derived
           handleSelectEvent={this.handleSelectEvent} // derived
@@ -693,31 +735,27 @@ class EventView extends Component {
       config,
       oevent,
       user,
-      // setEventViewModeEvent,
-      // selectEventForDetails,
       setMapBoundsEvents,
       setMapBoundsMyMaps,
-      // setMapZoomEvents,
-      // setMapZoomMyMaps,
     } = this.props;
     const {
       mapBoundsEvents,
       mapBoundsMyMaps,
-      // mapZoomLevelEvents,
-      // mapZoomLevelMyMaps,
       searchFieldEvents,
       searchFieldMyMaps,
       list,
+      tagFilterEvents,
+      tagFilterMyMaps,
     } = oevent;
     const { language } = config;
     const { current } = user;
     // select appropriate props for Events or MyMaps view
     const setMapBounds = (mineOnly) ? setMapBoundsMyMaps : setMapBoundsEvents;
-    // const setMapZoom = (mineOnly) ? setMapZoomMyMaps : setMapZoomEvents;
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
+    const tagFilter = (mineOnly) ? tagFilterMyMaps : tagFilterEvents;
     const mapBounds = (mineOnly) ? mapBoundsMyMaps : mapBoundsEvents;
-    // const mapZoomLevel = (mineOnly) ? mapZoomLevelMyMaps : mapZoomLevelEvents;
-    const eventListArray = this.getEventListArray(list, searchField, current, mineOnly);
+    const eventListArray = this.getEventListArray(list, searchField, tagFilter,
+      current, mineOnly, language);
 
     return (
       <EventMap
@@ -726,18 +764,14 @@ class EventView extends Component {
         handleSelectEvent={this.handleSelectEvent} // derived
         language={language}
         mapBounds={mapBounds}
-        // mapZoomLevel={mapZoomLevel}
         setMapBounds={setMapBounds}
-        // setMapZoom={setMapZoom}
-        // selectEventForDetails={selectEventForDetails}
-        // setEventViewModeEvent={setEventViewModeEvent}
       />
     );
   }
 
   render() {
     // console.log('state in EventView:', this.state);
-    console.log('props in EventView:', this.props);
+    // console.log('props in EventView:', this.props);
     const { showMap } = this.props;
     if (showMap) {
       return (
@@ -798,6 +832,8 @@ const mapDispatchToProps = {
   cancelEventError: cancelEventErrorAction,
   clearEventSearchFieldEvents: () => setEventSearchFieldEventsAction(''),
   clearEventSearchFieldMyMaps: () => setEventSearchFieldMyMapsAction(''),
+  clearEventTagFilterEvents: () => setEventTagFilterEventsAction(''),
+  clearEventTagFilterMyMaps: () => setEventTagFilterMyMapsAction(''),
   createEvent: createEventAction,
   createEventLink: createEventLinkAction,
   createEventOris: createEventOrisAction,
@@ -814,14 +850,14 @@ const mapDispatchToProps = {
   selectRunnerToDisplay: selectRunnerToDisplayAction,
   setEventSearchFieldEvents: event => setEventSearchFieldEventsAction(event.target.value),
   setEventSearchFieldMyMaps: event => setEventSearchFieldMyMapsAction(event.target.value),
+  setEventTagFilterEvents: event => setEventTagFilterEventsAction(event.target.value),
+  setEventTagFilterMyMaps: event => setEventTagFilterMyMapsAction(event.target.value),
   setEventViewModeEventEvents: setEventViewModeEventEventsAction,
   setEventViewModeEventMapView: setEventViewModeEventMapViewAction,
   setEventViewModeEventMyMaps: setEventViewModeEventMyMapsAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
   setMapBoundsEvents: setMapBoundsEventsAction,
   setMapBoundsMyMaps: setMapBoundsMyMapsAction,
-  // setMapZoomEvents: setMapZoomEventsAction,
-  // setMapZoomMyMaps: setMapZoomMyMapsAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,
 };

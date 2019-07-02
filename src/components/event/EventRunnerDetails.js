@@ -11,6 +11,7 @@ import { MAPOHOLIC_SERVER } from '../../config';
 const EventRunnerDetails = ({
   canEdit,
   language,
+  requestRefreshCollapse,
   runnerDetails,
   selectedEvent,
   selectedRunner,
@@ -57,6 +58,9 @@ const EventRunnerDetails = ({
     <img
       className="ui tiny image right floated"
       alt="avatar"
+      onLoad={() => {
+        requestRefreshCollapse();
+      }}
       src={(runnerDetails && runnerDetails.profileImage) ? `${MAPOHOLIC_SERVER}/${runnerDetails.profileImage}` : noAvatar}
     />
   );
@@ -183,6 +187,7 @@ const EventRunnerDetails = ({
 EventRunnerDetails.propTypes = {
   canEdit: PropTypes.bool,
   language: PropTypes.string.isRequired,
+  requestRefreshCollapse: PropTypes.func.isRequired,
   runnerDetails: PropTypes.objectOf(PropTypes.any),
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,

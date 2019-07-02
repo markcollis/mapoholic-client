@@ -6,6 +6,7 @@ import { reformatTimestampDateOnly } from '../../common/conversions';
 import { MAPOHOLIC_SERVER } from '../../config';
 
 const EventListItem = ({
+  currentUserId,
   handleSelectEvent,
   language,
   oevent,
@@ -25,10 +26,15 @@ const EventListItem = ({
   } = oevent;
   const typesOptions = typesOptionsLocale[language];
   let mapExtractToDisplay = null;
+  const currentRunnerTags = [];
   if (runners && runners.length > 0) {
     runners.forEach((runner) => {
       if (!mapExtractToDisplay && runner.mapExtract) {
         mapExtractToDisplay = runner.mapExtract;
+      }
+      if (runner.user === currentUserId) {
+        // console.log('runner:', runner);
+        currentRunnerTags.push(...runner.tags);
       }
     });
   }
@@ -64,12 +70,12 @@ const EventListItem = ({
     : null;
   const renderMapName = (mapName && mapName !== '')
     ? (
-      <p>
+      <div>
         <span className={textClass}>
           <Trans>Map</Trans>
           {`: ${mapName}`}
         </span>
-      </p>
+      </div>
     )
     : null;
   const renderOrganisedBy = (organisedBy && organisedBy.length > 0)
@@ -101,10 +107,26 @@ const EventListItem = ({
       </span>
     )
     : null;
+  const renderRunnerTags = (currentRunnerTags && currentRunnerTags.length > 0)
+    ? (
+      <span>
+        {currentRunnerTags.map((tag) => {
+          return <div key={tag} className="ui purple label">{tag}</div>;
+        })}
+      </span>
+    )
+    : null;
   const renderTotalRunners = (runners && runners.length > 0)
-    ? <span className="ui label circular floatedright">{runners.length}</span>
-    : <span className="ui label floatedright"><Trans>none</Trans></span>;
-
+    ? (
+      <span className="floatedright">
+        <div className="ui label black circular">{runners.length}</div>
+      </span>
+    )
+    : (
+      <span className="floatedright">
+        <div className="ui label black"><Trans>none</Trans></div>
+      </span>
+    );
   return (
     <div
       className={cardClass}
@@ -121,10 +143,13 @@ const EventListItem = ({
         <div className="meta">
           {renderPlace}
           {renderMapName}
-          {renderOrganisedBy}
-          {renderTypes}
-          {renderTags}
-          {renderTotalRunners}
+          <div className="list-item-tags">
+            {renderOrganisedBy}
+            {renderTypes}
+            {renderTags}
+            {renderRunnerTags}
+            {renderTotalRunners}
+          </div>
         </div>
       </div>
     </div>
@@ -132,10 +157,14 @@ const EventListItem = ({
 };
 
 EventListItem.propTypes = {
+  currentUserId: PropTypes.string,
   language: PropTypes.string.isRequired,
   oevent: PropTypes.objectOf(PropTypes.any).isRequired,
   handleSelectEvent: PropTypes.func.isRequired,
   selectedEventId: PropTypes.string.isRequired,
+};
+EventListItem.defaultProps = {
+  currentUserId: null,
 };
 
 export default EventListItem;
