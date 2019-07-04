@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
@@ -10,12 +11,15 @@ import { MAPOHOLIC_SERVER } from '../../config';
 
 const EventRunnerDetails = ({
   canEdit,
+  history,
   language,
   requestRefreshCollapse,
-  runnerDetails,
   selectedEvent,
   selectedRunner,
+  selectUserToDisplay,
+  setUserViewMode,
   setEventViewModeRunner,
+  userList,
 }) => {
   if (!selectedEvent._id) {
     return (
@@ -34,7 +38,6 @@ const EventRunnerDetails = ({
       </div>
     );
   }
-  // console.log('runnerDetails:', runnerDetails);
   // console.log('selectedRunnerDetails:', selectedRunnerDetails);
   const {
     user,
@@ -49,11 +52,13 @@ const EventRunnerDetails = ({
     timeBehind,
     fieldSize,
     tags,
-    // maps,
-    // comments,
   } = selectedRunnerDetails;
-  const { displayName, fullName } = user;
-  // className="event-runner-profile-image"
+  const {
+    _id: userId,
+    displayName,
+    fullName,
+    profileImage,
+  } = user;
   const avatar = (
     <img
       className="ui tiny image right floated"
@@ -61,14 +66,33 @@ const EventRunnerDetails = ({
       onLoad={() => {
         requestRefreshCollapse();
       }}
-      src={(runnerDetails && runnerDetails.profileImage) ? `${MAPOHOLIC_SERVER}/${runnerDetails.profileImage}` : noAvatar}
+      src={(profileImage !== '') ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
     />
   );
-  const renderHeader = (
-    <h3 className="header">
-      {`${displayName} ${(fullName && fullName !== '') ? `(${fullName})` : ''}`}
-    </h3>
-  );
+
+  const nameToDisplay = `${displayName} ${(fullName && fullName !== '') ? `(${fullName})` : ''}`;
+  const renderHeader = (userList && userList.find(eachUser => eachUser.user_id === userId))
+    ? (
+      <h3 className="header">
+        <a
+          href="/users"
+          onClick={(e) => {
+            e.preventDefault();
+            selectUserToDisplay(userId);
+            setUserViewMode('view');
+            history.push('/users');
+            window.scrollTo(0, 0);
+          }}
+        >
+          {nameToDisplay}
+        </a>
+      </h3>
+    )
+    : (
+      <h3 className="header">
+        {`${displayName} ${(fullName && fullName !== '') ? `(${fullName})` : ''}`}
+      </h3>
+    );
   const courseTitleToDisplay = (courseTitle && courseTitle !== '')
     ? (
       <Trans>
@@ -171,8 +195,6 @@ const EventRunnerDetails = ({
       {renderEditButtons}
     </div>
   );
-  // <div className="item">{`${maps.length} maps, see below`}</div>
-  // <div className="item">{`${comments.length} comments, see below`}</div>
 
   const title = <Trans>Runner details</Trans>;
   return (
@@ -186,18 +208,21 @@ const EventRunnerDetails = ({
 
 EventRunnerDetails.propTypes = {
   canEdit: PropTypes.bool,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   language: PropTypes.string.isRequired,
   requestRefreshCollapse: PropTypes.func.isRequired,
-  runnerDetails: PropTypes.objectOf(PropTypes.any),
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,
+  selectUserToDisplay: PropTypes.func.isRequired,
+  setUserViewMode: PropTypes.func.isRequired,
   setEventViewModeRunner: PropTypes.func.isRequired,
+  userList: PropTypes.arrayOf(PropTypes.object),
 };
 EventRunnerDetails.defaultProps = {
   canEdit: false,
-  runnerDetails: {},
   selectedEvent: {},
   selectedRunner: '',
+  userList: null,
 };
 
-export default EventRunnerDetails;
+export default withRouter(EventRunnerDetails);

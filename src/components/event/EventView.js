@@ -30,7 +30,6 @@ import {
   getEventLinkListAction,
   getEventListAction,
   getEventListOrisAction,
-  getUserByIdAction,
   selectEventForDetailsEventsAction,
   selectEventForDetailsMyMapsAction,
   selectEventToDisplayAction,
@@ -75,7 +74,6 @@ class EventView extends Component {
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
-    getUserById: PropTypes.func.isRequired,
     selectEventForDetailsEvents: PropTypes.func.isRequired,
     selectEventForDetailsMyMaps: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
@@ -323,7 +321,6 @@ class EventView extends Component {
       createEventOris, // different to MapView version
       deleteEvent,
       getEventList,
-      // getEventListOris,
       getEventLinkList,
       mineOnly,
       selectEventForDetailsEvents,
@@ -547,13 +544,11 @@ class EventView extends Component {
   // render EventRunners component
   renderEventRunners = () => {
     const {
-      // history,
       mineOnly,
       oevent,
       user,
       addEventRunner,
       addEventRunnerOris,
-      getUserById,
       selectEventToDisplay,
       selectRunnerToDisplay,
     } = this.props;
@@ -563,7 +558,7 @@ class EventView extends Component {
       selectedEventDetailsEvents, // only difference from version in MapView
       selectedEventDetailsMyMaps,
     } = oevent;
-    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
+    const { current } = user;
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
     // select appropriate props for Events or MyMaps view
@@ -571,12 +566,6 @@ class EventView extends Component {
       ? selectedEventDetailsMyMaps
       : selectedEventDetailsEvents;
     const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
-    // const handleSelectEventRunner = (eventId, userId) => {
-    //   selectEventToDisplay(eventId);
-    //   selectRunnerToDisplay(userId);
-    //   history.push('/mapview');
-    //   window.scrollTo(0, 0);
-    // };
 
     if (mineOnly) return null;
     return (
@@ -585,13 +574,10 @@ class EventView extends Component {
         addEventRunnerOris={addEventRunnerOris} // prop
         currentUserId={currentUserId} // derived
         currentUserOrisId={currentUserOrisId} // derived
-        getUserById={getUserById} // prop
         handleSelectEventRunner={this.handleSelectEventRunner} // derived
         selectedEvent={selectedEvent} // derived
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
-        userDetails={userDetails} // prop (user)
-        userErrorMessage={userErrorMessage} // prop (user)
       />
     );
   }
@@ -757,11 +743,11 @@ class EventView extends Component {
     return (
       <EventMap
         key={mineOnly} // to force remounting when switching between Events and MyMaps views
-        events={eventListArray}
+        events={eventListArray} // derived
         handleSelectEvent={this.handleSelectEvent} // derived
-        language={language}
-        mapBounds={mapBounds}
-        setMapBounds={setMapBounds}
+        language={language} // prop (config)
+        mapBounds={mapBounds} // prop (oevent)
+        setMapBounds={setMapBounds} // prop
       />
     );
   }
@@ -840,7 +826,6 @@ const mapDispatchToProps = {
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,
-  getUserById: getUserByIdAction,
   selectEventForDetailsEvents: selectEventForDetailsEventsAction,
   selectEventForDetailsMyMaps: selectEventForDetailsMyMapsAction,
   selectEventToDisplay: selectEventToDisplayAction,

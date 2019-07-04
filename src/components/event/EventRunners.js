@@ -11,15 +11,12 @@ const EventRunners = ({
   addEventRunnerOris,
   currentUserId,
   currentUserOrisId,
-  getUserById,
   handleSelectEventRunner,
   history,
   selectedEvent,
   selectedRunner,
   selectEventToDisplay,
   selectRunnerToDisplay,
-  userDetails,
-  userErrorMessage,
 }) => {
   if (!selectedEvent._id) return null;
   const { _id: eventId, runners, orisId } = selectedEvent;
@@ -35,12 +32,9 @@ const EventRunners = ({
           key={runnerId}
           currentUserId={currentUserId}
           eventId={eventId}
-          getUserById={getUserById}
           handleSelectEventRunner={handleSelectEventRunner}
           runner={runner}
           selectedRunner={selectedRunner}
-          userDetails={userDetails}
-          userErrorMessage={userErrorMessage}
         />
       );
     });
@@ -95,23 +89,18 @@ EventRunners.propTypes = {
   addEventRunnerOris: PropTypes.func.isRequired,
   currentUserId: PropTypes.string,
   currentUserOrisId: PropTypes.string,
-  getUserById: PropTypes.func.isRequired,
   handleSelectEventRunner: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectedRunner: PropTypes.string,
   selectEventToDisplay: PropTypes.func.isRequired,
   selectRunnerToDisplay: PropTypes.func.isRequired,
-  userDetails: PropTypes.objectOf(PropTypes.any),
-  userErrorMessage: PropTypes.string,
 };
 EventRunners.defaultProps = {
   currentUserId: null,
   currentUserOrisId: null,
   selectedEvent: {},
   selectedRunner: '',
-  userDetails: {},
-  userErrorMessage: '',
 };
 
 export default withRouter(EventRunners);

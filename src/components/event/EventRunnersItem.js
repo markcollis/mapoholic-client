@@ -7,18 +7,16 @@ import { MAPOHOLIC_SERVER } from '../../config';
 const EventRunnersItem = ({
   currentUserId,
   eventId,
-  getUserById,
   handleSelectEventRunner,
   runner,
   selectedRunner,
-  userDetails,
-  userErrorMessage,
 }) => {
   const {
     _id: userId,
     displayName,
     fullName,
     memberOf,
+    profileImage,
   } = runner.user;
   // check if runner has been deleted (as 'deletion' involves setting runner
   // records to 'private' instead of completely deleting them)
@@ -42,17 +40,11 @@ const EventRunnersItem = ({
     )
     : null;
 
-  if (!userDetails[userId] && !userErrorMessage && !isDeleted) {
-    getUserById(userId);
-  }
-
   const avatar = (
     <img
       className="ui mini image left floated"
       alt="avatar"
-      src={(userDetails[userId] && userDetails[userId].profileImage)
-        ? `${MAPOHOLIC_SERVER}/${userDetails[userId].profileImage}`
-        : noAvatar}
+      src={(profileImage !== '') ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
     />
   );
 
@@ -81,17 +73,12 @@ const EventRunnersItem = ({
 EventRunnersItem.propTypes = {
   currentUserId: PropTypes.string,
   eventId: PropTypes.string.isRequired,
-  getUserById: PropTypes.func.isRequired,
   handleSelectEventRunner: PropTypes.func.isRequired,
   runner: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedRunner: PropTypes.string.isRequired,
-  userDetails: PropTypes.objectOf(PropTypes.any),
-  userErrorMessage: PropTypes.string,
 };
 EventRunnersItem.defaultProps = {
   currentUserId: null,
-  userDetails: {},
-  userErrorMessage: '',
 };
 
 export default EventRunnersItem;

@@ -31,17 +31,18 @@ import {
   getEventByIdAction,
   getEventLinkListAction,
   getEventListAction,
-  getUserByIdAction,
   postCommentAction,
   postMapAction,
   selectEventForDetailsMapViewAction,
   selectEventToDisplayAction,
   selectMapToDisplayAction,
   selectRunnerToDisplayAction,
+  selectUserToDisplayAction,
   setEventViewModeEventMapViewAction,
   setEventViewModeEventLinkAction,
   setEventViewModeRunnerAction,
   setMapViewParametersAction,
+  setUserViewModeAction,
   updateCommentAction,
   updateEventAction,
   updateEventLinkAction,
@@ -67,17 +68,18 @@ class MapView extends Component {
     getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
-    getUserById: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
     selectEventForDetails: PropTypes.func.isRequired,
     selectEventToDisplay: PropTypes.func.isRequired,
     selectMapToDisplay: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
+    selectUserToDisplay: PropTypes.func.isRequired,
     setEventViewModeEvent: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
     setEventViewModeRunner: PropTypes.func.isRequired,
     setMapViewParameters: PropTypes.func.isRequired,
+    setUserViewMode: PropTypes.func.isRequired,
     updateComment: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
@@ -119,16 +121,6 @@ class MapView extends Component {
       : [];
     const isRunner = (current && selectedEvent && runnerList.includes(current._id));
     return isRunner;
-  });
-
-  // helper to get full details of currently selected runner if input props have changed
-  getRunnerDetails = memoize((selectedRunner, userDetails, userErrorMessage) => {
-    const { getUserById } = this.props;
-    if (selectedRunner && !userDetails[selectedRunner] && !userErrorMessage) {
-      getUserById(selectedRunner);
-      return null;
-    }
-    return userDetails[selectedRunner];
   });
 
   // helper to determine if current user can edit runner if input props have changed
@@ -220,7 +212,6 @@ class MapView extends Component {
       user,
       addEventRunner,
       addEventRunnerOris,
-      getUserById,
       setEventViewModeRunner,
       selectEventToDisplay,
       selectRunnerToDisplay,
@@ -231,7 +222,7 @@ class MapView extends Component {
       selectedEventDisplay,
       selectedRunner,
     } = oevent;
-    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
+    const { current } = user;
 
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
@@ -248,14 +239,11 @@ class MapView extends Component {
         addEventRunnerOris={addEventRunnerOris} // prop
         currentUserId={currentUserId} // derived
         currentUserOrisId={currentUserOrisId} // derived
-        getUserById={getUserById} // prop
         handleSelectEventRunner={handleSelectEventRunner} // defined here
         selectedEvent={selectedEvent} // derived
         selectedRunner={selectedRunner} // prop (oevent)
         selectEventToDisplay={selectEventToDisplay} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
-        userDetails={userDetails}
-        userErrorMessage={userErrorMessage} // prop
       />
     );
   }
@@ -268,7 +256,9 @@ class MapView extends Component {
       oevent,
       user,
       deleteEventRunner,
+      selectUserToDisplay,
       setEventViewModeRunner,
+      setUserViewMode,
       updateEventRunner,
     } = this.props;
     const { language } = config;
@@ -280,11 +270,10 @@ class MapView extends Component {
       selectedEventDisplay,
       selectedRunner,
     } = oevent;
-    const { current, details: userDetails, errorMessage: userErrorMessage } = user;
+    const { current, list: userList } = user;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventDisplay, errorMessage);
     const canEdit = this.getCanEditRunner(current, selectedRunner);
-    const runnerDetails = this.getRunnerDetails(selectedRunner, userDetails, userErrorMessage);
     const tagList = this.getPersonalTagList(list, selectedRunner, language);
     switch (runnerMode) {
       case 'none':
@@ -300,10 +289,12 @@ class MapView extends Component {
             language={language} // prop (config)
             refreshCollapse={refreshCollapseRunnerDetails} // state (value increments to trigger)
             requestRefreshCollapse={this.requestRefreshCollapseRunnerDetails} // defined here
-            runnerDetails={runnerDetails} // derived
             selectedEvent={selectedEvent} // derived
             selectedRunner={selectedRunner} // prop (oevent)
+            selectUserToDisplay={selectUserToDisplay} // prop
             setEventViewModeRunner={setEventViewModeRunner} // prop
+            setUserViewMode={setUserViewMode} // prop
+            userList={userList} // prop (user)
           />
         );
       case 'edit':
@@ -679,17 +670,19 @@ const mapDispatchToProps = {
   getEventById: getEventByIdAction,
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
-  getUserById: getUserByIdAction,
+  // getUserById: getUserByIdAction,
   postComment: postCommentAction,
   postMap: postMapAction,
   selectEventForDetails: selectEventForDetailsMapViewAction,
   selectEventToDisplay: selectEventToDisplayAction,
   selectMapToDisplay: selectMapToDisplayAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
+  selectUserToDisplay: selectUserToDisplayAction,
   setEventViewModeEvent: setEventViewModeEventMapViewAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
   setEventViewModeRunner: setEventViewModeRunnerAction,
   setMapViewParameters: setMapViewParametersAction,
+  setUserViewMode: setUserViewModeAction,
   updateComment: updateCommentAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,
