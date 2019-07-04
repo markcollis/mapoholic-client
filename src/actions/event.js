@@ -34,6 +34,7 @@ import {
   EVENT_SELECT_EVENT_DISPLAY,
   EVENT_SELECT_RUNNER,
   EVENT_SELECT_MAP,
+  EVENT_SET_MAP_VIEW_PARAMETERS,
   EVENT_MAP_SET_BOUNDS_EVENTS,
   EVENT_MAP_SET_BOUNDS_MYMAPS,
 } from './types';
@@ -155,6 +156,11 @@ export const setMapBoundsEventsAction = bounds => ({
 export const setMapBoundsMyMapsAction = bounds => ({
   type: EVENT_MAP_SET_BOUNDS_MYMAPS,
   payload: bounds,
+});
+// set view parameters for displaying a selected map
+export const setMapViewParametersAction = viewParameters => ({
+  type: EVENT_SET_MAP_VIEW_PARAMETERS,
+  payload: viewParameters, // object, will include mapId
 });
 // cancel a displayed error message
 export const cancelEventErrorAction = () => ({

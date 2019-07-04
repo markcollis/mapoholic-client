@@ -41,6 +41,7 @@ import {
   setEventViewModeEventMapViewAction,
   setEventViewModeEventLinkAction,
   setEventViewModeRunnerAction,
+  setMapViewParametersAction,
   updateCommentAction,
   updateEventAction,
   updateEventLinkAction,
@@ -76,6 +77,7 @@ class MapView extends Component {
     setEventViewModeEvent: PropTypes.func.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
     setEventViewModeRunner: PropTypes.func.isRequired,
+    setMapViewParameters: PropTypes.func.isRequired,
     updateComment: PropTypes.func.isRequired,
     updateEvent: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
@@ -543,11 +545,13 @@ class MapView extends Component {
       deleteMap,
       postMap,
       selectMapToDisplay,
+      setMapViewParameters,
       updateEventRunner,
     } = this.props;
     const {
       details,
       errorMessage,
+      mapViewParameters,
       selectedEventDisplay,
       selectedRunner,
       selectedMap,
@@ -564,8 +568,10 @@ class MapView extends Component {
         selectedRunner={selectedRunner} // prop (oevent)
         selectedMap={selectedMap} // prop (oevent)
         deleteMap={deleteMap} // prop
+        mapViewParameters={mapViewParameters} // prop (oevent)
         postMap={postMap} // prop
         selectMapToDisplay={selectMapToDisplay} // prop
+        setMapViewParameters={setMapViewParameters} // prop
         updateEventRunner={updateEventRunner} // prop
       />
     );
@@ -683,6 +689,7 @@ const mapDispatchToProps = {
   setEventViewModeEvent: setEventViewModeEventMapViewAction,
   setEventViewModeEventLink: setEventViewModeEventLinkAction,
   setEventViewModeRunner: setEventViewModeRunnerAction,
+  setMapViewParameters: setMapViewParametersAction,
   updateComment: updateCommentAction,
   updateEvent: updateEventAction,
   updateEventLink: updateEventLinkAction,

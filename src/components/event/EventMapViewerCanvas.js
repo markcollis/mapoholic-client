@@ -12,16 +12,19 @@ class EventMapViewerCanvas extends Component {
     mapImage: PropTypes.objectOf(PropTypes.any),
     containerHeight: PropTypes.number,
     containerWidth: PropTypes.number,
+    viewParameters: PropTypes.objectOf(PropTypes.any),
+    setMapViewParameters: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     mapImage: {},
     containerHeight: null,
     containerWidth: null,
+    viewParameters: null, // i.e. first time this particular map has been viewed
   };
 
-  state = { // detailed view state held locally, reset when component remounted
-    // could handle centrally in redux state, need to decide if this is important or not?
+  state = { // detailed view state held locally, stored in Redux state
+    // then restored on unmount/remount
     activeType: '', // Course or Route
     width: null,
     height: null,
@@ -39,25 +42,31 @@ class EventMapViewerCanvas extends Component {
   };
 
   componentDidMount() {
+    const { viewParameters } = this.props;
     // console.log('EventMapViewerCanvas mounted, props:', this.props);
-    this.loadImage();
+    this.loadImage(viewParameters);
   }
 
   componentDidUpdate(prevProps) {
     // console.log('EventMapViewerCanvas updated, props:', this.props);
     // console.log('props and state on update:', this.props, this.state);
-    const { mapImage, containerWidth, containerHeight } = this.props;
+    const {
+      mapImage,
+      containerWidth,
+      containerHeight,
+      viewParameters,
+    } = this.props;
     // load image when container first initialised
     if (containerWidth && !prevProps.containerWidth) {
       // console.log('Loading image when container first initialised');
-      this.loadImage();
+      this.loadImage(viewParameters);
     }
     // load image if maps change
     if (prevProps.mapImage.mapId !== mapImage.mapId
       || prevProps.mapImage.srcCourse !== mapImage.srcCourse
       || prevProps.mapImage.srcRoute !== mapImage.srcRoute) {
       // console.log('Loading image as mapId or URLs have changed');
-      this.loadImage();
+      this.loadImage(viewParameters);
     }
     // reset when window size changes
     if (prevProps.containerWidth !== containerWidth
@@ -76,9 +85,28 @@ class EventMapViewerCanvas extends Component {
     }
   }
 
-  loadImageSuccess = (imageWidth, imageHeight) => {
+  componentWillUnmount() {
+    const { mapImage, setMapViewParameters } = this.props;
+    const { mapId } = mapImage;
+    const {
+      left,
+      top,
+      rotate,
+      scale,
+    } = this.state;
+    setMapViewParameters({
+      mapId,
+      left,
+      top,
+      rotate,
+      scale,
+    });
+  }
+
+  loadImageSuccess = (imageWidth, imageHeight, viewParameters) => {
     // console.log('width/height in loadImageSuccess:', imageWidth, imageHeight);
     const { containerWidth, containerHeight } = this.props;
+    const applyViewParameters = viewParameters;
     const adjustedHeight = containerHeight - 40; // allowing for toolbar
     let width = Math.min(containerWidth * 0.9, imageWidth);
     let height = imageHeight * (width / imageWidth);
@@ -86,26 +114,29 @@ class EventMapViewerCanvas extends Component {
       height = adjustedHeight * 0.9;
       width = imageWidth * (height / imageHeight);
     }
-    const left = (containerWidth - width) / 2;
-    const top = (adjustedHeight - height) / 2;
-    // console.log('left, top calculated in loadImageSuccess:', left, top);
+    const left = (applyViewParameters) ? viewParameters.left : (containerWidth - width) / 2;
+    const top = (applyViewParameters) ? viewParameters.top : (adjustedHeight - height) / 2;
+    const rotate = (applyViewParameters) ? viewParameters.rotate : 0;
+    const scale = (applyViewParameters) ? viewParameters.scale : 1;
+    // console.log('left, top, rotate, scale in loadImageSuccess:', left, top, rotate, scale);
     this.setState({
       width,
       height,
       left,
       top,
+      rotate,
+      scale,
       centre: { x: left + width / 2, y: top + height / 2 },
       isLoading: false,
-      rotate: 0,
-      scale: 1,
       mouseDownZoomIn: false,
       mouseDownZoomOut: false,
       mouseDownRotateLeft: false,
       mouseDownRotateRight: false,
+      // firstLoad: false,
     });
   };
 
-  loadImage = (type = null) => {
+  loadImage = (viewParameters) => {
     const { mapImage } = this.props;
     if (mapImage && mapImage.empty) {
       this.setState({
@@ -113,7 +144,7 @@ class EventMapViewerCanvas extends Component {
         isLoading: false,
       });
     } else {
-      const activeType = type || mapImage.preferType;
+      const activeType = mapImage.preferType;
       const img = new Image();
       // console.log('started loading');
       this.setState({
@@ -122,7 +153,7 @@ class EventMapViewerCanvas extends Component {
       }, () => {
         img.onload = () => {
           // console.log('img.onload');
-          this.loadImageSuccess(img.width, img.height);
+          this.loadImageSuccess(img.width, img.height, viewParameters);
         };
         img.onerror = () => {
           // console.log('img.onerror');

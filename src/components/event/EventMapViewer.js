@@ -11,11 +11,13 @@ class EventMapViewer extends Component {
   static propTypes = {
     canEdit: PropTypes.bool,
     deleteMap: PropTypes.func.isRequired,
+    mapViewParameters: PropTypes.objectOf(PropTypes.any).isRequired,
     postMap: PropTypes.func.isRequired,
     selectedEvent: PropTypes.objectOf(PropTypes.any),
     selectedMap: PropTypes.string,
     selectedRunner: PropTypes.string,
     selectMapToDisplay: PropTypes.func.isRequired,
+    setMapViewParameters: PropTypes.func.isRequired,
     updateEventRunner: PropTypes.func.isRequired,
   };
 
@@ -67,7 +69,8 @@ class EventMapViewer extends Component {
   // helper to derive mapImageArray if input props have changed (different event or runner)
   getMapImageArray = memoize((selectedEventId, selectedRunner, mapUpdates) => {
     const { selectedEvent } = this.props;
-    console.log('getMapImageArray called:', selectedEventId, selectedRunner, mapUpdates, selectedEvent);
+    // console.log('getMapImageArray called:', selectedEventId,
+    // selectedRunner, mapUpdates, selectedEvent);
     const runnerData = (selectedEvent.runners)
       ? selectedEvent.runners.find(runner => runner.user._id === selectedRunner)
       : null;
@@ -107,7 +110,7 @@ class EventMapViewer extends Component {
         };
       })
       : [];
-    console.log('new mapImageArray:', mapImages);
+    // console.log('new mapImageArray:', mapImages);
     return mapImages;
   });
 
@@ -143,10 +146,12 @@ class EventMapViewer extends Component {
     const {
       canEdit,
       deleteMap,
+      mapViewParameters,
       postMap,
       selectedEvent,
       selectedMap,
       selectedRunner,
+      setMapViewParameters,
       updateEventRunner,
     } = this.props;
     const mapImageArray = this.getMapImageArray(selectedEvent._id, selectedRunner, mapUpdates);
@@ -199,6 +204,8 @@ class EventMapViewer extends Component {
               mapImage={mapImage}
               containerWidth={mapContainerWidth}
               containerHeight={mapContainerHeight}
+              viewParameters={mapViewParameters[mapId]}
+              setMapViewParameters={setMapViewParameters}
             />
           </div>
         );

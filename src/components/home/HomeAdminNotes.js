@@ -16,7 +16,15 @@ const HomeAdminNotes = () => {
           </li>
           <li>Check background image on ClubDetails on narrow screens</li>
           <li>Centre rotation on current view when zoomed in</li>
+          <li>
+            <del>Add keyboard shortcuts to EventMapViewerCanvas</del>
+            (&nbsp;done 3/7)
+          </li>
           <li>Remember current map position/zoom/rotation in Redux state when changing pages</li>
+          <li>
+          Investigate user details auth error in EventsList when not admin
+          (can see runner but not profile??)
+          </li>
           <li>Design a logo, e.g. map with control colours on the O</li>
           <li>Draw my own version of the tree background, or find a royalty free one</li>
           <li>Make style names more consistent across components</li>
