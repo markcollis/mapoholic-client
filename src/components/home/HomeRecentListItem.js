@@ -35,6 +35,11 @@ class HomeRecentListItem extends Component {
     setEventViewModeEventEvents: PropTypes.func.isRequired,
     setEventViewModeEventMapView: PropTypes.func.isRequired,
     setUserViewMode: PropTypes.func.isRequired,
+    userList: PropTypes.arrayOf(PropTypes.any),
+  };
+
+  static defaultProps = {
+    userList: null,
   };
 
   redirectToClub = (clubId) => {
@@ -87,7 +92,7 @@ class HomeRecentListItem extends Component {
     window.scrollTo(0, 0);
   }
 
-  renderActionByLink = (activity) => {
+  renderActionByLink = (activity, userList) => {
     const { actionBy, eventRunner, user } = activity;
     const { active, _id: userId, displayName } = actionBy;
     if (user) {
@@ -101,8 +106,10 @@ class HomeRecentListItem extends Component {
     if (!active) return displayName; // will it show 'deleted'?
     // specifically for actionBy, it is possible that the current user will
     // not have permission to view this particular user's profile - need to check
-    const canSee = true; // temp
-    if (!canSee) return displayName;
+    // console.log('userList', userList);
+    const inUserList = userList.find(eachUser => eachUser.user_id === userId);
+    // console.log('inUserList', inUserList);
+    if (!inUserList) return displayName;
     return (
       <a
         href="/users"
@@ -200,53 +207,53 @@ class HomeRecentListItem extends Component {
     );
   };
 
-  renderActivityDetail = memoize((activity, language) => {
+  renderActivityDetail = memoize((activity, language, userList) => {
     const { actionType } = activity;
     switch (actionType) {
       case 'CLUB_CREATED':
         // The new club [club name] was created by [user name]
         return (
-          <Trans>{`The new club ${this.renderClubLink(activity)} was created by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The new club ${this.renderClubLink(activity)} was created by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'CLUB_UPDATED':
         // The club [club name] was updated by [user name]
         return (
-          <Trans>{`The club ${this.renderClubLink(activity)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The club ${this.renderClubLink(activity)} was updated by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'CLUB_DELETED':
         // The club [club name] was deleted by [user name]
         return (
-          <Trans>{`The club ${this.renderClubLink(activity)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The club ${this.renderClubLink(activity)} was deleted by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'COMMENT_POSTED':
         // A new comment was posted about [runner name]'s run at [event name (date)] by [user name]
         return (
-          <Trans>{`A new comment was posted about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`A new comment was posted about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'COMMENT_UPDATED':
         // A comment about [runner name]'s run at [event name (date)] was updated by [user name]
         return (
-          <Trans>{`A comment about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`A comment about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} was updated by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'COMMENT_DELETED':
       // A comment about [runner name]'s run at [event name (date)] was deleted by [user name]
         return (
-          <Trans>{`A comment about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`A comment about ${this.renderEventRunnerLink(activity)}'s run at ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_CREATED':
         // The new event [event name (date)] was created by [user name]
         return (
-          <Trans>{`The new event ${this.renderEventLink(activity, language)} was created by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The new event ${this.renderEventLink(activity, language)} was created by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_UPDATED':
         // The event [event name (date)] was updated by [user name]
         return (
-          <Trans>{`The event ${this.renderEventLink(activity, language)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The event ${this.renderEventLink(activity, language)} was updated by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_DELETED':
         // The event [event name (date)] was deleted by [user name]
         return (
-          <Trans>{`The event ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The event ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_MAP_UPLOADED':
         // [runner name] uploaded a map from [event name (date)]
@@ -268,12 +275,12 @@ class HomeRecentListItem extends Component {
       case 'EVENT_RUNNER_UPDATED':
         // [runner name]'s details for [event name (date)] were updated by [user name]
         return (
-          <Trans>{`${this.renderEventRunnerLink(activity)}'s details for ${this.renderEventLink(activity, language)} were updated by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`${this.renderEventRunnerLink(activity)}'s details for ${this.renderEventLink(activity, language)} were updated by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_RUNNER_DELETED':
         // [runner name]'s record for [event name (date)] was deleted by [user name]
         return (
-          <Trans>{`${this.renderEventRunnerLink(activity)}'s record for ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`${this.renderEventRunnerLink(activity)}'s record for ${this.renderEventLink(activity, language)} was deleted by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'USER_CREATED':
         // [user name] created an account
@@ -283,27 +290,27 @@ class HomeRecentListItem extends Component {
       case 'USER_UPDATED':
         // The user [user name] was updated by [user name]
         return (
-          <Trans>{`The user ${this.renderUserLink(activity)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The user ${this.renderUserLink(activity)} was updated by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'USER_DELETED':
         // The user [user name] was deleted by [user name]
         return (
-          <Trans>{`The user ${this.renderUserLink(activity)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The user ${this.renderUserLink(activity)} was deleted by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_LINK_CREATED':
         // A new link between events [event link name] was updated by [user name]
         return (
-          <Trans>{`A new link between events ${this.renderLinkedEventLink(activity)} was created by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`A new link between events ${this.renderLinkedEventLink(activity)} was created by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_LINK_UPDATED':
         // The link between events [event link name] was updated by [user name]
         return (
-          <Trans>{`The link between events ${this.renderLinkedEventLink(activity)} was updated by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The link between events ${this.renderLinkedEventLink(activity)} was updated by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       case 'EVENT_LINK_DELETED':
         // The link between events [event link name] was deleted by [user name]
         return (
-          <Trans>{`The link between events ${this.renderLinkedEventLink(activity)} was deleted by ${this.renderActionByLink(activity)}`}</Trans>
+          <Trans>{`The link between events ${this.renderLinkedEventLink(activity)} was deleted by ${this.renderActionByLink(activity, userList)}`}</Trans>
         );
       default:
         return <Trans>{`Unknown actionType ${actionType}`}</Trans>; // should never be needed
@@ -312,18 +319,25 @@ class HomeRecentListItem extends Component {
 
   render() {
     // console.log('props in HomeRecentListItem:', this.props);
-    const { activity, language } = this.props;
+    const { activity, language, userList } = this.props;
     const { timestamp } = activity;
     const activityTime = reformatTimestamp(timestamp, language);
 
     return (
       <li>
         {`${activityTime}: `}
-        {this.renderActivityDetail(activity, language)}
+        {this.renderActivityDetail(activity, language, userList)}
       </li>
     );
   }
 }
+
+const mapStateToProps = ({
+  user,
+}) => {
+  return { userList: user.list };
+};
+
 const mapDispatchToProps = {
   selectClubToDisplay: selectClubToDisplayAction,
   selectEventForDetailsEvents: selectEventForDetailsEventsAction,
@@ -336,4 +350,4 @@ const mapDispatchToProps = {
   setUserViewMode: setUserViewModeAction,
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(HomeRecentListItem));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HomeRecentListItem));

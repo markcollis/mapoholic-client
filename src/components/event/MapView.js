@@ -146,7 +146,6 @@ class MapView extends Component {
 
   // helper to extract list of event tags if input props have changed
   getEventTagList = memoize((list, language) => {
-    console.log('getting event tag list');
     if (!list) return [];
     const tagList = list.reduce((acc, val) => {
       val.tags.forEach((tag) => {
@@ -159,14 +158,12 @@ class MapView extends Component {
     tagList.sort((a, b) => {
       return a.localeCompare(b, language);
     });
-    console.log('tagList to return:', tagList);
     return tagList;
   });
 
   // helper to extract list of personal tags (from selected
   // runner's entries) if input props have changed
   getPersonalTagList = memoize((list, selectedRunner, language) => {
-    console.log('getting personal tag list');
     if (!list) return [];
     const filteredList = list.filter((eachEvent) => {
       // select only those with current user as runner
@@ -187,7 +184,6 @@ class MapView extends Component {
     tagList.sort((a, b) => {
       return a.localeCompare(b, language);
     });
-    console.log('tagList to return:', tagList);
     return tagList;
   });
 

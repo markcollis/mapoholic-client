@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
-// click and drag for panning - add buttons as alterative
 
 class EventCourseMapCanvasRender extends Component {
   state = {
+    isKeyDown: {
+      // ArrowLeft: false,
+      // ArrowRight: false,
+      // ArrowUp: false,
+      // ArrowDown: false,
+    },
     isMouseDown: false,
+    isMouseOver: false,
+    maxPanStep: 10, // pixels
     mouseX: 0,
     mouseY: 0,
+    panTimeInterval: 20, // milliseconds
   };
 
   static propTypes = {
@@ -20,7 +28,16 @@ class EventCourseMapCanvasRender extends Component {
     imageSrc: PropTypes.string,
     imageAlt: PropTypes.string,
     isLoading: PropTypes.bool,
-    onChangeImageState: PropTypes.func.isRequired,
+    handlePanImage: PropTypes.func.isRequired,
+    switchCourseRoute: PropTypes.func.isRequired,
+    startZoomIn: PropTypes.func.isRequired,
+    endZoomIn: PropTypes.func.isRequired,
+    startZoomOut: PropTypes.func.isRequired,
+    endZoomOut: PropTypes.func.isRequired,
+    startRotateLeft: PropTypes.func.isRequired,
+    endRotateLeft: PropTypes.func.isRequired,
+    startRotateRight: PropTypes.func.isRequired,
+    endRotateRight: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -33,12 +50,18 @@ class EventCourseMapCanvasRender extends Component {
     isLoading: false,
   };
 
+  // want to respond to arrow keys (pan), +/- (zoom) and L/R (rotate) when hovering over img
+  // mouse movement and button release may happen outside the boundary of the img
   componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown, false);
+    document.addEventListener('keyup', this.handleKeyUp, false);
     document.addEventListener('click', this.handleMouseUp, false);
     document.addEventListener('mousemove', this.handleMouseMove, false);
   }
 
   componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown, false);
+    document.removeEventListener('keyup', this.handleKeyUp, false);
     document.removeEventListener('click', this.handleMouseUp, false);
     document.removeEventListener('mousemove', this.handleMouseMove, false);
   }
@@ -55,9 +78,7 @@ class EventCourseMapCanvasRender extends Component {
 
   handleMouseMove = (e) => {
     const {
-      onChangeImageState,
-      width,
-      height,
+      handlePanImage,
       top,
       left,
     } = this.props;
@@ -66,12 +87,139 @@ class EventCourseMapCanvasRender extends Component {
       const dX = e.clientX - mouseX;
       const dY = e.clientY - mouseY;
       this.setState({ mouseX: e.clientX, mouseY: e.clientY });
-      onChangeImageState(width, height, top + dY, left + dX);
+      handlePanImage(top + dY, left + dX);
     }
   }
 
   handleMouseUp = () => {
     this.setState({ isMouseDown: false });
+  }
+
+  handleDoubleClick = () => {
+    const { switchCourseRoute } = this.props;
+    switchCourseRoute();
+  }
+
+  handleMouseOver = () => {
+    this.setState({ isMouseOver: true });
+  }
+
+  handleMouseOut = () => {
+    this.setState({ isMouseOver: false });
+  }
+
+  handleKeyDown = (e) => {
+    const {
+      startZoomIn,
+      startZoomOut,
+      startRotateLeft,
+      startRotateRight,
+    } = this.props;
+    const { isKeyDown, isMouseOver, maxPanStep } = this.state;
+    // console.log('isKeyDown:', isKeyDown);
+    if (isMouseOver) {
+      const keyCode = e.code;
+      if (!isKeyDown[keyCode]) {
+        this.setState({ isKeyDown: { ...isKeyDown, [keyCode]: true } });
+      }
+      switch (keyCode) {
+        case 'ArrowLeft':
+        case 'ArrowRight':
+        case 'ArrowUp':
+        case 'ArrowDown':
+          e.preventDefault();
+          if (!isKeyDown[keyCode]) {
+            this.panKeyboard(keyCode, 1, maxPanStep);
+          }
+          return true;
+        case 'Equal':
+        case 'NumpadAdd':
+          e.preventDefault();
+          if (!isKeyDown[keyCode]) {
+            startZoomIn();
+          }
+          break;
+        case 'Minus':
+        case 'NumpadSubtract':
+          e.preventDefault();
+          if (!isKeyDown[keyCode]) {
+            startZoomOut();
+          }
+          break;
+        case 'KeyL':
+          e.preventDefault();
+          if (!isKeyDown[keyCode]) {
+            startRotateLeft();
+          }
+          break;
+        case 'KeyR':
+        case 'KeyP':
+          e.preventDefault();
+          if (!isKeyDown[keyCode]) {
+            startRotateRight();
+          }
+          break;
+        default: // pass on event for normal handling by browser
+          return false;
+      }
+    }
+    return false; // ignore keyboard when not hovering over image to allow scrolling
+  }
+
+  handleKeyUp = (e) => { // reset when no longer holding down arrow key
+    const {
+      endZoomIn,
+      endZoomOut,
+      endRotateLeft,
+      endRotateRight,
+    } = this.props;
+    const { isKeyDown } = this.state;
+    const keyCode = e.code;
+    this.setState({ isKeyDown: { ...isKeyDown, [keyCode]: false } });
+    switch (keyCode) {
+      case 'ArrowLeft':
+      case 'ArrowRight':
+      case 'ArrowUp':
+      case 'ArrowDown':
+        e.preventDefault();
+        break;
+      case 'Equal':
+      case 'NumpadAdd':
+        e.preventDefault();
+        endZoomIn();
+        break;
+      case 'Minus':
+      case 'NumpadSubtract':
+        e.preventDefault();
+        endZoomOut();
+        break;
+      case 'KeyL':
+        e.preventDefault();
+        endRotateLeft();
+        break;
+      case 'KeyR':
+      case 'KeyP':
+        e.preventDefault();
+        endRotateRight();
+        break;
+      default: // pass on event for normal handling by browser
+    }
+  }
+
+  panKeyboard = (arrowKey, step, maxStep) => {
+    const { handlePanImage, left, top } = this.props;
+    const { isKeyDown, panTimeInterval } = this.state;
+    if (isKeyDown[arrowKey]) {
+      let newTop = top;
+      let newLeft = left;
+      if (arrowKey === 'ArrowLeft') newLeft -= step;
+      if (arrowKey === 'ArrowRight') newLeft += step;
+      if (arrowKey === 'ArrowUp') newTop -= step;
+      if (arrowKey === 'ArrowDown') newTop += step;
+      handlePanImage(newTop, newLeft);
+      const newStep = Math.min(step + 1, maxStep);
+      setTimeout(() => this.panKeyboard(arrowKey, newStep, maxStep), panTimeInterval);
+    }
   }
 
   render() {
@@ -87,28 +235,27 @@ class EventCourseMapCanvasRender extends Component {
       imageAlt,
       isLoading,
     } = this.props;
-    // what are the image coordinates of the current centre of view?
-    // possibly use as transform-origin
     const imageClass = 'event-course-map-img';
     const imageStyle = {
       width: `${width}px`,
       height: `${height}px`,
       transform: `translateX(${(left) ? `${left}px` : 'auto'}) translateY(${top}px) rotate(${rotate}deg) scale(${scale})`,
-      // transformOrigin: 'top left',
     };
     const imgToDisplay = (imageSrc === '')
       ? null
       : (
-        <div
-          className="event-course-map-canvas"
-          // onMouseDown={this.handleCanvasMouseDown}
-        >
+        <div className="event-course-map-canvas">
           <img
             className={imageClass}
             style={imageStyle}
             src={imageSrc}
             alt={imageAlt}
             onMouseDown={this.handleMouseDown}
+            onMouseOut={this.handleMouseOut}
+            onBlur={this.handleMouseOut}
+            onMouseOver={this.handleMouseOver}
+            onFocus={this.handleMouseOver}
+            onDoubleClick={this.handleDoubleClick}
           />
         </div>
       );

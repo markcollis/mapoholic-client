@@ -30,12 +30,14 @@ class HomeView extends Component {
     getActivityLogAll: PropTypes.func.isRequired,
     getActivityLogOwn: PropTypes.func.isRequired,
     language: PropTypes.string.isRequired,
+    userList: PropTypes.arrayOf(PropTypes.any),
   }
 
   static defaultProps = {
     auth: null,
     currentUser: null,
     eventList: null,
+    userList: null,
   };
 
   state = {
@@ -170,7 +172,7 @@ class HomeView extends Component {
     return (
       <>
         <img className="home-image" src={forest} alt="welcome" />
-        <p>inspiring O related photo</p>
+        <p>Photo: spread out pile of O maps, folder in background</p>
       </>
     );
   }
@@ -221,24 +223,39 @@ class HomeView extends Component {
   }
 
   renderHomeRecent = () => {
-    const { activity, currentUser, language } = this.props;
+    const {
+      activity,
+      currentUser,
+      language,
+      userList,
+    } = this.props;
     const { activityOwn, activityAll } = activity;
     if (!currentUser) return null;
     const { role } = currentUser;
     if (role === 'guest') {
       return (
         <div className="sixteen wide column">
-          <HomeRecent activityList={activityAll} language={language} />
+          <HomeRecent activityList={activityAll} language={language} userList={userList} />
         </div>
       );
     }
     return (
       <div className="row">
         <div className="eight wide column">
-          <HomeRecent activityList={activityOwn} language={language} isOwn />
+          <HomeRecent
+            activityList={activityOwn}
+            language={language}
+            isOwn
+            userList={userList}
+          />
         </div>
         <div className="eight wide column">
-          <HomeRecent activityList={activityAll} language={language} isAll />
+          <HomeRecent
+            activityList={activityAll}
+            language={language}
+            isAll
+            userList={userList}
+          />
         </div>
       </div>
     );
@@ -321,6 +338,7 @@ const mapStateToProps = ({
     currentUser: user.current,
     eventList: oevent.list,
     language: config.language,
+    userList: user.list,
   };
 };
 const mapDispatchToProps = {

@@ -1,33 +1,37 @@
 {
-  "List view": {
+  "Events": {
     "origin": [
       [
         "src/components/Header.js",
-        184
+        210
       ],
       [
         "src/components/Header.js",
-        197
+        222
       ]
     ]
   },
-  "Map view": {
+  "> List": {
     "origin": [
       [
         "src/components/Header.js",
-        187
+        213
       ],
       [
         "src/components/Header.js",
-        200
+        233
       ]
     ]
   },
-  "Current Map": {
+  "> Map": {
     "origin": [
       [
         "src/components/Header.js",
-        214
+        216
+      ],
+      [
+        "src/components/Header.js",
+        236
       ]
     ]
   },
@@ -35,15 +39,19 @@
     "origin": [
       [
         "src/components/Header.js",
-        219
+        230
+      ],
+      [
+        "src/components/Header.js",
+        242
       ]
     ]
   },
-  "Events": {
+  "Current Map": {
     "origin": [
       [
         "src/components/Header.js",
-        222
+        256
       ]
     ]
   },
@@ -51,7 +59,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        225
+        267
       ]
     ]
   },
@@ -59,7 +67,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        228
+        271
       ]
     ]
   },
@@ -67,15 +75,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        233
-      ]
-    ]
-  },
-  "Browse Public Maps": {
-    "origin": [
-      [
-        "src/components/Header.js",
-        248
+        277
       ]
     ]
   },
@@ -83,7 +83,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        252
+        294
       ]
     ]
   },
@@ -91,7 +91,7 @@
     "origin": [
       [
         "src/components/Header.js",
-        255
+        298
       ]
     ]
   }

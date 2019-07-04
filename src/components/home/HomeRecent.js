@@ -11,6 +11,7 @@ const HomeRecent = ({
   isOwn,
   isAll,
   language,
+  userList,
 }) => {
   // activityList should only be null if it hasn't loaded yet
   if (!activityList) {
@@ -36,7 +37,12 @@ const HomeRecent = ({
   const renderActivityList = activityList.map((activity) => {
     const { timestamp } = activity;
     return (
-      <HomeRecentListItem key={timestamp} activity={activity} language={language} />
+      <HomeRecentListItem
+        key={timestamp}
+        activity={activity}
+        language={language}
+        userList={userList}
+      />
     );
   });
 
@@ -56,11 +62,13 @@ HomeRecent.propTypes = {
   isAll: PropTypes.bool,
   isOwn: PropTypes.bool,
   language: PropTypes.string.isRequired,
+  userList: PropTypes.arrayOf(PropTypes.any),
 };
 HomeRecent.defaultProps = {
   activityList: null,
   isAll: false,
   isOwn: false,
+  userList: null,
 };
 
 export default HomeRecent;

@@ -143,15 +143,13 @@ class EventMapViewerCanvas extends Component {
     }
   }
 
-  handleChangeImageState = (width, height, top, left) => {
-    this.setState({
-      width,
-      height,
-      top,
-      left,
-    });
+  // image panning controlled by mouse click and drag in EventMapViewerCanvasRender
+  handlePanImage = (top, left) => {
+    this.setState({ top, left });
   }
 
+  // controlled by button (should only appear if there are both course and route maps)
+  // and by double click in EventMapViewerCanvasRender
   switchCourseRoute = () => {
     const { mapImage } = this.props;
     const { activeType } = this.state;
@@ -228,7 +226,7 @@ class EventMapViewerCanvas extends Component {
     this.rotateTrigger();
   }
 
-  zoom = () => { // could improve by tracking centre of view
+  zoom = () => {
     const {
       mouseDownZoomIn,
       mouseDownZoomOut,
@@ -239,15 +237,9 @@ class EventMapViewerCanvas extends Component {
       left,
     } = this.state;
     const currentCentre = this.getCurrentCentre();
-    // console.log('centre:', centre);
-    // console.log('currentCentre:', currentCentre);
     const dX = currentCentre.x - centre.x;
     const dY = currentCentre.y - centre.y;
     if (mouseDownZoomIn) {
-      // console.log('dX, dY', dX, dY);
-      // console.log('scale', scale);
-      // console.log('zoomScaleFactor', zoomScaleFactor);
-      // console.log('left, top', left, top);
       this.setState({
         scale: scale * zoomScaleFactor,
         top: top + dY * (zoomScaleFactor - 1),
@@ -419,7 +411,16 @@ class EventMapViewerCanvas extends Component {
             imageSrc={mapImage[`src${activeType}`]}
             imageAlt={mapImage[`alt${activeType}`]}
             isLoading={isLoading}
-            onChangeImageState={this.handleChangeImageState}
+            handlePanImage={this.handlePanImage}
+            switchCourseRoute={this.switchCourseRoute}
+            startZoomIn={this.handleMouseDownZoomIn}
+            endZoomIn={this.handleMouseUpZoomIn}
+            startZoomOut={this.handleMouseDownZoomOut}
+            endZoomOut={this.handleMouseUpZoomOut}
+            startRotateLeft={this.handleMouseDownRotateLeft}
+            endRotateLeft={this.handleMouseUpRotateLeft}
+            startRotateRight={this.handleMouseDownRotateRight}
+            endRotateRight={this.handleMouseUpRotateRight}
           />
           {actionsToolbar}
         </div>

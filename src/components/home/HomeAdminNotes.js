@@ -14,18 +14,14 @@ const HomeAdminNotes = () => {
             Complete lingui translations and check that nothing is missing
             &nbsp;(done all except long paragraphs on Home page 29/6)
           </li>
-          <li>
-            <del>Incorporate extra filter into new control toolbars (start with event tags)</del>
-            &nbsp;(tag filter implement 2/7)
-          </li>
           <li>Check background image on ClubDetails on narrow screens</li>
           <li>Centre rotation on current view when zoomed in</li>
-          <li>Check permission to view ActionBy user&apos;s profile in HomeRecentListItem</li>
+          <li>Remember current map position/zoom/rotation in Redux state when changing pages</li>
           <li>Design a logo, e.g. map with control colours on the O</li>
           <li>Draw my own version of the tree background, or find a royalty free one</li>
           <li>Make style names more consistent across components</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
-          <li>Add some real sample data/maps (started 4/6)</li>
+          <li>Add some real sample data/maps (started 4/6 - ongoing task)</li>
           <li>Test it out on a real Internet-facing server</li>
         </ol>
       </Collapse>
@@ -232,6 +228,14 @@ const HomeAdminNotes = () => {
           <li>
             <del>Add refreshCollapse to RunnerDetails</del>
             &nbsp;(done 1/7)
+          </li>
+          <li>
+            <del>Incorporate extra filter into new control toolbars (start with event tags)</del>
+            &nbsp;(tag filter implemented 2/7)
+          </li>
+          <li>
+            <del>Check permission to view ActionBy user&apos;s profile in HomeRecentListItem</del>
+            (done - only show link if the action is by a user in the downloaded user list 2/7)
           </li>
         </ol>
       </Collapse>

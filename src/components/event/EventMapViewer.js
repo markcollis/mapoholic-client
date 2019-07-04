@@ -66,15 +66,14 @@ class EventMapViewer extends Component {
 
   // helper to derive mapImageArray if input props have changed (different event or runner)
   getMapImageArray = memoize((selectedEventId, selectedRunner, mapUpdates) => {
-    // console.log('getMapImageArray called:', selectedEventId, selectedRunner, mapUpdates);
     const { selectedEvent } = this.props;
+    console.log('getMapImageArray called:', selectedEventId, selectedRunner, mapUpdates, selectedEvent);
     const runnerData = (selectedEvent.runners)
-      ? selectedEvent.runners.find(runner => runner.user._id.toString() === selectedRunner)
+      ? selectedEvent.runners.find(runner => runner.user._id === selectedRunner)
       : null;
     const hasMaps = runnerData && runnerData.maps.length > 0;
     const now = new Date();
     const srcSuffix = (mapUpdates > 0) ? `?${now.getTime()}` : ''; // to force reload if image changed
-    // let hasVisibleMap = false;
     const mapImages = (hasMaps)
       ? runnerData.maps.map((map) => {
         const {
@@ -83,33 +82,32 @@ class EventMapViewer extends Component {
           course,
           route,
         } = map;
-        const defaultPreferType = 'Course'; // consider making this a config option later?
+        const defaultPreferType = 'Course'; // consider making this a per-user config option later
         const hasCourseMap = (course && course !== '');
         const hasRouteMap = (route && route !== '');
         if (!hasCourseMap && !hasRouteMap) {
           return {
-            mapId: mapId.toString(),
+            mapId,
             title,
             empty: true,
           };
         }
-        // const isVisibleMap = (selectedMap === mapId.toString());
-        // hasVisibleMap = hasVisibleMap || isVisibleMap;
         const preferType = ((defaultPreferType === 'Course' && hasCourseMap)
           || (defaultPreferType === 'Route' && !hasRouteMap)) ? 'Course' : 'Route';
         return {
-          mapId: mapId.toString(),
+          mapId,
           title,
           empty: false,
           preferType,
           srcCourse: (hasCourseMap) ? `${MAPOHOLIC_SERVER}/${course}${srcSuffix}` : null,
-          altCourse: (hasCourseMap) ? `${title} - course` : null,
+          altCourse: (hasCourseMap) ? `${(title === '') ? 'map' : title}: course` : null,
           srcRoute: (hasRouteMap) ? `${MAPOHOLIC_SERVER}/${route}${srcSuffix}` : null,
-          altRoute: (hasRouteMap) ? `${title} - route` : null,
+          altRoute: (hasRouteMap) ? `${(title === '') ? 'map' : title}: route` : null,
+          // translation needed?
         };
       })
       : [];
-    // console.log('new mapImageArray:', mapImages);
+    console.log('new mapImageArray:', mapImages);
     return mapImages;
   });
 

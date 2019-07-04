@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Trans, Plural } from '@lingui/macro';
+
+import forest from '../../graphics/silhouette.jpg';
 /* eslint react/jsx-one-expression-per-line: 0  */
 /* warning deactivated to avoid unwanted spaces in Trans components */
 
@@ -83,7 +85,8 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
 
   return (
     <div className="ui segment">
-      <h3 className="header"><Trans>Welcome to MapOholic!</Trans></h3>
+      <img className="ui medium right floated image home-image" src={forest} alt="MapOholic logo" />
+      <p className="home-welcome-header"><Trans>Welcome to MapOholic!</Trans></p>
       <p><Trans>Dedicated to those that know you can never have too many maps...</Trans></p>
       {(auth) ? <p><Trans>You are currently logged in.</Trans></p> : visitorWelcome}
       {(isGuest) ? guestWelcome : ''}

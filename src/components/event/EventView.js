@@ -105,16 +105,14 @@ class EventView extends Component {
 
   // helper to create event list if relevant props change
   getEventListArray = memoize((list, searchField, tagFilter, current, mineOnly, language) => {
-    console.log('refreshing event list array');
-    console.log('tagFilter:', tagFilter);
-    // console.log('list:', list);
+    // console.log('refreshing event list array');
+    // console.log('tagFilter:', tagFilter);
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
     return list
       .filter((eachEvent) => { // if mineOnly, select only those with current user as runner
         const { runners } = eachEvent;
         const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
-        // console.log(currentUserId, runnerIds);
         return !mineOnly || runnerIds.includes(currentUserId);
       })
       .filter((eachEvent) => { // use tag filter if set
@@ -213,7 +211,7 @@ class EventView extends Component {
     const currentHasOrisList = current && current.orisId && current.orisId !== '' && current.role !== 'guest';
     // populate ORIS event list when adding event with a current user for the first time
     if (currentHasOrisList && eventMode === 'add' && !orisList) {
-      console.log('getting list of events from ORIS');
+      // console.log('getting list of events from ORIS');
       getEventListOris();
       return [];
     }
@@ -223,7 +221,7 @@ class EventView extends Component {
   // helper to extract lists of event tags (all events) and personal tags (from user's
   // own runner entries) if input props have changed
   getTagLists = memoize((list, mineOnly, current, language) => {
-    console.log('getting tag lists');
+    // console.log('getting tag lists');
     const emptyTagList = { eventTags: [], personalTags: [] };
     if (!list) return emptyTagList;
     const currentUserId = (current) ? current._id : '';
@@ -649,7 +647,6 @@ class EventView extends Component {
     const { current } = user;
     const { language } = config;
     const tagLists = this.getTagLists(list, mineOnly, current, language);
-    console.log('tagLists:', tagLists);
     // select appropriate props for Events or MyMaps view
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
     const tagFilter = (mineOnly) ? tagFilterMyMaps : tagFilterEvents;

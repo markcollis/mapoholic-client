@@ -36,7 +36,7 @@ const ClubHeader = ({
             setClubViewMode('add');
           }}
         >
-          <Trans>Add new club</Trans>
+          <Trans>Add club</Trans>
         </button>
         <button
           type="button"

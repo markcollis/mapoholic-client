@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        203
+        205
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        215
+        217
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/event/EventDetails.js",
-        229
+        231
       ]
     ]
   }

@@ -94,7 +94,7 @@ const EventFilter = ({
                 setEventViewModeEvent('add');
               }}
             >
-              <Trans>Add new event</Trans>
+              <Trans>Add event</Trans>
             </button>
           )
           : null}

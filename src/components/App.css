@@ -305,6 +305,11 @@ select, optgroup {
   width: 100%;
   border: solid 2px red; /* temporary, to emphasise the need to put in place the right images*/
 }
+/* settings for HomeWelcome */
+.home-welcome-header {
+  font-size: 1.8em;
+  font-weight: 700;
+}
 
 /* User components */
 /* --------------- */

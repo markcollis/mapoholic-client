@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        22
+        23
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        32
+        33
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        70
+        74
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        83
+        87
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        102
+        106
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        105
+        109
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        112
+        116
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        131
+        135
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        133
+        137
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        151
+        155
       ]
     ]
   },
@@ -83,7 +83,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        154
+        158
       ]
     ]
   },
@@ -91,7 +91,7 @@
     "origin": [
       [
         "src/components/event/EventRunnerDetails.js",
-        173
+        177
       ]
     ]
   }

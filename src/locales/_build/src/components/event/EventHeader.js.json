@@ -1,0 +1,50 @@
+{
+  "Search for events": {
+    "origin": [
+      [
+        "src/components/event/EventHeader.js",
+        33
+      ]
+    ]
+  },
+  "Filter by tag": {
+    "origin": [
+      [
+        "src/components/event/EventHeader.js",
+        59
+      ]
+    ]
+  },
+  "Event tags": {
+    "origin": [
+      [
+        "src/components/event/EventHeader.js",
+        61
+      ]
+    ]
+  },
+  "Personal tags": {
+    "origin": [
+      [
+        "src/components/event/EventHeader.js",
+        66
+      ]
+    ]
+  },
+  "Add event": {
+    "origin": [
+      [
+        "src/components/event/EventHeader.js",
+        97
+      ]
+    ]
+  },
+  "Refresh list": {
+    "origin": [
+      [
+        "src/components/event/EventHeader.js",
+        102
+      ]
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "Club search filter": {
+    "origin": [
+      [
+        "src/components/club/ClubHeader.js",
+        21
+      ]
+    ]
+  },
+  "Add club": {
+    "origin": [
+      [
+        "src/components/club/ClubHeader.js",
+        39
+      ]
+    ]
+  },
+  "Refresh list": {
+    "origin": [
+      [
+        "src/components/club/ClubHeader.js",
+        46
+      ]
+    ]
+  }
+}
