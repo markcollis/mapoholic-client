@@ -216,6 +216,7 @@ class EventCourseMapCanvasRender extends Component {
       if (arrowKey === 'ArrowRight') newLeft += step;
       if (arrowKey === 'ArrowUp') newTop -= step;
       if (arrowKey === 'ArrowDown') newTop += step;
+      // console.log('top/left old/new', arrowKey, top, left, newTop, newLeft);
       handlePanImage(newTop, newLeft);
       const newStep = Math.min(step + 1, maxStep);
       setTimeout(() => this.panKeyboard(arrowKey, newStep, maxStep), panTimeInterval);
@@ -239,7 +240,7 @@ class EventCourseMapCanvasRender extends Component {
     const imageStyle = {
       width: `${width}px`,
       height: `${height}px`,
-      transform: `translateX(${(left) ? `${left}px` : 'auto'}) translateY(${top}px) rotate(${rotate}deg) scale(${scale})`,
+      transform: `translateX(${(left) ? `${left}px` : 'auto'}) translateY(${top}px) scale(${scale}) rotate(${rotate}deg)`,
     };
     const imgToDisplay = (imageSrc === '')
       ? null

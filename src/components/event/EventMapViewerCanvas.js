@@ -126,7 +126,7 @@ class EventMapViewerCanvas extends Component {
       top,
       rotate,
       scale,
-      centre: { x: left + width / 2, y: top + height / 2 },
+      initialCentre: { x: left + width / 2, y: top + height / 2 },
       isLoading: false,
       mouseDownZoomIn: false,
       mouseDownZoomOut: false,
@@ -191,33 +191,51 @@ class EventMapViewerCanvas extends Component {
     this.setState({ activeType: newActiveType });
   }
 
-  getCurrentCentre = () => {
-    const {
-      width,
-      height,
-      left,
-      top,
-    } = this.state;
-    return {
-      x: left + width / 2,
-      y: top + height / 2,
-    };
-  };
+  sinDeg = angle => Math.sin(angle * Math.PI / 180);
+
+  cosDeg = angle => Math.cos(angle * Math.PI / 180);
 
   rotate = () => {
     const {
+      initialCentre,
+      left,
       mouseDownRotateLeft,
       mouseDownRotateRight,
       rotate,
       rotateStep,
+      top,
+      width,
+      height,
     } = this.state;
+    const currentCentre = { x: left + width / 2, y: top + height / 2 };
+    // console.log('initial and current centres', initialCentre, currentCentre);
+    const offsetX = currentCentre.x - initialCentre.x;
+    const offsetY = currentCentre.y - initialCentre.y;
     if (mouseDownRotateLeft) {
-      this.setState({ rotate: rotate - rotateStep }, () => {
+      const deltaXfromX = offsetX * this.sinDeg(-rotateStep) * this.sinDeg(-rotateStep);
+      const deltaYfromX = offsetX * this.sinDeg(-rotateStep) * this.cosDeg(-rotateStep);
+      const deltaXfromY = offsetY * this.sinDeg(-rotateStep) * this.cosDeg(-rotateStep);
+      const deltaYfromY = offsetY * this.sinDeg(-rotateStep) * this.sinDeg(-rotateStep);
+      // console.log('deltas:', deltaXfromX, deltaYfromX, deltaXfromY, deltaYfromY);
+      this.setState({
+        rotate: rotate - rotateStep,
+        left: left - deltaXfromX - deltaXfromY,
+        top: top + deltaYfromX + deltaYfromY,
+      }, () => {
         window.requestAnimationFrame(this.rotate);
       });
     }
     if (mouseDownRotateRight) {
-      this.setState({ rotate: rotate + rotateStep }, () => {
+      const deltaXfromX = offsetX * this.sinDeg(rotateStep) * this.sinDeg(rotateStep);
+      const deltaYfromX = offsetX * this.sinDeg(rotateStep) * this.cosDeg(rotateStep);
+      const deltaXfromY = offsetY * this.sinDeg(rotateStep) * this.cosDeg(rotateStep);
+      const deltaYfromY = offsetY * this.sinDeg(rotateStep) * this.sinDeg(rotateStep);
+      // console.log('deltas:', deltaXfromX, deltaYfromX, deltaXfromY, deltaYfromY);
+      this.setState({
+        rotate: rotate + rotateStep,
+        left: left - deltaXfromX - deltaXfromY,
+        top: top + deltaYfromX + deltaYfromY,
+      }, () => {
         window.requestAnimationFrame(this.rotate);
       });
     }
@@ -263,27 +281,40 @@ class EventMapViewerCanvas extends Component {
       mouseDownZoomOut,
       scale,
       zoomScaleFactor,
-      centre,
+      initialCentre,
       top,
       left,
+      width,
+      height,
     } = this.state;
-    const currentCentre = this.getCurrentCentre();
-    const dX = currentCentre.x - centre.x;
-    const dY = currentCentre.y - centre.y;
+    const currentCentre = {
+      x: left + width / 2,
+      y: top + height / 2,
+    };
+    // console.log('state in zoom (scale/top/left):', scale, top, left);
+    // console.log('initial and current centres', initialCentre, currentCentre);
+    const offsetX = currentCentre.x - initialCentre.x;
+    const offsetY = currentCentre.y - initialCentre.y;
     if (mouseDownZoomIn) {
+      const deltaX = offsetX * (zoomScaleFactor - 1);
+      const deltaY = offsetY * (zoomScaleFactor - 1);
+      // console.log('deltas:', deltaX, deltaY);
       this.setState({
         scale: scale * zoomScaleFactor,
-        top: top + dY * (zoomScaleFactor - 1),
-        left: left + dX * (zoomScaleFactor - 1),
+        top: top + deltaY,
+        left: left + deltaX,
       }, () => {
         window.requestAnimationFrame(this.zoom);
       });
     }
     if (mouseDownZoomOut) {
+      const deltaX = offsetX * (zoomScaleFactor - 1);
+      const deltaY = offsetY * (zoomScaleFactor - 1);
+      // console.log('deltas:', deltaX, deltaY);
       this.setState({
         scale: scale / zoomScaleFactor,
-        top: top - dY * (zoomScaleFactor - 1),
-        left: left - dX * (zoomScaleFactor - 1),
+        top: top - deltaY,
+        left: left - deltaX,
       }, () => {
         window.requestAnimationFrame(this.zoom);
       });
