@@ -17,7 +17,7 @@ msgstr ""
 msgid "(to match QuickRoute output)"
 msgstr "(odpovídající výstupu QuickRoute)"
 
-#: src/components/home/HomeWhatIsIt.js:27
+#: src/components/home/HomeWhatIsIt.js:32
 msgid "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
 msgstr "##### to translate #####"
 
@@ -35,19 +35,19 @@ msgstr "> Mapa"
 msgid "A brief user profile"
 msgstr "Krátký profil uživatele"
 
-#: src/components/home/HomeRecentListItem.js:234
+#: src/components/home/HomeRecentListItem.js:241
 msgid "A comment about {0}'s run at {1} was deleted by {2}"
 msgstr "Poznámka o {0} běhu na {1} byla smazána kvůli {2}"
 
-#: src/components/home/HomeRecentListItem.js:229
+#: src/components/home/HomeRecentListItem.js:236
 msgid "A comment about {0}'s run at {1} was updated by {2}"
 msgstr "Poznámka o {0} běhu na {1} byla upravána kvůli {2}"
 
-#: src/components/home/HomeRecentListItem.js:224
+#: src/components/home/HomeRecentListItem.js:231
 msgid "A new comment was posted about {0}'s run at {1} by {2}"
 msgstr "Nová poznámka o {0} běhu na {1} byla poslána kvůli {2}"
 
-#: src/components/home/HomeRecentListItem.js:296
+#: src/components/home/HomeRecentListItem.js:303
 msgid "A new link between events {0} was created by {1}"
 msgstr "Nové spojecní mezi závody {0} byla vytvořena kvůli {1}"
 
@@ -58,6 +58,10 @@ msgstr "Zkrátka"
 #: src/components/user/UserEdit.js:174
 msgid "About"
 msgstr "O"
+
+#: src/components/home/HomeAboutAuthor.js:6
+msgid "About me"
+msgstr "O mně"
 
 #: src/components/event/EventCommentsAdd.js:71
 msgid "Add a comment"
@@ -91,7 +95,7 @@ msgstr "Přidat závod"
 msgid "Add new event link"
 msgstr "Přidat nové závodní spojení"
 
-#: src/components/event/EventMapViewer.js:159
+#: src/components/event/EventMapViewer.js:162
 msgid "Add or Delete maps"
 msgstr "Přidat nebo Smazat mapy"
 
@@ -103,7 +107,7 @@ msgstr "Přidat nebo změnit mapy"
 msgid "Add or change user profile image"
 msgstr "Přidat nebo změnit obrázek uživatele"
 
-#: src/components/event/EventRunners.js:77
+#: src/components/event/EventRunners.js:71
 msgid "Add yourself as a runner"
 msgstr "Přidat se jako běžec"
 
@@ -119,7 +123,7 @@ msgstr "Webová stránka klubu"
 msgid "Address of event website"
 msgstr "Webová stránka závodu"
 
-#: src/components/home/HomeRecent.js:33
+#: src/components/home/HomeRecent.js:34
 msgid "All Recent Activity"
 msgstr "Všech posledních aktivit"
 
@@ -127,7 +131,7 @@ msgstr "Všech posledních aktivit"
 msgid "Are you sure you want to delete \"{displayName}\"?"
 msgstr "Jste si jisti, že chcete smazat \"{displayName}\"?"
 
-#: src/components/home/HomeWelcome.js:40
+#: src/components/home/HomeWelcome.js:42
 msgid "As a guest user, you are able to browse or search for maps {eventsListLink} or {eventsMapLink}, but can not upload or comment on them. If you would like to add some maps of your own, please {signUpLink} for an individual account."
 msgstr "##### to translate #####"
 
@@ -140,7 +144,11 @@ msgstr "Ztráta"
 #~ msgstr "Veřejné Mapy"
 
 #: src/components/home/HomeWhatIsIt.js:18
-msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps."
+#~ msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps."
+#~ msgstr "##### to translate #####"
+
+#: src/components/home/HomeWhatIsIt.js:21
+msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps. The search filter matches event and map names, dates, places and the different types of tags so that your maps are easy to find."
 msgstr "##### to translate #####"
 
 #: src/components/club/ClubDelete.js:38
@@ -239,7 +247,7 @@ msgstr "Délka tratě"
 msgid "Course title"
 msgstr "Název tratě"
 
-#: src/components/event/EventRunnerDetails.js:74
+#: src/components/event/EventRunnerDetails.js:98
 msgid "Course: <0>{courseTitle}</0>"
 msgstr "Trať: <0>{courseTitle}</0>"
 
@@ -274,7 +282,7 @@ msgstr "Aktuální heslo"
 msgid "Date"
 msgstr "Datum"
 
-#: src/components/home/HomeWelcome.js:87
+#: src/components/home/HomeWelcome.js:90
 msgid "Dedicated to those that know you can never have too many maps..."
 msgstr "Pro ty, kteří nikdy nemohou mít příliš mnoho map..."
 
@@ -330,7 +338,7 @@ msgstr "Smazat závodní spojení"
 msgid "Delete link"
 msgstr "Smazat spojení"
 
-#: src/components/event/EventRunnerDetails.js:155
+#: src/components/event/EventRunnerDetails.js:179
 msgid "Delete runner"
 msgstr "Smazat běžce"
 
@@ -354,7 +362,7 @@ msgstr "Smazat {shortName}?"
 msgid "Deleting a user removes their details and all of their event records including maps. All that is retained is any comments that they have made on other users' maps."
 msgstr "##### to translate #####"
 
-#: src/components/home/HomeWelcome.js:65
+#: src/components/home/HomeWelcome.js:67
 msgid "Do you have a large collection of orienteering maps neatly filed away? Can you never bear to throw away a map? Do you wish it was easier to search your collection? Do you have easy access to your route choices and results for each event? Are you interested in seeing your friends' maps and routes as well?"
 msgstr "##### to translate #####"
 
@@ -395,7 +403,7 @@ msgstr "Upravit závodní spojení"
 msgid "Edit link details"
 msgstr "Upravit detaily spojení"
 
-#: src/components/event/EventRunnerDetails.js:158
+#: src/components/event/EventRunnerDetails.js:182
 msgid "Edit runner details"
 msgstr "Upravit detaily běžce"
 
@@ -444,9 +452,9 @@ msgid "Error (get user): {userErrorMessage}"
 msgstr "Chyba (uživatelní): {userErrorMessage}"
 
 #: src/components/club/ClubView.js:256
-#: src/components/event/EventView.js:614
-#: src/components/event/MapView.js:615
-#: src/components/home/HomeView.js:147
+#: src/components/event/EventView.js:600
+#: src/components/event/MapView.js:612
+#: src/components/home/HomeView.js:149
 #: src/components/user/UserView.js:148
 msgid "Error: {errorMessage}"
 msgstr "Chyba: {errorMessage}"
@@ -535,6 +543,10 @@ msgstr "Skupiny ostatných spojených závodů"
 msgid "Hide event link list"
 msgstr "Schovat seznam závodných spojení"
 
+#: src/components/home/HomeAboutAuthor.js:11
+msgid "If you want to get in touch..."
+msgstr "##### to translate #####"
+
 #: src/components/user/UserDetails.js:50
 msgid "Internal ID: {userId}"
 msgstr "Interní ID: {userId}"
@@ -587,11 +599,11 @@ msgid "Loading club details..."
 msgstr "Načítání detaily klubu..."
 
 #: src/components/event/EventDetails.js:23
-#: src/components/event/EventRunnerDetails.js:23
+#: src/components/event/EventRunnerDetails.js:27
 msgid "Loading event details..."
 msgstr "Načítání detaily závodu..."
 
-#: src/components/home/HomeRecent.js:19
+#: src/components/home/HomeRecent.js:20
 msgid "Loading recent activity..."
 msgstr "Načítání poslední aktivitu..."
 
@@ -644,7 +656,7 @@ msgstr "Spravovat spojené závody"
 msgid "Map"
 msgstr "Mapa"
 
-#: src/components/event/EventMapViewer.js:226
+#: src/components/event/EventMapViewer.js:231
 msgid "Map Viewer"
 msgstr "Prohlízec map"
 
@@ -660,6 +672,10 @@ msgstr "Titul mapy"
 #: src/components/Header.js:200
 #~ msgid "Map view"
 #~ msgstr "Mapový pohled"
+
+#: src/components/home/HomeAboutAuthor.js:10
+msgid "MapOholic was developed by..."
+msgstr "##### to translate #####"
 
 #: src/components/user/UserEdit.js:154
 msgid "Member of"
@@ -704,11 +720,11 @@ msgstr "Nové heslo"
 msgid "No comments have been posted yet"
 msgstr "Žádné přípominek nebyly odeslané"
 
-#: src/components/event/EventRunnerDetails.js:106
+#: src/components/event/EventRunnerDetails.js:130
 msgid "No course details to display"
 msgstr "Nejsou žádné detaily trati zobrazit."
 
-#: src/components/event/EventRunnerDetails.js:135
+#: src/components/event/EventRunnerDetails.js:159
 msgid "No result to display"
 msgstr "Není výsledek zobrazit."
 
@@ -776,7 +792,7 @@ msgstr "Místo"
 msgid "Placing in field"
 msgstr "Místo na pole"
 
-#: src/components/home/HomeWelcome.js:74
+#: src/components/home/HomeWelcome.js:76
 msgid "Please {signUpLink} or {logInLink} to use all the exciting features of this site. If you would like to see more before you sign up, some of the maps are visible to unregistered visitors too, you can search for them {eventsListLink} or {eventsMapLink}."
 msgstr "##### to translate #####"
 
@@ -792,7 +808,7 @@ msgstr "Viditelnost profilu"
 msgid "Profile visibility: {visibility}"
 msgstr "Viditelnost profilu: {visibility}"
 
-#: src/components/home/HomeRecent.js:32
+#: src/components/home/HomeRecent.js:33
 msgid "Recent Activity"
 msgstr "Poslední Aktivita"
 
@@ -814,7 +830,7 @@ msgstr "Regiony pro závod"
 msgid "Registration number"
 msgstr "Registrační číslo"
 
-#: src/components/event/EventRunnerDetails.js:109
+#: src/components/event/EventRunnerDetails.js:133
 msgid "Result: <0>{time}</0>"
 msgstr "Výsledek: <0>{time}</0>"
 
@@ -824,7 +840,7 @@ msgstr "Výsledek: <0>{time}</0>"
 msgid "Results"
 msgstr "Výsledky"
 
-#: src/components/event/EventMapViewer.js:158
+#: src/components/event/EventMapViewer.js:161
 msgid "Return to map view"
 msgstr "Návrat do mapového pohledu"
 
@@ -836,11 +852,11 @@ msgstr "Role"
 msgid "Route"
 msgstr "Postup"
 
-#: src/components/event/EventRunnerDetails.js:177
+#: src/components/event/EventRunnerDetails.js:199
 msgid "Runner details"
 msgstr "Detaíly běžce"
 
-#: src/components/event/EventRunners.js:80
+#: src/components/event/EventRunners.js:74
 msgid "Runners at event (select one to see their maps)"
 msgstr "Běžci na závod (vyberte jednu abyste zobrazili své mapy)"
 
@@ -860,7 +876,7 @@ msgstr "Hledat závody"
 #~ msgid "Search for users"
 #~ msgstr "Hledat uživatele"
 
-#: src/components/event/EventRunnerDetails.js:137
+#: src/components/event/EventRunnerDetails.js:161
 msgid "See below for detailed results ({0} runners)"
 msgstr "Viz níže detailní výsledky ({0} běžců)"
 
@@ -868,7 +884,7 @@ msgstr "Viz níže detailní výsledky ({0} běžců)"
 msgid "Select a club from the list to show further details here"
 msgstr "Chcete-li zobrazit více informaci, vyberte klub ze seznamu"
 
-#: src/components/event/MapView.js:291
+#: src/components/event/MapView.js:282
 msgid "Select a runner from the list to show further details here"
 msgstr "Chcete-li zobrazit více informaci, vyberte běžce ze seznamu"
 
@@ -908,8 +924,8 @@ msgstr "Zaregistrovat se na MapOholic"
 msgid "Sorry to see you leave, come back again soon!"
 msgstr "Je nám líto, že vás opustíme, vraťte se brzy!"
 
-#: src/components/event/EventView.js:377
-#: src/components/event/MapView.js:370
+#: src/components/event/EventView.js:374
+#: src/components/event/MapView.js:363
 msgid "Sorry, no event is selected."
 msgstr "Je nám líto, ale závod není vybraný."
 
@@ -917,11 +933,11 @@ msgstr "Je nám líto, ale závod není vybraný."
 msgid "Sorry, no event links found."
 msgstr "Je nám líto, ale nejsou žádné závodných spojení."
 
-#: src/components/event/EventRunnerDetails.js:33
+#: src/components/event/EventRunnerDetails.js:37
 msgid "Sorry, no matching runner details were found."
 msgstr "Je nám líto, ale nejsou žádné takové běžce."
 
-#: src/components/event/EventMapViewerCanvas.js:428
+#: src/components/event/EventMapViewerCanvas.js:491
 msgid "Sorry, there are no maps to display."
 msgstr "Je nám líto, ale nejsou žádné mapy zobrazit."
 
@@ -954,55 +970,55 @@ msgstr "Značky (přizpůsobitelné)"
 msgid "Tags for event"
 msgstr "Značky pro závod"
 
-#: src/components/home/HomeRecentListItem.js:219
+#: src/components/home/HomeRecentListItem.js:226
 msgid "The club {0} was deleted by {1}"
 msgstr "Klub {0} byl smazán uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:214
+#: src/components/home/HomeRecentListItem.js:221
 msgid "The club {0} was updated by {1}"
 msgstr "Klub {0} byl aktualizován uživatelem {1}"
 
-#: src/components/home/HomeWhatIsIt.js:9
-msgid "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*)."
+#: src/components/home/HomeWhatIsIt.js:11
+msgid "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*). You can zoom in and rotate maps, switch easily between the plain course and your route, and multi-part courses with different maps are supported."
 msgstr "##### to translate #####"
 
-#: src/components/home/HomeRecentListItem.js:249
+#: src/components/home/HomeRecentListItem.js:256
 msgid "The event {0} was deleted by {1}"
 msgstr "Závod {0} byl smazán uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:244
+#: src/components/home/HomeRecentListItem.js:251
 msgid "The event {0} was updated by {1}"
 msgstr "Závod {0} byl aktualizován uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:306
+#: src/components/home/HomeRecentListItem.js:313
 msgid "The link between events {0} was deleted by {1}"
 msgstr "Spojení mezi závody {0} bylo smazáno uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:301
+#: src/components/home/HomeRecentListItem.js:308
 msgid "The link between events {0} was updated by {1}"
 msgstr "Spojení mezi závody {0} bylo aktualizováno uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:209
+#: src/components/home/HomeRecentListItem.js:216
 msgid "The new club {0} was created by {1}"
 msgstr "Nový klub {0} byl vytvořen uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:239
+#: src/components/home/HomeRecentListItem.js:246
 msgid "The new event {0} was created by {1}"
 msgstr "Nový závod {0} byl vytvořen uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:291
+#: src/components/home/HomeRecentListItem.js:298
 msgid "The user {0} was deleted by {1}"
 msgstr "Uživatel {0} byl smazán uživatelem {1}"
 
-#: src/components/home/HomeRecentListItem.js:286
+#: src/components/home/HomeRecentListItem.js:293
 msgid "The user {0} was updated by {1}"
 msgstr "Uživatel {0} byl aktualizován uživatelem {1}"
 
-#: src/components/home/HomeWelcome.js:72
+#: src/components/home/HomeWelcome.js:74
 msgid "Then MapOholic might be for you!"
 msgstr "MapOholic možná bude pro Vás!"
 
-#: src/components/home/HomeRecent.js:27
+#: src/components/home/HomeRecent.js:28
 msgid "There has been no recent activity."
 msgstr "Nebyla žádná poslední aktivita."
 
@@ -1051,7 +1067,7 @@ msgstr "Disciplína"
 msgid "Type(s) of event"
 msgstr "Disciplíny"
 
-#: src/components/home/HomeRecentListItem.js:309
+#: src/components/home/HomeRecentListItem.js:316
 msgid "Unknown actionType {actionType}"
 msgstr "Neznamený actionType {actionType}"
 
@@ -1107,9 +1123,13 @@ msgstr "Viditelnost vaše mapy od tohohle závodu ostatnímu"
 msgid "Website"
 msgstr "Webová stránka"
 
-#: src/components/home/HomeWelcome.js:86
+#: src/components/home/HomeWelcome.js:89
 msgid "Welcome to MapOholic!"
 msgstr "Vítáme vás v MapOholic!"
+
+#: src/components/home/HomeWhatIsIt.js:6
+msgid "What is it?"
+msgstr "Co to je?"
 
 #: src/components/user/UserEdit.js:197
 msgid "Where user is based"
@@ -1119,11 +1139,11 @@ msgstr "Kde uživatel bydlí"
 msgid "You are about to delete {runnerName} from {name} ({0})."
 msgstr "Budete smazat {runnerName} z {name} ({0})."
 
-#: src/components/home/HomeWelcome.js:88
+#: src/components/home/HomeWelcome.js:91
 msgid "You are currently logged in."
 msgstr "Jste teď přihlasení."
 
-#: src/components/home/HomeWelcome.js:56
+#: src/components/home/HomeWelcome.js:58
 msgid "You have already uploaded {uploadedMapsText} from {attendedEventsText}. You can browse or search for them either {myEventsListLink} or {myEventsMapLink}."
 msgstr "##### to translate #####"
 
@@ -1131,11 +1151,11 @@ msgstr "##### to translate #####"
 msgid "You have not added any events yet."
 msgstr "Dosud jste nepřidal(a) žadné závody."
 
-#: src/components/home/HomeWelcome.js:49
+#: src/components/home/HomeWelcome.js:51
 msgid "You have not yet uploaded any maps. Why not start now?"
 msgstr "Dosud jste nepřidal(a) žadné mapy. Proč nezačněte hned teď?"
 
-#: src/components/home/HomeRecent.js:34
+#: src/components/home/HomeRecent.js:35
 msgid "Your Own Recent Activity"
 msgstr "Vaše Vlastní Poslední Aktivita"
 
@@ -1143,12 +1163,12 @@ msgstr "Vaše Vlastní Poslední Aktivita"
 msgid "Your own password"
 msgstr "Vaše vlastní heslo"
 
-#: src/components/home/HomeWelcome.js:33
 #: src/components/home/HomeWelcome.js:35
+#: src/components/home/HomeWelcome.js:37
 msgid "by name"
 msgstr "jménem"
 
-#: src/components/home/HomeWelcome.js:32
+#: src/components/home/HomeWelcome.js:34
 msgid "log in"
 msgstr "přihlasit se"
 
@@ -1157,7 +1177,7 @@ msgstr "přihlasit se"
 msgid "no map yet"
 msgstr "už není mapa"
 
-#: src/components/event/EventMapViewer.js:193
+#: src/components/event/EventMapViewer.js:196
 msgid "no maps found"
 msgstr "žádné map našly"
 
@@ -1165,7 +1185,7 @@ msgstr "žádné map našly"
 msgid "none"
 msgstr "nikdo"
 
-#: src/components/event/EventRunnerDetails.js:116
+#: src/components/event/EventRunnerDetails.js:140
 msgid "of {fieldSize}"
 msgstr "z {fieldSize}"
 
@@ -1173,8 +1193,8 @@ msgstr "z {fieldSize}"
 msgid "of {totalPages}"
 msgstr "z {totalPages}"
 
-#: src/components/home/HomeWelcome.js:34
 #: src/components/home/HomeWelcome.js:36
+#: src/components/home/HomeWelcome.js:38
 msgid "on a map"
 msgstr "na mapě"
 
@@ -1182,12 +1202,12 @@ msgstr "na mapě"
 msgid "rows per page"
 msgstr "řády na straně"
 
-#: src/components/home/HomeWelcome.js:31
+#: src/components/home/HomeWelcome.js:33
 msgid "sign up"
 msgstr "zaregistrovat se"
 
-#: src/components/home/HomeRecentListItem.js:95
-#: src/components/home/HomeRecentListItem.js:99
+#: src/components/home/HomeRecentListItem.js:100
+#: src/components/home/HomeRecentListItem.js:104
 msgid "themselves"
 msgstr "pro sebe"
 
@@ -1199,35 +1219,35 @@ msgstr "{0, plural, one {# přípominka} few {# přípominky} many {# přípomin
 msgid "{0, plural, one {# map} other {# maps}}"
 msgstr "{0, plural, one {# mapa} few {# mapy} many {# mapy} other {# map}}"
 
-#: src/components/home/HomeRecentListItem.js:281
+#: src/components/home/HomeRecentListItem.js:288
 msgid "{0} created an account"
 msgstr "{0} vytvořil(a) účet"
 
-#: src/components/home/HomeRecentListItem.js:261
+#: src/components/home/HomeRecentListItem.js:268
 msgid "{0} deleted a map from {1}"
 msgstr "{0} smazal(a) mapu z {1}"
 
-#: src/components/home/HomeRecentListItem.js:266
+#: src/components/home/HomeRecentListItem.js:273
 msgid "{0} ran at {1}"
 msgstr "{0} běhal(a) {1}"
 
-#: src/components/home/HomeRecentListItem.js:255
+#: src/components/home/HomeRecentListItem.js:262
 msgid "{0} uploaded a map from {1}"
 msgstr "{0} nahrál(a) mapu z {1}"
 
-#: src/components/home/HomeRecentListItem.js:271
+#: src/components/home/HomeRecentListItem.js:278
 msgid "{0}'s details for {1} were updated by {2}"
 msgstr "Detaily běžce {0} z {1} byly aktualizovány uživatelem {2}"
 
-#: src/components/home/HomeRecentListItem.js:276
+#: src/components/home/HomeRecentListItem.js:283
 msgid "{0}'s record for {1} was deleted by {2}"
 msgstr "Záznam běžce {0} z {1} byl smazan uživatelem {2}"
 
-#: src/components/home/HomeWelcome.js:28
+#: src/components/home/HomeWelcome.js:30
 msgid "{attendedEvents, plural, one {# event} other {# events}}"
 msgstr "{attendedEvents, plural, one {# závod} few {# závody} many {# závodu} other {# závodů}}"
 
-#: src/components/event/EventRunnerDetails.js:87
+#: src/components/event/EventRunnerDetails.js:111
 msgid "{courseControls} controls"
 msgstr "{courseControls} kontrol"
 
@@ -1235,6 +1255,6 @@ msgstr "{courseControls} kontrol"
 msgid "{eventCount, plural, one {# event} other {# events}}"
 msgstr "{eventCount, plural, one {# závod} few {# závody} many {# závodu} other {# závodů}}"
 
-#: src/components/home/HomeWelcome.js:27
+#: src/components/home/HomeWelcome.js:29
 msgid "{uploadedMaps, plural, one {# map} other {# maps}}"
 msgstr "{uploadedMaps, plural, one {# mapa} few {# mapy} many {# mapy} other {# map}}"

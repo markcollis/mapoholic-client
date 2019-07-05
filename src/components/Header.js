@@ -11,7 +11,7 @@ import {
   getUserListAction,
   setLanguageAction,
 } from '../actions';
-import noAvatar from '../graphics/no-avatar.png';
+import noAvatar from '../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../config';
 
 class Header extends Component {

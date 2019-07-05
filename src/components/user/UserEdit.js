@@ -6,7 +6,7 @@ import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import { roleOptionsLocale, visibilityOptionsLocale, validationErrorsLocale } from '../../common/data';
-import noAvatar from '../../graphics/no-avatar.png';
+import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 import UserChangePassword from './UserChangePassword';
 import UserEditProfileImage from './UserEditProfileImage';

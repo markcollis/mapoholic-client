@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
-import forest from '../../graphics/silhouette.jpg';
-import noAvatar from '../../graphics/no-avatar.png';
+import forest from '../../graphics/blueForest.png';
+import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
@@ -79,25 +79,24 @@ const UserDetails = ({
           src={forest}
           onLoad={() => requestRefreshCollapse()}
         />
-        <div>
-          <img
-            className="profile-image"
-            alt="avatar"
-            src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
-          />
-          <h3>{displayName}</h3>
-          {(fullName !== displayName)
-            ? <div>{fullName}</div>
-            : null}
-          {(memberOf.length > 0)
-            ? (
-              <div>{`(${memberOf.map(club => club.shortName).join(', ')})`}</div>
-            )
-            : null
-          }
-        </div>
+        <img
+          className="profile-image"
+          alt="avatar"
+          src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+        />
       </div>
-      <br />
+      <div>
+        <h3 className="user-details-title">{displayName}</h3>
+        {(fullName !== displayName)
+          ? fullName
+          : null}
+        {(memberOf.length > 0)
+          ? (
+            <div>{`(${memberOf.map(club => club.shortName).join(', ')})`}</div>
+          )
+          : null
+        }
+      </div>
       <div>
         <div className="ui list">
           <p className="item">{about}</p>

@@ -4,7 +4,7 @@ import { Trans } from '@lingui/macro';
 
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import Collapse from '../generic/Collapse';
-import forest from '../../graphics/silhouette.jpg';
+import forest from '../../graphics/blueForest.png';
 
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 

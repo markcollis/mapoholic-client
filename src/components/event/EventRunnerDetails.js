@@ -5,7 +5,7 @@ import { Trans } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
 import { visibilityOptionsLocale } from '../../common/data';
-import noAvatar from '../../graphics/no-avatar.png';
+import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 

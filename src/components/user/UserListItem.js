@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { roleOptionsLocale } from '../../common/data';
-import noAvatar from '../../graphics/no-avatar.png';
+import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 
 const UserListItem = ({

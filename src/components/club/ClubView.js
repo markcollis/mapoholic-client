@@ -8,7 +8,6 @@ import ClubDelete from './ClubDelete';
 import ClubDetails from './ClubDetails';
 import ClubEdit from './ClubEdit';
 import ClubEvents from './ClubEvents';
-// import ClubFilter from './ClubFilter';
 import ClubHeader from './ClubHeader';
 import ClubList from './ClubList';
 import ClubMembers from './ClubMembers';
@@ -55,11 +54,12 @@ class ClubView extends Component {
   state = {
     gettingEventList: '',
     gettingMemberList: '',
+    isMounted: true,
   };
 
   componentDidUpdate() {
     // console.log('state', this.state);
-    const { gettingEventList, gettingMemberList } = this.state;
+    const { gettingEventList, gettingMemberList, isMounted } = this.state;
     const { club, getClubEvents, getClubMembers } = this.props;
     const {
       details,
@@ -72,18 +72,22 @@ class ClubView extends Component {
       if (!eventLists[selectedClubId] && gettingEventList !== selectedClubId) {
         // console.log('getting event list for', selectedClubId);
         getClubEvents(selectedClubId, (successful) => {
-          if (successful) this.setState({ gettingEventList: '' });
+          if (successful && isMounted) this.setState({ gettingEventList: '' });
         });
         this.setState({ gettingEventList: selectedClubId });
       }
       if (!memberLists[selectedClubId] && gettingMemberList !== selectedClubId) {
         // console.log('getting member list for', selectedClubId);
         getClubMembers(selectedClubId, (successful) => {
-          if (successful) this.setState({ gettingMemberList: '' });
+          if (successful && isMounted) this.setState({ gettingMemberList: '' });
         });
         this.setState({ gettingMemberList: selectedClubId });
       }
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({ isMounted: false });
   }
 
   // helper to check if current user is administrator if input prop has changed

@@ -12,6 +12,14 @@ Contents:
 /* General */
 /* ------- */
 
+/* fixed background image */
+body {
+  background-image: url('../graphics/blueForestBackground.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
 /* Remove outline for non-keyboard :focus */
 *:focus:not(.focus-visible) {
   outline: none;
@@ -88,6 +96,9 @@ select, optgroup {
   text-align: right;
   font-style: italic;
   margin-bottom: 1rem;
+}
+.footer img {
+  width: 100%;
 }
 /* level position of current user with avatar in Header component */
 .header-current-user {
@@ -271,6 +282,9 @@ select, optgroup {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.event-course-map-img { /* prevent unwanted scrolling */
+  touch-action: none;
+}
 /* settings for EventRunnerDetails */
 .course-title {
   font-weight: bold;
@@ -318,16 +332,21 @@ select, optgroup {
 .profile-forest {
   z-index: 0;
   width: 100%;
+  min-height: 180px;
 }
 .profile-image {
+  position: absolute;
+  top: 80px;
+  left: 30px;
   width: 150px;
   height: 150px;
-  position: relative;
-  float: left;
   background-color: white;
-  margin: -70px 20px 0px 30px;
   z-index: 1;
   padding: 5px;
+}
+.user-details-title {
+  margin-top: 1em !important;
+  margin-bottom: 0 !important;
 }
 /* settings for UserList: control appearance of avatars */
 .user-list-avatar {

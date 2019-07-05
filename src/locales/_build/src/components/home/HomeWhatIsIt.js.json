@@ -1,17 +1,25 @@
 {
-  "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*).": {
+  "What is it?": {
     "origin": [
       [
         "src/components/home/HomeWhatIsIt.js",
-        9
+        6
       ]
     ]
   },
-  "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps.": {
+  "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*). You can zoom in and rotate maps, switch easily between the plain course and your route, and multi-part courses with different maps are supported.": {
     "origin": [
       [
         "src/components/home/HomeWhatIsIt.js",
-        18
+        11
+      ]
+    ]
+  },
+  "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps. The search filter matches event and map names, dates, places and the different types of tags so that your maps are easy to find.": {
+    "origin": [
+      [
+        "src/components/home/HomeWhatIsIt.js",
+        21
       ]
     ]
   },
@@ -19,7 +27,7 @@
     "origin": [
       [
         "src/components/home/HomeWhatIsIt.js",
-        27
+        32
       ]
     ]
   }

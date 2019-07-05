@@ -394,6 +394,8 @@ class EventMapViewerCanvas extends Component {
             onMouseUp={() => this.handleMouseUpZoomIn()}
             onMouseOut={() => this.handleMouseUpZoomIn()}
             onBlur={() => this.handleMouseUpZoomIn()}
+            onTouchStart={() => this.handleMouseDownZoomIn()}
+            onTouchEnd={() => this.handleMouseUpZoomIn()}
             // data-tooltip="zoom in"
           >
             <i className="icon zoom-in" />
@@ -405,6 +407,8 @@ class EventMapViewerCanvas extends Component {
             onMouseUp={() => this.handleMouseUpZoomOut()}
             onMouseOut={() => this.handleMouseUpZoomOut()}
             onBlur={() => this.handleMouseUpZoomOut()}
+            onTouchStart={() => this.handleMouseDownZoomOut()}
+            onTouchEnd={() => this.handleMouseUpZoomOut()}
           >
             <i className="icon zoom-out" />
           </button>
@@ -415,6 +419,8 @@ class EventMapViewerCanvas extends Component {
             onMouseUp={() => this.handleMouseUpRotateLeft()}
             onMouseOut={() => this.handleMouseUpRotateLeft()}
             onBlur={() => this.handleMouseUpRotateLeft()}
+            onTouchStart={() => this.handleMouseDownRotateLeft()}
+            onTouchEnd={() => this.handleMouseUpRotateRight()}
           >
             <i className="icon undo alternate" />
           </button>
@@ -425,6 +431,8 @@ class EventMapViewerCanvas extends Component {
             onMouseUp={() => this.handleMouseUpRotateRight()}
             onMouseOut={() => this.handleMouseUpRotateRight()}
             onBlur={() => this.handleMouseUpRotateRight()}
+            onTouchStart={() => this.handleMouseDownRotateRight()}
+            onTouchEnd={() => this.handleMouseUpRotateRight()}
           >
             <i className="icon redo alternate" />
           </button>

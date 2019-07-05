@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
-import forest from '../../graphics/silhouette.jpg';
+import forest from '../../graphics/greyForestSquare.png';
 
 import HomeWelcome from './HomeWelcome';
 import HomeRecent from './HomeRecent';

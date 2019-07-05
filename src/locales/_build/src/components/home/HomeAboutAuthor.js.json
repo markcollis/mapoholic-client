@@ -1,0 +1,26 @@
+{
+  "About me": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        6
+      ]
+    ]
+  },
+  "MapOholic was developed by...": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        10
+      ]
+    ]
+  },
+  "If you want to get in touch...": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        11
+      ]
+    ]
+  }
+}

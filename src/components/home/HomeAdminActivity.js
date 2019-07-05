@@ -173,7 +173,7 @@ class HomeAdminActivity extends Component {
       refreshCollapse,
       requestRefreshCollapse,
     } = this.props;
-    console.log('activityList, language:', activityList, language);
+    // console.log('activityList, language:', activityList, language);
     const tableHead = ['actionBy', 'actionType', 'club', 'event', 'eventRunner', 'linkedEvent', 'user', 'timestamp'];
     const tableData = (activityList)
       ? (

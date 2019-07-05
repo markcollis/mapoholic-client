@@ -381,12 +381,12 @@ class UserView extends Component {
       return (
         <div className="ui vertically padded stackable grid">
           {this.renderError()}
-          <div className="seven wide column">
+          <div className="eight wide column">
             {(viewModeSelf === 'view') ? this.renderUserDetails() : null}
             {(viewModeSelf === 'edit') ? this.renderUserEdit() : null}
             {(viewModeSelf === 'delete') ? this.renderUserDelete() : null}
           </div>
-          <div className="nine wide column">
+          <div className="eight wide column">
             {this.renderUserEvents()}
           </div>
         </div>

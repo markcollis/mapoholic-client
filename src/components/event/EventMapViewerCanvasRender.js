@@ -56,14 +56,54 @@ class EventCourseMapCanvasRender extends Component {
     document.addEventListener('keydown', this.handleKeyDown, false);
     document.addEventListener('keyup', this.handleKeyUp, false);
     document.addEventListener('click', this.handleMouseUp, false);
+    document.addEventListener('touchend', this.handleMouseUp, false);
     document.addEventListener('mousemove', this.handleMouseMove, false);
+    // document.addEventListener('touchmove', this.handleTouchMove, { passive: false });
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown, false);
     document.removeEventListener('keyup', this.handleKeyUp, false);
     document.removeEventListener('click', this.handleMouseUp, false);
+    document.removeEventListener('touchend', this.handleMouseUp, false);
     document.removeEventListener('mousemove', this.handleMouseMove, false);
+    // document.removeEventListener('touchmove', this.handleTouchMove, { passive: false });
+  }
+
+  handleTouchStart = (e) => {
+    // e.preventDefault();
+    // e.stopPropagation();
+    // console.log('touchStart', e);
+    // console.log('touches', e.touches);
+    const touchPoint = e.touches[0];
+    this.setState({
+      isMouseDown: true,
+      mouseX: touchPoint.clientX,
+      mouseY: touchPoint.clientY,
+    });
+  }
+
+  handleTouchMove = (e) => {
+    // e.preventDefault();
+    // e.stopPropagation();
+    // console.log('touchMove touches', e.touches);
+    const touchPoint = e.touches[0];
+    const {
+      handlePanImage,
+      top,
+      left,
+    } = this.props;
+    const { isMouseDown, mouseX, mouseY } = this.state;
+    // console.log('state in handleTouchMove:', isMouseDown, mouseX, mouseY);
+    if (isMouseDown) {
+      const dX = touchPoint.clientX - mouseX;
+      const dY = touchPoint.clientY - mouseY;
+      this.setState({
+        mouseX: touchPoint.clientX,
+        mouseY: touchPoint.clientY,
+      });
+      handlePanImage(top + dY, left + dX);
+    }
   }
 
   handleMouseDown = (e) => {
@@ -225,6 +265,7 @@ class EventCourseMapCanvasRender extends Component {
 
   render() {
     // console.log('props in EventMapViewerCanvasRender:', this.props);
+    console.log('state in EventMapViewerCanvasRender:', this.state);
     const {
       width,
       height,
@@ -257,6 +298,8 @@ class EventCourseMapCanvasRender extends Component {
             onMouseOver={this.handleMouseOver}
             onFocus={this.handleMouseOver}
             onDoubleClick={this.handleDoubleClick}
+            onTouchStart={this.handleTouchStart}
+            onTouchMove={this.handleTouchMove}
           />
         </div>
       );

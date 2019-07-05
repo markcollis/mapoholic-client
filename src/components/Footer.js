@@ -1,8 +1,10 @@
 import React from 'react';
+import forestBar from '../graphics/blueForestBarWide.png';
 
 const Footer = () => {
   return (
     <div className="footer">
+      <img src={forestBar} alt="separator" />
       <a
         href="https://github.com/markcollis/mapoholic-client"
         target="_blank"

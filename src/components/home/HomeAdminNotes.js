@@ -8,15 +8,21 @@ const HomeAdminNotes = () => {
       <hr className="divider" />
       <Collapse title="Checklist of things still to do:">
         <ol>
-          <li>Add some more introductory/help text on this page</li>
+          <li>Finish introductory/help text on Home view</li>
           <li>Investigate issue with not loading thumbnail after uploading map (timing?)</li>
           <li>
             Complete lingui translations and check that nothing is missing
             &nbsp;(done all except long paragraphs on Home page 29/6)
           </li>
-          <li>Check background image on ClubDetails on narrow screens</li>
+          <li>
+            <del>Check background image on ClubDetails on narrow screens</del>
+            &nbsp;(fixed with new graphics 5/7)
+          </li>
           <li>Design a logo, e.g. map with control colours on the O</li>
-          <li>Draw my own version of the tree background, or find a royalty free one</li>
+          <li>
+            <div>Draw my own version of the tree background, or find a royalty free one</div>
+            &nbsp;(done 4/7, cropped to different sizes and used accordingly 5/7)
+          </li>
           <li>Make style names more consistent across components</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
           <li>Add some real sample data/maps (started 4/6 - ongoing task)</li>
