@@ -739,10 +739,12 @@ class EventView extends Component {
     const mapBounds = (mineOnly) ? mapBoundsMyMaps : mapBoundsEvents;
     const eventListArray = this.getEventListArray(list, searchField, tagFilter,
       current, mineOnly, language);
+    const currentUserId = this.getCurrentUserId(current);
 
     return (
       <EventMap
         key={mineOnly} // to force remounting when switching between Events and MyMaps views
+        currentUserId={currentUserId} // derived
         events={eventListArray} // derived
         handleSelectEvent={this.handleSelectEvent} // derived
         language={language} // prop (config)
@@ -755,7 +757,7 @@ class EventView extends Component {
   render() {
     // console.log('state in EventView:', this.state);
     // console.log('props in EventView:', this.props);
-    const { showMap } = this.props;
+    const { mineOnly, showMap } = this.props;
     if (showMap) {
       return (
         <div className="ui vertically padded stackable grid">
@@ -766,13 +768,19 @@ class EventView extends Component {
           <div className="sixteen wide column">
             {this.renderEventMap()}
           </div>
-          <div className="eight wide column">
-            {this.renderLinkedEvents()}
-          </div>
-          <div className="eight wide column">
-            {this.renderEventDetails()}
-            {this.renderEventRunners()}
-          </div>
+          {(mineOnly)
+            ? ''
+            : (
+              <div className="row">
+                <div className="eight wide column">
+                  {this.renderEventDetails()}
+                  {this.renderLinkedEvents()}
+                </div>
+                <div className="eight wide column">
+                  {this.renderEventRunners()}
+                </div>
+              </div>
+            )}
         </div>
       );
     }

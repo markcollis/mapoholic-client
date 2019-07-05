@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import Leaflet from 'leaflet';
 import {
   Map,
   Marker,
-  // Popup,
   Rectangle,
   TileLayer,
   Tooltip,
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
-import { reformatTimestampDateOnly } from '../../common/conversions';
+import EventListItem from './EventListItem';
 
 const osmTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const osmAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -33,7 +31,7 @@ class EventMap extends Component {
     // console.log('mapBounds:', mapBounds);
     if (mapBounds) {
       this.setState({ mapBounds });
-    } else {
+    } else if (events) {
       const eventBounds = events
         .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
         .map((eventDetails) => {
@@ -111,7 +109,7 @@ class EventMap extends Component {
 
   renderMapLocations = (events) => {
     const { mapZoomLevel } = this.state;
-    const { handleSelectEvent, language } = this.props;
+    const { currentUserId, handleSelectEvent, language } = this.props;
     return (
       events
         .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
@@ -122,15 +120,24 @@ class EventMap extends Component {
             locLong,
             locCornerSW,
             locCornerNE,
-            name,
-            date,
           } = eventDetails;
           const flagMarkerPos = [locLat, locLong];
-          const rectangleMarkerPos = [
-            (locCornerSW[0] + locCornerNE[0]) / 2,
-            (locCornerSW[1] + locCornerNE[1]) / 2,
-          ];
           const rectangleBounds = [locCornerSW, locCornerNE];
+          const tooltip = (
+            <Tooltip
+              direction="right"
+              offset={[20, 0]}
+              className="event-map-tooltip"
+            >
+              <EventListItem
+                currentUserId={currentUserId}
+                handleSelectEvent={handleSelectEvent}
+                language={language}
+                oevent={eventDetails}
+                selectedEventId={eventId}
+              />
+            </Tooltip>
+          );
           // const coords = [[locLat - 0.01, locLong - 0.01], [locLat + 0.01, locLong + 0.01]];
           if (!mapZoomLevel || mapZoomLevel < 12 || locCornerSW.length === 0) {
             return (
@@ -141,10 +148,7 @@ class EventMap extends Component {
                 icon={iconFlag}
                 onClick={() => handleSelectEvent(eventId)}
               >
-                <Tooltip direction="center" offset={[0, 30]} className="event-map-flag-tooltip">
-                  <div>{name}</div>
-                  <div>{reformatTimestampDateOnly(date, language)}</div>
-                </Tooltip>
+                {tooltip}
               </Marker>
             );
           }
@@ -156,17 +160,9 @@ class EventMap extends Component {
                 bounds={rectangleBounds}
                 color="blue"
                 onClick={() => handleSelectEvent(eventId)}
-              />
-              <Marker
-                position={rectangleMarkerPos}
-                opacity={0}
-                icon={iconFlag}
               >
-                <Tooltip direction="center" permanent className="event-map-box-tooltip">
-                  <div>{name}</div>
-                  <div>{reformatTimestampDateOnly(date, language)}</div>
-                </Tooltip>
-              </Marker>
+                {tooltip}
+              </Rectangle>
             </div>
           );
         })
@@ -174,19 +170,8 @@ class EventMap extends Component {
   }
 
   render() {
-    // const mapBoundsDefault = [[50, 14], [50.5, 14.5]];
-    // console.log('current zoom:', this.state.mapZoomLevel);
     const { events } = this.props;
     const { mapBounds } = this.state;
-    // console.log('mapBounds in state', mapBounds);
-    // if (this.mapRef.current) {
-    //   const leafletMap = this.mapRef.current.leafletElement;
-    //   console.log('current bounds:', leafletMap.getBounds());
-    //   // console.log('centre, zoom:', leafletMap.getCenter(), leafletMap.getZoom());
-    // } else {
-    //   console.log('no mapRef yet');
-    // }
-    // <p>is it here</p>
     return (
       <div className="ui segment">
         <Map
@@ -203,15 +188,15 @@ class EventMap extends Component {
 }
 
 EventMap.propTypes = {
+  currentUserId: PropTypes.string,
   events: PropTypes.arrayOf(PropTypes.any),
   handleSelectEvent: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   mapBounds: PropTypes.arrayOf(PropTypes.array),
   setMapBounds: PropTypes.func.isRequired,
-  // selectEventForDetails: PropTypes.func.isRequired,
-  // setEventViewModeEvent: PropTypes.func.isRequired,
 };
 EventMap.defaultProps = {
+  currentUserId: null,
   events: [],
   mapBounds: null,
 };

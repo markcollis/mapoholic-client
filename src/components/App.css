@@ -252,16 +252,9 @@ select, optgroup {
   height: 400px;
   width: 100%;
 }
-.event-map-box-tooltip {
-  background-color: white;
-  border: none;
-  box-shadow: none;
-  color: blue;
-  padding: 5px;
-  text-align: center;
-}
-.event-map-flag-tooltip {
-  text-align: center;
+.event-map-tooltip {
+  width: 350px;
+  white-space: normal;
 }
 /* settings for EventMapViewerCanvas */
 .course-map-container {

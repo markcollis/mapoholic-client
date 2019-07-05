@@ -14,15 +14,7 @@ const HomeAdminNotes = () => {
             Complete lingui translations and check that nothing is missing
             &nbsp;(done all except long paragraphs on Home page 29/6)
           </li>
-          <li>
-            <del>Check background image on ClubDetails on narrow screens</del>
-            &nbsp;(fixed with new graphics 5/7)
-          </li>
           <li>Design a logo, e.g. map with control colours on the O</li>
-          <li>
-            <div>Draw my own version of the tree background, or find a royalty free one</div>
-            &nbsp;(done 4/7, cropped to different sizes and used accordingly 5/7)
-          </li>
           <li>Make style names more consistent across components</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
           <li>Add some real sample data/maps (started 4/6 - ongoing task)</li>
@@ -262,6 +254,22 @@ const HomeAdminNotes = () => {
           <li>
             <del>Centre rotation on current view when zoomed in</del>
             (done both rotate and zoom 4/7, still not 100% perfect)
+          </li>
+          <li>
+            <div>Draw my own version of the tree background, or find a royalty free one</div>
+            &nbsp;(done 4/7, cropped to different sizes and used accordingly 5/7)
+          </li>
+          <li>
+            <del>Check background image on ClubDetails on narrow screens</del>
+            &nbsp;(fixed with new graphics 5/7)
+          </li>
+          <li>
+            <del>Include touch event handlers in EventMapViewerCanvas</del>
+            &nbsp;(done 5/7)
+          </li>
+          <li>
+            <del>Improve overview map views, particularly MyMaps</del>
+            &nbsp;(done 5/7, using EventListItem component on map)
           </li>
         </ol>
       </Collapse>
