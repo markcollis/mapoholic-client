@@ -206,13 +206,13 @@ class Header extends Component {
     const renderEvents = (isEventsGroup)
       ? (
         <>
-          <Link to={linkEvents} className="active blue item header-parent">
+          <Link to={linkEvents} className="active blue item header__menu--parent">
             <Trans>Events</Trans>
           </Link>
-          <Link to="/events" className={(isEventsList) ? 'active blue item header-child' : 'item header-child'}>
+          <Link to="/events" className={(isEventsList) ? 'active blue item header__menu--child' : 'item header__menu--child'}>
             <Trans>&gt; List</Trans>
           </Link>
-          <Link to="/eventsmap" className={(isEventsMap) ? 'active blue item header-child-right' : 'item header-child-right'}>
+          <Link to="/eventsmap" className={(isEventsMap) ? 'active blue item header__menu--child-right' : 'item header__menu--child-right'}>
             <Trans>&gt; Map</Trans>
           </Link>
         </>
@@ -226,13 +226,13 @@ class Header extends Component {
     const renderMyMaps = (isMyMapsGroup)
       ? (
         <>
-          <Link to={linkMyMaps} className="active blue item header-parent">
+          <Link to={linkMyMaps} className="active blue item header__menu--parent">
             <Trans>My Maps</Trans>
           </Link>
-          <Link to="/mymaps" className={(isMyMapsList) ? 'active blue item header-child' : 'item header-child'}>
+          <Link to="/mymaps" className={(isMyMapsList) ? 'active blue item header__menu--child' : 'item header__menu--child'}>
             <Trans>&gt; List</Trans>
           </Link>
-          <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active blue item header-child-right' : 'item header-child-right'}>
+          <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active blue item header__menu--child-right' : 'item header__menu--child-right'}>
             <Trans>&gt; Map</Trans>
           </Link>
         </>
@@ -248,35 +248,35 @@ class Header extends Component {
         <div>
           <div className="ui menu secondary pointing stackable">
             <Link to="/" className={(isHome) ? 'active item' : 'item'}><i className="icon home" /></Link>
-            <span className="header-menu-divider" />
+            <span className="header__menu--divider" />
             {(selectedEventDisplay && selectedRunner)
               ? (
                 <>
                   <Link to="/mapview" className={(isMapView) ? 'active blue item' : 'item'}>
                     <Trans>Current Map</Trans>
                   </Link>
-                  <span className="header-menu-divider" />
+                  <span className="header__menu--divider" />
                 </>
               )
               : null}
             {renderMyMaps}
-            <span className="header-menu-divider" />
+            <span className="header__menu--divider" />
             {renderEvents}
-            <span className="header-menu-divider" />
+            <span className="header__menu--divider" />
             <Link to="/users" className={(isUsers) ? 'active blue item' : 'item'}>
               <Trans>Users</Trans>
             </Link>
-            <span className="header-menu-divider" />
+            <span className="header__menu--divider" />
             <Link to="/clubs" className={(isClubs) ? 'active blue item' : 'item'}>
               <Trans>Clubs</Trans>
             </Link>
             <div className="right menu">
-              <Link to="/me" className={(isCurrentUser) ? 'active blue item header-current-user' : 'item header-current-user'}>{userDetails}</Link>
-              <span className="header-menu-divider" />
+              <Link to="/me" className={(isCurrentUser) ? 'active blue item header__menu--current-user' : 'item header__menu--current-user'}>{userDetails}</Link>
+              <span className="header__menu--divider" />
               <Link to="/logout" className="item right ">
                 <Trans>Log Out</Trans>
               </Link>
-              <span className="header-menu-divider" />
+              <span className="header__menu--divider" />
               {selectLanguage}
             </div>
           </div>
@@ -287,17 +287,17 @@ class Header extends Component {
       <div>
         <div className="ui menu secondary pointing">
           <Link to="/" className={(isHome) ? 'active blue item' : 'item'}><i className="icon home" /></Link>
-          <span className="header-menu-divider" />
+          <span className="header__menu--divider" />
           {renderEvents}
           <div className="right menu">
             <Link to="/signup" className={(isSignup) ? 'active blue item' : 'item'}>
               <Trans>Sign Up</Trans>
             </Link>
-            <span className="header-menu-divider" />
+            <span className="header__menu--divider" />
             <Link to="/login" className={(isLogin) ? 'active blue item' : 'item'}>
               <Trans>Log In</Trans>
             </Link>
-            <span className="header-menu-divider" />
+            <span className="header__menu--divider" />
             {selectLanguage}
           </div>
         </div>

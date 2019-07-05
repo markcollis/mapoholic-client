@@ -25,8 +25,8 @@ const UserListItem = ({
   const roleAdminName = roleOptions.find(el => el.value === 'admin').label;
   const roleGuestName = roleOptions.find(el => el.value === 'guest').label;
   let cardClass = 'ui fluid centered card';
-  if (currentUserId === userId) cardClass = cardClass.concat(' item-current-user');
-  if (selectedUserId === userId) cardClass = cardClass.concat(' item-selected');
+  if (currentUserId === userId) cardClass = cardClass.concat(' card-list--item-current-user');
+  if (selectedUserId === userId) cardClass = cardClass.concat(' card-list--item-selected');
 
   return (
     <div
@@ -55,7 +55,7 @@ const UserListItem = ({
           {fullName}
           {(memberOf && memberOf.length > 0)
             ? (
-              <div className="list-item-tags">
+              <div className="tags-group">
                 {memberOf.map((club) => {
                   return <div key={club} className="ui label">{club}</div>;
                 })}

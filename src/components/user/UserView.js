@@ -194,7 +194,7 @@ class UserView extends Component {
     const userListArray = this.getUserListArray(list, searchField);
 
     return (
-      <div className="list-limit-height">
+      <div className="card-list--limit-height">
         <UserList
           currentUserId={currentUserId} // prop (user/current)
           language={language} // prop (config)
@@ -355,7 +355,7 @@ class UserView extends Component {
       );
     }
     return (
-      <div className="list-limit-height">
+      <div className="card-list--limit-height">
         <UserEvents
           eventsList={eventsList} // derived
           language={language} // prop (config)

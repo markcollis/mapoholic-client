@@ -14,7 +14,7 @@ const EventLinkedItem = ({
   const { _id: linkedEventId, name, date } = linkedEvent;
   if (linkedEventId === eventId) {
     return (
-      <div className="ui fluid centered card item-selected">
+      <div className="ui fluid centered card card-list--item-selected">
         <div className="content">
           <div className="header">{`${reformatTimestampDateOnly(date, language)} - ${name}`}</div>
         </div>

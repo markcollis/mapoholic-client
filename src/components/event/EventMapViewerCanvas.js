@@ -372,7 +372,7 @@ class EventMapViewerCanvas extends Component {
 
     const actionsToolbar = (
       <div
-        className="event-course-map-toolbar"
+        className="event-map-viewer-canvas__toolbar"
         style={{ display: 'flex', justifyContent: 'center', zIndex: 10 }}
       >
         <div className="ui icon buttons">

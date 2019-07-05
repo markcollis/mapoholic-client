@@ -74,19 +74,19 @@ const UserDetails = ({
     <div>
       <div>
         <img
-          className="profile-forest"
+          className="user-details__background-image"
           alt="forest"
           src={forest}
           onLoad={() => requestRefreshCollapse()}
         />
         <img
-          className="profile-image"
+          className="user-details__profile-image"
           alt="avatar"
           src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
         />
       </div>
       <div>
-        <h3 className="user-details-title">{displayName}</h3>
+        <h3 className="user-details__title">{displayName}</h3>
         {(fullName !== displayName)
           ? fullName
           : null}

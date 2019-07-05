@@ -15,7 +15,11 @@ const HomeAdminNotes = () => {
             &nbsp;(done all except long paragraphs on Home page 29/6)
           </li>
           <li>Design a logo, e.g. map with control colours on the O</li>
-          <li>Make style names more consistent across components</li>
+          <li>
+            <del>Make style names more consistent across components</del>
+            &nbsp;(done 5/7 (BEM))
+          </li>
+          <li>Make website/email links actual links in user/club views! (cf event view)</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
           <li>Add some real sample data/maps (started 4/6 - ongoing task)</li>
           <li>Test it out on a real Internet-facing server</li>

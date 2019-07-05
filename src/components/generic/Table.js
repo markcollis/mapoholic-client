@@ -199,7 +199,7 @@ class Table extends Component {
     // console.log('pageData:', pageData);
 
     return (
-      <div className="table-scrollx">
+      <div className="table-component">
         {(showFilter)
           ? <TableFilter filter={filter} setTableFilter={this.setTableFilter} />
           : ''}

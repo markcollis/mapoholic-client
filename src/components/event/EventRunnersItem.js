@@ -24,11 +24,11 @@ const EventRunnersItem = ({
   const isDeleted = (displayName.slice(-21, -14) === 'deleted');
   // console.log('isDeleted', isDeleted);
   const headerClass = (isDeleted)
-    ? 'header event-runners-deleted'
+    ? 'header event-runners-item__deleted'
     : 'header';
   let cardClass = 'ui fluid centered card event-runners-item';
-  if (currentUserId === userId) cardClass = cardClass.concat(' item-current-user');
-  if (selectedRunner === userId) cardClass = cardClass.concat(' item-selected');
+  if (currentUserId === userId) cardClass = cardClass.concat(' card-list--item-current-user');
+  if (selectedRunner === userId) cardClass = cardClass.concat(' card-list--item-selected');
   const clubsToShow = (memberOf && memberOf.length > 0)
     ? (
       <span>

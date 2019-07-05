@@ -120,10 +120,9 @@ class FileDropzone extends Component {
       highlighted,
     } = this.state;
     return (
-      <>
+      <div className={(highlighted) ? 'filedropzone filedropzone--highlighted' : 'filedropzone'}>
         <div
           role="button"
-          className={(highlighted) ? 'filedropzone highlighted' : 'filedropzone'}
           onClick={this.openFileDialogue}
           onDragOver={this.onDragOver}
           onDragLeave={this.onDragLeave}
@@ -150,7 +149,7 @@ class FileDropzone extends Component {
         </div>
         {(showAddBorder && currentFile && !borderAdded)
           ? (
-            <div className="border-button">
+            <div className="filedropzone__button-below">
               <button
                 type="button"
                 className="ui button small primary"
@@ -162,7 +161,7 @@ class FileDropzone extends Component {
             </div>
           )
           : null}
-      </>
+      </div>
     );
   }
 }

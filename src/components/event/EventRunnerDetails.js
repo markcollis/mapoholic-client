@@ -97,7 +97,7 @@ const EventRunnerDetails = ({
     ? (
       <Trans>
         {'Course: '}
-        <span className="course-title">{courseTitle}</span>
+        <span className="event-runner-details--highlight">{courseTitle}</span>
       </Trans>
     )
     : null;
@@ -132,7 +132,7 @@ const EventRunnerDetails = ({
     ? (
       <Trans>
         {'Result: '}
-        <span className="course-title">{time}</span>
+        <span className="event-runner-details--highlight">{time}</span>
       </Trans>
     )
     : null;

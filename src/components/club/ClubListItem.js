@@ -16,7 +16,7 @@ const ClubListItem = ({
   } = club;
   const flagClass = `${countryCodesConversion[country]} flag floatedright`;
   const cardClass = (selectedClubId === clubId)
-    ? 'ui fluid centered card item-selected'
+    ? 'ui fluid centered card card-list--item-selected'
     : 'ui fluid centered card';
   return (
     <div

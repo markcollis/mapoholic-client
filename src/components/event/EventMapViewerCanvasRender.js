@@ -277,7 +277,7 @@ class EventCourseMapCanvasRender extends Component {
       imageAlt,
       isLoading,
     } = this.props;
-    const imageClass = 'event-course-map-img';
+    const imageClass = 'event-map-viewer-canvas-render__map-image';
     const imageStyle = {
       width: `${width}px`,
       height: `${height}px`,
@@ -286,7 +286,7 @@ class EventCourseMapCanvasRender extends Component {
     const imgToDisplay = (imageSrc === '')
       ? null
       : (
-        <div className="event-course-map-canvas">
+        <div className="event-map-viewer-canvas-render__canvas">
           <img
             className={imageClass}
             style={imageStyle}
@@ -305,7 +305,7 @@ class EventCourseMapCanvasRender extends Component {
       );
     return (isLoading)
       ? (
-        <div className="ui segment event-course-map-loader">
+        <div className="ui segment event-map-viewer-canvas-render__loader">
           <div className="ui active dimmer">
             <div className="ui medium text loader">Loading...</div>
           </div>

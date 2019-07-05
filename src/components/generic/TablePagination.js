@@ -36,7 +36,7 @@ const TablePagination = ({
     <span className="floatedright">
       <button
         type="button"
-        className="circular ui icon basic button table-control-margin"
+        className="circular ui icon basic button table__control"
         disabled={prevButtonDisabled}
         onClick={handlePrevButtonClick}
       >
@@ -44,7 +44,7 @@ const TablePagination = ({
       </button>
       <Trans>Page</Trans>
       <select
-        className="ui dropdown table-control-margin"
+        className="ui dropdown table__control"
         onChange={handlePageNumberSelectChange}
         value={pageNumber}
       >
@@ -53,14 +53,14 @@ const TablePagination = ({
       <Trans>{`of ${totalPages}`}</Trans>
       <button
         type="button"
-        className="circular ui icon basic button table-control-margin"
+        className="circular ui icon basic button table__control"
         disabled={nextButtonDisabled}
         onClick={handleNextButtonClick}
       >
         <i className="arrow right icon" />
       </button>
       <select
-        className="ui dropdown table-control-margin"
+        className="ui dropdown table__control"
         onChange={handleRowsPerPageSelectChange}
         value={(rowsPerPage === 1000) ? tableAll : rowsPerPage}
       >

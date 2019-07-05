@@ -73,7 +73,7 @@ const EventDetails = ({
     : null;
   const showEdit = (canEdit)
     ? (
-      <div className="event-details-canedit">
+      <div className="event-details__edit-block">
         <hr className="divider" />
         <div className=""><Trans>{`Owner: ${owner.displayName}`}</Trans></div>
         {(orisId)
@@ -112,7 +112,7 @@ const EventDetails = ({
     : null;
   const renderTags = (tags && tags.length > 0)
     ? (
-      <span className="list-item-tags">
+      <span className="tags-group">
         {tags.map((tag) => {
           return <div key={tag} className="ui violet label">{tag}</div>;
         })}
@@ -121,7 +121,7 @@ const EventDetails = ({
     : null;
   const regionLabels = (locRegions && locRegions.length > 0)
     ? (
-      <span className="list-item-tags">
+      <span className="tags-group">
         {locRegions.map((region) => {
           return <span key={region} className="ui basic label">{region}</span>;
         })}

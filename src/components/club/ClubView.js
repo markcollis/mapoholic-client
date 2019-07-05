@@ -313,7 +313,7 @@ class ClubView extends Component {
     const { list, searchField, selectedClubId } = club;
     const clubList = this.getClubList(list, searchField);
     return (
-      <div className="list-limit-height">
+      <div className="card-list--limit-height">
         <ClubList
           clubList={clubList}
           selectClubToDisplay={selectClubToDisplay}

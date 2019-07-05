@@ -78,7 +78,7 @@ class EventCommentsAdd extends Component {
     if (!isEditing) return null;
 
     return (
-      <div className="ui form comment-editor">
+      <div className="ui form event-comments-item__editor">
         <div className="field">
           <textarea
             type="textarea"

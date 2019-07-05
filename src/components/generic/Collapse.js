@@ -97,7 +97,11 @@ class Collapse extends Component {
             ? <i className="icon angle down large floatedright" />
             : <i className="icon angle up large floatedright" />}
         </div>
-        <div ref={this.contentRef} style={contentStyle} className={(hideContent) ? 'hide' : 'show'}>
+        <div
+          ref={this.contentRef}
+          style={contentStyle}
+          className="collapse__content"
+        >
           <div className="ui divider" />
           {children}
           <div />

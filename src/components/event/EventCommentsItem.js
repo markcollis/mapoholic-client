@@ -143,12 +143,12 @@ class EventCommentsItem extends Component {
       ? `posted ${postedDate}`
       : `posted ${postedDate}, updated ${updatedDate}`;
     const headerStyle = (isAuthor)
-      ? 'header comment-header comment-author'
-      : 'header comment-header';
+      ? 'header event-comments-item__header event-comments-item__author'
+      : 'header event-comments-item__header';
     const displayNameFiltered = (active) ? displayName : displayName.slice(0, -22);
     const textContent = (isEditing)
       ? (
-        <div className="ui form comment-editor">
+        <div className="ui form event-comments-item__editor">
           <div className="field">
             <textarea
               type="textarea"
@@ -164,7 +164,7 @@ class EventCommentsItem extends Component {
           </button>
         </div>
       )
-      : <div className="comment-text">{text}</div>;
+      : <div className="event-comments-item__text">{text}</div>;
     const deleteButtons = (isDeleting)
       ? (
         <div>
@@ -190,7 +190,7 @@ class EventCommentsItem extends Component {
       : (
         <div className={headerStyle}>
           {`${displayNameFiltered} `}
-          <span className="comment-fullname">
+          <span className="event-comments-item__fullname">
             {`(${fullName})`}
           </span>
         </div>
@@ -208,7 +208,7 @@ class EventCommentsItem extends Component {
           {deleteButtons}
         </div>
         <div className="extra">
-          <div className="right floated comment-date">{datesToDisplay}</div>
+          <div className="right floated event-comments-item__date">{datesToDisplay}</div>
         </div>
       </>
     );

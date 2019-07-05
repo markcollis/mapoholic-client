@@ -86,7 +86,7 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
   return (
     <div className="ui segment">
       <img className="ui medium right floated image home-image" src={forest} alt="MapOholic logo" />
-      <p className="home-welcome-header"><Trans>Welcome to MapOholic!</Trans></p>
+      <p className="home-welcome__header"><Trans>Welcome to MapOholic!</Trans></p>
       <p><Trans>Dedicated to those that know you can never have too many maps...</Trans></p>
       {(auth) ? <p><Trans>You are currently logged in.</Trans></p> : visitorWelcome}
       {(isGuest) ? guestWelcome : ''}

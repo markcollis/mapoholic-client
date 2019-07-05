@@ -15,14 +15,14 @@ const HomeAdminPanel = ({
   return (
     <div className="ui segment">
       <h3><Trans>Additional information for administrators</Trans></h3>
-      <hr className="admin-panel-divider" />
+      <hr className="home-admin-panel__divider" />
       <HomeAdminActivity
         activityList={activityList}
         language={language}
         refreshCollapse={refreshCollapse}
         requestRefreshCollapse={requestRefreshCollapse}
       />
-      <hr className="admin-panel-divider" />
+      <hr className="home-admin-panel__divider" />
       <HomeAdminNotes />
     </div>
   );

@@ -127,7 +127,7 @@ class EventMap extends Component {
             <Tooltip
               direction="right"
               offset={[20, 0]}
-              className="event-map-tooltip"
+              className="event-map__tooltip"
             >
               <EventListItem
                 currentUserId={currentUserId}

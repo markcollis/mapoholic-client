@@ -1,4 +1,5 @@
-/* Style definitions to amend or override (with !important) the Semantic UI defaults
+/* Style definitions with !important override the Semantic UI defaults
+
 Contents:
  - general styles for use in any component
  - styles for Header and Footer components
@@ -12,33 +13,32 @@ Contents:
 /* General */
 /* ------- */
 
-/* fixed background image */
+/* apply fixed background image */
 body {
   background-image: url('../graphics/blueForestBackground.png');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
-
-/* Remove outline for non-keyboard :focus */
+/* Accessibility: Remove outline for non-keyboard :focus */
 *:focus:not(.focus-visible) {
   outline: none;
 }
-/* Optional: Customize .focus-visible */
+/* Accessibility: Customize .focus-visible */
 .focus-visible {
   outline-color: lightgreen;
 }
-/* scroll long lists (e.g. ClubView, EventView, UserView) */
-.list-limit-height {
+/* scroll long lists within constrained height (e.g. ClubList, EventList, UserList) */
+.card-list--limit-height {
   max-height: 50em;
   overflow-y: auto;
 }
 /* highlight entries in card lists (e.g. ClubListItem, EventListItem, EventRunnersItem,
 EventLinkedItem, UserListItem) */
-.item-current-user { /* card represents currently logged in user */
+.card-list--item-current-user { /* card represents currently logged in user */
   background-color: #e9f3fc !important;
 }
-.item-selected { /* card represents currently selected item */
+.card-list--item-selected { /* card represents currently selected item */
   box-shadow: 0 0 0 1px #2185d0, 3px 3px 4px 0 #2185d0 !important;
 }
 /* float element right */
@@ -56,10 +56,10 @@ EventLinkedItem, UserListItem) */
   }
 }
 /* provide space between tags when they overflow onto another line */
-.list-item-tags {
+.tags-group {
   line-height: 250%;
 }
-/* consistent font in dropdowns */
+/* provide consistent font in select dropdowns */
 select, optgroup {
   font-family: Lato, "Helvetica Neue", Arial;
 }
@@ -68,7 +68,7 @@ select, optgroup {
 /* ----------------- */
 
 /* settings to provide visual cues for List/Map view selection in main menu */
-.header-menu-divider {
+.header__menu--divider {
   align-self: center;
   margin: 5px 0 0 0;
   height: 20px;
@@ -76,51 +76,44 @@ select, optgroup {
   background-color: rgba(34, 36, 38, 0.15);
 }
 @media only screen and (max-width: 767px) {
-  .header-menu-divider {
+  .header__menu--divider {
     height: 0; /* hide when stacked */
   }
 }
-.header-parent {
+.header__menu--parent {
   padding-right: 0.3rem !important;
 }
-.header-child {
+.header__menu--child {
   padding-left: 0.3rem !important;
   padding-right: 0.3rem !important;
 }
-.header-child-right {
+.header__menu--child-right {
   padding-left: 0.3rem !important;
 }
-
-/* format common Footer text */
+/* level position of current user with avatar in Header component */
+.header__menu--current-user {
+  padding-bottom: 0.3em !important;
+}
+/* basic format for all Footer text */
 .footer {
   text-align: right;
   font-style: italic;
   margin-bottom: 1rem;
 }
+/* full width image bar separator */
 .footer img {
   width: 100%;
-}
-/* level position of current user with avatar in Header component */
-.header-current-user {
-  padding-bottom: 0.3em !important;
 }
 
 /* Generic components */
 /* ------------------ */
 
 /* Collapse: set margins to avoid clipping when inside a Collapse component */
-.card-list {
+.collapse .card-list {
   margin: 0 0.1em 0 0.1em !important;
 }
 /* settings for Collapse: define smooth collapse and expand effects */
-.collapse .show {
-  padding-left: 0.1em;
-  padding-right: 0.1em;
-  padding-bottom: 0.1em;
-  overflow: hidden;
-  transition: max-height 500ms cubic-bezier(.525,.66,.495,1.4);
-}
-.collapse .hide {
+.collapse__content {
   padding-left: 0.1em;
   padding-right: 0.1em;
   padding-bottom: 0.1em;
@@ -149,18 +142,24 @@ select, optgroup {
   max-height: 20em;
   max-width: 20em;
 }
-.highlighted {
+.filedropzone--highlighted {
   background-color: #ddd;
 }
-.border-button {
+.filedropzone__button-below {
+  margin-top: 0.5em;
   text-align: center;
 }
+.filedropzone__button-below p {
+  padding-top: 0.5em;
+}
 /* settings for Table */
-.table-scrollx {
+/* enable scrolling if table is too wide for its container */
+.table-component { /* 'table' on its own conflicts with Semantic UI*/
   overflow-x: auto;
 }
 /* settings for TablePagination */
-.table-control-margin {
+/* override margin for control buttons */
+.table__control {
   margin-left: 0.7em !important;
   margin-right: 0.7em !important;
 }
@@ -169,38 +168,44 @@ select, optgroup {
 /* --------------- */
 
 /* settings for ClubDetails component */
-.club-details-floating {
+/* float summary details above background forest image */
+.club-details__summary {
   position: absolute;
-  top: 6.5em;
-  left: 3em;
+  top: 6em;
+  left: 2.5em;
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 0.5em;
-  box-shadow: 0 0 0.5em 0.5em rgba(255, 255, 255, 0.9);
+  padding: 1em;
+  /* box-shadow: 0 0 0.5em 0.5em rgba(255, 255, 255, 0.9); */
+}
+.club-details__background-image {
+  z-index: 0;
+  width: 100%;
+  min-height: 180px;
 }
 
 /* Event components */
 /* ---------------- */
 
 /* settings for EventCommentsItem */
-.comment-header {
+.event-comments-item__header {
   padding-top: 0.3em !important;
   padding-bottom: 0.5em !important;
 }
-.comment-author {
+.event-comments-item__author {
   color: #2185d0 !important;
 }
-.comment-fullname {
+.event-comments-item__fullname {
   font-size: 0.9em;
   font-weight: normal;
 }
-.comment-date {
+.event-comments-item__date {
   font-size: 0.9em;
   font-style: italic;
 }
-.comment-editor {
+.event-comments-item__editor {
   padding-top: 1rem;
 }
-.comment-text {
+.event-comments-item__text {
   white-space: pre-line;
 }
 /* settings for EventDetails */
@@ -210,88 +215,84 @@ select, optgroup {
 .event-details .item:after {
   clear: left !important;
 }
-.event-details-canedit {
+.event-details__edit-block {
   clear: both;
 }
 /* settings for EventHeader */
-.event-header-tag-default {
+.event-header__tag-filter--empty {
   color: rgba(0, 0, 0, 0.3) !important;
 }
-.event-header-tag-event {
+.event-header__tag-filter--event {
   background-color: #6435c9 !important;
   color: white !important;
-  /* font-size: 110%; */
 }
-.event-header-tag-personal {
+.event-header__tag-filter--personal {
   background-color: #a333c8 !important;
   color: white !important;
-  /* font-size: 110%; */
 }
-.event-header-tag-select {
+.event-header__tag-filter {
   border: 1px solid rgba(34, 36, 38, 0.15);
   border-radius: 0.25rem;
 }
-.event-header-tag-select optgroup {
+.event-header__tag-filter optgroup {
   color: black;
   background-color: white;
 }
-.event-header-tag-select div, select {
+.event-header__tag-filter div, select {
     height: 36px !important;
     border: none !important;
 }
-.event-header-tag-select div {
+.event-header__tag-filter div {
   padding-left: 0.3rem !important;
 }
 /* settings for EventListItem */
-.event-list-text {
-  background: rgba(255, 255, 255, 0.8);
+.event-list-item__with-map .event-list-item--text {
+  /* border: solid white 2px !important; */
+  background: white;
+  /* background: rgba(255, 255, 255, 0.8); */
   color: #000;
+  padding: 0.2em;
 }
 /* settings for EventMap (leaflet) */
 .leaflet-container { /* essential for leaflet to render properly */
   height: 400px;
   width: 100%;
 }
-.event-map-tooltip {
+.event-map__tooltip {
   width: 350px;
   white-space: normal;
 }
 /* settings for EventMapViewerCanvas */
-.course-map-container {
+.event-map-viewer__container {
   height: 600px;
   width: 100%;
   overflow: hidden;
 }
-.event-course-map-loader {
+.event-map-viewer-canvas-render__loader {
   margin-top: 10px !important;
   height: 540px;
 }
-.event-course-map-canvas {
+.event-map-viewer-canvas-render__canvas {
   margin-top: 5px;
   overflow: hidden;
   height: 555px;
 }
-.event-course-map-toolbar {
+.event-map-viewer-canvas__toolbar {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.event-course-map-img { /* prevent unwanted scrolling */
+.event-map-viewer-canvas-render__map-image { /* prevent unwanted scrolling */
   touch-action: none;
 }
 /* settings for EventRunnerDetails */
-.course-title {
+.event-runner-details--highlight {
   font-weight: bold;
-}
-.event-runner-profile-image {
-  width: 100px;
-  height: 100px;
-  float: right;
 }
 /* settings for EventRunnersItem */
 .event-runners-item .label {
   margin-right: 0.3em !important;
 }
-.event-runners-deleted { /* only admin users should ever see this */
+.event-runners-item__deleted { /* only admin users should ever see this */
   color: red !important;
 }
 
@@ -299,21 +300,21 @@ select, optgroup {
 /* --------------- */
 
 /* settings for HomeAdminPanel */
-.admin-panel-divider {
+.home-admin-panel__divider {
   border-color: blue;
   margin-bottom: 1.5em;
 }
 /* settings for HomeRecent */
-.recent-activity-list {
+.home-recent ul {
   padding: 0 20px;
 }
 /* settings for HomeView */
-.home-image {
+.home-view img {
   width: 100%;
   border: solid 2px red; /* temporary, to emphasise the need to put in place the right images*/
 }
 /* settings for HomeWelcome */
-.home-welcome-header {
+.home-welcome__header {
   font-size: 1.8em;
   font-weight: 700;
 }
@@ -322,28 +323,22 @@ select, optgroup {
 /* --------------- */
 
 /* settings for UserDetails: control appearance of images */
-.profile-forest {
+.user-details__background-image {
   z-index: 0;
   width: 100%;
   min-height: 180px;
 }
-.profile-image {
+.user-details__profile-image {
   position: absolute;
-  top: 80px;
-  left: 30px;
+  top: 6em;
+  left: 2.5em;
   width: 150px;
   height: 150px;
   background-color: white;
   z-index: 1;
   padding: 5px;
 }
-.user-details-title {
+.user-details__title {
   margin-top: 1em !important;
   margin-bottom: 0 !important;
-}
-/* settings for UserList: control appearance of avatars */
-.user-list-avatar {
-  width: 80px;
-  height: 80px;
-  margin-right: 1.5em;
 }

@@ -117,7 +117,7 @@ class EventView extends Component {
         if (tagFilter === '') return true;
         const { runners, tags } = eachEvent;
         const runnerSelf = runners.find(runner => runner.user === currentUserId);
-        const tagsToCheck = tags.concat(runnerSelf.tags);
+        const tagsToCheck = (runnerSelf) ? tags.concat(runnerSelf.tags) : tags;
         return (tagsToCheck.includes(tagFilter));
       })
       .filter((eachEvent) => { // filter against search field
@@ -700,7 +700,7 @@ class EventView extends Component {
       current, mineOnly, language);
     // console.log('eventListArray', eventListArray);
     return (
-      <div className="list-limit-height">
+      <div className="card-list--limit-height">
         <EventList
           currentUserId={currentUserId} // derived
           language={language} // prop (config)

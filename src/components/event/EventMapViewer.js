@@ -237,7 +237,7 @@ class EventMapViewer extends Component {
           </div>
         </div>
         <div
-          className="course-map-container"
+          className="event-map-viewer__container"
           ref={this.mapRef}
           style={(showMapContainer) ? { display: 'none' } : {}}
         >

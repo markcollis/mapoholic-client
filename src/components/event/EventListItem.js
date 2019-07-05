@@ -50,18 +50,18 @@ const EventListItem = ({
     )
     : {};
   const cardClass = (selectedEventId === eventId)
-    ? 'ui fluid centered card item-selected'
+    ? 'ui fluid centered card card-list--item-selected'
     : 'ui fluid centered card';
-  const textClass = (mapExtractToDisplay)
-    ? 'event-list-text'
-    : '';
+  const contentClass = (mapExtractToDisplay)
+    ? 'content event-list-item__with-map'
+    : 'content';
 
   const place = (locPlace && locPlace !== '') ? locPlace : null;
   const country = (locCountry && locCountry !== '') ? locCountry : null;
   const renderPlace = (place || country)
     ? (
       <div>
-        <span className={textClass}>
+        <span className="event-list-item--text">
           <Trans>Place</Trans>
           {`: ${place || ''}${(place && country) ? ', ' : ''}${country || ''}`}
         </span>
@@ -71,7 +71,7 @@ const EventListItem = ({
   const renderMapName = (mapName && mapName !== '')
     ? (
       <div>
-        <span className={textClass}>
+        <span className="event-list-item--text">
           <Trans>Map</Trans>
           {`: ${mapName}`}
         </span>
@@ -136,14 +136,16 @@ const EventListItem = ({
       onKeyPress={() => handleSelectEvent(eventId)}
       tabIndex="0"
     >
-      <div className="content">
+      <div className={contentClass}>
         <div className="header">
-          <span className={textClass}>{`${reformatTimestampDateOnly(date, language)} - ${name}`}</span>
+          <span className="event-list-item--text">
+            {`${reformatTimestampDateOnly(date, language)} - ${name}`}
+          </span>
         </div>
         <div className="meta">
           {renderPlace}
           {renderMapName}
-          <div className="list-item-tags">
+          <div className="tags-group">
             {renderOrganisedBy}
             {renderTypes}
             {renderTags}

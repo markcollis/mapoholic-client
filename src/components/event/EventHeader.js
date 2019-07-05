@@ -18,10 +18,10 @@ const EventFilter = ({
 }) => {
   // const dropdownStyle = {};
   // if (tagFilter === '') dropdownStyle.color = 'rgba(0, 0, 0, 0.3)';
-  let dropdownClass = 'ui dropdown';
-  if (tagFilter === '') dropdownClass = dropdownClass.concat(' event-header-tag-default');
-  if (tagLists.eventTags.includes(tagFilter)) dropdownClass = dropdownClass.concat(' event-header-tag-event');
-  if (tagLists.personalTags.includes(tagFilter)) dropdownClass = dropdownClass.concat(' event-header-tag-personal');
+  let dropdownClass = 'ui dropdown event-header__tag-filter';
+  if (tagFilter === '') dropdownClass = dropdownClass.concat('--empty');
+  if (tagLists.eventTags.includes(tagFilter)) dropdownClass = dropdownClass.concat('--event');
+  if (tagLists.personalTags.includes(tagFilter)) dropdownClass = dropdownClass.concat('--personal');
   return (
     <div className="ui stackable grid">
       <div className="column five wide">
@@ -47,7 +47,7 @@ const EventFilter = ({
       </div>
       <div className="column five wide">
         <div className="ui form">
-          <div className="ui right labeled input event-header-tag-select">
+          <div className="ui right labeled input event-header__tag-filter">
             <I18n>
               {({ i18n }) => (
                 <select
@@ -60,12 +60,12 @@ const EventFilter = ({
                   </option>
                   <optgroup label={i18n._(t`Event tags`)}>
                     {tagLists.eventTags.map((tag) => {
-                      return <option className="event-header-tag-event" key={tag}>{tag}</option>;
+                      return <option className="event-header__tag-filter--event" key={tag}>{tag}</option>;
                     })}
                   </optgroup>
                   <optgroup label={i18n._(t`Personal tags`)}>
                     {tagLists.personalTags.map((tag) => {
-                      return <option className="event-header-tag-personal" key={tag}>{tag}</option>;
+                      return <option className="event-header__tag-filter--personal" key={tag}>{tag}</option>;
                     })}
                   </optgroup>
                 </select>

@@ -171,7 +171,7 @@ class HomeView extends Component {
   renderHomeWelcomeImage = () => {
     return (
       <>
-        <img className="home-image" src={forest} alt="welcome" />
+        <img src={forest} alt="welcome" />
         <p>Photo: spread out pile of O maps, folder in background</p>
       </>
     );
@@ -186,7 +186,7 @@ class HomeView extends Component {
   renderHomeWhatIsItImage = () => {
     return (
       <>
-        <img className="home-image" src={forest} alt="screenshot" />
+        <img src={forest} alt="screenshot" />
         <p>screenshot(s)</p>
       </>
     );
@@ -201,7 +201,7 @@ class HomeView extends Component {
   renderHomeHowToUseImage = () => {
     return (
       <>
-        <img className="home-image" src={forest} alt="screenshot" />
+        <img src={forest} alt="screenshot" />
         <p>screenshot(s)</p>
       </>
     );
@@ -216,7 +216,7 @@ class HomeView extends Component {
   renderHomeAboutAuthorImage = () => {
     return (
       <>
-        <img className="home-image" src={forest} alt="author" />
+        <img src={forest} alt="author" />
         <p>picture of me running</p>
       </>
     );
@@ -284,7 +284,7 @@ class HomeView extends Component {
     // console.log('state in HomeView', this.state);
     // console.log('props in HomeView', this.props);
     return (
-      <div className="ui vertically padded stackable grid">
+      <div className="ui vertically padded stackable grid home-view">
         {this.renderError()}
         <div className="row">
           <div className="twelve wide column">

@@ -64,8 +64,8 @@ const ClubDetails = ({
     : null;
   const displayProfile = (
     <div>
-      <img className="profile-forest" alt="forest" src={forest} />
-      <div className="club-details-floating">
+      <img className="club-details__background-image" alt="forest" src={forest} />
+      <div className="club-details__summary">
         <h3>{shortName}</h3>
         {(fullName)
           ? <div>{fullName}</div>
