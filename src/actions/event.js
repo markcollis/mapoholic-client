@@ -314,10 +314,12 @@ export const postMapAction = (parameters, file, callback) => async (dispatch, ge
     const token = auth.authenticated;
     const validMapType = (mapType === 'course') || (mapType === 'route');
     if (!eventId || !userId || !validMapType) throw new Error('invalid parameters');
+    // strip special characters from API call
+    // const sanitisedMapTitle = mapTitle.replace(/[`~!@#$%^&*()|+=?;:'",.<>{}\]\\/\s]/gi, '');
     const formData = new FormData();
     formData.append('upload', file, file.name);
     const response = await axios.post(
-      `${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}/${mapType}${(mapTitle) ? `/${mapTitle}` : ''}`,
+      `${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}/${mapType}/${(mapTitle) ? encodeURIComponent(mapTitle) : ''}`,
       formData,
       {
         headers: {

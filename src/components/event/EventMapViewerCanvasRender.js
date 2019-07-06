@@ -265,7 +265,7 @@ class EventCourseMapCanvasRender extends Component {
 
   render() {
     // console.log('props in EventMapViewerCanvasRender:', this.props);
-    console.log('state in EventMapViewerCanvasRender:', this.state);
+    // console.log('state in EventMapViewerCanvasRender:', this.state);
     const {
       width,
       height,

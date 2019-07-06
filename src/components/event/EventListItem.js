@@ -29,11 +29,11 @@ const EventListItem = ({
   const currentRunnerTags = [];
   if (runners && runners.length > 0) {
     runners.forEach((runner) => {
+      // console.log('runner:', runner);
       if (!mapExtractToDisplay && runner.mapExtract) {
         mapExtractToDisplay = runner.mapExtract;
       }
       if (runner.user === currentUserId) {
-        // console.log('runner:', runner);
         currentRunnerTags.push(...runner.tags);
       }
     });

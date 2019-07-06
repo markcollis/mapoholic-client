@@ -53,7 +53,7 @@ class EventMapViewer extends Component {
       selectedRunner,
     } = this.props;
     const { mapUpdates } = this.state;
-    const mapImageArray = this.getMapImageArray(selectedEvent._id, selectedRunner, mapUpdates);
+    const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner, mapUpdates);
     const hasMaps = mapImageArray.length > 0;
     const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
     if (hasMaps && !selectedMapImage) {
@@ -67,10 +67,8 @@ class EventMapViewer extends Component {
   }
 
   // helper to derive mapImageArray if input props have changed (different event or runner)
-  getMapImageArray = memoize((selectedEventId, selectedRunner, mapUpdates) => {
-    const { selectedEvent } = this.props;
-    // console.log('getMapImageArray called:', selectedEventId,
-    // selectedRunner, mapUpdates, selectedEvent);
+  getMapImageArray = memoize((selectedEvent, selectedRunner, mapUpdates) => {
+    // console.log('getMapImageArray called:', selectedEvent, selectedRunner, mapUpdates);
     const runnerData = (selectedEvent.runners)
       ? selectedEvent.runners.find(runner => runner.user._id === selectedRunner)
       : null;
@@ -154,7 +152,7 @@ class EventMapViewer extends Component {
       setMapViewParameters,
       updateEventRunner,
     } = this.props;
-    const mapImageArray = this.getMapImageArray(selectedEvent._id, selectedRunner, mapUpdates);
+    const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner, mapUpdates);
     // console.log('mapImageArray returned:', mapImageArray);
     const hasMaps = (mapImageArray.length > 0);
     const addDeleteTitle = (showMapViewerDetails)
@@ -186,7 +184,7 @@ class EventMapViewer extends Component {
             onKeyPress={() => this.handleSelectMapImage(mapId)}
             tabIndex="0"
           >
-            {(title === '') ? 'untitled' : title}
+            {(title === '') ? <Trans>untitled</Trans> : title}
           </div>
         );
       })

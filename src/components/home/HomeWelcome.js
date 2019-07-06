@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Trans, Plural } from '@lingui/macro';
 
-import forest from '../../graphics/blueForest.png';
+import logo from '../../graphics/mapoholicLogoSmall.png';
 /* eslint react/jsx-one-expression-per-line: 0  */
 /* warning deactivated to avoid unwanted spaces in Trans components */
 
@@ -85,9 +85,13 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
 
   return (
     <div className="ui segment">
-      <img className="ui medium right floated image home-image" src={forest} alt="MapOholic logo" />
-      <p className="home-welcome__header"><Trans>Welcome to MapOholic!</Trans></p>
-      <p><Trans>Dedicated to those that know you can never have too many maps...</Trans></p>
+      <img className="ui medium right floated image home-image" src={logo} alt="MapOholic logo" />
+      <p className="home-welcome__header">
+        <Trans>Welcome to MapOholic!</Trans>
+      </p>
+      <p>
+        <Trans>Dedicated to those that know you can never have too many maps...</Trans>
+      </p>
       {(auth) ? <p><Trans>You are currently logged in.</Trans></p> : visitorWelcome}
       {(isGuest) ? guestWelcome : ''}
       {(isStandardOrAdmin && hasMaps) ? standardWelcome : ''}

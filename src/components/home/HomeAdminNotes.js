@@ -8,26 +8,43 @@ const HomeAdminNotes = () => {
       <hr className="divider" />
       <Collapse title="Checklist of things still to do:">
         <ol>
-          <li>Finish introductory/help text on Home view</li>
           <li>
             Investigate issue with not loading thumbnail after uploading map (timing?)
-            (possibly fixed 5/7 using setState callback, need to test)
+            (possibly fixed 5/7 using setState callback, need to test - still an issue
+            when server is slow)
           </li>
           <li>
             Complete lingui translations and check that nothing is missing
             (done all except long paragraphs on Home page 29/6)
           </li>
-          <li>Design a logo, e.g. map with control colours on the O</li>
-          <li>
-            <del>Make style names more consistent across components</del>
-            &nbsp;(done 5/7 (BEM))
-          </li>
-          <li>Make website/email links actual links in user/club views! (cf event view)</li>
-          <li>Take a photo of a pile of O maps to use as a background/on home page</li>
-          <li>Add some real sample data/maps (started 4/6 - ongoing task)</li>
           <li>
             Test it out on a real Internet-facing server
             &nbsp;(DB migrated to MongoDB Atlas online service 5/7)
+          </li>
+          <li>
+            Design a logo, e.g. map with control colours on the O
+            &nbsp;(logo done, now need to make best use of it!)
+          </li>
+          <li>Make website/email links actual links in user/club views! (cf event view)</li>
+          <li>Finish introductory/help text on Home view</li>
+          <li>Take a photo of a pile of O maps to use as a background/on home page</li>
+          <li>
+            <del>Add some real sample data/maps</del>
+            &nbsp;(all 2019 maps now added 6/7)
+          </li>
+          <li>Bug: hangs on Loading... event details when creating a new event</li>
+          <li>
+            <del>Bug: map part title doesn&apos;t change in the tab when edited</del>
+            &nbsp;(fixed 6/7)
+          </li>
+          <li>Bug?: Linked Event list doesn&apos;t update when a new event is created in link</li>
+          <li>
+            Bug? (server): Does not change file names when title changes
+            (leave as is, now throws an error when uploading a map with a previously used title)
+          </li>
+          <li>
+          Use all four corners for map outline (Polygon not Rectangle) otherwise
+          the likes of pootoceny Hradek breaks things...
           </li>
         </ol>
       </Collapse>
@@ -280,6 +297,18 @@ const HomeAdminNotes = () => {
           <li>
             <del>Improve overview map views, particularly MyMaps</del>
             &nbsp;(done 5/7, using EventListItem component on map)
+          </li>
+          <li>
+            <del>Make style names more consistent across components</del>
+            &nbsp;(done 5/7 (BEM))
+          </li>
+          <li>
+            <del>Bug (server): Can not deal with map titles with spaces/brackets in</del>
+            &nbsp;(fixed 6/7, URIencoded for maptitle parameter, strip special chars for filename)
+          </li>
+          <li>
+            <del>Bug: Datepicker in EventEdit parses partial dates as mm/dd</del>
+            &nbsp;(fixed 6/7)
           </li>
         </ol>
       </Collapse>
