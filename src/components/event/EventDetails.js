@@ -181,16 +181,19 @@ const EventDetails = ({
             <div className="item">
               <i className="users icon" />
               <div className="content">
-                {organisingClubs.map((club) => {
+                {organisingClubs.map((club, index) => {
                   if (!club) return null;
                   if (club.website && club.website !== '') {
                     return (
-                      <a key={club._id} href={club.website} target="_blank" rel="noopener noreferrer">
-                        {`${club.fullName} (${club.shortName})`}
-                      </a>
+                      <span key={club._id}>
+                        {(index > 0) ? ', ' : ''}
+                        <a key={club._id} href={club.website} target="_blank" rel="noopener noreferrer">
+                          {`${club.fullName} (${club.shortName})`}
+                        </a>
+                      </span>
                     );
                   }
-                  return `${club.fullName} (${club.shortName})`;
+                  return `${(index > 0) ? ', ' : ''}${club.fullName} (${club.shortName})`;
                 })}
               </div>
             </div>

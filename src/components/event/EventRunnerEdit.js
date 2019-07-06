@@ -29,43 +29,23 @@ class EventRunnerEdit extends Component {
     tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
 
-  // static defaultProps = {
-  //   language: 'en',
-  //   selectedEvent: {},
-  //   selectedRunner: '',
-  // };
-
   state = {
-    // selectedRunnerDetails: {},
     tagsOptions: [{ value: 'default', label: 'default' }],
   };
 
   componentDidMount() {
-    // console.log('EventRunnerEdit mounted, props:', this.props);
     const {
-      // selectedEvent,
-      // selectedRunner,
       tagList,
     } = this.props;
-    // const selectedRunnerDetails = selectedEvent.runners
-    //   .find(runner => runner.user._id === selectedRunner);
-    // this.setState({ selectedRunnerDetails });
     const tagsOptions = tagList.map((tag) => {
       return { value: tag, label: tag };
     });
     this.setState({ tagsOptions });
-    console.log('mounted with tagsOptions;', tagsOptions);
-    // const newTagsOptions = (selectedRunnerDetails.tags && selectedRunnerDetails.tags.length > 0)
-    //   ? selectedRunnerDetails.tags.map((tag) => {
-    //     return { value: tag, label: tag };
-    //   })
-    //   : [{ value: 'default', label: 'default set to be defined' }];
-    // this.setState({ tagsOptions: newTagsOptions });
+    // console.log('mounted with tagsOptions;', tagsOptions);
   }
 
   renderForm() {
     const {
-      // selectedRunnerDetails,
       tagsOptions,
     } = this.state;
     // console.log('props:', this.props);

@@ -1,5 +1,5 @@
 {
-  "name": "omapfolder-client",
+  "name": "mapoholic-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,7 +7,7 @@
     "@lingui/react": "^2.7.4",
     "axios": "^0.19.0",
     "babel-loader": "8.0.5",
-    "date-fns": "2.0.0-alpha.27",
+    "date-fns": "^2.0.0-beta.2",
     "dotenv": "^8.0.0",
     "focus-visible": "^4.1.5",
     "formik": "^1.5.0",
@@ -35,7 +35,8 @@
     "eject": "react-scripts eject",
     "add-locale": "lingui add-locale",
     "extract": "lingui extract",
-    "compile": "lingui compile"
+    "compile": "lingui compile",
+    "fixcert": "cp -f config/server.pem node_modules/webpack-dev-server/ssl/"
   },
   "eslintConfig": {
     "extends": "react-app"

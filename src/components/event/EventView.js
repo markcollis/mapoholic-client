@@ -147,7 +147,7 @@ class EventView extends Component {
         const matchTags = tags.length > 0 && tags.some((tag) => {
           return tag.toLowerCase().includes(searchField.toLowerCase());
         });
-        const runnerSelf = runners.find(runner => runner.user === currentUserId);
+        const runnerSelf = (runners) ? runners.find(runner => runner.user === currentUserId) : null;
         const matchOwnTags = (runnerSelf && runnerSelf.tags.length > 0
           && runnerSelf.tags.some((tag) => {
             return tag.toLowerCase().includes(searchField.toLowerCase());
@@ -232,20 +232,22 @@ class EventView extends Component {
     const tagLists = filteredList.reduce((acc, val) => {
       const newEventTags = acc.eventTags;
       const newPersonalTags = acc.personalTags;
-      const tagsFromEvent = val.tags;
+      const tagsFromEvent = val.tags || [];
       tagsFromEvent.forEach((tag) => {
         if (newEventTags.indexOf(tag) === -1) {
           newEventTags.push(tag);
         }
       });
-      const runnerSelf = val.runners.find(runner => runner.user === currentUserId);
-      if (runnerSelf) {
-        const tagsFromRunner = runnerSelf.tags;
-        tagsFromRunner.forEach((tag) => {
-          if (newPersonalTags.indexOf(tag) === -1) {
-            newPersonalTags.push(tag);
-          }
-        });
+      if (val.runners) {
+        const runnerSelf = val.runners.find(runner => runner.user === currentUserId);
+        if (runnerSelf) {
+          const tagsFromRunner = runnerSelf.tags;
+          tagsFromRunner.forEach((tag) => {
+            if (newPersonalTags.indexOf(tag) === -1) {
+              newPersonalTags.push(tag);
+            }
+          });
+        }
       }
       return { eventTags: newEventTags, personalTags: newPersonalTags };
     }, emptyTagList);

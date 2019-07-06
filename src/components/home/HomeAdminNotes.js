@@ -9,10 +9,13 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do:">
         <ol>
           <li>Finish introductory/help text on Home view</li>
-          <li>Investigate issue with not loading thumbnail after uploading map (timing?)</li>
+          <li>
+            Investigate issue with not loading thumbnail after uploading map (timing?)
+            (possibly fixed 5/7 using setState callback, need to test)
+          </li>
           <li>
             Complete lingui translations and check that nothing is missing
-            &nbsp;(done all except long paragraphs on Home page 29/6)
+            (done all except long paragraphs on Home page 29/6)
           </li>
           <li>Design a logo, e.g. map with control colours on the O</li>
           <li>
@@ -22,7 +25,10 @@ const HomeAdminNotes = () => {
           <li>Make website/email links actual links in user/club views! (cf event view)</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
           <li>Add some real sample data/maps (started 4/6 - ongoing task)</li>
-          <li>Test it out on a real Internet-facing server</li>
+          <li>
+            Test it out on a real Internet-facing server
+            &nbsp;(DB migrated to MongoDB Atlas online service 5/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -33,8 +39,8 @@ const HomeAdminNotes = () => {
             &nbsp;(fixed 18/5)
           </li>
           <li>
-          &nbsp;(added thumbnail to EventDetails 18/5, extract to EventListItem 18/5)
             <del>Make use of map thumbnails/thin extracts</del>
+            &nbsp;(added thumbnail to EventDetails 18/5, extract to EventListItem 18/5)
           </li>
           <li>
             <del>Enable HTTPS</del>

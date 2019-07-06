@@ -9,7 +9,8 @@ import CreatableSelect from 'react-select/creatable';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import enGB from 'date-fns/locale/en-GB';
-import cs from '../../common/cs';
+import cs from 'date-fns/locale/cs';
+// import cs from '../../common/cs'; NO LONGER NEEDED AS date-fns NOW INCLUDES cs
 import {
   countryOptionsLocale,
   regionOptionSets,
@@ -23,9 +24,6 @@ registerLocale('cs', cs);
 registerLocale('en', enGB);
 
 /* eslint no-underscore-dangle: 0 */
-
-// createEventOris={createEventOris}
-// getEventListOris={getEventListOris}
 
 // renders form to either create or edit an event record
 class EventEdit extends Component {
@@ -174,7 +172,15 @@ class EventEdit extends Component {
       });
     const organisedByOptions = clubList
       .map((club) => {
-        return { value: club._id, label: club.shortName };
+        const {
+          _id: clubId,
+          shortName,
+          fullName,
+          country,
+        } = club;
+        const fullNameToDisplay = (fullName) ? `: ${fullName}` : '';
+        const countryToDisplay = (country !== '') ? ` (${country})` : '';
+        return { value: clubId, label: `${shortName}${fullNameToDisplay}${countryToDisplay}` };
       })
       .sort((a, b) => {
         if (a.label > b.label) return 1;
@@ -251,10 +257,11 @@ class EventEdit extends Component {
                   <Trans>Date</Trans>
                   <div>
                     <DatePicker
+                      dateFormat={(language === 'cs') ? ['d. M. yyyy', 'd/M'] : ['d/M/yyyy', 'd/M']}
                       locale={language}
                       name="date"
                       selected={values.date}
-                      onChange={value => setFieldValue('date', value)}
+                      onChange={value => setFieldValue('date', value || new Date())}
                       onBlur={() => setFieldTouched('date', true)}
                     />
                   </div>
@@ -407,9 +414,11 @@ class EventEdit extends Component {
                         isMulti
                         onChange={value => setFieldValue('types', value)}
                         onBlur={() => setFieldTouched('types', true)}
-                        value={values.types.map((type) => {
-                          return typesOptions.find(el => el.value === type.value);
-                        })}
+                        value={(values.types)
+                          ? values.types.map((type) => {
+                            return typesOptions.find(el => el.value === type.value);
+                          })
+                          : null}
                       />
                     )}
                   </I18n>

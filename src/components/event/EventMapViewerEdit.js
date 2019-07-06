@@ -71,11 +71,12 @@ class EventMapViewerEdit extends Component {
       };
       postMap(parameters, courseMapToUpload, (successful) => {
         if (successful) {
-          updateMapImageArray();
           this.setState({
             changesMade: true,
             courseMapToUpload: null,
             dropZoneKeyCourse: dropZoneKeyCourse + 1,
+          }, () => {
+            updateMapImageArray();
           });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('course map upload successful');

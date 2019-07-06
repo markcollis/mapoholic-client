@@ -95,7 +95,15 @@ class UserEdit extends Component {
     // console.log('clubList:', clubList);
     const memberOfOptions = clubList
       .map((club) => {
-        return { value: club._id, label: club.shortName };
+        const {
+          _id: clubId,
+          shortName,
+          fullName,
+          country,
+        } = club;
+        const fullNameToDisplay = (fullName) ? `: ${fullName}` : '';
+        const countryToDisplay = (country !== '') ? ` (${country})` : '';
+        return { value: clubId, label: `${shortName}${fullNameToDisplay}${countryToDisplay}` };
       })
       .sort((a, b) => {
         if (a.label > b.label) return 1;

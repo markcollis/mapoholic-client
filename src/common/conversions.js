@@ -48,7 +48,16 @@ export const reformatTimestampDateOnly = (timestamp, locale = 'default') => {
     month: 'numeric',
     day: 'numeric',
   };
-  const reformattedTimestamp = new Intl.DateTimeFormat(localeToUse, options).format(newDate);
+  let reformattedTimestamp = new Intl.DateTimeFormat(localeToUse, options).format(newDate);
+  // strip leading 0 from day and month which en-GB locale provides
+  if (locale === 'en') {
+    // console.log('reformattedTimestamp', reformattedTimestamp);
+    const parts = reformattedTimestamp.split('/');
+    // console.log('parts', parts);
+    const newParts = parts.map(part => part.replace(/^0+/, ''));
+    // console.log('newParts', newParts);
+    reformattedTimestamp = newParts.join('/');
+  }
   return reformattedTimestamp;
   // const today = new Date();
   // const yesterday = (new Date()).setDate(today.getDate() - 1);
@@ -74,7 +83,7 @@ export const reformatTimestamp = (timestamp, locale = 'default') => {
     minute: '2-digit',
   };
   const time = new Intl.DateTimeFormat(localeToUse, options).format(newDate);
-  const date = reformatTimestampDateOnly(timestamp, localeToUse);
+  const date = reformatTimestampDateOnly(timestamp, locale);
   // console.log('time, date', time, date);
   const reformattedTimestamp = date.concat(' ').concat(time);
   return reformattedTimestamp;
