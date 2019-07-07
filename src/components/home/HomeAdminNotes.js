@@ -33,19 +33,22 @@ const HomeAdminNotes = () => {
             &nbsp;(all 2019 maps now added 6/7)
           </li>
           <li>Bug: hangs on Loading... event details when creating a new event</li>
+          <li>Suppress add event on MyMaps screen</li>
           <li>
             <del>Bug: map part title doesn&apos;t change in the tab when edited</del>
             &nbsp;(fixed 6/7)
           </li>
           <li>Bug?: Linked Event list doesn&apos;t update when a new event is created in link</li>
           <li>
-            Bug? (server): Does not change file names when title changes
-            (leave as is, now throws an error when uploading a map with a previously used title)
+            <del>Bug? (server): Does not change file names when title changes</del>
+            &nbsp;(leave them, throw an error when uploading a map with a previously used title,
+            deleting now renames the files to -deleted@... so they can be replaced 7/7)
           </li>
           <li>
           Use all four corners for map outline (Polygon not Rectangle) otherwise
           the likes of pootoceny Hradek breaks things...
           </li>
+          <li>Inconsistency: non-admins can see delete button for event links but cannot delete</li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -315,11 +318,12 @@ const HomeAdminNotes = () => {
       <hr className="divider" />
       <Collapse title="Other ideas for the future (non-essential):">
         <ol>
+          <li>Investigate making results editable/uploadable if not on ORIS</li>
+          <li>Support re-ordering of multi-part maps</li>
           <li>
             Investigate overlays - drawing own route, adding annotations, etc. =&gt;
             need to be able to save too... *react-canvas-draw*
           </li>
-          <li>Investigate making results editable/uploadable if not on ORIS</li>
           <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
           <li>
             Remove refresh list buttons? Should only be needed if a different user has updated
@@ -329,8 +333,8 @@ const HomeAdminNotes = () => {
           <li>User-specific preferences (e.g. language)</li>
           <li>Real-time (non-persistent) chat??</li>
           <li>
-          View multiple routes for the same course together? (e.g. 50% opacity for each?)
-          Only works in general if course is an overlay not complete image
+            View multiple routes for the same course together? (e.g. 50% opacity for each?)
+            Will only work well if course is an overlay not complete image
           </li>
         </ol>
       </Collapse>

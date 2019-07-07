@@ -140,11 +140,12 @@ class EventMapViewerEdit extends Component {
       };
       postMap(parameters, routeMapToUpload, (successful) => {
         if (successful) {
-          updateMapImageArray();
           this.setState({
             changesMade: true,
             routeMapToUpload: null,
             dropZoneKeyRoute: dropZoneKeyRoute + 1,
+          }, () => {
+            updateMapImageArray();
           });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('route map upload successful');
@@ -255,10 +256,13 @@ class EventMapViewerEdit extends Component {
         </div>
       )
       : <h4>{mapTitleToUpload}</h4>;
-    const editTitleButtonText = (mapTitleEditable)
-      ? <Trans>Confirm change</Trans>
-      : <Trans>Change title</Trans>;
-    const renderEditTitleButton = (mapTitle || mapTitle === '')
+    let editTitleButtonText = <Trans>Change title</Trans>;
+    if (mapTitle === '') editTitleButtonText = <Trans>Add title</Trans>;
+    if (mapTitleEditable) editTitleButtonText = <Trans>Confirm change</Trans>;
+    // const editTitleButtonText = (mapTitleEditable)
+    //   ? <Trans>Confirm change</Trans>
+    //   : (mapTitle === '') ? <Trans>Add title</Trans> : <Trans>Change title</Trans>;
+    const renderEditTitleButton = (typeof mapTitle === 'string')
       ? (
         <button
           className={`ui tiny button primary fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
@@ -316,7 +320,7 @@ class EventMapViewerEdit extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="column two wide"><Trans>Course</Trans></div>
+            <div className="column two wide right aligned"><Trans>Course</Trans></div>
             <div className="column four wide">
               {renderCourseThumbnail}
             </div>
@@ -348,7 +352,7 @@ class EventMapViewerEdit extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="column two wide"><Trans>Route</Trans></div>
+            <div className="column two wide right aligned"><Trans>Route</Trans></div>
             <div className="column four wide">
               {renderRouteThumbnail}
             </div>

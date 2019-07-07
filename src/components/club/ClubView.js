@@ -20,7 +20,7 @@ import {
   getClubMembersAction,
   getUserByIdAction,
   selectClubToDisplayAction,
-  selectEventForDetailsEventsAction,
+  selectEventIdEventsAction,
   selectUserToDisplayAction,
   setClubSearchFieldAction,
   setClubViewModeAction,
@@ -42,7 +42,7 @@ class ClubView extends Component {
     getClubList: PropTypes.func.isRequired,
     getClubMembers: PropTypes.func.isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
-    selectEventForDetails: PropTypes.func.isRequired,
+    selectEventId: PropTypes.func.isRequired,
     selectUserToDisplay: PropTypes.func.isRequired,
     setClubSearchField: PropTypes.func.isRequired,
     setClubViewMode: PropTypes.func.isRequired,
@@ -131,7 +131,7 @@ class ClubView extends Component {
       user,
       getClubList,
       selectClubToDisplay,
-      selectEventForDetails,
+      selectEventId,
       selectUserToDisplay,
       setClubViewMode,
       setUserViewMode,
@@ -182,7 +182,7 @@ class ClubView extends Component {
             <ClubEvents
               eventsList={eventsList} // derived
               language={language} // prop (config)
-              selectEventForDetails={selectEventForDetails} // prop
+              selectEventId={selectEventId} // prop
               setEventViewModeEvent={setEventViewModeEvent} // prop
             />
             <ClubMembers
@@ -210,7 +210,7 @@ class ClubView extends Component {
             <ClubEvents
               eventsList={eventsList} // derived
               language={language} // prop (config)
-              selectEventForDetails={selectEventForDetails} // prop
+              selectEventId={selectEventId} // prop
               setEventViewModeEvent={setEventViewModeEvent} // prop
             />
             <ClubMembers
@@ -362,7 +362,7 @@ const mapDispatchToProps = {
   getClubEvents: getClubEventsAction,
   getUserById: getUserByIdAction,
   selectClubToDisplay: selectClubToDisplayAction,
-  selectEventForDetails: selectEventForDetailsEventsAction, // forwards to Events view
+  selectEventId: selectEventIdEventsAction, // forwards to Events view
   selectUserToDisplay: selectUserToDisplayAction,
   setEventViewModeEvent: setEventViewModeEventEventsAction, // forwards to Events view
   setUserViewMode: setUserViewModeAction,

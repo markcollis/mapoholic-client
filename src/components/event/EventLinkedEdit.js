@@ -131,10 +131,9 @@ class EventLinkedEdit extends Component {
 }
 
 const formikEventLinkedEdit = withFormik({
-  mapPropsToValues({ selectedEventLink, eventLinkMode, linkDetails }) {
-    if (eventLinkMode === 'edit' && selectedEventLink) {
-      const selectedEventLinkDetails = linkDetails[selectedEventLink];
-      const { displayName, includes } = selectedEventLinkDetails;
+  mapPropsToValues({ eventLinkMode, linkData }) {
+    if (eventLinkMode === 'edit' && linkData) {
+      const { displayName, includes } = linkData;
       const sortedIncludes = [...includes].sort((a, b) => {
         if (a.date < b.date) return 1;
         if (a.date > b.date) return -1;
@@ -162,14 +161,15 @@ const formikEventLinkedEdit = withFormik({
     const {
       eventLinkMode,
       createEventLink,
-      getEventById,
+      // getEventById,
       getEventLinkList,
       getEventList,
+      linkData,
       updateEventLink,
-      selectedEventDetails,
-      selectedEventDisplay,
+      // selectedEventDetails,
+      // selectedEventIdMapView,
       setEventViewModeEventLink,
-      selectedEventLink,
+      // selectedEventLinkId,
     } = props;
     const valuesToSubmit = { displayName: values.displayName };
     valuesToSubmit.includes = (values.includes.length > 0)
@@ -180,12 +180,12 @@ const formikEventLinkedEdit = withFormik({
       createEventLink(valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           // re-fetch full details to capture changes to event links
-          if (selectedEventDetails !== '') getEventById(selectedEventDetails);
-          if (selectedEventDisplay !== '' && selectedEventDisplay !== selectedEventDetails) {
-            getEventById(selectedEventDisplay);
-          }
+          // if (selectedEventDetails !== '') getEventById(selectedEventDetails);
+          // if (selectedEventIdMapView !== '' && selectedEventIdMapView !== selectedEventDetails) {
+          //   getEventById(selectedEventIdMapView);
+          // }
           getEventList(null, () => {
-            getEventLinkList();
+            getEventLinkList(); // want to eliminate this in reducer
             setEventViewModeEventLink('view');
           });
         } else {
@@ -193,15 +193,16 @@ const formikEventLinkedEdit = withFormik({
         }
       });
     } else {
-      updateEventLink(selectedEventLink, valuesToSubmit, (didSucceed) => {
+      const { _id: selectedEventLinkId } = linkData;
+      updateEventLink(selectedEventLinkId, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           // re-fetch full details to capture changes to event links
-          if (selectedEventDetails !== '') getEventById(selectedEventDetails);
-          if (selectedEventDisplay !== '' && selectedEventDisplay !== selectedEventDetails) {
-            getEventById(selectedEventDisplay);
-          }
+          // if (selectedEventDetails !== '') getEventById(selectedEventDetails);
+          // if (selectedEventIdMapView !== '' && selectedEventIdMapView !== selectedEventDetails) {
+          //   getEventById(selectedEventIdMapView);
+          // }
           getEventList(null, () => {
-            getEventLinkList();
+            getEventLinkList(); // want to eliminate this in reducer
             setEventViewModeEventLink('view');
           });
         } else {

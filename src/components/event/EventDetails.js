@@ -17,6 +17,7 @@ const EventDetails = ({
   selectedEvent,
   setEventViewModeEvent,
 }) => {
+  // console.log('selectedEvent in EventDetails:', selectedEvent);
   if (!selectedEvent._id) {
     return (
       <div className="ui segment">
@@ -24,7 +25,6 @@ const EventDetails = ({
       </div>
     );
   }
-  // console.log('selectedEvent in EventDetails:', selectedEvent);
   const {
     owner,
     orisId,

@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 const EventDelete = ({
-  selectedEvent,
-  selectedEventDetails,
-  selectedEventDisplay,
   deleteEvent,
-  getEventList,
   getEventLinkList,
+  getEventList,
+  selectedEvent,
   setEventViewModeEvent,
-  selectEventForDetails,
-  selectEventToDisplay,
 }) => {
   if (!selectedEvent) return null;
   const { _id: eventId, name, date } = selectedEvent;
@@ -31,11 +27,13 @@ const EventDelete = ({
         onClick={() => {
           deleteEvent(eventId, (didSucceed) => {
             if (didSucceed) {
-              getEventList(null, () => {
+              getEventList(null, () => { // want to eliminate this in reducer
                 setEventViewModeEvent('none');
-                getEventLinkList();
-                if (eventId === selectedEventDetails) selectEventForDetails('');
-                if (eventId === selectedEventDisplay) selectEventToDisplay('');
+                getEventLinkList(); // want to eliminate this in reducer
+                // reset selectedEventId whether viewing or not - moved to reducer
+                // if (eventId === selectedEventIdEvents) selectEventIdEvents('');
+                // if (eventId === selectedEventIdMyMaps) selectEventIdMyMaps('');
+                // if (eventId === selectedEventIdMapView) selectEventIdMapView('');
               });
             }
           });
@@ -56,19 +54,13 @@ const EventDelete = ({
 
 EventDelete.propTypes = {
   selectedEvent: PropTypes.objectOf(PropTypes.any),
-  selectedEventDetails: PropTypes.string,
-  selectedEventDisplay: PropTypes.string,
   getEventList: PropTypes.func.isRequired,
   getEventLinkList: PropTypes.func.isRequired,
   deleteEvent: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
-  selectEventForDetails: PropTypes.func.isRequired,
-  selectEventToDisplay: PropTypes.func.isRequired,
 };
 EventDelete.defaultProps = {
   selectedEvent: null,
-  selectedEventDetails: '',
-  selectedEventDisplay: '',
 };
 
 export default EventDelete;

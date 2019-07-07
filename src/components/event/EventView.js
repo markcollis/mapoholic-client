@@ -30,9 +30,9 @@ import {
   getEventLinkListAction,
   getEventListAction,
   getEventListOrisAction,
-  selectEventForDetailsEventsAction,
-  selectEventForDetailsMyMapsAction,
-  selectEventToDisplayAction,
+  selectEventIdEventsAction,
+  selectEventIdMyMapsAction,
+  selectEventIdMapViewAction,
   selectRunnerToDisplayAction,
   setEventSearchFieldEventsAction,
   setEventSearchFieldMyMapsAction,
@@ -74,9 +74,9 @@ class EventView extends Component {
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
-    selectEventForDetailsEvents: PropTypes.func.isRequired,
-    selectEventForDetailsMyMaps: PropTypes.func.isRequired,
-    selectEventToDisplay: PropTypes.func.isRequired,
+    selectEventIdEvents: PropTypes.func.isRequired,
+    selectEventIdMyMaps: PropTypes.func.isRequired,
+    selectEventIdMapView: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
     setEventSearchFieldEvents: PropTypes.func.isRequired,
     setEventSearchFieldMyMaps: PropTypes.func.isRequired,
@@ -158,14 +158,15 @@ class EventView extends Component {
   });
 
   // helper to get details of selected event if input props have changed
-  getSelectedEvent = memoize((details, selectedEventDetails, errorMessage) => {
-    // console.log('getting selected event');
+  getSelectedEvent = memoize((details, selectedEventId, errorMessage) => {
+    console.log('getting selected event');
+    console.log('details, selectedEventId:', details, selectedEventId);
     // get detailed data for selected event if not already available
-    if (selectedEventDetails && !details[selectedEventDetails] && !errorMessage) {
+    if (selectedEventId && !details[selectedEventId] && !errorMessage) {
       const { getEventById } = this.props;
-      getEventById(selectedEventDetails);
+      getEventById(selectedEventId);
     }
-    return details[selectedEventDetails] || {};
+    return details[selectedEventId] || {};
   });
 
   // helper to return current user's id if input prop has changed
@@ -264,11 +265,11 @@ class EventView extends Component {
   handleSelectEventRunner = (eventId, userId) => {
     const {
       history,
-      selectEventToDisplay,
+      selectEventIdMapView,
       selectRunnerToDisplay,
       setEventViewModeEventMapView,
     } = this.props;
-    selectEventToDisplay(eventId);
+    selectEventIdMapView(eventId);
     setEventViewModeEventMapView('view');
     selectRunnerToDisplay(userId);
     history.push('/mapview');
@@ -279,8 +280,8 @@ class EventView extends Component {
   handleSelectEvent = (eventId) => {
     const {
       mineOnly,
-      selectEventForDetailsEvents,
-      selectEventForDetailsMyMaps,
+      selectEventIdEvents,
+      selectEventIdMyMaps,
       setEventViewModeEventEvents,
       setEventViewModeEventMyMaps,
       user,
@@ -288,7 +289,7 @@ class EventView extends Component {
     const { current } = user;
     if (current && mineOnly) {
       const { _id: userId } = current;
-      selectEventForDetailsMyMaps(eventId);
+      selectEventIdMyMaps(eventId);
       if (eventId === '') {
         setEventViewModeEventMyMaps('none');
       } else {
@@ -296,7 +297,7 @@ class EventView extends Component {
       }
       this.handleSelectEventRunner(eventId, userId);
     } else {
-      selectEventForDetailsEvents(eventId);
+      selectEventIdEvents(eventId);
       if (eventId === '') {
         setEventViewModeEventEvents('none');
       } else {
@@ -325,9 +326,9 @@ class EventView extends Component {
       getEventList,
       getEventLinkList,
       mineOnly,
-      selectEventForDetailsEvents,
-      selectEventForDetailsMyMaps,
-      selectEventToDisplay,
+      selectEventIdEvents,
+      selectEventIdMyMaps,
+      selectEventIdMapView,
       setEventViewModeEventEvents,
       setEventViewModeEventMyMaps,
       updateEvent,
@@ -339,27 +340,22 @@ class EventView extends Component {
       eventModeMyMaps,
       linkList,
       list,
-      selectedEventDetailsEvents, // different to MapView version
-      selectedEventDetailsMyMaps,
-      selectedEventDisplay,
+      selectedEventIdEvents, // different to MapView version
+      selectedEventIdMyMaps,
     } = oevent;
     const { details: clubDetails, list: clubList } = club;
     const { language } = config;
     const { current, list: userList } = user;
     // select appropriate props for Events or MyMaps view
-    const selectEventForDetails = (mineOnly)
-      ? selectEventForDetailsMyMaps
-      : selectEventForDetailsEvents;
+    const selectEventId = (mineOnly) ? selectEventIdMyMaps : selectEventIdEvents;
     const setEventViewModeEvent = (mineOnly)
       ? setEventViewModeEventMyMaps
       : setEventViewModeEventEvents;
     const eventMode = (mineOnly) ? eventModeMyMaps : eventModeEvents;
-    const selectedEventDetails = (mineOnly)
-      ? selectedEventDetailsMyMaps
-      : selectedEventDetailsEvents;
+    const selectedEventId = (mineOnly) ? selectedEventIdMyMaps : selectedEventIdEvents;
 
     const tagLists = this.getTagLists(list, mineOnly, current, language);
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
+    const selectedEvent = this.getSelectedEvent(details, selectedEventId, errorMessage);
     // different to MapView version
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
@@ -391,8 +387,8 @@ class EventView extends Component {
             language={language} // prop (config)
             orisList={orisEventsList} // derived
             selectedEvent={selectedEvent} // derived
-            selectEventForDetails={selectEventForDetails} // prop
-            selectEventToDisplay={selectEventToDisplay} // prop
+            selectEventId={selectEventId} // prop
+            selectEventIdMapView={selectEventIdMapView} // prop
             setEventViewModeEvent={setEventViewModeEvent} // prop
             tagList={tagLists.eventTags} // derived
           />
@@ -433,10 +429,6 @@ class EventView extends Component {
             getEventLinkList={getEventLinkList} // prop
             getEventList={getEventList} // prop
             selectedEvent={selectedEvent} // derived
-            selectedEventDetails={selectedEventDetails} // prop (oevent)
-            selectedEventDisplay={selectedEventDisplay} // prop (oevent)
-            selectEventForDetails={selectEventForDetails} // prop
-            selectEventToDisplay={selectEventToDisplay} // prop
             setEventViewModeEvent={setEventViewModeEvent} // prop
           />
         );
@@ -453,12 +445,12 @@ class EventView extends Component {
       user,
       createEventLink,
       deleteEventLink,
-      getEventById,
+      // getEventById,
       getEventLinkList,
       getEventList,
       mineOnly,
-      selectEventForDetailsEvents,
-      selectEventForDetailsMyMaps,
+      selectEventIdEvents,
+      selectEventIdMyMaps,
       setEventViewModeEventEvents,
       setEventViewModeEventMyMaps,
       setEventViewModeEventLink,
@@ -470,26 +462,26 @@ class EventView extends Component {
       errorMessage,
       eventLinkMode,
       list,
-      linkDetails,
+      // linkDetails, (same data as linkList)
       linkList,
-      selectedEventDetailsEvents,
-      selectedEventDetailsMyMaps,
-      selectedEventDisplay,
-      selectedEventLink,
+      selectedEventIdEvents,
+      selectedEventIdMyMaps,
+      // selectedEventIdMapView,
+      selectedEventLinkId,
     } = oevent;
     const { current } = user;
     // select appropriate props for Events or MyMaps view
-    const selectEventForDetails = (mineOnly)
-      ? selectEventForDetailsMyMaps
-      : selectEventForDetailsEvents;
+    const selectEventId = (mineOnly)
+      ? selectEventIdMyMaps
+      : selectEventIdEvents;
     const setEventViewModeEvent = (mineOnly)
       ? setEventViewModeEventMyMaps
       : setEventViewModeEventEvents;
-    const selectedEventDetails = (mineOnly)
-      ? selectedEventDetailsMyMaps
-      : selectedEventDetailsEvents;
+    const selectedEventId = (mineOnly)
+      ? selectedEventIdMyMaps
+      : selectedEventIdEvents;
 
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
+    const selectedEvent = this.getSelectedEvent(details, selectedEventId, errorMessage);
     // different from MapView version
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
@@ -508,9 +500,10 @@ class EventView extends Component {
                   isAdmin={isAdmin} // derived
                   language={language} // prop (config)
                   link={link} // derived (selectedEvent)
-                  linkDetails={linkDetails} // prop (oevent)
+                  linkList={linkList} // prop (oevent)
+                  // linkDetails={linkDetails} // prop (oevent)
                   selectedEvent={selectedEvent} // derived
-                  selectEvent={selectEventForDetails} // prop, different from MapView version
+                  selectEvent={selectEventId} // prop, different from MapView version
                   setEventViewModeEvent={setEventViewModeEvent} // prop
                   setEventViewModeEventLink={setEventViewModeEventLink} // prop
                 />
@@ -524,16 +517,16 @@ class EventView extends Component {
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
               eventList={list} // prop (oevent)
-              getEventById={getEventById} // prop
+              // getEventById={getEventById} // prop
               getEventLinkList={getEventLinkList} // prop
               getEventList={getEventList} // prop
               language={language} // prop (config)
-              linkDetails={linkDetails} // prop (oevent)
+              // linkDetails={linkDetails} // prop (oevent)
               linkList={linkList} // prop (oevent)
               selectedEvent={selectedEvent} // derived
-              selectedEventDetails={selectedEventDetails} // prop (oevent)
-              selectedEventDisplay={selectedEventDisplay} // prop (oevent)
-              selectedEventLink={selectedEventLink} // prop (oevent)
+              // selectedEventDetails={selectedEventDetails} // prop (oevent)
+              // selectedEventIdMapView={selectedEventIdMapView} // prop (oevent)
+              selectedEventLinkId={selectedEventLinkId} // prop (oevent)
               setEventViewModeEventLink={setEventViewModeEventLink} // prop
               updateEventLink={updateEventLink} // prop
             />
@@ -551,23 +544,21 @@ class EventView extends Component {
       user,
       addEventRunner,
       addEventRunnerOris,
-      selectEventToDisplay,
+      selectEventIdMapView,
       selectRunnerToDisplay,
     } = this.props;
     const {
       details,
       errorMessage,
-      selectedEventDetailsEvents, // only difference from version in MapView
-      selectedEventDetailsMyMaps,
+      selectedEventIdEvents, // only difference from version in MapView
+      selectedEventIdMyMaps,
     } = oevent;
     const { current } = user;
     const currentUserId = this.getCurrentUserId(current);
     const currentUserOrisId = this.getCurrentUserOrisId(current);
     // select appropriate props for Events or MyMaps view
-    const selectedEventDetails = (mineOnly)
-      ? selectedEventDetailsMyMaps
-      : selectedEventDetailsEvents;
-    const selectedEvent = this.getSelectedEvent(details, selectedEventDetails, errorMessage);
+    const selectedEventId = (mineOnly) ? selectedEventIdMyMaps : selectedEventIdEvents;
+    const selectedEvent = this.getSelectedEvent(details, selectedEventId, errorMessage);
 
     if (mineOnly) return null;
     return (
@@ -578,7 +569,7 @@ class EventView extends Component {
         currentUserOrisId={currentUserOrisId} // derived
         handleSelectEventRunner={this.handleSelectEventRunner} // derived
         selectedEvent={selectedEvent} // derived
-        selectEventToDisplay={selectEventToDisplay} // prop
+        selectEventId={selectEventIdMapView} // prop
         selectRunnerToDisplay={selectRunnerToDisplay} // prop
       />
     );
@@ -622,8 +613,8 @@ class EventView extends Component {
       setEventTagFilterMyMaps,
       setEventViewModeEventEvents,
       setEventViewModeEventMyMaps,
-      selectEventForDetailsEvents,
-      selectEventForDetailsMyMaps,
+      selectEventIdEvents,
+      selectEventIdMyMaps,
     } = this.props;
     const {
       list,
@@ -638,9 +629,9 @@ class EventView extends Component {
     // select appropriate props for Events or MyMaps view
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
     const tagFilter = (mineOnly) ? tagFilterMyMaps : tagFilterEvents;
-    const selectEventForDetails = (mineOnly)
-      ? selectEventForDetailsMyMaps
-      : selectEventForDetailsEvents;
+    const selectEventId = (mineOnly)
+      ? selectEventIdMyMaps
+      : selectEventIdEvents;
     const setEventViewModeEvent = (mineOnly)
       ? setEventViewModeEventMyMaps
       : setEventViewModeEventEvents;
@@ -669,7 +660,7 @@ class EventView extends Component {
         setEventTagFilter={setEventTagFilter}
         setEventViewModeEvent={setEventViewModeEvent}
         getEventList={getEventList}
-        selectEventForDetails={selectEventForDetails}
+        selectEventId={selectEventId}
       />
     );
   }
@@ -685,8 +676,8 @@ class EventView extends Component {
     const {
       searchFieldEvents,
       searchFieldMyMaps,
-      selectedEventDetailsEvents,
-      selectedEventDetailsMyMaps,
+      selectedEventIdEvents,
+      selectedEventIdMyMaps,
       list,
       tagFilterEvents,
       tagFilterMyMaps,
@@ -696,7 +687,7 @@ class EventView extends Component {
     // select appropriate props for Events or MyMaps view
     const searchField = (mineOnly) ? searchFieldMyMaps : searchFieldEvents;
     const tagFilter = (mineOnly) ? tagFilterMyMaps : tagFilterEvents;
-    const selectedEventId = (mineOnly) ? selectedEventDetailsMyMaps : selectedEventDetailsEvents;
+    const selectedEventId = (mineOnly) ? selectedEventIdMyMaps : selectedEventIdEvents;
     // need to consider reducing the number shown if there are many many events...
     const eventListArray = this.getEventListArray(list, searchField, tagFilter,
       current, mineOnly, language);
@@ -836,9 +827,9 @@ const mapDispatchToProps = {
   getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,
-  selectEventForDetailsEvents: selectEventForDetailsEventsAction,
-  selectEventForDetailsMyMaps: selectEventForDetailsMyMapsAction,
-  selectEventToDisplay: selectEventToDisplayAction,
+  selectEventIdEvents: selectEventIdEventsAction,
+  selectEventIdMyMaps: selectEventIdMyMapsAction,
+  selectEventIdMapView: selectEventIdMapViewAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
   setEventSearchFieldEvents: event => setEventSearchFieldEventsAction(event.target.value),
   setEventSearchFieldMyMaps: event => setEventSearchFieldMyMapsAction(event.target.value),

@@ -1,47 +1,48 @@
 import {
   AUTH_USER,
-  EVENT_GOT_LIST,
-  EVENT_GOT_EVENT_LINK_LIST,
-  EVENT_GOT_ORIS_LIST,
-  EVENT_GOT_BY_ID,
-  EVENT_CREATED, // same action whether or not ORIS ref is used
-  EVENT_LINK_CREATED,
-  EVENT_RUNNER_ADDED,
-  EVENT_MAP_UPLOADED,
-  EVENT_COMMENT_ADDED,
-  EVENT_UPDATED,
-  EVENT_RUNNER_UPDATED,
-  EVENT_LINK_UPDATED,
-  EVENT_COMMENT_UPDATED,
-  EVENT_DELETED,
-  EVENT_RUNNER_DELETED,
-  EVENT_MAP_DELETED,
-  EVENT_LINK_DELETED,
-  EVENT_COMMENT_DELETED,
-  EVENT_ERROR,
   EVENT_CHANGE_SEARCH_FIELD_EVENTS,
   EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
   EVENT_CHANGE_TAG_FILTER_EVENTS,
   EVENT_CHANGE_TAG_FILTER_MYMAPS,
   EVENT_CHANGE_VIEW_EVENT_EVENTS,
-  EVENT_CHANGE_VIEW_EVENT_MYMAPS,
-  EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
   EVENT_CHANGE_VIEW_EVENT_LINK,
+  EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
+  EVENT_CHANGE_VIEW_EVENT_MYMAPS,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_SELECT_EVENT_DETAILS_EVENTS,
-  EVENT_SELECT_EVENT_DETAILS_MYMAPS,
-  EVENT_SELECT_EVENT_DETAILS_MAPVIEW,
-  EVENT_SELECT_EVENT_DISPLAY,
-  EVENT_SELECT_RUNNER,
-  EVENT_SELECT_MAP,
+  EVENT_COMMENT_ADDED,
+  EVENT_COMMENT_DELETED,
+  EVENT_COMMENT_UPDATED,
+  EVENT_CREATED, // same action whether or not ORIS ref is used
+  EVENT_DELETED,
+  EVENT_ERROR,
+  EVENT_GOT_BY_ID,
+  EVENT_GOT_EVENT_LINK_LIST,
+  EVENT_GOT_LIST,
+  EVENT_GOT_ORIS_LIST,
+  EVENT_LINK_CREATED,
+  EVENT_LINK_DELETED,
+  EVENT_LINK_UPDATED,
+  EVENT_MAP_DELETED,
   EVENT_MAP_SET_BOUNDS_EVENTS,
   EVENT_MAP_SET_BOUNDS_MYMAPS,
+  EVENT_MAP_UPLOADED,
+  EVENT_RUNNER_ADDED,
+  EVENT_RUNNER_DELETED,
+  EVENT_RUNNER_UPDATED,
+  EVENT_SELECT_EVENT_ID_EVENTS,
+  EVENT_SELECT_EVENT_ID_MAPVIEW,
+  EVENT_SELECT_EVENT_ID_MYMAPS,
+  EVENT_SELECT_MAP,
+  EVENT_SELECT_RUNNER,
   EVENT_SET_MAP_VIEW_PARAMETERS,
+  EVENT_UPDATED,
 } from '../actions/types';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
+// Helper Functions
 // update event list as necessary for all actions that receive full details of an updated event
 const getUpdatedEventList = (list, payload) => {
+  // console.log('getUpdatedEventList list', list, payload);
   if (!list) return null;
   const newList = list.map((listedEvent) => {
     if (listedEvent._id === payload._id) {
@@ -107,115 +108,57 @@ const getUpdatedEventList = (list, payload) => {
     }
     return listedEvent;
   });
+  // console.log('newList:', newList);
   return newList;
 };
 
-// remove an event from list after deletion
-const removeEventFromList = (list, eventId) => {
+// remove a specific item (e.g. event/event link) from list after deletion
+const removeFromListById = (list, id) => {
   if (!list) return null;
-  const newList = list.filter(listedEvent => listedEvent._id !== eventId);
+  const newList = list.filter(listItem => listItem._id !== id);
   return newList;
 };
 
 const INITIAL_STATE = {
+  // Inputs
   searchFieldEvents: '', // contents of search box in EventHeader (Events view)
   searchFieldMyMaps: '', // contents of search box in EventHeader (MyMaps view)
   tagFilterEvents: '', // contents of tag filter dropdown in EventHeader (Events view)
   tagFilterMyMaps: '', // contents of tag filter dropdown in EventHeader (MyMaps view)
-  eventModeEvents: 'none', // none, view, add, edit, delete (Events view)
-  eventModeMyMaps: 'none', // none, view, add, edit, delete (MyMaps view)
-  eventModeMapView: 'view', // view, add, edit, delete (Map view)
+  // Current view modes
   eventLinkMode: 'view', // view, add, edit, delete
+  eventModeEvents: 'none', // none, view, add, edit, delete (Events view)
+  eventModeMapView: 'view', // view, add, edit, delete (Map view)
+  eventModeMyMaps: 'none', // none, view, add, edit, delete (MyMaps view)
   runnerMode: 'view', // none, view, edit, delete
-  list: null, // replaced each time API is queried, also populates corresponding details
-  linkList: null, // replaced each time API is queried
-  linkDetails: {}, // all link list records downloaded/updated
-  orisList: null, // replaced each time API is queried, list specific to current user
-  details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
-  selectedEventDetailsEvents: '', // eventId of event to show details of (Events view)
-  selectedEventDetailsMyMaps: '', // eventId of event to show details of (MyMaps view)
-  selectedEventDetailsMapView: '', // eventId of event to show details of (Map view)
-  selectedEventDisplay: '', // eventId of event to display maps for (can browse events without reset)
-  selectedEventLink: '', // eventLinkId of event link to edit or delete
-  selectedRunner: '', // userId of runner to display maps for
-  selectedMap: '', // mapId of map to display
+  // Current map view states
   mapBoundsEvents: null, // lat/long coords [[50, 14], [50.2, 14.2]],
   mapBoundsMyMaps: null, // lat/long coords [[50, 14], [50.2, 14.2]],
   mapViewParameters: {}, // view parameters (position, zoom, rotate), key is mapId
+  // Ids of items currently being viewed
+  selectedEventIdEvents: '', // eventId of event to show details of (Events view)
+  selectedEventIdMapView: '', // eventId of event to display maps for
+  selectedEventIdMyMaps: '', // eventId of event to show details of (MyMaps view)
+  selectedEventLinkId: '', // eventLinkId of event link to edit or delete
+  selectedMap: '', // mapId of map to display
+  selectedRunner: '', // userId of runner to display maps for
+  // API calls
+  details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
+  // linkDetails: {}, // all link list records downloaded/updated REDUNDANT
+  linkList: null, // replaced each time API is queried
+  list: null, // replaced each time API is queried, also populates corresponding details
+  orisList: null, // replaced each time API is queried, list specific to current user
   errorMessage: '', // empty unless an error occurs
 };
 
 const eventReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    // Reset on login or logout
     case AUTH_USER:
       // console.log('AUTH_USER payload:', action.payload);
-      return INITIAL_STATE; // clear on login or logout
-    case EVENT_GOT_LIST:
-      // console.log('EVENT_GOT_LIST payload:', action.payload);
-      return {
-        ...state,
-        errorMessage: '',
-        list: action.payload,
-      };
-    case EVENT_GOT_EVENT_LINK_LIST: {
-      // console.log('EVENT_GOT_EVENT_LINK_LIST payload:', action.payload);
-      const newDetails = { ...state.linkListDetails };
-      if (action.payload.length > 0) {
-        action.payload.forEach((link) => {
-          if (link._id) newDetails[link._id] = link;
-        });
-      }
-      return {
-        ...state,
-        errorMessage: '',
-        linkDetails: newDetails,
-        linkList: action.payload,
-      };
-    }
-    case EVENT_GOT_ORIS_LIST:
-      // console.log('EVENT_GOT_ORIS_LIST payload:', action.payload);
-      return {
-        ...state,
-        errorMessage: '',
-        orisList: action.payload,
-      };
-    case EVENT_GOT_BY_ID:
-      // console.log('EVENT_GOT_BY_ID payload:', action.payload);
-      return {
-        ...state,
-        details: { ...state.details, [action.payload._id]: action.payload },
-        errorMessage: '',
-        list: getUpdatedEventList(state.list, action.payload),
-      };
-    case EVENT_CREATED:
-      // console.log('EVENT_CREATED payload:', action.payload);
-      return {
-        ...state,
-        details: { ...state.details, [action.payload._id]: action.payload },
-        errorMessage: '',
-        selectedEventDetails: action.payload._id, // selectedEventDisplay as well?
-      };
-    case EVENT_LINK_CREATED:
-      // console.log('EVENT_LINK_CREATED payload:', action.payload);
-      return {
-        ...state,
-        errorMessage: '',
-        linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
-      };
-    case EVENT_RUNNER_ADDED:
-      // console.log('EVENT_RUNNER_ADDED payload:', action.payload);
-      return {
-        ...state,
-        details: { ...state.details, [action.payload._id]: action.payload },
-        errorMessage: '',
-        list: getUpdatedEventList(state.list, action.payload),
-      };
-    case EVENT_ERROR:
-      // console.log('EVENT_ERROR payload:', action.payload);
-      return {
-        ...state,
-        errorMessage: action.payload,
-      };
+      return INITIAL_STATE;
+
+    // Inputs
     case EVENT_CHANGE_SEARCH_FIELD_EVENTS:
       // console.log('EVENT_CHANGE_SEARCH_FIELD_EVENTS payload:', action.payload);
       return {
@@ -240,6 +183,15 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         ...state,
         tagFilterMyMaps: action.payload,
       };
+
+    // Current view modes
+    case EVENT_CHANGE_VIEW_EVENT_LINK: // view mode *and* id
+      // console.log('EVENT_CHANGE_VIEW_EVENT_LINK payload:', action.payload);
+      return {
+        ...state,
+        eventLinkMode: action.payload.mode,
+        selectedEventLinkId: action.payload.target,
+      };
     case EVENT_CHANGE_VIEW_EVENT_EVENTS:
       // console.log('EVENT_CHANGE_VIEW_EVENT_EVENTS payload:', action.payload);
       return {
@@ -258,55 +210,14 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         ...state,
         eventModeMapView: action.payload,
       };
-    case EVENT_CHANGE_VIEW_EVENT_LINK:
-      // console.log('EVENT_CHANGE_VIEW_EVENT_LINK payload:', action.payload);
-      return {
-        ...state,
-        eventLinkMode: action.payload.mode,
-        selectedEventLink: action.payload.target,
-      };
     case EVENT_CHANGE_VIEW_RUNNER:
       // console.log('EVENT_CHANGE_VIEW_RUNNER payload:', action.payload);
       return {
         ...state,
         runnerMode: action.payload,
       };
-    case EVENT_SELECT_EVENT_DETAILS_EVENTS:
-      // console.log('EVENT_SELECT_EVENT_DETAILS_EVENTS payload:', action.payload);
-      return {
-        ...state,
-        selectedEventDetailsEvents: action.payload,
-      };
-    case EVENT_SELECT_EVENT_DETAILS_MYMAPS:
-      // console.log('EVENT_SELECT_EVENT_DETAILS_MYMAPS payload:', action.payload);
-      return {
-        ...state,
-        selectedEventDetailsMyMaps: action.payload,
-      };
-    case EVENT_SELECT_EVENT_DETAILS_MAPVIEW:
-      // console.log('EVENT_SELECT_EVENT_DETAILS_MAPVIEW payload:', action.payload);
-      return {
-        ...state,
-        selectedEventDetailsMapView: action.payload,
-      };
-    case EVENT_SELECT_EVENT_DISPLAY:
-      // console.log('EVENT_SELECT_EVENT_DISPLAY payload:', action.payload);
-      return {
-        ...state,
-        selectedEventDisplay: action.payload,
-      };
-    case EVENT_SELECT_RUNNER:
-      // console.log('EVENT_SELECT_RUNNER payload:', action.payload);
-      return {
-        ...state,
-        selectedRunner: action.payload,
-      };
-    case EVENT_SELECT_MAP:
-      // console.log('EVENT_SELECT_MAP payload:', action.payload);
-      return {
-        ...state,
-        selectedMap: action.payload,
-      };
+
+    // Current map view states
     case EVENT_MAP_SET_BOUNDS_EVENTS:
       // console.log('EVENT_MAP_SET_BOUNDS_EVENTS:', action.payload);
       return {
@@ -327,6 +238,79 @@ const eventReducer = (state = INITIAL_STATE, action) => {
           ...state.mapViewParameters,
           [action.payload.mapId]: action.payload,
         },
+      };
+
+    // Ids of items currently being viewed
+    case EVENT_SELECT_EVENT_ID_EVENTS:
+      // console.log('EVENT_SELECT_EVENT_ID_EVENTS payload:', action.payload);
+      return {
+        ...state,
+        selectedEventIdEvents: action.payload,
+      };
+    case EVENT_SELECT_EVENT_ID_MYMAPS:
+      // console.log('EVENT_SELECT_EVENT_ID_MYMAPS payload:', action.payload);
+      return {
+        ...state,
+        selectedEventIdMyMaps: action.payload,
+      };
+    case EVENT_SELECT_EVENT_ID_MAPVIEW:
+      // console.log('EVENT_SELECT_EVENT_ID_MAPVIEW payload:', action.payload);
+      return {
+        ...state,
+        selectedEventIdMapView: action.payload,
+      };
+    case EVENT_SELECT_RUNNER:
+      // console.log('EVENT_SELECT_RUNNER payload:', action.payload);
+      return {
+        ...state,
+        selectedRunner: action.payload,
+      };
+    case EVENT_SELECT_MAP:
+      // console.log('EVENT_SELECT_MAP payload:', action.payload);
+      return {
+        ...state,
+        selectedMap: action.payload,
+      };
+
+    // API calls
+      // list: null, // replaced each time API is queried, also populates corresponding details
+      // details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
+    case EVENT_GOT_LIST:
+      // console.log('EVENT_GOT_LIST payload:', action.payload);
+      return {
+        ...state,
+        errorMessage: '',
+        list: action.payload,
+      };
+    case EVENT_GOT_BY_ID:
+      // console.log('EVENT_GOT_BY_ID payload:', action.payload);
+      return {
+        ...state,
+        details: { ...state.details, [action.payload._id]: action.payload },
+        errorMessage: '',
+        list: getUpdatedEventList(state.list, action.payload),
+      };
+    case EVENT_CREATED:
+      // console.log('EVENT_CREATED payload:', action.payload);
+      return {
+        ...state,
+        details: { ...state.details, [action.payload._id]: action.payload },
+        errorMessage: '',
+        selectedEventIdEvents: action.payload._id, // want to redirect to /events on creation
+        list: getUpdatedEventList([...state.list, { // add summary to list
+          _id: action.payload._id,
+        }], action.payload),
+      };
+    case EVENT_UPDATED:
+    case EVENT_RUNNER_ADDED: // same thing, runner addition returns whole event
+    case EVENT_RUNNER_DELETED: // same thing, runner delete returns whole event minus runner
+    case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
+      // console.log('EVENT_UPDATED payload:', action.payload);
+      return {
+        ...state,
+        details: { ...state.details, [action.payload._id]: action.payload },
+        errorMessage: '',
+        list: getUpdatedEventList(state.list, action.payload),
       };
     case EVENT_MAP_DELETED: // same as uploaded, refresh event details record
     case EVENT_MAP_UPLOADED: {
@@ -363,16 +347,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         selectedMap: updatedMapId,
       };
     }
-    case EVENT_UPDATED:
-    case EVENT_RUNNER_DELETED: // same thing, runner delete returns whole event minus runner
-    case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
-      // console.log('EVENT_UPDATED payload:', action.payload);
-      return {
-        ...state,
-        details: { ...state.details, [action.payload._id]: action.payload },
-        errorMessage: '',
-        list: getUpdatedEventList(state.list, action.payload),
-      };
     case EVENT_COMMENT_UPDATED:
     case EVENT_COMMENT_DELETED:
     case EVENT_COMMENT_ADDED: { // API returns relevant comments array
@@ -397,29 +371,82 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     }
-    case EVENT_LINK_UPDATED:
-      // console.log('EVENT_LINK_UPDATED payload:', action.payload);
-      return {
-        ...state,
-        linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
-        errorMessage: '',
-      };
     case EVENT_DELETED:
       // console.log('EVENT_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
         errorMessage: '',
-        list: removeEventFromList(state.list, action.payload._id),
-        selectedEventDetails: '',
+        list: removeFromListById(state.list, action.payload._id),
+        selectedEventIdEvents: ((state.selectedEventIdEvents === action.payload._id)
+          ? ''
+          : state.selectedEventIdEvents),
+        selectedEventIdMyMaps: ((state.selectedEventIdMyMaps === action.payload._id)
+          ? ''
+          : state.selectedEventIdMyMaps),
+        selectedEventIdMapView: ((state.selectedEventIdMapView === action.payload._id)
+          ? ''
+          : state.selectedEventIdMapView),
       };
+
+    // linkList: null, // replaced each time API is queried
+    case EVENT_GOT_EVENT_LINK_LIST: {
+      // console.log('EVENT_GOT_EVENT_LINK_LIST payload:', action.payload);
+      // const newDetails = { ...state.linkListDetails };
+      // if (action.payload.length > 0) {
+      //   action.payload.forEach((link) => {
+      //     if (link._id) newDetails[link._id] = link;
+      //   });
+      // }
+      return {
+        ...state,
+        errorMessage: '',
+        // linkDetails: newDetails,
+        linkList: action.payload,
+      };
+    }
+    case EVENT_LINK_CREATED:
+      // console.log('EVENT_LINK_CREATED payload:', action.payload);
+      return {
+        ...state,
+        errorMessage: '',
+        // linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
+      };
+      // *** need to add appropriate updates to details, list and linkedList *** //
+    case EVENT_LINK_UPDATED:
+      // console.log('EVENT_LINK_UPDATED payload:', action.payload);
+      return {
+        ...state,
+        // linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
+        errorMessage: '',
+      };
+      // *** need to add appropriate updates to details, list and linkedList *** //
     case EVENT_LINK_DELETED:
       // console.log('EVENT_LINK_DELETED payload:', action.payload);
       return {
         ...state,
-        linkDetails: { ...state.linkDetails, [action.payload._id]: null },
+        // linkDetails: { ...state.linkDetails, [action.payload._id]: null },
+        linkList: removeFromListById(state.linkList, action.payload._id),
         errorMessage: '',
-        selectedEventLink: '',
+        selectedEventLinkId: '',
+      };
+      // *** need to add appropriate updates to details, list and linkedList *** //
+
+    // orisList: null, // replaced each time API is queried, list specific to current user
+    case EVENT_GOT_ORIS_LIST:
+      // console.log('EVENT_GOT_ORIS_LIST payload:', action.payload);
+      return {
+        ...state,
+        errorMessage: '',
+        orisList: action.payload,
+      };
+
+    // errorMessage: '', // empty unless an error occurs
+    case EVENT_ERROR:
+      // console.log('EVENT_ERROR payload:', action.payload);
+      return {
+        ...state,
+        errorMessage: action.payload,
       };
     default:
       return state;

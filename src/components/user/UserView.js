@@ -20,7 +20,7 @@ import {
   getUserEventsAction,
   getUserListAction,
   postProfileImageAction,
-  selectEventToDisplayAction,
+  selectEventIdMapViewAction,
   selectRunnerToDisplayAction,
   selectUserToDisplayAction,
   setUserSearchFieldAction,
@@ -44,7 +44,7 @@ class UserView extends Component {
     getUserEvents: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
     postProfileImage: PropTypes.func.isRequired,
-    selectEventToDisplay: PropTypes.func.isRequired,
+    selectEventIdMapView: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
     selectUserToDisplay: PropTypes.func.isRequired,
     setUserSearchField: PropTypes.func.isRequired,
@@ -329,7 +329,7 @@ class UserView extends Component {
     const {
       config,
       ownProfile,
-      selectEventToDisplay,
+      selectEventIdMapView,
       selectRunnerToDisplay,
       user,
     } = this.props;
@@ -360,7 +360,7 @@ class UserView extends Component {
           eventsList={eventsList} // derived
           language={language} // prop (config)
           selectedUser={selectedUser} // derived
-          selectEventToDisplay={selectEventToDisplay} // prop
+          selectEventIdMapView={selectEventIdMapView} // prop
           selectRunnerToDisplay={selectRunnerToDisplay} // prop
         />
       </div>
@@ -438,7 +438,7 @@ const mapDispatchToProps = {
   getUserEvents: getUserEventsAction,
   getUserList: getUserListAction,
   postProfileImage: postProfileImageAction,
-  selectEventToDisplay: selectEventToDisplayAction,
+  selectEventIdMapView: selectEventIdMapViewAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
   selectUserToDisplay: selectUserToDisplayAction,
   setUserSearchField: event => setUserSearchFieldAction(event.target.value),

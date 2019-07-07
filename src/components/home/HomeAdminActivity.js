@@ -9,8 +9,8 @@ import Table from '../generic/Table';
 import { reformatTimestamp, reformatTimestampDateOnly } from '../../common/conversions';
 import {
   selectClubToDisplayAction,
-  selectEventForDetailsEventsAction,
-  selectEventToDisplayAction,
+  selectEventIdEventsAction,
+  selectEventIdMapViewAction,
   selectRunnerToDisplayAction,
   selectUserToDisplayAction,
   setClubViewModeAction,
@@ -27,8 +27,8 @@ class HomeAdminActivity extends Component {
     refreshCollapse: PropTypes.number.isRequired,
     requestRefreshCollapse: PropTypes.func.isRequired,
     selectClubToDisplay: PropTypes.func.isRequired,
-    selectEventForDetailsEvents: PropTypes.func.isRequired,
-    selectEventToDisplay: PropTypes.func.isRequired,
+    selectEventIdEvents: PropTypes.func.isRequired,
+    selectEventIdMapView: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
     selectUserToDisplay: PropTypes.func.isRequired,
     setClubViewMode: PropTypes.func.isRequired,
@@ -56,10 +56,10 @@ class HomeAdminActivity extends Component {
   redirectToEvent = (eventId) => {
     const {
       history,
-      selectEventForDetailsEvents,
+      selectEventIdEvents,
       setEventViewModeEventEvents,
     } = this.props;
-    selectEventForDetailsEvents(eventId);
+    selectEventIdEvents(eventId);
     setEventViewModeEventEvents('view');
     history.push('/events');
     window.scrollTo(0, 0);
@@ -68,11 +68,11 @@ class HomeAdminActivity extends Component {
   redirectToEventRunner = (eventId, userId) => {
     const {
       history,
-      selectEventToDisplay,
+      selectEventIdMapView,
       selectRunnerToDisplay,
       setEventViewModeEventMapView,
     } = this.props;
-    selectEventToDisplay(eventId);
+    selectEventIdMapView(eventId);
     setEventViewModeEventMapView('view');
     selectRunnerToDisplay(userId);
     history.push('./mapview');
@@ -233,8 +233,8 @@ class HomeAdminActivity extends Component {
 
 const mapDispatchToProps = {
   selectClubToDisplay: selectClubToDisplayAction,
-  selectEventForDetailsEvents: selectEventForDetailsEventsAction,
-  selectEventToDisplay: selectEventToDisplayAction,
+  selectEventIdEvents: selectEventIdEventsAction,
+  selectEventIdMapView: selectEventIdMapViewAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
   selectUserToDisplay: selectUserToDisplayAction,
   setClubViewMode: setClubViewModeAction,

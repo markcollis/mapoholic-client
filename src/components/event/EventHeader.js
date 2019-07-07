@@ -13,7 +13,7 @@ const EventFilter = ({
   setEventSearchField,
   setEventTagFilter,
   setEventViewModeEvent,
-  selectEventForDetails,
+  selectEventId,
   getEventList,
 }) => {
   // const dropdownStyle = {};
@@ -90,7 +90,7 @@ const EventFilter = ({
               type="button"
               className="ui tiny button primary right floated"
               onClick={() => {
-                selectEventForDetails('');
+                selectEventId('');
                 setEventViewModeEvent('add');
               }}
             >
@@ -116,7 +116,7 @@ EventFilter.propTypes = {
   setEventSearchField: PropTypes.func.isRequired,
   setEventTagFilter: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
-  selectEventForDetails: PropTypes.func.isRequired,
+  selectEventId: PropTypes.func.isRequired,
   getEventList: PropTypes.func.isRequired,
 };
 EventFilter.defaultProps = {

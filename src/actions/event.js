@@ -28,10 +28,9 @@ import {
   EVENT_CHANGE_VIEW_EVENT_MAPVIEW,
   EVENT_CHANGE_VIEW_EVENT_LINK,
   EVENT_CHANGE_VIEW_RUNNER,
-  EVENT_SELECT_EVENT_DETAILS_EVENTS,
-  EVENT_SELECT_EVENT_DETAILS_MYMAPS,
-  EVENT_SELECT_EVENT_DETAILS_MAPVIEW,
-  EVENT_SELECT_EVENT_DISPLAY,
+  EVENT_SELECT_EVENT_ID_EVENTS,
+  EVENT_SELECT_EVENT_ID_MYMAPS,
+  EVENT_SELECT_EVENT_ID_MAPVIEW,
   EVENT_SELECT_RUNNER,
   EVENT_SELECT_MAP,
   EVENT_SET_MAP_VIEW_PARAMETERS,
@@ -118,23 +117,18 @@ export const setEventTagFilterMyMapsAction = text => ({
   payload: text,
 });
 // select an event to show additional details (Events view)
-export const selectEventForDetailsEventsAction = eventId => ({
-  type: EVENT_SELECT_EVENT_DETAILS_EVENTS,
+export const selectEventIdEventsAction = eventId => ({
+  type: EVENT_SELECT_EVENT_ID_EVENTS,
   payload: eventId,
 });
 // select an event to show additional details (MyMaps view)
-export const selectEventForDetailsMyMapsAction = eventId => ({
-  type: EVENT_SELECT_EVENT_DETAILS_MYMAPS,
+export const selectEventIdMyMapsAction = eventId => ({
+  type: EVENT_SELECT_EVENT_ID_MYMAPS,
   payload: eventId,
 });
-// select an event to show additional details (Map view)
-export const selectEventForDetailsMapViewAction = eventId => ({
-  type: EVENT_SELECT_EVENT_DETAILS_MAPVIEW,
-  payload: eventId,
-});
-// select an event to display maps for
-export const selectEventToDisplayAction = eventId => ({
-  type: EVENT_SELECT_EVENT_DISPLAY,
+// select an event to display maps (Map view)
+export const selectEventIdMapViewAction = eventId => ({
+  type: EVENT_SELECT_EVENT_ID_MAPVIEW,
   payload: eventId,
 });
 // select a runner at an event to display maps for

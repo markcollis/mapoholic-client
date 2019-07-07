@@ -128,7 +128,7 @@ class Header extends Component {
       setLanguage,
     } = this.props;
     const { current } = user;
-    const { selectedEventDisplay, selectedRunner } = oevent;
+    const { selectedEventIdMapView, selectedRunner } = oevent;
     const userDetails = (current)
       ? (
         <div>
@@ -249,7 +249,7 @@ class Header extends Component {
           <div className="ui menu secondary pointing stackable">
             <Link to="/" className={(isHome) ? 'active item' : 'item'}><i className="icon home" /></Link>
             <span className="header__menu--divider" />
-            {(selectedEventDisplay && selectedRunner)
+            {(selectedEventIdMapView && selectedRunner)
               ? (
                 <>
                   <Link to="/mapview" className={(isMapView) ? 'active blue item' : 'item'}>

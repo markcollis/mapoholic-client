@@ -10,14 +10,14 @@ const ClubEvents = ({
   eventsList,
   history,
   language,
-  selectEventForDetails,
+  selectEventId,
   setEventViewModeEvent,
 }) => {
   if (eventsList.length === 0) {
     return null;
   }
   const handleSelectEvent = (eventId) => {
-    selectEventForDetails(eventId);
+    selectEventId(eventId);
     setEventViewModeEvent('view');
     history.push('/events');
     window.scrollTo(0, 0);
@@ -55,7 +55,7 @@ ClubEvents.propTypes = {
   eventsList: PropTypes.arrayOf(PropTypes.object),
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   language: PropTypes.string.isRequired,
-  selectEventForDetails: PropTypes.func.isRequired,
+  selectEventId: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
 };
 ClubEvents.defaultProps = {

@@ -10,7 +10,8 @@ const EventLinked = ({
   isAdmin,
   language,
   link,
-  linkDetails,
+  linkList,
+  // linkDetails,
   selectedEvent,
   selectEvent,
   setEventViewModeEvent,
@@ -19,23 +20,26 @@ const EventLinked = ({
   // console.log('linkDetails:', linkDetails);
   const { _id: linkId, displayName } = link;
   const { _id: eventId } = selectedEvent;
-  if (!eventId) return null;
-  if (!linkId) {
-    return (
-      <div className="ui segment">
-        <h3 className="header"><Trans>Linked events</Trans></h3>
-        <p><Trans>This event is not currently linked to any others.</Trans></p>
-      </div>
-    );
-  }
-  if (!linkDetails[linkId]) {
+  if (!eventId || !linkList) return null;
+  // if (!linkId) { // SHOULD NEVER HAPPEN
+  //   return (
+  //     <div className="ui segment">
+  //       <h3 className="header"><Trans>Linked events</Trans></h3>
+  //       <p><Trans>This event is not currently linked to any others.</Trans></p>
+  //     </div>
+  //   );
+  // }
+  /* eslint-disable no-underscore-dangle */
+  const linkData = linkList.find(eachLink => eachLink._id === linkId);
+  /* eslint-enable */
+  if (!linkData) {
     return (
       <div className="ui warning message">
         <Trans>{`Event link details not found for ${linkId}`}</Trans>
       </div>
     );
   }
-  const sortedLinkedEventArray = [...linkDetails[linkId].includes].sort((a, b) => {
+  const sortedLinkedEventArray = [...linkData.includes].sort((a, b) => {
     if (a.date < b.date) return 1;
     if (a.date > b.date) return -1;
     return 0;
@@ -107,7 +111,8 @@ EventLinked.propTypes = {
   isAdmin: PropTypes.bool,
   language: PropTypes.string.isRequired,
   link: PropTypes.objectOf(PropTypes.any),
-  linkDetails: PropTypes.objectOf(PropTypes.any),
+  linkList: PropTypes.arrayOf(PropTypes.object),
+  // linkDetails: PropTypes.objectOf(PropTypes.any),
   selectedEvent: PropTypes.objectOf(PropTypes.any),
   selectEvent: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
@@ -118,7 +123,8 @@ EventLinked.defaultProps = {
   eventLinkMode: 'view',
   isAdmin: false,
   link: {},
-  linkDetails: {},
+  linkList: null,
+  // linkDetails: {},
   selectedEvent: {},
 };
 

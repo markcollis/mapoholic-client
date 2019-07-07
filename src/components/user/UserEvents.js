@@ -11,7 +11,7 @@ const UserEvents = ({
   history,
   language,
   selectedUser,
-  selectEventToDisplay,
+  selectEventIdMapView,
   selectRunnerToDisplay,
 }) => {
   if (eventsList.length === 0) {
@@ -19,7 +19,7 @@ const UserEvents = ({
   }
   const { _id: userId } = selectedUser;
   const handleSelectEvent = (eventId) => {
-    selectEventToDisplay(eventId);
+    selectEventIdMapView(eventId);
     selectRunnerToDisplay(userId);
     history.push('/mapview');
   };
@@ -57,7 +57,7 @@ UserEvents.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   language: PropTypes.string.isRequired,
   selectedUser: PropTypes.objectOf(PropTypes.any).isRequired,
-  selectEventToDisplay: PropTypes.func.isRequired,
+  selectEventIdMapView: PropTypes.func.isRequired,
   selectRunnerToDisplay: PropTypes.func.isRequired,
 };
 UserEvents.defaultProps = {
