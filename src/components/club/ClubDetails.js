@@ -11,6 +11,7 @@ import forest from '../../graphics/blueForest.png';
 const ClubDetails = ({
   canEdit,
   language,
+  requestRefreshCollapse,
   selectedClub,
   setClubViewMode,
 }) => {
@@ -64,7 +65,15 @@ const ClubDetails = ({
     : null;
   const displayProfile = (
     <div>
-      <img className="club-details__background-image" alt="forest" src={forest} />
+      <img
+        className="club-details__background-image"
+        alt="forest"
+        src={forest}
+        onLoad={() => {
+          // console.log('image loaded!');
+          requestRefreshCollapse();
+        }}
+      />
       <div className="club-details__summary">
         <h3>{shortName}</h3>
         {(fullName)
@@ -73,11 +82,17 @@ const ClubDetails = ({
         <div className="ui list">
           <div className="item">
             <i className="marker icon" />
-            {country}
+            <div className="content">
+              {country}
+            </div>
           </div>
           <div className="item">
             <i className="linkify icon" />
-            {website}
+            <div className="content">
+              <a href={website} target="_blank" rel="noopener noreferrer">
+                <Trans>Website</Trans>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -97,6 +112,7 @@ const ClubDetails = ({
 ClubDetails.propTypes = {
   canEdit: PropTypes.bool,
   language: PropTypes.string.isRequired,
+  requestRefreshCollapse: PropTypes.func.isRequired,
   selectedClub: PropTypes.objectOf(PropTypes.any),
   setClubViewMode: PropTypes.func.isRequired,
 };

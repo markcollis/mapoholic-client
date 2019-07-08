@@ -103,21 +103,27 @@ const UserDetails = ({
           {(location && location !== '')
             ? (
               <div className="item">
-                <i className="marker icon" />
-                {location}
+                <div className="content">
+                  <i className="marker icon" />
+                  {location}
+                </div>
               </div>
             )
             : null
           }
           <div className="item">
             <i className="mail icon" />
-            {email}
+            <div className="content">
+              <a href={`mailto:${email}`}>{email}</a>
+            </div>
           </div>
           {(regNumber && regNumber !== '')
             ? (
               <div className="item">
-                <i className="compass outline icon" />
-                {regNumber}
+                <div className="content">
+                  <i className="compass outline icon" />
+                  {regNumber}
+                </div>
               </div>
             )
             : null

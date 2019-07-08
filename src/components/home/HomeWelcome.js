@@ -82,6 +82,15 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
       </p>
     </>
   );
+  const linkOMaps = (
+    <a
+      href="https://www.google.com/search?q=orienteering+maps&tbm=isch"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Trans>orienteering maps...</Trans>
+    </a>
+  );
 
   // <img className="ui medium right floated image home-image" src={logo} alt="MapOholic logo" />
   return (
@@ -90,7 +99,10 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
         <Trans>Welcome to MapOholic!</Trans>
       </p>
       <p>
-        <Trans>Dedicated to those that know you can never have too many maps...</Trans>
+        <Trans>
+          Dedicated to those that know you can never have too many
+          {linkOMaps}
+        </Trans>
       </p>
       {(auth) ? <p><Trans>You are currently logged in.</Trans></p> : visitorWelcome}
       {(isGuest) ? guestWelcome : ''}

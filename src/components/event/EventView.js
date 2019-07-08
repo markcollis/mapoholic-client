@@ -27,7 +27,6 @@ import {
   deleteEventAction,
   deleteEventLinkAction,
   getEventByIdAction,
-  // getEventLinkListAction,
   getEventListAction,
   getEventListOrisAction,
   selectEventIdEventsAction,
@@ -71,7 +70,6 @@ class EventView extends Component {
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
-    // getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
     selectEventIdEvents: PropTypes.func.isRequired,
@@ -605,6 +603,8 @@ class EventView extends Component {
       selectEventIdMyMaps,
     } = this.props;
     const {
+      eventModeEvents,
+      eventModeMyMaps,
       list,
       searchFieldEvents,
       searchFieldMyMaps,
@@ -635,21 +635,23 @@ class EventView extends Component {
     const clearEventTagFilter = (mineOnly)
       ? clearEventTagFilterMyMaps
       : clearEventTagFilterEvents;
+    const eventMode = (mineOnly) ? eventModeMyMaps : eventModeEvents;
 
     return (
       <EventHeader
-        currentUser={current}
-        searchField={searchField}
-        tagFilter={tagFilter}
-        tagLists={tagLists}
         clearEventSearchField={clearEventSearchField}
         clearEventTagFilter={clearEventTagFilter}
+        currentUser={current}
+        eventMode={eventMode}
+        getEventList={getEventList}
+        mineOnly={mineOnly}
+        searchField={searchField}
+        selectEventId={selectEventId}
         setEventSearchField={setEventSearchField}
         setEventTagFilter={setEventTagFilter}
         setEventViewModeEvent={setEventViewModeEvent}
-        getEventList={getEventList}
-        selectEventId={selectEventId}
-        mineOnly={mineOnly}
+        tagFilter={tagFilter}
+        tagLists={tagLists}
       />
     );
   }

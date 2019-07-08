@@ -4,11 +4,11 @@ import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 
 const ClubHeader = ({
+  getClubList,
   searchField,
   setClubSearchField,
   setClubViewMode,
-  selectClubToDisplay,
-  getClubList,
+  viewMode,
 }) => {
   return (
     <div className="ui stackable grid">
@@ -29,10 +29,10 @@ const ClubHeader = ({
       </div>
       <div className="column six wide right floated">
         <button
+          disabled={(['add', 'edit', 'delete'].includes(viewMode))}
           type="button"
           className="ui tiny button primary right floated"
           onClick={() => {
-            selectClubToDisplay('');
             setClubViewMode('add');
           }}
         >
@@ -51,11 +51,11 @@ const ClubHeader = ({
 };
 
 ClubHeader.propTypes = {
+  getClubList: PropTypes.func.isRequired,
   searchField: PropTypes.string.isRequired,
   setClubSearchField: PropTypes.func.isRequired,
   setClubViewMode: PropTypes.func.isRequired,
-  selectClubToDisplay: PropTypes.func.isRequired,
-  getClubList: PropTypes.func.isRequired,
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default ClubHeader;

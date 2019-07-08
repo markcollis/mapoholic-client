@@ -27,6 +27,7 @@ class ClubEdit extends Component {
     setClubViewMode: PropTypes.func.isRequired,
     userList: PropTypes.arrayOf(PropTypes.object),
     viewMode: PropTypes.string.isRequired,
+    selectedClub: PropTypes.objectOf(PropTypes.any).isRequired,
   };
 
   static defaultProps = {
@@ -48,6 +49,7 @@ class ClubEdit extends Component {
       isAdmin,
       isSubmitting,
       language,
+      selectedClub,
       setClubViewMode,
       setFieldTouched,
       setFieldValue,
@@ -72,6 +74,7 @@ class ClubEdit extends Component {
       });
     const countryOptions = countryOptionsLocale[language];
     const validationErrors = validationErrorsLocale[language];
+    const { _id: currentClubId } = selectedClub;
 
     return (
       <Form className="ui warning form" noValidate>
@@ -173,7 +176,7 @@ class ClubEdit extends Component {
         <button
           type="button"
           className="ui button right floated"
-          onClick={() => setClubViewMode('view')}
+          onClick={() => setClubViewMode((currentClubId) ? 'view' : 'none')}
         >
           <Trans>Cancel</Trans>
         </button>

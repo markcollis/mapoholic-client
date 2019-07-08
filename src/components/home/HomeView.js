@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 import logo from '../../graphics/mapoholicLogo.png';
-import forest from '../../graphics/greyForestSquare.png';
+import mark from '../../graphics/mark.jpg';
+import screenshotCourseMap from '../../graphics/screenshotCourseMapSmall.png';
+import screenshotEventList from '../../graphics/screenshotEventListSmall.png';
+import screenshotEventMap from '../../graphics/screenshotEventMapSmall.png';
 
 import HomeWelcome from './HomeWelcome';
 import HomeRecent from './HomeRecent';
@@ -169,59 +172,6 @@ class HomeView extends Component {
     );
   }
 
-  renderHomeWelcomeImage = () => {
-    return (
-      <>
-        <img src={logo} alt="MapOholic logo" />
-      </>
-    );
-  }
-
-  renderHomeWhatIsIt = () => {
-    return (
-      <HomeWhatIsIt />
-    );
-  }
-
-  renderHomeWhatIsItImage = () => {
-    return (
-      <>
-        <img src={forest} alt="screenshot" style={{ border: 'solid 2px red' }} />
-        <p>Photo: spread out pile of O maps, folder in background</p>
-      </>
-    );
-  }
-
-  renderHomeHowToUse = () => {
-    return (
-      <HomeHowToUse />
-    );
-  }
-
-  renderHomeHowToUseImage = () => {
-    return (
-      <>
-        <img src={forest} alt="screenshot" style={{ border: 'solid 2px red' }} />
-        <p>screenshot(s)</p>
-      </>
-    );
-  }
-
-  renderHomeAboutAuthor = () => {
-    return (
-      <HomeAboutAuthor />
-    );
-  }
-
-  renderHomeAboutAuthorImage = () => {
-    return (
-      <>
-        <img src={forest} alt="author" style={{ border: 'solid 2px red' }} />
-        <p>picture of me running</p>
-      </>
-    );
-  }
-
   renderHomeRecent = () => {
     const {
       activity,
@@ -281,6 +231,7 @@ class HomeView extends Component {
   }
 
   render() {
+    const { language } = this.props;
     // console.log('state in HomeView', this.state);
     // console.log('props in HomeView', this.props);
     return (
@@ -291,33 +242,34 @@ class HomeView extends Component {
             {this.renderHomeWelcome()}
           </div>
           <div className="ten wide column middle aligned">
-            {this.renderHomeWelcomeImage()}
+            <img src={logo} alt="MapOholic logo" />
           </div>
         </div>
         {this.renderHomeRecent()}
         {this.renderHomeAdminPanel()}
         <div className="row">
-          <div className="four wide column">
-            {this.renderHomeWhatIsItImage()}
+          <div className="six wide column">
+            <img src={screenshotCourseMap} alt="screenshot" className="home-view__screenshot" />
           </div>
-          <div className="twelve wide column">
-            {this.renderHomeWhatIsIt()}
-          </div>
-        </div>
-        <div className="row">
-          <div className="twelve wide column">
-            {this.renderHomeHowToUse()}
-          </div>
-          <div className="four wide column">
-            {this.renderHomeHowToUseImage()}
+          <div className="ten wide column middle aligned">
+            <HomeWhatIsIt />
           </div>
         </div>
         <div className="row">
+          <div className="ten wide column middle aligned">
+            <HomeHowToUse />
+          </div>
+          <div className="six wide column">
+            <img src={screenshotEventList} alt="screenshot" className="home-view__screenshot" />
+            <img src={screenshotEventMap} alt="screenshot" className="home-view__screenshot" />
+          </div>
+        </div>
+        <div className="row">
           <div className="four wide column">
-            {this.renderHomeAboutAuthorImage()}
+            <img className="ui medium circular image" src={mark} alt="Mark Collis" />
           </div>
           <div className="twelve wide column">
-            {this.renderHomeAboutAuthor()}
+            <HomeAboutAuthor language={language} />
           </div>
         </div>
       </div>

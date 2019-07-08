@@ -1,8 +1,9 @@
 import { CONFIG_SET_LANGUAGE } from '../actions/types';
-import { defaultLanguage } from '../config';
+// import { defaultLanguage } from '../config';
 
 const INITIAL_STATE = {
-  language: defaultLanguage || 'en',
+  language: (navigator.language === 'cs') ? 'cs' : 'en',
+  // language: defaultLanguage || 'en',
 };
 
 const configReducer = (state = INITIAL_STATE, action) => {

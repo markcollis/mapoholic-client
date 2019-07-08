@@ -21,12 +21,25 @@ const HomeAdminNotes = () => {
             Test it out on a real Internet-facing server
             &nbsp;(DB migrated to MongoDB Atlas online service 5/7)
           </li>
-          <li>Make website/email links actual links in user/club views! (cf event view)</li>
-          <li>Finish introductory/help text on Home view</li>
-          <li>Take a photo of a pile of O maps to use as a background/on home page</li>
-          <li>Review when various buttons should appear to be disabled</li>
+          <li>
+            Finish introductory/help text on Home view
+            &nbsp;(first pass done 8/7)
+          </li>
           <li>Refactor user reducer and components to avoid unnecessary API calls</li>
           <li>Refactor club reducer and components to avoid unnecessary API calls</li>
+          <li>EN and CZ specific screenshots?</li>
+          <li>
+            Take a photo of a pile of O maps to use as a background/on home page (still needed??)
+          </li>
+          <li>Investigate making results editable/uploadable if not on ORIS</li>
+          <li>
+            <del>Review when various buttons should appear to be disabled</del>
+            &nbsp;(Add Event/Add Club disabled when view mode is not none or view 8/7)
+          </li>
+          <li>
+            <del>Make website/email links actual links in user/club views! (cf event view)</del>
+            &nbsp;(done 8/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -333,12 +346,15 @@ const HomeAdminNotes = () => {
             </del>
             &nbsp;(done 8/7)
           </li>
+          <li>
+            <del>Automatically select language based on browser navigator.language</del>
+            &nbsp;(done 8/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
       <Collapse title="Other ideas for the future (non-essential):">
         <ol>
-          <li>Investigate making results editable/uploadable if not on ORIS</li>
           <li>Support re-ordering of multi-part maps</li>
           <li>
             Investigate overlays - drawing own route, adding annotations, etc. =&gt;

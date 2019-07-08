@@ -55,6 +55,7 @@ class ClubView extends Component {
     gettingEventList: '',
     gettingMemberList: '',
     isMounted: true,
+    refreshCollapseClubDetails: 0,
   };
 
   componentDidUpdate() {
@@ -122,8 +123,15 @@ class ClubView extends Component {
   // helper to return selected club details when selected club or details change
   getSelectedClub = memoize((details, selectedClubId) => details[selectedClubId] || {});
 
+  // update a prop in ClubDetails to trigger refresh of Collapse component to new size
+  refreshCollapseClubDetails = () => {
+    const { refreshCollapseClubDetails } = this.state;
+    this.setState({ refreshCollapseClubDetails: refreshCollapseClubDetails + 1 });
+  }
+
   // render ClubDetails, Edit, Delete, Members, Events components as required by viewMode
   renderClubDetails = () => {
+    const { refreshCollapseClubDetails } = this.state;
     const {
       club,
       config,
@@ -176,6 +184,8 @@ class ClubView extends Component {
             <ClubDetails
               canEdit={canEdit} // derived
               language={language} // prop (config)
+              refreshCollapse={refreshCollapseClubDetails} // state (value increments to trigger)
+              requestRefreshCollapse={this.refreshCollapseClubDetails} // defined here
               selectedClub={selectedClub} // derived
               setClubViewMode={setClubViewMode} // prop
             />
@@ -228,6 +238,7 @@ class ClubView extends Component {
               createClub={createClub} // prop
               getClubList={getClubList} // prop
               language={language} // prop (config)
+              selectedClub={selectedClub} // derived
               setClubViewMode={setClubViewMode} // prop
               viewMode={viewMode} // prop (club)
             />
@@ -268,42 +279,21 @@ class ClubView extends Component {
     return null;
   }
 
-  // renderClubFilter = () => {
-  //   const {
-  //     club,
-  //     getClubList,
-  //     setClubSearchField,
-  //     setClubViewMode,
-  //     selectClubToDisplay,
-  //   } = this.props;
-  //   const { searchField } = club;
-  //   return (
-  //     <ClubFilter
-  //       getClubList={getClubList} // prop
-  //       searchField={searchField} // prop (club)
-  //       selectClubToDisplay={selectClubToDisplay} // prop
-  //       setClubSearchField={setClubSearchField} // prop
-  //       setClubViewMode={setClubViewMode} // prop
-  //     />
-  //   );
-  // }
-
   renderClubHeader = () => {
     const {
       club,
       getClubList,
       setClubSearchField,
       setClubViewMode,
-      selectClubToDisplay,
     } = this.props;
-    const { searchField } = club;
+    const { searchField, viewMode } = club;
     return (
       <ClubHeader
         getClubList={getClubList} // prop
         searchField={searchField} // prop (club)
-        selectClubToDisplay={selectClubToDisplay} // prop
         setClubSearchField={setClubSearchField} // prop
         setClubViewMode={setClubViewMode} // prop
+        viewMode={viewMode} // prop
       />
     );
   }

@@ -7,6 +7,7 @@ const EventFilter = ({
   clearEventSearchField,
   clearEventTagFilter,
   currentUser,
+  eventMode,
   getEventList,
   mineOnly,
   searchField,
@@ -88,6 +89,7 @@ const EventFilter = ({
         {(currentUser && !mineOnly) // suppress for MyMaps view as new event would not show
           ? (
             <button
+              disabled={(['add', 'edit', 'delete'].includes(eventMode))}
               type="button"
               className="ui tiny button primary right floated"
               onClick={() => {
@@ -111,6 +113,7 @@ EventFilter.propTypes = {
   clearEventSearchField: PropTypes.func.isRequired,
   clearEventTagFilter: PropTypes.func.isRequired,
   currentUser: PropTypes.objectOf(PropTypes.any),
+  eventMode: PropTypes.string.isRequired,
   getEventList: PropTypes.func.isRequired,
   mineOnly: PropTypes.bool.isRequired,
   searchField: PropTypes.string.isRequired,

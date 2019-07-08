@@ -18,19 +18,21 @@ const ClubMembers = ({
   }
   // console.log('fullEventList:', fullEventList);
   const mapCountByUserId = {};
-  fullEventList.forEach((eventSummary) => {
-    const { runners } = eventSummary;
-    if (runners) {
-      runners.forEach((runner) => {
-        const { user, numberMaps } = runner;
-        if (mapCountByUserId[user]) {
-          mapCountByUserId[user] += numberMaps;
-        } else {
-          mapCountByUserId[user] = numberMaps;
-        }
-      });
-    }
-  });
+  if (fullEventList) {
+    fullEventList.forEach((eventSummary) => {
+      const { runners } = eventSummary;
+      if (runners) {
+        runners.forEach((runner) => {
+          const { user, numberMaps } = runner;
+          if (mapCountByUserId[user]) {
+            mapCountByUserId[user] += numberMaps;
+          } else {
+            mapCountByUserId[user] = numberMaps;
+          }
+        });
+      }
+    });
+  }
   // console.log('mapCountByUserId:', mapCountByUserId);
 
   const handleSelectUser = (userId) => {
