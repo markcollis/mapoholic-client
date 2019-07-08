@@ -4,17 +4,18 @@ import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 
 const EventFilter = ({
-  currentUser,
-  searchField,
-  tagFilter,
-  tagLists,
   clearEventSearchField,
   clearEventTagFilter,
+  currentUser,
+  getEventList,
+  mineOnly,
+  searchField,
+  selectEventId,
   setEventSearchField,
   setEventTagFilter,
   setEventViewModeEvent,
-  selectEventId,
-  getEventList,
+  tagFilter,
+  tagLists,
 }) => {
   // const dropdownStyle = {};
   // if (tagFilter === '') dropdownStyle.color = 'rgba(0, 0, 0, 0.3)';
@@ -84,7 +85,7 @@ const EventFilter = ({
         </div>
       </div>
       <div className="column six wide middle aligned">
-        {(currentUser)
+        {(currentUser && !mineOnly) // suppress for MyMaps view as new event would not show
           ? (
             <button
               type="button"
@@ -107,17 +108,18 @@ const EventFilter = ({
 };
 
 EventFilter.propTypes = {
-  currentUser: PropTypes.objectOf(PropTypes.any),
-  tagFilter: PropTypes.string.isRequired,
-  tagLists: PropTypes.objectOf(PropTypes.any).isRequired,
-  searchField: PropTypes.string.isRequired,
   clearEventSearchField: PropTypes.func.isRequired,
   clearEventTagFilter: PropTypes.func.isRequired,
+  currentUser: PropTypes.objectOf(PropTypes.any),
+  getEventList: PropTypes.func.isRequired,
+  mineOnly: PropTypes.bool.isRequired,
+  searchField: PropTypes.string.isRequired,
+  selectEventId: PropTypes.func.isRequired,
   setEventSearchField: PropTypes.func.isRequired,
   setEventTagFilter: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
-  selectEventId: PropTypes.func.isRequired,
-  getEventList: PropTypes.func.isRequired,
+  tagFilter: PropTypes.string.isRequired,
+  tagLists: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 EventFilter.defaultProps = {
   currentUser: null,

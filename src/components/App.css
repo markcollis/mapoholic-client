@@ -245,6 +245,12 @@ select, optgroup {
 .event-header__tag-filter div {
   padding-left: 0.3rem !important;
 }
+/* settings for EventLinkedList */
+/* constrain height if list is too long */
+.event-linked-list {
+  max-height: 15em;
+  overflow-y: auto;
+}
 /* settings for EventListItem */
 .event-list-item__with-map .event-list-item--text {
   /* border: solid white 2px !important; */
@@ -311,11 +317,11 @@ select, optgroup {
 /* settings for HomeView */
 .home-view img {
   width: 100%;
-  border: solid 2px red; /* temporary, to emphasise the need to put in place the right images*/
+  /* border: solid 2px red; /* temporary, to emphasise the need to put in place the right images*/
 }
 /* settings for HomeWelcome */
 .home-welcome__header {
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: 700;
 }
 

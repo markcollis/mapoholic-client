@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
+import logo from '../../graphics/mapoholicLogo.png';
 import forest from '../../graphics/greyForestSquare.png';
 
 import HomeWelcome from './HomeWelcome';
@@ -171,8 +172,7 @@ class HomeView extends Component {
   renderHomeWelcomeImage = () => {
     return (
       <>
-        <img src={forest} alt="welcome" />
-        <p>Photo: spread out pile of O maps, folder in background</p>
+        <img src={logo} alt="MapOholic logo" />
       </>
     );
   }
@@ -186,8 +186,8 @@ class HomeView extends Component {
   renderHomeWhatIsItImage = () => {
     return (
       <>
-        <img src={forest} alt="screenshot" />
-        <p>screenshot(s)</p>
+        <img src={forest} alt="screenshot" style={{ border: 'solid 2px red' }} />
+        <p>Photo: spread out pile of O maps, folder in background</p>
       </>
     );
   }
@@ -201,7 +201,7 @@ class HomeView extends Component {
   renderHomeHowToUseImage = () => {
     return (
       <>
-        <img src={forest} alt="screenshot" />
+        <img src={forest} alt="screenshot" style={{ border: 'solid 2px red' }} />
         <p>screenshot(s)</p>
       </>
     );
@@ -216,7 +216,7 @@ class HomeView extends Component {
   renderHomeAboutAuthorImage = () => {
     return (
       <>
-        <img src={forest} alt="author" />
+        <img src={forest} alt="author" style={{ border: 'solid 2px red' }} />
         <p>picture of me running</p>
       </>
     );
@@ -287,10 +287,10 @@ class HomeView extends Component {
       <div className="ui vertically padded stackable grid home-view">
         {this.renderError()}
         <div className="row">
-          <div className="twelve wide column">
+          <div className="six wide column">
             {this.renderHomeWelcome()}
           </div>
-          <div className="four wide column">
+          <div className="ten wide column middle aligned">
             {this.renderHomeWelcomeImage()}
           </div>
         </div>

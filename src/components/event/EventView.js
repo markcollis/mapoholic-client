@@ -159,8 +159,8 @@ class EventView extends Component {
 
   // helper to get details of selected event if input props have changed
   getSelectedEvent = memoize((details, selectedEventId, errorMessage) => {
-    console.log('getting selected event');
-    console.log('details, selectedEventId:', details, selectedEventId);
+    // console.log('getting selected event');
+    // console.log('details, selectedEventId:', details, selectedEventId);
     // get detailed data for selected event if not already available
     if (selectedEventId && !details[selectedEventId] && !errorMessage) {
       const { getEventById } = this.props;
@@ -445,7 +445,6 @@ class EventView extends Component {
       user,
       createEventLink,
       deleteEventLink,
-      // getEventById,
       getEventLinkList,
       getEventList,
       mineOnly,
@@ -462,27 +461,19 @@ class EventView extends Component {
       errorMessage,
       eventLinkMode,
       list,
-      // linkDetails, (same data as linkList)
       linkList,
       selectedEventIdEvents,
       selectedEventIdMyMaps,
-      // selectedEventIdMapView,
       selectedEventLinkId,
     } = oevent;
     const { current } = user;
     // select appropriate props for Events or MyMaps view
-    const selectEventId = (mineOnly)
-      ? selectEventIdMyMaps
-      : selectEventIdEvents;
+    const selectEventId = (mineOnly) ? selectEventIdMyMaps : selectEventIdEvents;
     const setEventViewModeEvent = (mineOnly)
-      ? setEventViewModeEventMyMaps
-      : setEventViewModeEventEvents;
-    const selectedEventId = (mineOnly)
-      ? selectedEventIdMyMaps
-      : selectedEventIdEvents;
+      ? setEventViewModeEventMyMaps : setEventViewModeEventEvents;
+    const selectedEventId = (mineOnly) ? selectedEventIdMyMaps : selectedEventIdEvents;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventId, errorMessage);
-    // different from MapView version
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
 
@@ -492,16 +483,16 @@ class EventView extends Component {
           ? null
           : (
             selectedEvent.linkedTo.map((link) => {
+              const { _id: linkId } = link;
+              const linkData = linkList.find(eachLink => eachLink._id === linkId);
               return (
                 <EventLinked
-                  key={link._id} // derived (selectedEvent)
+                  key={linkId} // derived (selectedEvent)
                   canEdit={canEdit} // derived
                   eventLinkMode={eventLinkMode} // prop (oevent)
                   isAdmin={isAdmin} // derived
                   language={language} // prop (config)
-                  link={link} // derived (selectedEvent)
-                  linkList={linkList} // prop (oevent)
-                  // linkDetails={linkDetails} // prop (oevent)
+                  linkData={linkData} // derived
                   selectedEvent={selectedEvent} // derived
                   selectEvent={selectEventId} // prop, different from MapView version
                   setEventViewModeEvent={setEventViewModeEvent} // prop
@@ -517,15 +508,12 @@ class EventView extends Component {
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
               eventList={list} // prop (oevent)
-              // getEventById={getEventById} // prop
               getEventLinkList={getEventLinkList} // prop
               getEventList={getEventList} // prop
+              isAdmin={isAdmin} // derived
               language={language} // prop (config)
-              // linkDetails={linkDetails} // prop (oevent)
               linkList={linkList} // prop (oevent)
               selectedEvent={selectedEvent} // derived
-              // selectedEventDetails={selectedEventDetails} // prop (oevent)
-              // selectedEventIdMapView={selectedEventIdMapView} // prop (oevent)
               selectedEventLinkId={selectedEventLinkId} // prop (oevent)
               setEventViewModeEventLink={setEventViewModeEventLink} // prop
               updateEventLink={updateEventLink} // prop
@@ -661,6 +649,7 @@ class EventView extends Component {
         setEventViewModeEvent={setEventViewModeEvent}
         getEventList={getEventList}
         selectEventId={selectEventId}
+        mineOnly={mineOnly}
       />
     );
   }

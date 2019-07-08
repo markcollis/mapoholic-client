@@ -161,15 +161,11 @@ const formikEventLinkedEdit = withFormik({
     const {
       eventLinkMode,
       createEventLink,
-      // getEventById,
       getEventLinkList,
       getEventList,
       linkData,
       updateEventLink,
-      // selectedEventDetails,
-      // selectedEventIdMapView,
       setEventViewModeEventLink,
-      // selectedEventLinkId,
     } = props;
     const valuesToSubmit = { displayName: values.displayName };
     valuesToSubmit.includes = (values.includes.length > 0)
@@ -179,11 +175,6 @@ const formikEventLinkedEdit = withFormik({
     if (eventLinkMode === 'add') {
       createEventLink(valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
-          // re-fetch full details to capture changes to event links
-          // if (selectedEventDetails !== '') getEventById(selectedEventDetails);
-          // if (selectedEventIdMapView !== '' && selectedEventIdMapView !== selectedEventDetails) {
-          //   getEventById(selectedEventIdMapView);
-          // }
           getEventList(null, () => {
             getEventLinkList(); // want to eliminate this in reducer
             setEventViewModeEventLink('view');
@@ -196,11 +187,6 @@ const formikEventLinkedEdit = withFormik({
       const { _id: selectedEventLinkId } = linkData;
       updateEventLink(selectedEventLinkId, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
-          // re-fetch full details to capture changes to event links
-          // if (selectedEventDetails !== '') getEventById(selectedEventDetails);
-          // if (selectedEventIdMapView !== '' && selectedEventIdMapView !== selectedEventDetails) {
-          //   getEventById(selectedEventIdMapView);
-          // }
           getEventList(null, () => {
             getEventLinkList(); // want to eliminate this in reducer
             setEventViewModeEventLink('view');

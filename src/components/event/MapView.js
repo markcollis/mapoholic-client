@@ -413,7 +413,6 @@ class MapView extends Component {
       user,
       createEventLink,
       deleteEventLink,
-      // getEventById,
       getEventLinkList,
       getEventList,
       selectEventIdMapView,
@@ -427,7 +426,6 @@ class MapView extends Component {
       errorMessage,
       eventLinkMode,
       list,
-      // linkDetails,
       linkList,
       selectedEventIdMapView,
       selectedEventLinkId,
@@ -444,16 +442,16 @@ class MapView extends Component {
           ? null
           : (
             selectedEvent.linkedTo.map((link) => {
+              const { _id: linkId } = link;
+              const linkData = linkList.find(eachLink => eachLink._id === linkId);
               return (
                 <EventLinked
-                  key={link._id} // derived (selectedEvent)
+                  key={linkId} // derived (selectedEvent)
                   canEdit={canEdit} // derived
                   eventLinkMode={eventLinkMode} // prop (oevent)
                   isAdmin={isAdmin} // derived
                   language={language} // prop (config)
-                  link={link} // derived (selectedEvent)
-                  linkList={linkList} // prop (oevent)
-                  // linkDetails={linkDetails} // prop (oevent)
+                  linkData={linkData} // derived
                   selectedEvent={selectedEvent} // derived
                   selectEvent={selectEventIdMapView} // prop
                   setEventViewModeEvent={setEventViewModeEvent} // prop
@@ -469,15 +467,12 @@ class MapView extends Component {
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
               eventList={list} // prop (oevent)
-              // getEventById={getEventById} // prop
               getEventLinkList={getEventLinkList} // prop
               getEventList={getEventList} // prop
+              isAdmin={isAdmin} // derived
               language={language} // prop (config)
-              // linkDetails={linkDetails} // prop (oevent)
               linkList={linkList} // prop (oevent)
               selectedEvent={selectedEvent} // derived
-              // selectedEventDetails={selectedEventDetails} // prop (oevent)
-              // selectedEventIdMapView={selectedEventIdMapView} // prop (oevent)
               selectedEventLinkId={selectedEventLinkId} // prop (oevent)
               setEventViewModeEventLink={setEventViewModeEventLink} // prop
               updateEventLink={updateEventLink} // prop

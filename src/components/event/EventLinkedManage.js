@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
+import memoize from 'memoize-one';
+
 import EventLinkedList from './EventLinkedList';
 import EventLinkedEdit from './EventLinkedEdit';
 import EventLinkedDelete from './EventLinkedDelete';
@@ -13,49 +15,41 @@ class EventLinkedManage extends Component {
   static propTypes = {
     createEventLink: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
-    eventLinkMode: PropTypes.string,
+    eventLinkMode: PropTypes.string.isRequired,
     eventList: PropTypes.arrayOf(PropTypes.any),
-    // getEventById: PropTypes.func.isRequired,
     getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
+    isAdmin: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
-    // linkDetails: PropTypes.objectOf(PropTypes.any),
     linkList: PropTypes.arrayOf(PropTypes.any),
-    selectedEvent: PropTypes.objectOf(PropTypes.any),
-    // selectedEventDetails: PropTypes.string,
-    // selectedEventIdMapView: PropTypes.string,
-    selectedEventLinkId: PropTypes.string,
+    selectedEvent: PropTypes.objectOf(PropTypes.any).isRequired,
+    selectedEventLinkId: PropTypes.string.isRequired,
     setEventViewModeEventLink: PropTypes.func.isRequired,
     updateEventLink: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    eventLinkMode: 'view',
     eventList: [],
-    // linkDetails: {},
     linkList: [],
-    selectedEvent: {},
-    // selectedEventDetails: '',
-    // selectedEventIdMapView: '',
-    selectedEventLinkId: '',
   };
 
   /* eslint-disable no-underscore-dangle */
-  getEventLinkData = (linkList, selectedEventLinkId) => {
-    if (!linkList) return null;
+  getEventLinkData = memoize((linkList, selectedEventLinkId) => {
     const selectedLink = linkList.find(eachLink => eachLink._id === selectedEventLinkId);
     return selectedLink;
-  }
+  });
   /* eslint-enable */
 
   renderEventLinkedList = () => {
     const {
+      isAdmin,
       language,
       linkList,
       setEventViewModeEventLink,
     } = this.props;
     return (
       <EventLinkedList
+        isAdmin={isAdmin}
         language={language}
         linkList={linkList}
         setEventViewModeEventLink={setEventViewModeEventLink}
@@ -68,14 +62,9 @@ class EventLinkedManage extends Component {
       createEventLink,
       eventLinkMode,
       eventList,
-      // getEventById,
       getEventLinkList,
       getEventList,
       language,
-      // linkDetails,
-      // linkList,
-      // selectedEventDetails,
-      // selectedEventIdMapView,
       setEventViewModeEventLink,
     } = this.props;
     return (
@@ -83,14 +72,9 @@ class EventLinkedManage extends Component {
         createEventLink={createEventLink}
         eventLinkMode={eventLinkMode}
         eventList={eventList}
-        // getEventById={getEventById}
         getEventLinkList={getEventLinkList}
         getEventList={getEventList}
         language={language}
-        // linkDetails={linkDetails}
-        // linkList={linkList}
-        // selectedEventDetails={selectedEventDetails}
-        // selectedEventIdMapView={selectedEventIdMapView}
         setEventViewModeEventLink={setEventViewModeEventLink}
       />
     );
@@ -100,14 +84,10 @@ class EventLinkedManage extends Component {
     const {
       eventLinkMode,
       eventList,
-      // getEventById,
       getEventLinkList,
       getEventList,
       language,
-      // linkDetails,
       linkList,
-      // selectedEventDetails,
-      // selectedEventIdMapView,
       selectedEventLinkId,
       setEventViewModeEventLink,
       updateEventLink,
@@ -118,16 +98,10 @@ class EventLinkedManage extends Component {
       <EventLinkedEdit
         eventLinkMode={eventLinkMode}
         eventList={eventList}
-        // getEventById={getEventById}
         getEventLinkList={getEventLinkList}
         getEventList={getEventList}
         language={language}
         linkData={linkData}
-        // linkDetails={linkDetails}
-        // linkList={linkList}
-        // selectedEventDetails={selectedEventDetails}
-        // selectedEventIdMapView={selectedEventIdMapView}
-        // selectedEventLinkId={selectedEventLinkId}
         setEventViewModeEventLink={setEventViewModeEventLink}
         updateEventLink={updateEventLink}
       />
@@ -137,14 +111,10 @@ class EventLinkedManage extends Component {
   renderEventLinkedDelete = () => {
     const {
       deleteEventLink,
-      // getEventById,
       getEventList,
       getEventLinkList,
       language,
       linkList,
-      // linkDetails,
-      // selectedEventDetails,
-      // selectedEventIdMapView,
       selectedEventLinkId,
       setEventViewModeEventLink,
     } = this.props;
@@ -153,14 +123,10 @@ class EventLinkedManage extends Component {
     return (
       <EventLinkedDelete
         deleteEventLink={deleteEventLink}
-        // getEventById={getEventById}
         getEventLinkList={getEventLinkList}
         getEventList={getEventList}
         language={language}
         linkData={linkData}
-        // linkDetails={linkDetails}
-        // selectedEventDetails={selectedEventDetails}
-        // selectedEventIdMapView={selectedEventIdMapView}
         setEventViewModeEventLink={setEventViewModeEventLink}
       />
     );

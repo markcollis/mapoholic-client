@@ -10,8 +10,8 @@ const HomeAdminNotes = () => {
         <ol>
           <li>
             Investigate issue with not loading thumbnail after uploading map (timing?)
-            (possibly fixed 5/7 using setState callback, need to test - still an issue
-            when server is slow)
+            (possibly fixed 5/7 using setState callback, need to test - still seems
+            to be an issue when connection is slow/server is overloaded)
           </li>
           <li>
             Complete lingui translations and check that nothing is missing
@@ -21,34 +21,14 @@ const HomeAdminNotes = () => {
             Test it out on a real Internet-facing server
             &nbsp;(DB migrated to MongoDB Atlas online service 5/7)
           </li>
-          <li>
-            Design a logo, e.g. map with control colours on the O
-            &nbsp;(logo done, now need to make best use of it!)
-          </li>
           <li>Make website/email links actual links in user/club views! (cf event view)</li>
           <li>Finish introductory/help text on Home view</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
           <li>
-            <del>Add some real sample data/maps</del>
-            &nbsp;(all 2019 maps now added 6/7)
+            Use all four corners for map outline (Polygon not Rectangle) otherwise
+            the likes of pootoceny Hradek breaks things...
           </li>
-          <li>Bug: hangs on Loading... event details when creating a new event</li>
-          <li>Suppress add event on MyMaps screen</li>
-          <li>
-            <del>Bug: map part title doesn&apos;t change in the tab when edited</del>
-            &nbsp;(fixed 6/7)
-          </li>
-          <li>Bug?: Linked Event list doesn&apos;t update when a new event is created in link</li>
-          <li>
-            <del>Bug? (server): Does not change file names when title changes</del>
-            &nbsp;(leave them, throw an error when uploading a map with a previously used title,
-            deleting now renames the files to -deleted@... so they can be replaced 7/7)
-          </li>
-          <li>
-          Use all four corners for map outline (Polygon not Rectangle) otherwise
-          the likes of pootoceny Hradek breaks things...
-          </li>
-          <li>Inconsistency: non-admins can see delete button for event links but cannot delete</li>
+          <li>Review when various buttons should appear to be disabled</li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -312,6 +292,41 @@ const HomeAdminNotes = () => {
           <li>
             <del>Bug: Datepicker in EventEdit parses partial dates as mm/dd</del>
             &nbsp;(fixed 6/7)
+          </li>
+          <li>
+            <del>Bug: map part title doesn&apos;t change in the tab when edited</del>
+            &nbsp;(fixed 6/7)
+          </li>
+          <li>
+            <del>Add some real sample data/maps</del>
+            &nbsp;(all 2019 maps now added 6/7)
+          </li>
+          <li>
+            <del>Design a logo, e.g. map with control colours on the O</del>
+            &nbsp;(done and included on home page 7/7)
+          </li>
+          <li>
+            <del>Bug: hangs on Loading... event details when creating a new event</del>
+            &nbsp;(fixed 7/7)
+          </li>
+          <li>
+            <del>Suppress add event on MyMaps screen</del>
+            &nbsp;(done 7/7)
+          </li>
+          <li>
+            <del>Bug? (server): Does not change file names when title changes</del>
+            &nbsp;(leave them, throw an error when uploading a map with a previously used title,
+            deleting now renames the files to -deleted@... so they can be replaced 7/7)
+          </li>
+          <li>
+            <del>Bug: Event link list doesn&apos;t update when a new event is created in link</del>
+            &nbsp;(fixed - major refactoring of event reducer and event link components 8/7)
+          </li>
+          <li>
+            <del>
+            Inconsistency: non-admins can see delete button for event links but cannot delete
+            </del>
+            &nbsp;(fixed 8/7)
           </li>
         </ol>
       </Collapse>

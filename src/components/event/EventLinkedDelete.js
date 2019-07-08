@@ -5,15 +5,10 @@ import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const EventLinkedDelete = ({
   deleteEventLink,
-  // getEventById,
   getEventList,
   getEventLinkList,
   language,
   linkData,
-  // linkDetails,
-  // selectedEventDetails,
-  // selectedEventIdMapView,
-  // selectedEventLinkId,
   setEventViewModeEventLink,
 }) => {
   const { _id: eventLinkId, displayName, includes } = linkData;
@@ -34,12 +29,6 @@ const EventLinkedDelete = ({
         onClick={() => {
           deleteEventLink(eventLinkId, (didSucceed) => {
             if (didSucceed) {
-              // re-fetch full details to capture changes to event links
-              // if (selectedEventDetails !== '') getEventById(selectedEventDetails);
-              // if (selectedEventIdMapView !== '' && selectedEventIdMapView
-              // !== selectedEventDetails) {
-              //   getEventById(selectedEventIdMapView);
-              // }
               getEventList(null, () => { // want to eliminate this using reducer
                 setEventViewModeEventLink('view');
                 getEventLinkList(); // want to eliminate this using reducer
@@ -63,21 +52,11 @@ const EventLinkedDelete = ({
 
 EventLinkedDelete.propTypes = {
   deleteEventLink: PropTypes.func.isRequired,
-  // getEventById: PropTypes.func.isRequired,
   getEventList: PropTypes.func.isRequired,
   getEventLinkList: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   linkData: PropTypes.objectOf(PropTypes.any).isRequired,
-  // selectedEventDetails: PropTypes.string,
-  // selectedEventIdMapView: PropTypes.string,
-  // selectedEventLinkId: PropTypes.string,
   setEventViewModeEventLink: PropTypes.func.isRequired,
 };
-// EventLinkedDelete.defaultProps = {
-//   linkData: {},
-//   // selectedEventDetails: '',
-//   // selectedEventIdMapView: '',
-//   // selectedEventLinkId: null,
-// };
 
 export default EventLinkedDelete;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Trans, Plural } from '@lingui/macro';
 
-import logo from '../../graphics/mapoholicLogoSmall.png';
+// import logo from '../../graphics/mapoholicLogoSmall.png';
 /* eslint react/jsx-one-expression-per-line: 0  */
 /* warning deactivated to avoid unwanted spaces in Trans components */
 
@@ -83,9 +83,9 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
     </>
   );
 
+  // <img className="ui medium right floated image home-image" src={logo} alt="MapOholic logo" />
   return (
     <div className="ui segment">
-      <img className="ui medium right floated image home-image" src={logo} alt="MapOholic logo" />
       <p className="home-welcome__header">
         <Trans>Welcome to MapOholic!</Trans>
       </p>
