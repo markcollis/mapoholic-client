@@ -653,7 +653,6 @@ const formikEventEdit = withFormik({
       updateEvent,
       setEventViewModeEvent,
       selectedEvent,
-      getEventList,
     } = props;
     const valuesToSubmit = (values.locCountry)
       ? { ...values, locCountry: values.locCountry.value }
@@ -680,7 +679,7 @@ const formikEventEdit = withFormik({
       if (values.orisId) {
         createEventOris(values.orisId.value, (didSucceed) => {
           if (didSucceed) {
-            getEventList(null, () => setEventViewModeEvent('view'));
+            setEventViewModeEvent('view');
           } else {
             setSubmitting(false);
           }
@@ -688,7 +687,7 @@ const formikEventEdit = withFormik({
       } else {
         createEvent(valuesToSubmit, (didSucceed) => {
           if (didSucceed) {
-            getEventList(null, () => setEventViewModeEvent('view'));
+            setEventViewModeEvent('view');
           } else {
             setSubmitting(false);
           }
@@ -697,7 +696,7 @@ const formikEventEdit = withFormik({
     } else {
       updateEvent(selectedEvent._id, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
-          getEventList(null, () => setEventViewModeEvent('view'));
+          setEventViewModeEvent('view');
         } else {
           setSubmitting(false);
         }

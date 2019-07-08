@@ -27,7 +27,7 @@ import {
   deleteEventAction,
   deleteEventLinkAction,
   getEventByIdAction,
-  getEventLinkListAction,
+  // getEventLinkListAction,
   getEventListAction,
   getEventListOrisAction,
   selectEventIdEventsAction,
@@ -71,7 +71,7 @@ class EventView extends Component {
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
-    getEventLinkList: PropTypes.func.isRequired,
+    // getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
     selectEventIdEvents: PropTypes.func.isRequired,
@@ -324,7 +324,7 @@ class EventView extends Component {
       createEventOris, // different to MapView version
       deleteEvent,
       getEventList,
-      getEventLinkList,
+      // getEventLinkList,
       mineOnly,
       selectEventIdEvents,
       selectEventIdMyMaps,
@@ -426,8 +426,8 @@ class EventView extends Component {
         return (
           <EventDelete
             deleteEvent={deleteEvent} // prop
-            getEventLinkList={getEventLinkList} // prop
-            getEventList={getEventList} // prop
+            // getEventLinkList={getEventLinkList} // prop
+            // getEventList={getEventList} // prop
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
           />
@@ -445,8 +445,8 @@ class EventView extends Component {
       user,
       createEventLink,
       deleteEventLink,
-      getEventLinkList,
-      getEventList,
+      // getEventLinkList,
+      // getEventList,
       mineOnly,
       selectEventIdEvents,
       selectEventIdMyMaps,
@@ -508,8 +508,8 @@ class EventView extends Component {
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
               eventList={list} // prop (oevent)
-              getEventLinkList={getEventLinkList} // prop
-              getEventList={getEventList} // prop
+              // getEventLinkList={getEventLinkList} // prop
+              // getEventList={getEventList} // prop
               isAdmin={isAdmin} // derived
               language={language} // prop (config)
               linkList={linkList} // prop (oevent)
@@ -813,7 +813,7 @@ const mapDispatchToProps = {
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
   getEventById: getEventByIdAction,
-  getEventLinkList: getEventLinkListAction,
+  // getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,
   selectEventIdEvents: selectEventIdEventsAction,

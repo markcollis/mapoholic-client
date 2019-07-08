@@ -5,8 +5,8 @@ import { reformatTimestampDateOnly } from '../../common/conversions';
 
 const EventLinkedDelete = ({
   deleteEventLink,
-  getEventList,
-  getEventLinkList,
+  // getEventList,
+  // getEventLinkList,
   language,
   linkData,
   setEventViewModeEventLink,
@@ -29,10 +29,10 @@ const EventLinkedDelete = ({
         onClick={() => {
           deleteEventLink(eventLinkId, (didSucceed) => {
             if (didSucceed) {
-              getEventList(null, () => { // want to eliminate this using reducer
-                setEventViewModeEventLink('view');
-                getEventLinkList(); // want to eliminate this using reducer
-              });
+              setEventViewModeEventLink('view');
+              // getEventList(null, () => { // want to eliminate this using reducer
+              //   getEventLinkList(); // want to eliminate this using reducer
+              // });
             }
           });
         }}
@@ -52,8 +52,8 @@ const EventLinkedDelete = ({
 
 EventLinkedDelete.propTypes = {
   deleteEventLink: PropTypes.func.isRequired,
-  getEventList: PropTypes.func.isRequired,
-  getEventLinkList: PropTypes.func.isRequired,
+  // getEventList: PropTypes.func.isRequired,
+  // getEventLinkList: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   linkData: PropTypes.objectOf(PropTypes.any).isRequired,
   setEventViewModeEventLink: PropTypes.func.isRequired,

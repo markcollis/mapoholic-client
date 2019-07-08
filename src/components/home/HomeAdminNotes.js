@@ -24,11 +24,9 @@ const HomeAdminNotes = () => {
           <li>Make website/email links actual links in user/club views! (cf event view)</li>
           <li>Finish introductory/help text on Home view</li>
           <li>Take a photo of a pile of O maps to use as a background/on home page</li>
-          <li>
-            Use all four corners for map outline (Polygon not Rectangle) otherwise
-            the likes of pootoceny Hradek breaks things...
-          </li>
           <li>Review when various buttons should appear to be disabled</li>
+          <li>Refactor user reducer and components to avoid unnecessary API calls</li>
+          <li>Refactor club reducer and components to avoid unnecessary API calls</li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -327,6 +325,13 @@ const HomeAdminNotes = () => {
             Inconsistency: non-admins can see delete button for event links but cannot delete
             </del>
             &nbsp;(fixed 8/7)
+          </li>
+          <li>
+            <del>
+            Use all four corners for map outline (Polygon not Rectangle) otherwise
+            the likes of pootoceny Hradek breaks things...
+            </del>
+            &nbsp;(done 8/7)
           </li>
         </ol>
       </Collapse>

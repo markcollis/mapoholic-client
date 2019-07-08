@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventHeader.js",
-        33
+        34
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventHeader.js",
-        59
+        60
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventHeader.js",
-        61
+        62
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventHeader.js",
-        66
+        67
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventHeader.js",
-        97
+        98
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventHeader.js",
-        102
+        103
       ]
     ]
   }

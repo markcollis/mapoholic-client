@@ -161,8 +161,8 @@ const formikEventLinkedEdit = withFormik({
     const {
       eventLinkMode,
       createEventLink,
-      getEventLinkList,
-      getEventList,
+      // getEventLinkList,
+      // getEventList,
       linkData,
       updateEventLink,
       setEventViewModeEventLink,
@@ -175,10 +175,10 @@ const formikEventLinkedEdit = withFormik({
     if (eventLinkMode === 'add') {
       createEventLink(valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
-          getEventList(null, () => {
-            getEventLinkList(); // want to eliminate this in reducer
-            setEventViewModeEventLink('view');
-          });
+          setEventViewModeEventLink('view');
+          // getEventList(null, () => {
+          //   getEventLinkList(); // want to eliminate this in reducer
+          // });
         } else {
           setSubmitting(false);
         }
@@ -187,10 +187,10 @@ const formikEventLinkedEdit = withFormik({
       const { _id: selectedEventLinkId } = linkData;
       updateEventLink(selectedEventLinkId, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
-          getEventList(null, () => {
-            getEventLinkList(); // want to eliminate this in reducer
-            setEventViewModeEventLink('view');
-          });
+          setEventViewModeEventLink('view');
+          // getEventList(null, () => {
+          //   getEventLinkList(); // want to eliminate this in reducer
+          // });
         } else {
           setSubmitting(false);
         }

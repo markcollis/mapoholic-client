@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedDelete.js",
-        29
+        23
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedDelete.js",
-        30
+        24
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedDelete.js",
-        51
+        40
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventLinkedDelete.js",
-        58
+        47
       ]
     ]
   }

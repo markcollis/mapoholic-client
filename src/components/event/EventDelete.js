@@ -4,8 +4,8 @@ import { Trans } from '@lingui/macro';
 
 const EventDelete = ({
   deleteEvent,
-  getEventLinkList,
-  getEventList,
+  // getEventLinkList,
+  // getEventList,
   selectedEvent,
   setEventViewModeEvent,
 }) => {
@@ -27,14 +27,14 @@ const EventDelete = ({
         onClick={() => {
           deleteEvent(eventId, (didSucceed) => {
             if (didSucceed) {
-              getEventList(null, () => { // want to eliminate this in reducer
-                setEventViewModeEvent('none');
-                getEventLinkList(); // want to eliminate this in reducer
-                // reset selectedEventId whether viewing or not - moved to reducer
-                // if (eventId === selectedEventIdEvents) selectEventIdEvents('');
-                // if (eventId === selectedEventIdMyMaps) selectEventIdMyMaps('');
-                // if (eventId === selectedEventIdMapView) selectEventIdMapView('');
-              });
+              setEventViewModeEvent('none');
+              // getEventList(null, () => { // want to eliminate this in reducer
+              //   getEventLinkList(); // want to eliminate this in reducer
+              //   // reset selectedEventId whether viewing or not - moved to reducer
+              //   // if (eventId === selectedEventIdEvents) selectEventIdEvents('');
+              //   // if (eventId === selectedEventIdMyMaps) selectEventIdMyMaps('');
+              //   // if (eventId === selectedEventIdMapView) selectEventIdMapView('');
+              // });
             }
           });
         }}
@@ -54,8 +54,8 @@ const EventDelete = ({
 
 EventDelete.propTypes = {
   selectedEvent: PropTypes.objectOf(PropTypes.any),
-  getEventList: PropTypes.func.isRequired,
-  getEventLinkList: PropTypes.func.isRequired,
+  // getEventList: PropTypes.func.isRequired,
+  // getEventLinkList: PropTypes.func.isRequired,
   deleteEvent: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
 };

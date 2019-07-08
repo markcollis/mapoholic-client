@@ -50,7 +50,9 @@ const getUpdatedEventList = (list, payload) => {
         date,
         linkedTo,
         locCornerNE,
+        locCornerNW,
         locCornerSW,
+        locCornerSE,
         locCountry,
         locLat,
         locLong,
@@ -68,7 +70,9 @@ const getUpdatedEventList = (list, payload) => {
         date,
         linkedTo,
         locCornerNE,
+        locCornerNW,
         locCornerSW,
+        locCornerSE,
         locCountry,
         locLat,
         locLong,
@@ -119,6 +123,41 @@ const removeFromListById = (list, id) => {
   return newList;
 };
 
+const getUpdatedLinkListEvent = (linkList, oevent) => {
+  if (!oevent) return linkList;
+  // console.log('updating linkList:', linkList, oevent);
+  const {
+    _id: eventId,
+    date,
+    name,
+    linkedTo,
+  } = oevent;
+  const linkedToIds = linkedTo.map((link => link._id));
+  const newLinkList = linkList.map((eachLink) => {
+    const { _id: eventLinkId, includes } = eachLink;
+    const nowLinked = includes.some(linkedEvent => linkedEvent._id === eventId);
+    const shouldBeLinked = linkedToIds.includes(eventLinkId);
+    if (nowLinked && shouldBeLinked) { // replace in case name or date have changed
+      const newIncludes = includes.map((linkedEvent) => {
+        if (linkedEvent._id === eventLinkId) return { _id: eventId, date, name };
+        return linkedEvent;
+      });
+      return { ...eachLink, includes: newIncludes };
+    }
+    if (!nowLinked && shouldBeLinked) { // add new link to array
+      const newIncludes = [...includes, { _id: eventId, date, name }];
+      return { ...eachLink, includes: newIncludes };
+    }
+    if (nowLinked && !shouldBeLinked) { // remove from array
+      const newIncludes = includes.filter(linkedEvent => (linkedEvent._id !== eventId));
+      return { ...eachLink, includes: newIncludes };
+    }
+    return eachLink; // otherwise do nothing
+  });
+  // console.log('updated version:', linkList);
+  return newLinkList;
+};
+
 const getUpdatedListEventLink = (list, eventLink) => {
   // console.log('updating list:', list, eventLink);
   if (!eventLink) return list;
@@ -126,12 +165,12 @@ const getUpdatedListEventLink = (list, eventLink) => {
   const includedIds = includes.map((included => included._id));
   const newList = list.map((eachEvent) => {
     const { _id: eventId, linkedTo } = eachEvent;
-    const nowLinked = linkedTo.some(linkedEvent => linkedEvent._id === eventLinkId);
+    const nowLinked = linkedTo.some(link => link._id === eventLinkId);
     const shouldBeLinked = includedIds.includes(eventId);
     if (nowLinked && shouldBeLinked) { // replace in case displayName has changed
-      const newLinkedTo = linkedTo.map((linkedEvent) => {
-        if (linkedEvent._id === eventLinkId) return { _id: eventLinkId, displayName };
-        return linkedEvent;
+      const newLinkedTo = linkedTo.map((link) => {
+        if (link._id === eventLinkId) return { _id: eventLinkId, displayName };
+        return link;
       });
       return { ...eachEvent, linkedTo: newLinkedTo };
     }
@@ -140,7 +179,7 @@ const getUpdatedListEventLink = (list, eventLink) => {
       return { ...eachEvent, linkedTo: newLinkedTo };
     }
     if (nowLinked && !shouldBeLinked) { // remove from array
-      const newLinkedTo = linkedTo.filter(linkedEvent => (linkedEvent._id !== eventLinkId));
+      const newLinkedTo = linkedTo.filter(link => (link._id !== eventLinkId));
       return { ...eachEvent, linkedTo: newLinkedTo };
     }
     return eachEvent; // otherwise do nothing
@@ -360,7 +399,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
           _id: action.payload._id,
         }], action.payload),
       };
-    case EVENT_UPDATED: // update entry in both details and list
+    case EVENT_UPDATED: // update entry in both details and list, fix linkList if required
     case EVENT_RUNNER_ADDED: // same thing, runner addition returns whole event
     case EVENT_RUNNER_DELETED: // same thing, runner delete returns whole event minus runner
     case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
@@ -369,6 +408,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
+        linkList: getUpdatedLinkListEvent(state.linkList, action.payload),
         list: getUpdatedEventList(state.list, action.payload),
       };
     case EVENT_MAP_UPLOADED: // update list and details, including summary data
@@ -382,7 +422,9 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       } = parameters;
       const updatedEventDetails = state.details[eventId];
       updatedEventDetails.locCornerNE = updatedEvent.locCornerNE;
+      updatedEventDetails.locCornerNW = updatedEvent.locCornerNW;
       updatedEventDetails.locCornerSW = updatedEvent.locCornerSW;
+      updatedEventDetails.locCornerSE = updatedEvent.locCornerSE;
       updatedEventDetails.locLat = updatedEvent.locLat;
       updatedEventDetails.locLong = updatedEvent.locLong;
       const runnerToUpdate = updatedEvent.runners.find(runner => runner.user._id === userId);
@@ -430,12 +472,14 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     }
-    case EVENT_DELETED: // remove from details and list, clear any current views
+    case EVENT_DELETED: // remove from details and list, clear any current views,
+      // fix linkList if required
       // console.log('EVENT_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
         errorMessage: '',
+        linkList: getUpdatedLinkListEvent(state.linkList, { ...action.payload, linkedTo: [] }),
         list: removeFromListById(state.list, action.payload._id),
         selectedEventIdEvents: ((state.selectedEventIdEvents === action.payload._id)
           ? ''

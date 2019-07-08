@@ -29,7 +29,7 @@ import {
   deleteEventRunnerAction,
   deleteMapAction,
   getEventByIdAction,
-  getEventLinkListAction,
+  // getEventLinkListAction,
   getEventListAction,
   postCommentAction,
   postMapAction,
@@ -65,7 +65,7 @@ class MapView extends Component {
     deleteEventRunner: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
-    getEventLinkList: PropTypes.func.isRequired,
+    // getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
@@ -332,7 +332,7 @@ class MapView extends Component {
       user,
       deleteEvent,
       getEventList,
-      getEventLinkList,
+      // getEventLinkList,
       setEventViewModeEvent,
       updateEvent,
     } = this.props;
@@ -394,8 +394,8 @@ class MapView extends Component {
         return (
           <EventDelete
             deleteEvent={deleteEvent} // prop
-            getEventLinkList={getEventLinkList} // prop
-            getEventList={getEventList} // prop
+            // getEventLinkList={getEventLinkList} // prop
+            // getEventList={getEventList} // prop
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
           />
@@ -413,8 +413,8 @@ class MapView extends Component {
       user,
       createEventLink,
       deleteEventLink,
-      getEventLinkList,
-      getEventList,
+      // getEventLinkList,
+      // getEventList,
       selectEventIdMapView,
       setEventViewModeEvent,
       setEventViewModeEventLink,
@@ -467,8 +467,8 @@ class MapView extends Component {
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
               eventList={list} // prop (oevent)
-              getEventLinkList={getEventLinkList} // prop
-              getEventList={getEventList} // prop
+              // getEventLinkList={getEventLinkList} // prop
+              // getEventList={getEventList} // prop
               isAdmin={isAdmin} // derived
               language={language} // prop (config)
               linkList={linkList} // prop (oevent)
@@ -657,7 +657,7 @@ const mapDispatchToProps = {
   deleteEventRunner: deleteEventRunnerAction,
   deleteMap: deleteMapAction,
   getEventById: getEventByIdAction,
-  getEventLinkList: getEventLinkListAction,
+  // getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   // getUserById: getUserByIdAction,
   postComment: postCommentAction,

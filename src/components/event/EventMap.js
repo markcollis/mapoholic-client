@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {
   Map,
   Marker,
-  Rectangle,
+  Polygon,
+  // Rectangle,
   TileLayer,
   Tooltip,
 } from 'react-leaflet';
@@ -119,10 +120,17 @@ class EventMap extends Component {
             locLat,
             locLong,
             locCornerSW,
+            locCornerNW, // * may be missing in some older records *
             locCornerNE,
+            locCornerSE, // * may be missing in some older records *
           } = eventDetails;
           const flagMarkerPos = [locLat, locLong];
-          const rectangleBounds = [locCornerSW, locCornerNE];
+
+          const polygonBounds = (!locCornerNW || locCornerNW.length === 0)
+            ? [locCornerSW, [locCornerNE[0], locCornerSW[1]],
+              locCornerNE, [locCornerSW[0], locCornerNE[1]]]
+            : [locCornerSW, locCornerNW, locCornerNE, locCornerSE];
+          // const rectangleBounds = [locCornerSW, locCornerNE];
           const tooltip = (
             <Tooltip
               direction="right"
@@ -139,7 +147,7 @@ class EventMap extends Component {
             </Tooltip>
           );
           // const coords = [[locLat - 0.01, locLong - 0.01], [locLat + 0.01, locLong + 0.01]];
-          if (!mapZoomLevel || mapZoomLevel < 12 || locCornerSW.length === 0) {
+          if (!mapZoomLevel || mapZoomLevel < 11 || locCornerSW.length === 0) {
             return (
               <Marker
                 key={eventId}
@@ -156,13 +164,13 @@ class EventMap extends Component {
           // console.log('rectangleBounds:', rectangleBounds);
           return (
             <div key={eventId}>
-              <Rectangle
-                bounds={rectangleBounds}
+              <Polygon
+                positions={polygonBounds}
                 color="blue"
                 onClick={() => handleSelectEvent(eventId)}
               >
                 {tooltip}
-              </Rectangle>
+              </Polygon>
             </div>
           );
         })

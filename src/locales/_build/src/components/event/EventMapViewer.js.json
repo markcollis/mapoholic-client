@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        161
+        159
       ]
     ]
   },
@@ -11,7 +11,15 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        162
+        160
+      ]
+    ]
+  },
+  "untitled": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewer.js",
+        187
       ]
     ]
   },
@@ -19,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        196
+        194
       ]
     ]
   },
@@ -27,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        231
+        229
       ]
     ]
   }

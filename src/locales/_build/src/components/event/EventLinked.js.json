@@ -1,25 +1,9 @@
 {
-  "Linked events": {
+  "Event link details not found": {
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        26
-      ]
-    ]
-  },
-  "This event is not currently linked to any others.": {
-    "origin": [
-      [
-        "src/components/event/EventLinked.js",
-        27
-      ]
-    ]
-  },
-  "Event link details not found for {linkId}": {
-    "origin": [
-      [
-        "src/components/event/EventLinked.js",
-        34
+        23
       ]
     ]
   },
@@ -27,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        69
+        58
       ]
     ]
   },
@@ -35,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        85
+        74
       ]
     ]
   },
@@ -43,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventLinked.js",
-        90
+        79
       ]
     ]
   }
