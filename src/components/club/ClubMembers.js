@@ -8,7 +8,7 @@ import { MAPOHOLIC_SERVER } from '../../config';
 
 const ClubMembers = ({
   history,
-  fullEventList,
+  eventList,
   membersList,
   selectUserToDisplay,
   setUserViewMode,
@@ -18,8 +18,8 @@ const ClubMembers = ({
   }
   // console.log('fullEventList:', fullEventList);
   const mapCountByUserId = {};
-  if (fullEventList) {
-    fullEventList.forEach((eventSummary) => {
+  if (eventList) {
+    eventList.forEach((eventSummary) => {
       const { runners } = eventSummary;
       if (runners) {
         runners.forEach((runner) => {
@@ -43,7 +43,7 @@ const ClubMembers = ({
   };
   const clubMembersArray = membersList.map((member) => {
     const {
-      user_id: userId,
+      _id: userId,
       displayName,
       fullName,
       profileImage,
@@ -98,15 +98,11 @@ const ClubMembers = ({
 };
 
 ClubMembers.propTypes = {
-  fullEventList: PropTypes.arrayOf(PropTypes.object),
+  eventList: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
-  membersList: PropTypes.arrayOf(PropTypes.object),
+  membersList: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectUserToDisplay: PropTypes.func.isRequired,
   setUserViewMode: PropTypes.func.isRequired,
-};
-ClubMembers.defaultProps = {
-  fullEventList: [],
-  membersList: [],
 };
 
 export default withRouter(ClubMembers);

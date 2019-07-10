@@ -1,9 +1,9 @@
 import {
   AUTH_USER,
   CLUB_GOT_LIST,
-  CLUB_GOT_BY_ID,
-  CLUB_GOT_MEMBERS,
-  CLUB_GOT_EVENTS,
+  // CLUB_GOT_BY_ID,
+  // CLUB_GOT_MEMBERS,
+  // CLUB_GOT_EVENTS,
   CLUB_CREATED,
   CLUB_UPDATED,
   CLUB_DELETED,
@@ -14,19 +14,40 @@ import {
   CLUB_SELECT_CLUB_MEMBER,
   CLUB_SELECT_CLUB_EVENT,
 } from '../actions/types';
+import { logAPICalls } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
+// update club list as necessary for all actions that receive details of an updated club
+const getUpdatedClubList = (list, payload) => {
+  if (!list) return null;
+  const newList = list.map((listedClub) => {
+    if (listedClub._id === payload._id) {
+      return payload;
+    }
+    return listedClub;
+  });
+  // console.log('newList:', newList);
+  return newList;
+};
+
+// remove a specific item from a list after deletion
+const removeFromListById = (list, id) => {
+  if (!list) return null;
+  const newList = list.filter(listItem => listItem._id !== id);
+  return newList;
+};
+
 const INITIAL_STATE = {
-  searchField: '', // contents of search box in ClubFilter
-  list: null, // replaced each time API is queried, also populates corresponding details
-  viewMode: 'none', // configuration of right column: none, view, add, edit, delete
+  // eventLists: {}, // all event list records viewed, key is clubId - redundant
+  // memberLists: {}, // all member list records viewed, key is clubId - redundant
   details: {}, // all club records viewed, key is clubId
-  selectedClubId: '', // clubId of club to display in ClubDetails
-  memberLists: {}, // all member list records viewed, key is clubId
-  selectedMember: '', // selected club member to show details of (userId)
-  eventLists: {}, // all event list records viewed, key is clubId
-  selectedEvent: '', // selected event to show details of (eventId)
   errorMessage: '', // empty unless an error occurs
+  list: null, // replaced each time API is queried, also populates corresponding details
+  searchField: '', // contents of search box in ClubFilter
+  selectedClubId: '', // clubId of club to display in ClubDetails
+  selectedEvent: '', // selected event to show details of (eventId)
+  selectedMember: '', // selected club member to show details of (userId)
+  viewMode: 'none', // configuration of right column: none, view, add, edit, delete
 };
 
 const clubReducer = (state = INITIAL_STATE, action) => {
@@ -35,7 +56,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case CLUB_GOT_LIST: {
-      // console.log('CLUB_GOT_LIST payload:', action.payload);
+      if (logAPICalls) console.log('CLUB_GOT_LIST payload:', action.payload);
       // console.log('details:', state.details);
       const newDetails = { ...state.details };
       if (action.payload.length > 0) {
@@ -51,51 +72,56 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         list: action.payload,
       };
     }
-    case CLUB_GOT_BY_ID:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload._id]: action.payload },
-        errorMessage: '',
-      };
+    // case CLUB_GOT_BY_ID:
+    //   if (logAPICalls) console.log('CLUB_GOT_BY_ID payload:', action.payload);
+    //   return {
+    //     ...state,
+    //     details: { ...state.details, [action.payload._id]: action.payload },
+    //     errorMessage: '',
+    //   };
     case CLUB_CREATED:
-      // console.log('CLUB_CREATED payload:', action.payload);
+      if (logAPICalls) console.log('CLUB_CREATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
+        list: getUpdatedClubList([...state.list, { _id: action.payload._id }], action.payload),
         errorMessage: '',
         selectedClubId: action.payload._id,
       };
     case CLUB_UPDATED:
-      // console.log('CLUB_UPDATED payload:', action.payload);
+      if (logAPICalls) console.log('CLUB_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
+        list: getUpdatedClubList(state.list, action.payload),
         errorMessage: '',
       };
     case CLUB_DELETED:
-      // console.log('CLUB_DELETED payload:', action.payload);
+      if (logAPICalls) console.log('CLUB_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
+        list: removeFromListById(state.list, action.payload._id),
         errorMessage: '',
         selectedClubId: '',
       };
-    case CLUB_GOT_MEMBERS:
-      // console.log('CLUB_GOT_MEMBERS payload:', action.payload);
-      return {
-        ...state,
-        errorMessage: '',
-        memberLists: { ...state.memberLists, [action.payload.clubId]: action.payload.memberList },
-      };
-    case CLUB_GOT_EVENTS:
-      // console.log('CLUB_GOT_EVENTS payload:', action.payload);
-      return {
-        ...state,
-        errorMessage: '',
-        eventLists: { ...state.eventLists, [action.payload.clubId]: action.payload.eventList },
-      };
+    // case CLUB_GOT_MEMBERS:
+    //   if (logAPICalls) console.log('CLUB_GOT_MEMBERS payload:', action.payload);
+    //   return {
+    //     ...state,
+    //     errorMessage: '',
+    //     memberLists: { ...state.memberLists,
+    // [action.payload.clubId]: action.payload.memberList },
+    //   };
+    // case CLUB_GOT_EVENTS:
+    //   if (logAPICalls) console.log('CLUB_GOT_EVENTS payload:', action.payload);
+    //   return {
+    //     ...state,
+    //     errorMessage: '',
+    //     eventLists: { ...state.eventLists, [action.payload.clubId]: action.payload.eventList },
+    //   };
     case CLUB_ERROR:
-      // console.log('CLUB_ERROR payload:', action.payload);
+      if (logAPICalls) console.log('CLUB_ERROR payload:', action.payload);
       return {
         ...state,
         errorMessage: action.payload,

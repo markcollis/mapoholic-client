@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {
-  CLUB_GOT_BY_ID,
+  // CLUB_GOT_BY_ID,
   CLUB_GOT_LIST,
-  CLUB_GOT_MEMBERS,
-  CLUB_GOT_EVENTS,
+  // CLUB_GOT_MEMBERS,
+  // CLUB_GOT_EVENTS,
   CLUB_CREATED,
   CLUB_UPDATED,
   CLUB_DELETED,
@@ -112,85 +112,85 @@ export const createClubAction = (formValues, callback) => async (dispatch, getSt
   }
 };
 
-// retrieve full details for the specified club
+// retrieve full details for the specified club - redundant
 // *** NOT CURRENTLY NEEDED AS LIST CONTAINS FULL DETAILS FOR EACH CLUB IN IT ***
 // app.get('/clubs/:id', publicRoute, Clubs.getClubById);
-export const getClubByIdAction = (userId, callback) => async (dispatch) => {
-  try {
-    const response = await axios.get(`${MAPOHOLIC_SERVER}/clubs/${userId}`);
-    dispatch({ type: CLUB_GOT_BY_ID, payload: response.data });
-    if (callback) callback(true);
-  } catch (err) {
-    handleError(CLUB_ERROR)(err, dispatch);
-    if (callback) callback(false);
-  }
-};
+// export const getClubByIdAction = (userId, callback) => async (dispatch) => {
+//   try {
+//     const response = await axios.get(`${MAPOHOLIC_SERVER}/clubs/${userId}`);
+//     dispatch({ type: CLUB_GOT_BY_ID, payload: response.data });
+//     if (callback) callback(true);
+//   } catch (err) {
+//     handleError(CLUB_ERROR)(err, dispatch);
+//     if (callback) callback(false);
+//   }
+// };
 
-// get a list of users that are members of the specified club
-export const getClubMembersAction = (clubId, callback) => async (dispatch, getState) => {
-  if (!clubId) {
-    dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
-  } else {
-    try {
-      const state = getState();
-      const { auth } = state;
-      const queryString = toQueryString({ memberOf: clubId });
-      const token = auth.authenticated;
-      let response;
-      if (token) {
-        response = await axios.get(`${MAPOHOLIC_SERVER}/users${queryString}`, {
-          headers: { Authorization: `bearer ${token}` },
-        });
-      } else {
-        response = await axios.get(`${MAPOHOLIC_SERVER}/users/public${queryString}`);
-      }
-      dispatch({
-        type: CLUB_GOT_MEMBERS,
-        payload: {
-          clubId,
-          memberList: response.data,
-        },
-      });
-      if (callback) callback(true);
-    } catch (err) {
-      handleError(CLUB_ERROR)(err, dispatch);
-      if (callback) callback(false);
-    }
-  }
-};
+// get a list of users that are members of the specified club - redundant
+// export const getClubMembersAction = (clubId, callback) => async (dispatch, getState) => {
+//   if (!clubId) {
+//     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
+//   } else {
+//     try {
+//       const state = getState();
+//       const { auth } = state;
+//       const queryString = toQueryString({ memberOf: clubId });
+//       const token = auth.authenticated;
+//       let response;
+//       if (token) {
+//         response = await axios.get(`${MAPOHOLIC_SERVER}/users${queryString}`, {
+//           headers: { Authorization: `bearer ${token}` },
+//         });
+//       } else {
+//         response = await axios.get(`${MAPOHOLIC_SERVER}/users/public${queryString}`);
+//       }
+//       dispatch({
+//         type: CLUB_GOT_MEMBERS,
+//         payload: {
+//           clubId,
+//           memberList: response.data,
+//         },
+//       });
+//       if (callback) callback(true);
+//     } catch (err) {
+//       handleError(CLUB_ERROR)(err, dispatch);
+//       if (callback) callback(false);
+//     }
+//   }
+// };
 
-// get a list of events organised by the specified club
-export const getClubEventsAction = (clubId, callback) => async (dispatch, getState) => {
-  if (!clubId) {
-    dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
-  } else {
-    try {
-      const state = getState();
-      const { auth } = state;
-      const queryString = toQueryString({ organisedBy: clubId });
-      const token = auth.authenticated;
-      let response;
-      if (token) {
-        response = await axios.get(`${MAPOHOLIC_SERVER}/events${queryString}`, {
-          headers: { Authorization: `bearer ${token}` },
-        });
-      } else {
-        response = await axios.get(`${MAPOHOLIC_SERVER}/events/public${queryString}`);
-      }
-      dispatch({
-        type: CLUB_GOT_EVENTS,
-        payload: {
-          clubId,
-          eventList: response.data,
-        },
-      });
-      if (callback) callback(true);
-    } catch (err) {
-      handleError(CLUB_ERROR)(err, dispatch);
-      if (callback) callback(false);
-    }
-  }
-};
+// get a list of events organised by the specified club - redundant
+// export const getClubEventsAction = (clubId, callback) => async (dispatch, getState) => {
+//   if (!clubId) {
+//     dispatch({ type: CLUB_ERROR, payload: 'No club specified.' });
+//   } else {
+//     try {
+//       const state = getState();
+//       const { auth } = state;
+//       const queryString = toQueryString({ organisedBy: clubId });
+//       const token = auth.authenticated;
+//       let response;
+//       if (token) {
+//         response = await axios.get(`${MAPOHOLIC_SERVER}/events${queryString}`, {
+//           headers: { Authorization: `bearer ${token}` },
+//         });
+//       } else {
+//         response = await axios.get(`${MAPOHOLIC_SERVER}/events/public${queryString}`);
+//       }
+//       dispatch({
+//         type: CLUB_GOT_EVENTS,
+//         payload: {
+//           clubId,
+//           eventList: response.data,
+//         },
+//       });
+//       if (callback) callback(true);
+//     } catch (err) {
+//       handleError(CLUB_ERROR)(err, dispatch);
+//       if (callback) callback(false);
+//     }
+//   }
+// };
 
 // update the specified club (multiple amendment not supported)
 // try to populate ORIS if abbreviation changes and looks Czech

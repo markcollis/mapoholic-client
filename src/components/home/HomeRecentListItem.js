@@ -107,7 +107,7 @@ class HomeRecentListItem extends Component {
     // specifically for actionBy, it is possible that the current user will
     // not have permission to view this particular user's profile - need to check
     // console.log('userList', userList);
-    const inUserList = userList.find(eachUser => eachUser.user_id === userId);
+    const inUserList = userList.find(eachUser => eachUser._id === userId);
     // console.log('inUserList', inUserList);
     if (!inUserList) return displayName;
     return (

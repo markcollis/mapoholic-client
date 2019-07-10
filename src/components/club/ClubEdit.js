@@ -65,7 +65,7 @@ class ClubEdit extends Component {
         const roleOption = roleOptions.find((el => el.value === user.role));
         const role = roleOption.label;
         const label = `${user.displayName} (${role})`;
-        return { value: user.user_id, label };
+        return { value: user._id, label };
       })
       .sort((a, b) => {
         if (a.label > b.label) return 1;
@@ -230,7 +230,6 @@ const formikClubEdit = withFormik({
       updateClub,
       setClubViewMode,
       selectedClub,
-      getClubList,
     } = props;
     const valuesToSubmit = (values.country)
       ? { ...values, country: values.country.value }
@@ -238,19 +237,13 @@ const formikClubEdit = withFormik({
     if (values.owner) valuesToSubmit.owner = values.owner.value;
     if (viewMode === 'add') {
       createClub(valuesToSubmit, (didSucceed) => {
-        if (didSucceed) {
-          getClubList(null, () => setClubViewMode('view'));
-        } else {
-          setSubmitting(false);
-        }
+        if (didSucceed) setClubViewMode('view');
+        else setSubmitting(false);
       });
     } else {
       updateClub(selectedClub._id, valuesToSubmit, (didSucceed) => {
-        if (didSucceed) {
-          getClubList(null, () => setClubViewMode('view'));
-        } else {
-          setSubmitting(false);
-        }
+        if (didSucceed) setClubViewMode('view');
+        else setSubmitting(false);
       });
     }
   },

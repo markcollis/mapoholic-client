@@ -15,9 +15,9 @@ import {
   changePasswordAction,
   deleteProfileImageAction,
   deleteUserAction,
-  getClubMembersAction,
+  // getClubMembersAction,
   getUserByIdAction,
-  getUserEventsAction,
+  // getUserEventsAction,
   getUserListAction,
   postProfileImageAction,
   selectEventIdMapViewAction,
@@ -33,15 +33,16 @@ class UserView extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,
     config: PropTypes.objectOf(PropTypes.any).isRequired,
+    oevent: PropTypes.objectOf(PropTypes.any).isRequired,
     ownProfile: PropTypes.bool,
     user: PropTypes.objectOf(PropTypes.any).isRequired,
     cancelUserError: PropTypes.func.isRequired,
     changePassword: PropTypes.func.isRequired,
     deleteProfileImage: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
-    getClubMembers: PropTypes.func.isRequired,
+    // getClubMembers: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
-    getUserEvents: PropTypes.func.isRequired,
+    // getUserEvents: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
     postProfileImage: PropTypes.func.isRequired,
     selectEventIdMapView: PropTypes.func.isRequired,
@@ -108,15 +109,14 @@ class UserView extends Component {
   });
 
   // helper to get list of events attended by selected user if props have changed
-  getEventsList = memoize((selectedUserId, eventLists, errorMessage) => {
-    const {
-      getUserEvents,
-    } = this.props;
-    const eventsList = eventLists[selectedUserId];
-    if (selectedUserId !== '' && !eventsList && !errorMessage) {
-      getUserEvents(selectedUserId);
-    }
-    return eventsList || [];
+  getUserEventsList = memoize((selectedUserId, eventList) => {
+    if (!eventList) return [];
+    const eventsList = eventList.filter((eachEvent) => {
+      const { runners } = eachEvent;
+      const isRunner = runners.some(runner => runner.user === selectedUserId);
+      return isRunner;
+    });
+    return eventsList;
   });
 
   // update a prop in UserDetails to trigger refresh of Collapse component to new size
@@ -247,9 +247,9 @@ class UserView extends Component {
       club,
       config,
       deleteProfileImage,
-      getClubMembers,
-      getUserById,
-      getUserList,
+      // getClubMembers,
+      // getUserById,
+      // getUserList,
       ownProfile,
       postProfileImage,
       selectUserToDisplay,
@@ -280,9 +280,9 @@ class UserView extends Component {
         changePassword={changePassword} // prop
         clubList={clubList} // prop (club)
         deleteProfileImage={deleteProfileImage} // prop
-        getClubMembers={getClubMembers} // prop
-        getUserById={getUserById} // prop
-        getUserList={getUserList} // prop
+        // getClubMembers={getClubMembers} // prop
+        // getUserById={getUserById} // prop
+        // getUserList={getUserList} // prop
         isAdmin={isAdmin} // derived
         language={language} // prop (config)
         postProfileImage={postProfileImage} // prop
@@ -299,7 +299,7 @@ class UserView extends Component {
     const {
       user,
       deleteUser,
-      getUserList,
+      // getUserList,
       ownProfile,
       setUserViewMode,
       setUserViewModeSelf,
@@ -317,7 +317,7 @@ class UserView extends Component {
     return (
       <UserDelete
         deleteUser={deleteUser} // prop
-        getUserList={getUserList} // prop
+        // getUserList={getUserList} // prop
         isSelf={isSelf} // derived
         selectedUser={selectedUser} // derived
         setUserViewMode={(ownProfile) ? setUserViewModeSelf : setUserViewMode} // props
@@ -328,6 +328,7 @@ class UserView extends Component {
   renderUserEvents = () => {
     const {
       config,
+      oevent,
       ownProfile,
       selectEventIdMapView,
       selectRunnerToDisplay,
@@ -337,15 +338,14 @@ class UserView extends Component {
       current,
       details,
       errorMessage,
-      eventLists,
+      // eventLists,
       selectedUserId,
     } = user;
-    const {
-      language,
-    } = config;
+    const { language } = config;
+    const { list: eventList } = oevent;
     const userId = this.getUserId(current, ownProfile, selectedUserId);
     const selectedUser = this.getSelectedUser(details, userId, errorMessage);
-    const eventsList = this.getEventsList(userId, eventLists, errorMessage);
+    const eventsList = this.getUserEventsList(userId, eventList);
 
     if (ownProfile && eventsList.length === 0) {
       return (
@@ -420,11 +420,13 @@ class UserView extends Component {
 const mapStateToProps = ({
   club,
   config,
+  oevent,
   user,
 }) => {
   return {
     club,
     config,
+    oevent,
     user,
   };
 };
@@ -433,9 +435,9 @@ const mapDispatchToProps = {
   changePassword: changePasswordAction,
   deleteProfileImage: deleteProfileImageAction,
   deleteUser: deleteUserAction,
-  getClubMembers: getClubMembersAction,
+  // getClubMembers: getClubMembersAction,
   getUserById: getUserByIdAction,
-  getUserEvents: getUserEventsAction,
+  // getUserEvents: getUserEventsAction,
   getUserList: getUserListAction,
   postProfileImage: postProfileImageAction,
   selectEventIdMapView: selectEventIdMapViewAction,

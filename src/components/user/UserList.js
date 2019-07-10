@@ -26,7 +26,7 @@ const UserList = ({
       return (a.displayName > b.displayName) ? 0 : -1;
     })
     .map((user) => {
-      const { user_id: userId } = user;
+      const { _id: userId } = user;
       return (
         <UserListItem
           key={userId}

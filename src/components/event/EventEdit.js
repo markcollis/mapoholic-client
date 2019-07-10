@@ -163,7 +163,7 @@ class EventEdit extends Component {
         const roleOption = roleOptions.find((el => el.value === user.role));
         const role = roleOption.label;
         const label = `${user.displayName} (${role})`;
-        return { value: user.user_id, label };
+        return { value: user._id, label };
       })
       .sort((a, b) => {
         if (a.label > b.label) return 1;

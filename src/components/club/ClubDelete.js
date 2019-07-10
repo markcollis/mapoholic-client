@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro';
 
 const ClubDelete = ({
   deleteClub,
-  getClubList,
   selectedClub,
   setClubViewMode,
 }) => {
@@ -24,7 +23,7 @@ const ClubDelete = ({
         className="ui tiny red button"
         onClick={() => {
           deleteClub(clubId, (didSucceed) => {
-            if (didSucceed) getClubList(null, () => setClubViewMode('none'));
+            if (didSucceed) setClubViewMode('none');
           });
         }}
       >
@@ -43,7 +42,6 @@ const ClubDelete = ({
 
 ClubDelete.propTypes = {
   deleteClub: PropTypes.func.isRequired,
-  getClubList: PropTypes.func.isRequired,
   selectedClub: PropTypes.objectOf(PropTypes.any),
   setClubViewMode: PropTypes.func.isRequired,
 };

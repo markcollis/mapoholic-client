@@ -71,7 +71,7 @@ const EventRunnerDetails = ({
   );
 
   const nameToDisplay = `${displayName} ${(fullName && fullName !== '') ? `(${fullName})` : ''}`;
-  const renderHeader = (userList && userList.find(eachUser => eachUser.user_id === userId))
+  const renderHeader = (userList && userList.find(eachUser => eachUser._id === userId))
     ? (
       <h3 className="header">
         <a

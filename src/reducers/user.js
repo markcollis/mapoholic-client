@@ -3,7 +3,7 @@ import {
   USER_GOT_LIST,
   USER_GOT_CURRENT,
   USER_GOT_BY_ID,
-  USER_GOT_EVENTS,
+  // USER_GOT_EVENTS,
   USER_UPDATED,
   USER_POSTED_IMAGE,
   USER_CHANGED_PASSWORD,
@@ -15,7 +15,46 @@ import {
   USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
 } from '../actions/types';
+import { logAPICalls } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
+
+// update user list as necessary for all actions that receive full details of an updated user
+const getUpdatedUserList = (list, payload) => {
+  if (!list) return null;
+  const newList = list.map((listedUser) => {
+    if (listedUser._id === payload._id) {
+      const {
+        _id,
+        displayName,
+        fullName,
+        memberOf,
+        profileImage,
+        role,
+        createdAt,
+      } = payload;
+      const userSummary = {
+        _id,
+        displayName,
+        fullName,
+        memberOf,
+        profileImage,
+        role,
+        joined: createdAt,
+      };
+      return userSummary;
+    }
+    return listedUser;
+  });
+  // console.log('newList:', newList);
+  return newList;
+};
+
+// remove a specific item from a list after deletion
+const removeFromListById = (list, id) => {
+  if (!list) return null;
+  const newList = list.filter(listItem => listItem._id !== id);
+  return newList;
+};
 
 const INITIAL_STATE = {
   searchField: '', // contents of search box in UserFilter
@@ -25,7 +64,7 @@ const INITIAL_STATE = {
   viewModeSelf: 'view', // configuration of own profile page: view, edit, delete
   details: {}, // all user records viewed, key is userId
   selectedUserId: '', // userId of user to display in UserDetails
-  eventLists: {}, // all event list records viewed, key is userId
+  // eventLists: {}, // all event list records viewed, key is userId
   errorMessage: '', // empty unless an error occurs
 };
 
@@ -35,14 +74,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
       // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case USER_GOT_LIST:
-      // console.log('USER_GOT_LIST payload:', action.payload);
+      if (logAPICalls) console.log('USER_GOT_LIST payload:', action.payload);
       return {
         ...state,
         list: action.payload,
         errorMessage: '',
       };
     case USER_GOT_CURRENT:
-      // console.log('USER_GET_CURRENT payload:', action.payload);
+      if (logAPICalls) console.log('USER_GOT_CURRENT payload:', action.payload);
       return {
         ...state,
         current: action.payload,
@@ -50,34 +89,35 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_GOT_BY_ID:
-      // console.log('USER_GOT_BY_ID payload:', action.payload);
+      if (logAPICalls) console.log('USER_GOT_BY_ID payload:', action.payload);
       return {
         ...state,
         current: (state.current._id === action.payload._id) ? action.payload : { ...state.current },
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
       };
-    case USER_GOT_EVENTS:
-      // console.log('USER_GOT_EVENTS payload:', action.payload);
-      return {
-        ...state,
-        eventLists: { ...state.eventLists, [action.payload.userId]: action.payload.eventList },
-        errorMessage: '',
-      };
+    // case USER_GOT_EVENTS:  redundant
+    //   if (logAPICalls) console.log('USER_GOT_EVENTS payload:', action.payload);
+    //   return {
+    //     ...state,
+    //     eventLists: { ...state.eventLists, [action.payload.userId]: action.payload.eventList },
+    //     errorMessage: '',
+    //   };
     case USER_UPDATED:
-      // console.log('USER_UPDATED payload:', action.payload);
+      if (logAPICalls) console.log('USER_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
+        list: getUpdatedUserList(state.list, action.payload),
       };
     case USER_POSTED_IMAGE:
-      // console.log('USER_POSTED_IMAGE payload:', action.payload);
+      if (logAPICalls) console.log('USER_POSTED_IMAGE payload:', action.payload);
       return {
         ...state,
         list: (state.list)
           ? state.list.map((user) => {
-            if (user.user_id && user.user_id === action.payload.userId) {
+            if (user._id && user._id === action.payload.userId) {
               return { ...user, profileImage: action.payload.profileImage };
             }
             return user;
@@ -95,23 +135,24 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_CHANGED_PASSWORD:
-      // console.log('USER_CHANGED_PASSWORD payload:', action.payload);
+      if (logAPICalls) console.log('USER_CHANGED_PASSWORD payload:', action.payload);
       return state;
     case USER_DELETED:
-      // console.log('USER_DELETED payload:', action.payload);
+      if (logAPICalls) console.log('USER_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
+        list: removeFromListById(state.list, action.payload._id),
         selectedUserId: '',
         errorMessage: '',
       };
     case USER_DELETED_IMAGE:
-      // console.log('USER_DELETED_IMAGE payload:', action.payload);
+      if (logAPICalls) console.log('USER_DELETED_IMAGE payload:', action.payload);
       return {
         ...state,
         list: (state.list)
           ? state.list.map((user) => {
-            if (user.user_id && user.user_id === action.payload) {
+            if (user._id && user._id === action.payload) {
               return { ...user, profileImage: '' };
             }
             return user;
@@ -129,7 +170,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_ERROR:
-      // console.log('USER_ERROR payload:', action.payload);
+      if (logAPICalls) console.log('USER_ERROR payload:', action.payload);
       return { ...state, errorMessage: action.payload };
     case USER_CHANGE_SEARCH_FIELD:
       // console.log('USER_CHANGE_SEARCH_FIELD payload:', action.payload);

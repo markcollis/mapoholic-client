@@ -14,7 +14,7 @@ const UserListItem = ({
   user,
 }) => {
   const {
-    user_id: userId,
+    _id: userId,
     profileImage,
     displayName,
     fullName,
@@ -57,7 +57,8 @@ const UserListItem = ({
             ? (
               <div className="tags-group">
                 {memberOf.map((club) => {
-                  return <div key={club} className="ui label">{club}</div>;
+                  const { _id: clubId, shortName } = club;
+                  return <div key={clubId} className="ui label">{shortName}</div>;
                 })}
               </div>
             )

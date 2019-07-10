@@ -1,8 +1,11 @@
 // Private configuration data
+
 export const defaultLanguage = 'en';
 
-// *** need to ensure that certificate on server matches ***
+// console.logs server response to every API call made
+export const logAPICalls = true;
 
+// *** need to ensure that certificate on server matches ***
 // crius on Wifi (Seven)
 export const MAPOHOLIC_SERVER = 'https://192.168.0.15:3090';
 

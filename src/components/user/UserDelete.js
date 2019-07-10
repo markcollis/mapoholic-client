@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 class UserDelete extends Component {
   static propTypes = {
     deleteUser: PropTypes.func.isRequired,
-    getUserList: PropTypes.func.isRequired,
+    // getUserList: PropTypes.func.isRequired,
     isSelf: PropTypes.bool,
     selectedUser: PropTypes.objectOf(PropTypes.any),
     setUserViewMode: PropTypes.func.isRequired,
@@ -28,7 +28,7 @@ class UserDelete extends Component {
     if (redirectToLogout) return <Redirect to="/logout" push />;
     const {
       deleteUser,
-      getUserList,
+      // getUserList,
       isSelf,
       selectedUser,
       setUserViewMode,
@@ -54,7 +54,7 @@ class UserDelete extends Component {
           className="ui red button"
           onClick={() => deleteUser(userId, (successful) => {
             if (successful) {
-              getUserList();
+              // getUserList();
               if (isSelf) {
                 this.setState({ redirectToLogout: true }, () => {
                   setUserViewMode('none');

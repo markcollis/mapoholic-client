@@ -379,9 +379,9 @@ const formikUserEdit = withFormik({
       updateUser,
       setUserViewMode,
       selectedUser,
-      getClubMembers,
-      getUserList,
-      getUserById,
+      // getClubMembers,
+      // getUserList,
+      // getUserById,
     } = props;
     const valuesToSubmit = (values.role)
       ? { ...values, role: values.role.value }
@@ -391,13 +391,13 @@ const formikUserEdit = withFormik({
     // console.log('valuesToSubmit:', valuesToSubmit);
     updateUser(selectedUser._id, valuesToSubmit, (didSucceed) => {
       if (didSucceed) {
-        getUserList(null, () => {
-          getUserById(selectedUser._id);
-          setUserViewMode('view');
-          valuesToSubmit.memberOf.forEach((clubId) => {
-            getClubMembers(clubId);
-          });
-        });
+        setUserViewMode('view');
+        // getUserList(null, () => {
+        //   getUserById(selectedUser._id);
+        //   // valuesToSubmit.memberOf.forEach((clubId) => {
+        //   //   getClubMembers(clubId);
+        //   // });
+        // });
       } else {
         setSubmitting(false);
       }
