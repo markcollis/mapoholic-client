@@ -26,6 +26,7 @@ class UserEditProfileImage extends Component {
   }
 
   render() {
+    const { fileToUpload } = this.state;
     const {
       user,
       hide,
@@ -54,6 +55,7 @@ class UserEditProfileImage extends Component {
         <button
           type="button"
           className="ui tiny primary button"
+          disabled={!fileToUpload}
           onClick={() => this.onUploadSelected()}
         >
           <Trans>Upload selected</Trans>

@@ -28,18 +28,6 @@ const HomeAdminNotes = () => {
           <li>Refactor user reducer and components to avoid unnecessary API calls</li>
           <li>Refactor club reducer and components to avoid unnecessary API calls</li>
           <li>EN and CZ specific screenshots?</li>
-          <li>
-            Take a photo of a pile of O maps to use as a background/on home page (still needed??)
-          </li>
-          <li>Investigate making results editable/uploadable if not on ORIS</li>
-          <li>
-            <del>Review when various buttons should appear to be disabled</del>
-            &nbsp;(Add Event/Add Club disabled when view mode is not none or view 8/7)
-          </li>
-          <li>
-            <del>Make website/email links actual links in user/club views! (cf event view)</del>
-            &nbsp;(done 8/7)
-          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -349,6 +337,18 @@ const HomeAdminNotes = () => {
           <li>
             <del>Automatically select language based on browser navigator.language</del>
             &nbsp;(done 8/7)
+          </li>
+          <li>
+            <del>Review when various buttons should appear to be disabled</del>
+            &nbsp;(Add Event/Add Club disabled when view mode is not none or view 8/7)
+          </li>
+          <li>
+            <del>Make website/email links actual links in user/club views! (cf event view)</del>
+            &nbsp;(done 8/7)
+          </li>
+          <li>
+            <del>Investigate making results editable/uploadable if not on ORIS</del>
+            &nbsp;(CSV/JSON results upload and dowload added 9-10/7)
           </li>
         </ol>
       </Collapse>

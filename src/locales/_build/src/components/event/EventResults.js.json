@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        33
+        137
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        33
+        137
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        33
+        137
       ]
     ]
   },
@@ -27,7 +27,79 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        33
+        137
+      ]
+    ]
+  },
+  "To amend results, you need to download them (in either CSV or JSON format), make whatever changes you want using a text editor or spreadsheet*, then re-upload them to replace the existing results. (*LibreOffice or Google Sheets provide better support for CSV import and export than MS Excel)": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        203
+      ]
+    ]
+  },
+  "You can upload full results for your course/class in either CSV format (exported from a spreadsheet) or JSON format if you are producing them programatically. If you download one of the following templates you will see what fields are required.": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        213
+      ]
+    ]
+  },
+  "Download current results: {downloadCSV} {downloadJSON}": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        222
+      ]
+    ]
+  },
+  "Download results template: {downloadCSV} {downloadJSON}": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        223
+      ]
+    ]
+  },
+  "Select your JSON or CSV results file (drag and drop or click to open file dialogue).": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        227
+      ]
+    ]
+  },
+  "Save Results": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        251
+      ]
+    ]
+  },
+  "Cancel": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        260
+      ]
+    ]
+  },
+  "Edit Results": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        295
+      ]
+    ]
+  },
+  "Add Results": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        295
       ]
     ]
   },
@@ -35,15 +107,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        61
-      ]
-    ]
-  },
-  "Sorry, there are no results to display.": {
-    "origin": [
-      [
-        "src/components/event/EventResults.js",
-        76
+        319
       ]
     ]
   }

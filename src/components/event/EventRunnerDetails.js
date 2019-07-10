@@ -157,7 +157,7 @@ const EventRunnerDetails = ({
       </p>
     )
     : <p><Trans>No result to display</Trans></p>;
-  const renderResultsInfo = (fullResults.length > 0)
+  const renderResultsInfo = (fullResults && fullResults.length > 0)
     ? <p><Trans>{`See below for detailed results (${fullResults.length} runners)`}</Trans></p>
     : null;
   const renderTags = (tags && tags.length > 0)

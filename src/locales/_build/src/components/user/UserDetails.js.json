@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        125
+        131
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/user/UserDetails.js",
-        131
+        137
       ]
     ]
   }

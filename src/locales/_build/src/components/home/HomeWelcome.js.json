@@ -103,19 +103,27 @@
       ]
     ]
   },
+  "orienteering maps...": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        91
+      ]
+    ]
+  },
   "Welcome to MapOholic!": {
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        90
+        99
       ]
     ]
   },
-  "Dedicated to those that know you can never have too many maps...": {
+  "Dedicated to those that know you can never have too many {linkOMaps}": {
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        93
+        102
       ]
     ]
   },
@@ -123,7 +131,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        95
+        107
       ]
     ]
   }

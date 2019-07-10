@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/generic/FileDropzone.js",
-        158
+        198
       ]
     ]
   },
@@ -11,7 +11,15 @@
     "origin": [
       [
         "src/components/generic/FileDropzone.js",
-        160
+        200
+      ]
+    ]
+  },
+  "Error: Incorrect file type. Please check and try again.": {
+    "origin": [
+      [
+        "src/components/generic/FileDropzone.js",
+        207
       ]
     ]
   }

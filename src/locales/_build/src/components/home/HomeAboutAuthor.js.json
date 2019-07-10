@@ -1,25 +1,65 @@
 {
+  "client": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        93
+      ]
+    ]
+  },
+  "server": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        102
+      ]
+    ]
+  },
   "About me": {
     "origin": [
       [
         "src/components/home/HomeAboutAuthor.js",
-        6
+        108
       ]
     ]
   },
-  "MapOholic was developed by...": {
+  "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there has a particular demand for a different language and is willing to do the translations!)": {
     "origin": [
       [
         "src/components/home/HomeAboutAuthor.js",
-        10
+        110
       ]
     ]
   },
-  "If you want to get in touch...": {
+  "I developed MapOholic for two reasons:": {
     "origin": [
       [
         "src/components/home/HomeAboutAuthor.js",
-        11
+        125
+      ]
+    ]
+  },
+  "It is a tool that I often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed Mapoholic to meet my own particular requirements and priorities I hope others will find it useful too.": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        128
+      ]
+    ]
+  },
+  "It is also a practical demonstration of my full stack web development skills and I have produced it to both improve and showcase those skills through developing a solution to a real requirement. For the technically minded, the front end is based on {linkReact} and {linkRedux}, the back end on {linkNode} and {linkExpress} with all the data (other than the image files) stored in {linkMongo}. Both are open source (ISC) and can be found on Github ({linkGithubClient}/{linkGithubServer}) if you are interested.": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        139
+      ]
+    ]
+  },
+  "* Since you are reading the English version of the site, you may not know what ORIS is. It is the Czech Orienteering Federation portal that provides a common database for events, including handling entries, publishing results and producing rankings. All significant events in the Czech Republic are included, as are many smaller local ones. As an added bonus, there is a public API which exposes this data so that MapOholic can import and exploit it.": {
+    "origin": [
+      [
+        "src/components/home/HomeAboutAuthor.js",
+        160
       ]
     ]
   }

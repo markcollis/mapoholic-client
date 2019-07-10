@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
+import { FILETYPE_ACCEPT, FILETYPE_MIME } from '../../common/fileData';
+
 class FileDropzone extends Component {
   static propTypes = {
     disabled: PropTypes.bool,
@@ -9,6 +11,7 @@ class FileDropzone extends Component {
     onFileAdded: PropTypes.func.isRequired,
     showAddBorder: PropTypes.bool,
     text: PropTypes.objectOf(PropTypes.any),
+    fileType: PropTypes.string, // 'image' (default), 'results' (JSON/CSV)
   };
 
   static defaultProps = {
@@ -16,11 +19,13 @@ class FileDropzone extends Component {
     icon: null,
     showAddBorder: false,
     text: null,
+    fileType: 'image',
   };
 
   state = {
     borderAdded: false,
     currentFile: null,
+    fileNotRecognised: false,
     highlighted: false,
   };
 
@@ -37,12 +42,25 @@ class FileDropzone extends Component {
   }
 
   onDrop = (e) => {
-    const { disabled, onFileAdded } = this.props;
+    const { disabled, fileType, onFileAdded } = this.props;
+    const allowedFileTypes = FILETYPE_MIME[fileType];
     e.preventDefault();
     if (!disabled) {
       const file = e.dataTransfer.files[0];
-      onFileAdded(file);
-      this.setState({ highlighted: false, currentFile: file });
+      // console.log('file dropped:', file);
+      if (allowedFileTypes.includes(file.type)) {
+        onFileAdded(file);
+        this.setState({
+          currentFile: file,
+          fileNotRecognised: false,
+          highlighted: false,
+        });
+      } else {
+        this.setState({
+          fileNotRecognised: true,
+          highlighted: false,
+        });
+      }
     }
   }
 
@@ -52,11 +70,23 @@ class FileDropzone extends Component {
   }
 
   handleFileAdded = (e) => {
-    const { disabled, onFileAdded } = this.props;
+    const { disabled, onFileAdded, fileType } = this.props;
+    const allowedFileTypes = FILETYPE_MIME[fileType];
     if (!disabled) {
       const file = e.target.files[0];
-      onFileAdded(file);
-      this.setState({ borderAdded: false, currentFile: file });
+      if (file && allowedFileTypes.includes(file.type)) {
+        onFileAdded(file);
+        this.setState({
+          currentFile: file,
+          fileNotRecognised: false,
+          highlighted: false,
+        });
+      } else {
+        this.setState({
+          fileNotRecognised: true,
+          highlighted: false,
+        });
+      }
     }
   }
 
@@ -108,17 +138,27 @@ class FileDropzone extends Component {
   }
 
   render() {
+    // console.log('props in FileDropzone', this.props);
     const {
       disabled,
       icon,
       showAddBorder,
       text,
+      fileType,
     } = this.props;
     const {
       borderAdded,
       currentFile,
+      fileNotRecognised,
       highlighted,
     } = this.state;
+    const accept = FILETYPE_ACCEPT[fileType];
+    const FILETYPE_PREVIEW = {
+      image: file => <img src={URL.createObjectURL(file)} alt="preview" />,
+      results: file => <p>{file.name}</p>,
+    };
+    const preview = FILETYPE_PREVIEW[fileType];
+
     return (
       <div className={(highlighted) ? 'filedropzone filedropzone--highlighted' : 'filedropzone'}>
         <div
@@ -134,11 +174,11 @@ class FileDropzone extends Component {
           <input
             ref={this.fileRef}
             type="file"
-            accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+            accept={accept}
             onChange={this.handleFileAdded}
           />
           {(currentFile)
-            ? <img src={URL.createObjectURL(currentFile)} alt="preview" />
+            ? preview(currentFile)
             : (
               <div>
                 {icon}
@@ -158,6 +198,15 @@ class FileDropzone extends Component {
                 <Trans>Add border</Trans>
               </button>
               <p><Trans>(to match QuickRoute output)</Trans></p>
+            </div>
+          )
+          : null}
+        {(fileNotRecognised)
+          ? (
+            <div className="ui warning message">
+              <Trans>
+                Error: Incorrect file type. Please check and try again.
+              </Trans>
             </div>
           )
           : null}

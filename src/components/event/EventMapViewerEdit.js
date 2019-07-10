@@ -200,6 +200,8 @@ class EventMapViewerEdit extends Component {
       changesMade,
       dropZoneKeyCourse,
       dropZoneKeyRoute,
+      courseMapToUpload,
+      routeMapToUpload,
     } = this.state;
     const mapTitlesInUse = selectedRunnerMaps.map(map => map.title);
     const mapTitleIsDuplicate = (mapTitleEditable && (mapTitleToUpload !== mapTitle)
@@ -336,7 +338,7 @@ class EventMapViewerEdit extends Component {
             <div className="column three wide">
               <button
                 type="button"
-                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate || !courseMapToUpload) ? 'disabled' : null}`}
                 onClick={() => this.onUploadCourseMap()}
               >
                 <Trans>Upload selected</Trans>
@@ -367,7 +369,7 @@ class EventMapViewerEdit extends Component {
             <div className="column three wide">
               <button
                 type="button"
-                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate || !routeMapToUpload) ? 'disabled' : null}`}
                 onClick={() => this.onUploadRouteMap()}
               >
                 <Trans>Upload selected</Trans>
