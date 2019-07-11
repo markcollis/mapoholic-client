@@ -10,17 +10,18 @@ import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 import UserChangePassword from './UserChangePassword';
 import UserEditProfileImage from './UserEditProfileImage';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 // renders form to submit credentials either for login or creating account
 class UserEdit extends Component {
   static propTypes = {
+    // Formik props
     errors: PropTypes.objectOf(PropTypes.any).isRequired, // input validation
     isSubmitting: PropTypes.bool.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
     setFieldValue: PropTypes.func.isRequired,
     touched: PropTypes.objectOf(PropTypes.any).isRequired,
     values: PropTypes.objectOf(PropTypes.any).isRequired,
+    // props from parent component
     changePassword: PropTypes.func.isRequired,
     clubList: PropTypes.arrayOf(PropTypes.object),
     deleteProfileImage: PropTypes.func.isRequired,
@@ -64,7 +65,11 @@ class UserEdit extends Component {
   }
 
   renderUpdateProfileImage() {
-    const { selectedUser, postProfileImage, deleteProfileImage } = this.props;
+    const {
+      deleteProfileImage,
+      postProfileImage,
+      selectedUser,
+    } = this.props;
     return (
       <div>
         <UserEditProfileImage
@@ -80,19 +85,17 @@ class UserEdit extends Component {
 
   renderForm() {
     const {
-      language,
+      clubList,
       errors,
+      isAdmin,
+      isSubmitting,
+      language,
+      setFieldTouched,
+      setFieldValue,
+      setUserViewMode,
       touched,
       values,
-      setFieldValue,
-      setFieldTouched,
-      isSubmitting,
-      isAdmin,
-      clubList,
-      setUserViewMode,
     } = this.props;
-    // console.log('values:', values);
-    // console.log('clubList:', clubList);
     const memberOfOptions = clubList
       .map((club) => {
         const {
@@ -110,7 +113,6 @@ class UserEdit extends Component {
         if (a.label < b.label) return -1;
         return 0;
       });
-    // console.log('memberOfOptions', memberOfOptions);
     const validationErrors = validationErrorsLocale[language];
     const roleOptions = roleOptionsLocale[language];
     const visibilityOptions = visibilityOptionsLocale[language];
@@ -347,10 +349,8 @@ const formikUserEdit = withFormik({
       displayName: selectedUser.displayName,
       fullName: selectedUser.fullName || '',
       memberOf: selectedUser.memberOf.map((club) => {
-        return {
-          value: club._id,
-          label: club.shortName,
-        };
+        const { _id: clubId } = club;
+        return { value: clubId, label: club.shortName };
       }) || [],
       about: selectedUser.about || '',
       location: selectedUser.location || '',
@@ -379,28 +379,16 @@ const formikUserEdit = withFormik({
       updateUser,
       setUserViewMode,
       selectedUser,
-      // getClubMembers,
-      // getUserList,
-      // getUserById,
     } = props;
+    const { _id: selectedUserId } = selectedUser;
     const valuesToSubmit = (values.role)
       ? { ...values, role: values.role.value }
       : { ...values };
     valuesToSubmit.visibility = values.visibility.value;
     valuesToSubmit.memberOf = values.memberOf.map(el => el.value);
-    // console.log('valuesToSubmit:', valuesToSubmit);
-    updateUser(selectedUser._id, valuesToSubmit, (didSucceed) => {
-      if (didSucceed) {
-        setUserViewMode('view');
-        // getUserList(null, () => {
-        //   getUserById(selectedUser._id);
-        //   // valuesToSubmit.memberOf.forEach((clubId) => {
-        //   //   getClubMembers(clubId);
-        //   // });
-        // });
-      } else {
-        setSubmitting(false);
-      }
+    updateUser(selectedUserId, valuesToSubmit, (didSucceed) => {
+      if (didSucceed) setUserViewMode('view');
+      else setSubmitting(false);
     });
   },
 })(UserEdit);

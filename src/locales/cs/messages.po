@@ -19,7 +19,7 @@ msgstr "(odpovídající výstupu QuickRoute)"
 
 #: src/components/home/HomeAboutAuthor.js:160
 msgid "* Since you are reading the English version of the site, you may not know what ORIS is. It is the Czech Orienteering Federation portal that provides a common database for events, including handling entries, publishing results and producing rankings. All significant events in the Czech Republic are included, as are many smaller local ones. As an added bonus, there is a public API which exposes this data so that MapOholic can import and exploit it."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/home/HomeWhatIsIt.js:30
 msgid "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
@@ -35,7 +35,7 @@ msgstr "> Seznam"
 msgid "> Map"
 msgstr "> Mapa"
 
-#: src/components/user/UserEdit.js:188
+#: src/components/user/UserEdit.js:190
 msgid "A brief user profile"
 msgstr "Krátký profil uživatele"
 
@@ -59,7 +59,7 @@ msgstr "Nové spojecní mezi závody {0} byla vytvořena kvůli {1}"
 msgid "Abbreviation"
 msgstr "Zkrátka"
 
-#: src/components/user/UserEdit.js:182
+#: src/components/user/UserEdit.js:184
 msgid "About"
 msgstr "O"
 
@@ -69,7 +69,7 @@ msgstr "O mně"
 
 #: src/components/event/EventResults.js:295
 msgid "Add Results"
-msgstr ""
+msgstr "Přidat výsledky"
 
 #: src/components/event/EventCommentsAdd.js:71
 msgid "Add a comment"
@@ -163,7 +163,7 @@ msgstr "Ztráta"
 msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps. The search filter matches event and map names, dates, places and the different types of tags so that your maps are easy to find."
 msgstr "##### to translate #####"
 
-#: src/components/club/ClubDelete.js:38
+#: src/components/club/ClubDelete.js:37
 #: src/components/club/ClubEdit.js:181
 #: src/components/event/EventCommentsAdd.js:93
 #: src/components/event/EventCommentsItem.js:163
@@ -177,13 +177,13 @@ msgstr "##### to translate #####"
 #: src/components/event/EventRunnerDelete.js:74
 #: src/components/event/EventRunnerEdit.js:248
 #: src/components/user/UserChangePassword.js:63
-#: src/components/user/UserDelete.js:73
-#: src/components/user/UserEdit.js:278
+#: src/components/user/UserDelete.js:68
+#: src/components/user/UserEdit.js:280
 #: src/components/user/UserEditProfileImage.js:75
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/components/user/UserEdit.js:306
+#: src/components/user/UserEdit.js:308
 msgid "Change Password"
 msgstr "Změnit Heslo"
 
@@ -223,7 +223,7 @@ msgstr "Kluby"
 msgid "Clubs that event is organised by"
 msgstr "Pořadatelné kluby"
 
-#: src/components/user/UserEdit.js:167
+#: src/components/user/UserEdit.js:169
 msgid "Clubs that user is a member of"
 msgstr "Kluby, kterých uživatel je člen"
 
@@ -301,7 +301,7 @@ msgstr "Datum"
 
 #: src/components/home/HomeWelcome.js:102
 msgid "Dedicated to those that know you can never have too many {linkOMaps}"
-msgstr ""
+msgstr "Pro ty, kteří nikdy nemohou mít příliš mnoho {linkOMaps}"
 
 #: src/components/event/EventCommentsItem.js:110
 #: src/components/event/EventLinkedDelete.js:40
@@ -309,7 +309,7 @@ msgstr ""
 msgid "Delete"
 msgstr "Smazat"
 
-#: src/components/club/ClubDelete.js:15
+#: src/components/club/ClubDelete.js:14
 msgid "Delete Club"
 msgstr "Smazat Klub"
 
@@ -325,7 +325,7 @@ msgstr "Smazat Závod?"
 msgid "Delete Runner"
 msgstr "Smazat Běžce"
 
-#: src/components/user/UserDelete.js:40
+#: src/components/user/UserDelete.js:38
 msgid "Delete User"
 msgstr "Smazat Uživatele"
 
@@ -363,7 +363,7 @@ msgstr "Smazat běžce"
 msgid "Delete user"
 msgstr "Smazat uživatele"
 
-#: src/components/user/UserDelete.js:66
+#: src/components/user/UserDelete.js:61
 msgid "Delete {displayName}?"
 msgstr "Smazat {displayName}?"
 
@@ -371,11 +371,11 @@ msgstr "Smazat {displayName}?"
 msgid "Delete {runnerName}?"
 msgstr "Smazat {runnerName}?"
 
-#: src/components/club/ClubDelete.js:31
+#: src/components/club/ClubDelete.js:30
 msgid "Delete {shortName}?"
 msgstr "Smazat {shortName}?"
 
-#: src/components/user/UserDelete.js:42
+#: src/components/user/UserDelete.js:40
 msgid "Deleting a user removes their details and all of their event records including maps. All that is retained is any comments that they have made on other users' maps."
 msgstr "##### to translate #####"
 
@@ -385,11 +385,11 @@ msgstr "##### to translate #####"
 
 #: src/components/event/EventResults.js:222
 msgid "Download current results: {downloadCSV} {downloadJSON}"
-msgstr ""
+msgstr "Stáhnout stávající výsledky"
 
 #: src/components/event/EventResults.js:223
 msgid "Download results template: {downloadCSV} {downloadJSON}"
-msgstr ""
+msgstr "Stáhnout šablonu výsledků"
 
 #: src/components/event/EventMapViewerEdit.js:255
 msgid "Duplicate map title"
@@ -410,9 +410,9 @@ msgstr "Upravit Detaily Běžce"
 
 #: src/components/event/EventResults.js:295
 msgid "Edit Results"
-msgstr ""
+msgstr "Upravit výsledky"
 
-#: src/components/user/UserEdit.js:295
+#: src/components/user/UserEdit.js:297
 msgid "Edit User Details"
 msgstr "Upravit Detaily Uživatele"
 
@@ -444,7 +444,7 @@ msgstr "Upravit detaily uživatele"
 msgid "Email"
 msgstr "Emailová adresa"
 
-#: src/components/user/UserEdit.js:122
+#: src/components/user/UserEdit.js:124
 msgid "Email address"
 msgstr "Emailová adresa"
 
@@ -476,19 +476,19 @@ msgstr "Zadejte heslo"
 msgid "Enter user name (your email address will be used if left blank)"
 msgstr "Zadejte uživatelské jméno (výchozí jméno je emailová adresa)"
 
-#: src/components/club/ClubView.js:274
+#: src/components/club/ClubView.js:299
 msgid "Error (get user): {userErrorMessage}"
 msgstr "Chyba (uživatelní): {userErrorMessage}"
 
 #: src/components/generic/FileDropzone.js:207
 msgid "Error: Incorrect file type. Please check and try again."
-msgstr ""
+msgstr "Chyba: Nesprávný typ souboru. Prosím, zkontrolujte a zkuste to znovu."
 
-#: src/components/club/ClubView.js:271
+#: src/components/club/ClubView.js:296
 #: src/components/event/EventView.js:579
 #: src/components/event/MapView.js:602
 #: src/components/home/HomeView.js:153
-#: src/components/user/UserView.js:148
+#: src/components/user/UserView.js:144
 msgid "Error: {errorMessage}"
 msgstr "Chyba: {errorMessage}"
 
@@ -560,7 +560,7 @@ msgid "Filter table"
 msgstr "Filtrovat položek tabulky"
 
 #: src/components/club/ClubEdit.js:99
-#: src/components/user/UserEdit.js:145
+#: src/components/user/UserEdit.js:147
 msgid "Full name"
 msgstr "Celé jméno"
 
@@ -568,7 +568,7 @@ msgstr "Celé jméno"
 msgid "Full name of club"
 msgstr "Celé jméno klubu"
 
-#: src/components/user/UserEdit.js:150
+#: src/components/user/UserEdit.js:152
 msgid "Full name of user"
 msgstr "Celé jméno uživatele"
 
@@ -582,11 +582,11 @@ msgstr "Schovat seznam závodných spojení"
 
 #: src/components/home/HomeHowToUse.js:7
 msgid "How to use MapOholic"
-msgstr ""
+msgstr "Jak používat MapOholic"
 
 #: src/components/home/HomeAboutAuthor.js:125
 msgid "I developed MapOholic for two reasons:"
-msgstr ""
+msgstr "Vyvinul jsem MapOholic na dva důvody:"
 
 #: src/components/home/HomeAboutAuthor.js:11
 #~ msgid "If you want to get in touch..."
@@ -598,11 +598,11 @@ msgstr "Interní ID: {userId}"
 
 #: src/components/home/HomeAboutAuthor.js:128
 msgid "It is a tool that I often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed Mapoholic to meet my own particular requirements and priorities I hope others will find it useful too."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/home/HomeAboutAuthor.js:139
 msgid "It is also a practical demonstration of my full stack web development skills and I have produced it to both improve and showcase those skills through developing a solution to a real requirement. For the technically minded, the front end is based on {linkReact} and {linkRedux}, the back end on {linkNode} and {linkExpress} with all the data (other than the image files) stored in {linkMongo}. Both are open source (ISC) and can be found on Github ({linkGithubClient}/{linkGithubServer}) if you are interested."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/event/EventLinkedDelete.js:24
 msgid "It links the following events:"
@@ -610,7 +610,7 @@ msgstr "Spojuje to tyhle závody:"
 
 #: src/components/home/HomeHowToUse.js:40
 msgid "It's now time to add some maps! Click the big \"Add or Delete maps\" button at the top, which enables you to upload both a course map and a route map (i.e. the same map with the route drawn on). You can also give the map a title, which will be shown if you add a different map for the same event later, for example if the course was in two parts. For the course map, you are given the option to add a border. This makes it easier to work with QuickRoute, which outputs images bigger than the original when you have added a route; without the border switching between course and route would not be smooth. If you do not have a route to upload, or you drew it on the course map with a different tool, you can ignore this option."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/user/UserDetails.js:131
 msgid "Joined: {0}"
@@ -669,7 +669,7 @@ msgid "Loading user details..."
 msgstr "Načítání detaily uživatele..."
 
 #: src/components/event/EventEdit.js:304
-#: src/components/user/UserEdit.js:200
+#: src/components/user/UserEdit.js:202
 msgid "Location"
 msgstr "Místo"
 
@@ -732,13 +732,13 @@ msgstr "Titul mapy"
 
 #: src/components/home/HomeAboutAuthor.js:110
 msgid "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there has a particular demand for a different language and is willing to do the translations!)"
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/home/HomeAboutAuthor.js:10
 #~ msgid "MapOholic was developed by..."
 #~ msgstr "##### to translate #####"
 
-#: src/components/user/UserEdit.js:162
+#: src/components/user/UserEdit.js:164
 msgid "Member of"
 msgstr "Člen"
 
@@ -769,7 +769,7 @@ msgstr "Název závodní spojení (potřebný)"
 msgid "Name of map used for event"
 msgstr "Název mapy použité pro závod"
 
-#: src/components/user/UserEdit.js:221
+#: src/components/user/UserEdit.js:223
 msgid "National registration number of user"
 msgstr "Registrační číslo"
 
@@ -808,7 +808,7 @@ msgstr "ORIS ID: {orisId}"
 
 #: src/components/home/HomeHowToUse.js:25
 msgid "Once you have created the event, or are looking at its details if it already exists, add yourself as a runner (below the details in list view, to the right of the details in map view). This will take you to the Current Map screen with this event selected. Again, there is a bonus if the event and your entry are in ORIS, because course details and results can be populated automatically too. Edit runner details allows you to enter course details manually, as well as to add personal tags to help you search your collection later and to decide who else can see your maps for this particular event (just you, anyone who is a member of the same club as you, all registered users of the site, or anyone anywhere in the entire world)."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/event/EventEdit.js:481
 msgid "Organised by"
@@ -869,7 +869,7 @@ msgstr "##### to translate #####"
 msgid "Post comment"
 msgstr "Odeslat přípominku"
 
-#: src/components/user/UserEdit.js:234
+#: src/components/user/UserEdit.js:236
 msgid "Profile visibility"
 msgstr "Viditelnost profilu"
 
@@ -895,7 +895,7 @@ msgstr "Regiony"
 msgid "Region(s) associated with event"
 msgstr "Regiony pro závod"
 
-#: src/components/user/UserEdit.js:216
+#: src/components/user/UserEdit.js:218
 msgid "Registration number"
 msgstr "Registrační číslo"
 
@@ -913,7 +913,7 @@ msgstr "Výsledky"
 msgid "Return to map view"
 msgstr "Návrat do mapového pohledu"
 
-#: src/components/user/UserEdit.js:250
+#: src/components/user/UserEdit.js:252
 msgid "Role"
 msgstr "Role"
 
@@ -935,7 +935,7 @@ msgstr ""
 
 #: src/components/event/EventResults.js:251
 msgid "Save Results"
-msgstr ""
+msgstr "Uložit Výsledky"
 
 #: src/components/event/EventCommentsItem.js:160
 msgid "Save changes"
@@ -951,7 +951,7 @@ msgstr "Hledat závody"
 
 #: src/components/home/HomeHowToUse.js:15
 msgid "Search for the event you ran at: if it's there, great; if not you can add it. If it happens to be a Czech event on ORIS, you're lucky and can import all the event information automatically, just select it from the list of recent events at the top. Otherwise you can enter as much information about the event as you like, only the date and its name are required."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/user/UserFilter.js:12
 #~ msgid "Search for users"
@@ -961,7 +961,7 @@ msgstr ""
 msgid "See below for detailed results ({0} runners)"
 msgstr "Viz níže detailní výsledky ({0} běžců)"
 
-#: src/components/club/ClubView.js:177
+#: src/components/club/ClubView.js:202
 msgid "Select a club from the list to show further details here"
 msgstr "Chcete-li zobrazit více informaci, vyberte klub ze seznamu"
 
@@ -969,13 +969,13 @@ msgstr "Chcete-li zobrazit více informaci, vyberte klub ze seznamu"
 msgid "Select a runner from the list to show further details here"
 msgstr "Chcete-li zobrazit více informaci, vyberte běžce ze seznamu"
 
-#: src/components/user/UserView.js:407
+#: src/components/user/UserView.js:394
 msgid "Select a user from the list to show further details here"
 msgstr "Chcete-li zobrazit více informaci, vyberte uživatele ze seznamu"
 
 #: src/components/event/EventResults.js:227
 msgid "Select your JSON or CSV results file (drag and drop or click to open file dialogue)."
-msgstr ""
+msgstr "Vyberte soubor výsledků CSV nebo JSON (přetažením nebo kliknutím otevřete dialog souborů)."
 
 #: src/components/event/EventMapViewerEdit.js:296
 msgid "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
@@ -1057,7 +1057,7 @@ msgstr "Značky pro závod"
 
 #: src/components/home/HomeHowToUse.js:55
 msgid "That's it for this event, now upload some more maps for another event, browse other users' maps for this event or search through the archive for any other maps of interest."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/home/HomeRecentListItem.js:226
 msgid "The club {0} was deleted by {1}"
@@ -1115,7 +1115,7 @@ msgstr "Nebyla žádná poslední aktivita."
 #~ msgid "This event is not currently linked to any others."
 #~ msgstr "Tenhle závod není spojený ostatnímu."
 
-#: src/components/club/ClubDelete.js:17
+#: src/components/club/ClubDelete.js:16
 msgid "This will delete all records relating to this club, including connections with users (as members) and events (as organisers)."
 msgstr "##### to translate #####"
 
@@ -1146,7 +1146,7 @@ msgstr "Titul trati"
 
 #: src/components/event/EventResults.js:203
 msgid "To amend results, you need to download them (in either CSV or JSON format), make whatever changes you want using a text editor or spreadsheet*, then re-upload them to replace the existing results. (*LibreOffice or Google Sheets provide better support for CSV import and export than MS Excel)"
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/event/EventRunnerEdit.js:188
 msgid "Total number of runners"
@@ -1168,7 +1168,7 @@ msgstr "Neznamený actionType {actionType}"
 #: src/components/event/EventEdit.js:156
 #: src/components/event/EventLinkedEdit.js:53
 #: src/components/event/EventRunnerEdit.js:241
-#: src/components/user/UserEdit.js:271
+#: src/components/user/UserEdit.js:273
 msgid "Update"
 msgstr "Aktualizovat"
 
@@ -1183,7 +1183,7 @@ msgid "User list"
 msgstr "Seznam Uživatelů"
 
 #: src/components/auth/Authenticate.js:96
-#: src/components/user/UserEdit.js:134
+#: src/components/user/UserEdit.js:136
 msgid "User name"
 msgstr "Jméno uživatele"
 
@@ -1225,7 +1225,7 @@ msgstr "Vítáme vás v MapOholic!"
 msgid "What is it?"
 msgstr "Co to je?"
 
-#: src/components/user/UserEdit.js:205
+#: src/components/user/UserEdit.js:207
 msgid "Where user is based"
 msgstr "Kde uživatel bydlí"
 
@@ -1239,13 +1239,13 @@ msgstr "Jste teď přihlasení."
 
 #: src/components/event/EventResults.js:213
 msgid "You can upload full results for your course/class in either CSV format (exported from a spreadsheet) or JSON format if you are producing them programatically. If you download one of the following templates you will see what fields are required."
-msgstr ""
+msgstr "##### to translate #####"
 
 #: src/components/home/HomeWelcome.js:58
 msgid "You have already uploaded {uploadedMapsText} from {attendedEventsText}. You can browse or search for them either {myEventsListLink} or {myEventsMapLink}."
 msgstr "##### to translate #####"
 
-#: src/components/user/UserView.js:353
+#: src/components/user/UserView.js:340
 msgid "You have not added any events yet."
 msgstr "Dosud jste nepřidal(a) žadné závody."
 
@@ -1268,7 +1268,7 @@ msgstr "jménem"
 
 #: src/components/home/HomeAboutAuthor.js:93
 msgid "client"
-msgstr ""
+msgstr "klienta"
 
 #: src/components/home/HomeWelcome.js:34
 msgid "log in"
@@ -1302,7 +1302,7 @@ msgstr "na mapě"
 
 #: src/components/home/HomeWelcome.js:91
 msgid "orienteering maps..."
-msgstr ""
+msgstr "map OB..."
 
 #: src/components/generic/TablePagination.js:69
 msgid "rows per page"
@@ -1310,7 +1310,7 @@ msgstr "řády na straně"
 
 #: src/components/home/HomeAboutAuthor.js:102
 msgid "server"
-msgstr ""
+msgstr "server"
 
 #: src/components/home/HomeWelcome.js:33
 msgid "sign up"

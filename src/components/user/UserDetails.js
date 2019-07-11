@@ -12,9 +12,9 @@ const UserDetails = ({
   language,
   refreshCollapse,
   requestRefreshCollapse,
-  showOptional,
   selectedUser,
   setUserViewMode,
+  showOptional,
 }) => {
   const { _id: userId } = selectedUser;
   if (!userId) {

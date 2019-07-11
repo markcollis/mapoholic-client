@@ -1,6 +1,7 @@
 import {
   CONFIG_SET_LANGUAGE,
 } from './types';
+/* eslint-disable import/prefer-default-export */
 
 // change language
 export const setLanguageAction = (language) => {
@@ -13,5 +14,3 @@ export const setLanguageAction = (language) => {
   }
   return null;
 };
-
-export const another = 'another'; // avoid export default warning until another is needed

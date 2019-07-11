@@ -1,9 +1,6 @@
 import {
   AUTH_USER,
   CLUB_GOT_LIST,
-  // CLUB_GOT_BY_ID,
-  // CLUB_GOT_MEMBERS,
-  // CLUB_GOT_EVENTS,
   CLUB_CREATED,
   CLUB_UPDATED,
   CLUB_DELETED,
@@ -15,6 +12,7 @@ import {
   CLUB_SELECT_CLUB_EVENT,
 } from '../actions/types';
 import { logAPICalls } from '../config';
+/* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // update club list as necessary for all actions that receive details of an updated club
@@ -38,8 +36,6 @@ const removeFromListById = (list, id) => {
 };
 
 const INITIAL_STATE = {
-  // eventLists: {}, // all event list records viewed, key is clubId - redundant
-  // memberLists: {}, // all member list records viewed, key is clubId - redundant
   details: {}, // all club records viewed, key is clubId
   errorMessage: '', // empty unless an error occurs
   list: null, // replaced each time API is queried, also populates corresponding details
@@ -72,13 +68,6 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         list: action.payload,
       };
     }
-    // case CLUB_GOT_BY_ID:
-    //   if (logAPICalls) console.log('CLUB_GOT_BY_ID payload:', action.payload);
-    //   return {
-    //     ...state,
-    //     details: { ...state.details, [action.payload._id]: action.payload },
-    //     errorMessage: '',
-    //   };
     case CLUB_CREATED:
       if (logAPICalls) console.log('CLUB_CREATED payload:', action.payload);
       return {
@@ -105,21 +94,6 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
         selectedClubId: '',
       };
-    // case CLUB_GOT_MEMBERS:
-    //   if (logAPICalls) console.log('CLUB_GOT_MEMBERS payload:', action.payload);
-    //   return {
-    //     ...state,
-    //     errorMessage: '',
-    //     memberLists: { ...state.memberLists,
-    // [action.payload.clubId]: action.payload.memberList },
-    //   };
-    // case CLUB_GOT_EVENTS:
-    //   if (logAPICalls) console.log('CLUB_GOT_EVENTS payload:', action.payload);
-    //   return {
-    //     ...state,
-    //     errorMessage: '',
-    //     eventLists: { ...state.eventLists, [action.payload.clubId]: action.payload.eventList },
-    //   };
     case CLUB_ERROR:
       if (logAPICalls) console.log('CLUB_ERROR payload:', action.payload);
       return {

@@ -87,27 +87,27 @@ class Header extends Component {
     const { current, list: userList, errorMessage: userErrorMessage } = user;
     const { list, linkList, errorMessage: eventErrorMessage } = oevent;
     if (auth && userErrorMessage === '' && !current && !isGettingCurrentUser) {
-      console.log('getting current user details');
+      // console.log('getting current user details');
       this.setState({ isGettingCurrentUser: true });
       getCurrentUser(() => this.setState({ isGettingCurrentUser: false }));
     }
     if (!clubList && clubErrorMessage === '' && !isGettingClubList) {
-      console.log('retrieving list of clubs');
+      // console.log('retrieving list of clubs');
       this.setState({ isGettingClubList: true });
       getClubList(null, () => this.setState({ isGettingClubList: false }));
     }
     if (!userList && userErrorMessage === '' && !isGettingUserList) {
-      console.log('retrieving list of users');
+      // console.log('retrieving list of users');
       this.setState({ isGettingUserList: true });
       getUserList(null, () => this.setState({ isGettingUserList: false }));
     }
     if (!list && eventErrorMessage === '' && !isGettingEventList) {
-      console.log('retrieving list of events');
+      // console.log('retrieving list of events');
       this.setState({ isGettingEventList: true });
       getEventList(null, () => this.setState({ isGettingEventList: false }));
     }
     if (!linkList && eventErrorMessage === '' && !isGettingEventLinkList) {
-      console.log('retrieving list of event links');
+      // console.log('retrieving list of event links');
       this.setState({ isGettingEventLinkList: true });
       getEventLinkList(null, () => this.setState({ isGettingEventLinkList: false }));
     }

@@ -38,6 +38,7 @@ import {
   EVENT_UPDATED,
 } from '../actions/types';
 import { logAPICalls } from '../config';
+/* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // Helper Functions

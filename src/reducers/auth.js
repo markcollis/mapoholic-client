@@ -1,5 +1,6 @@
 import { AUTH_USER, AUTH_ERROR } from '../actions/types';
 import { logAPICalls } from '../config';
+/* eslint-disable no-console */
 
 const INITIAL_STATE = {
   authenticated: localStorage.getItem('mapoholic-auth-token'), // null if not logged in, JWT token if logged in

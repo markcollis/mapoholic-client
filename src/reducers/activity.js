@@ -6,6 +6,7 @@ import {
   ACTIVITY_ERROR,
 } from '../actions/types';
 import { logAPICalls } from '../config';
+/* eslint-disable no-console */
 
 const INITIAL_STATE = {
   activityAdmin: null, // replaced each time API is queried

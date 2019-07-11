@@ -3,7 +3,6 @@ import {
   USER_GOT_LIST,
   USER_GOT_CURRENT,
   USER_GOT_BY_ID,
-  // USER_GOT_EVENTS,
   USER_UPDATED,
   USER_POSTED_IMAGE,
   USER_CHANGED_PASSWORD,
@@ -17,7 +16,6 @@ import {
 } from './types';
 import { MAPOHOLIC_SERVER } from '../config';
 /* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
-
 
 // *** Local Actions ***
 // change user view mode
@@ -201,40 +199,6 @@ export const getUserByIdAction = (userId, callback) => async (dispatch, getState
     if (callback) callback(false);
   }
 };
-
-// *** Now unnecessary, there is sufficient information in oevent/list ***
-// get a list of events attended by the specified user (need to check when maps are present)
-// export const getUserEventsAction = (userId, callback) => async (dispatch, getState) => {
-//   if (!userId) {
-//     dispatch({ type: USER_ERROR, payload: 'No user specified.' });
-//   } else {
-//     const state = getState();
-//     const { auth } = state;
-//     const queryString = toQueryString({ runners: userId });
-//     try {
-//       const token = auth.authenticated;
-//       let response;
-//       if (token) {
-//         response = await axios.get(`${MAPOHOLIC_SERVER}/events${queryString}`, {
-//           headers: { Authorization: `bearer ${token}` },
-//         });
-//       } else {
-//         response = await axios.get(`${MAPOHOLIC_SERVER}/events/public${queryString}`);
-//       }
-//       dispatch({
-//         type: USER_GOT_EVENTS,
-//         payload: {
-//           userId,
-//           eventList: response.data,
-//         },
-//       });
-//       if (callback) callback(true);
-//     } catch (err) {
-//       handleError(USER_ERROR)(err, dispatch);
-//       if (callback) callback(false);
-//     }
-//   }
-// };
 
 // update the specified user (multiple amendment not supported)
 // app.patch('/users/:id', requireAuth, Users.updateUser);

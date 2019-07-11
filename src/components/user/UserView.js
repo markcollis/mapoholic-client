@@ -15,9 +15,7 @@ import {
   changePasswordAction,
   deleteProfileImageAction,
   deleteUserAction,
-  // getClubMembersAction,
   getUserByIdAction,
-  // getUserEventsAction,
   getUserListAction,
   postProfileImageAction,
   selectEventIdMapViewAction,
@@ -40,9 +38,7 @@ class UserView extends Component {
     changePassword: PropTypes.func.isRequired,
     deleteProfileImage: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
-    // getClubMembers: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
-    // getUserEvents: PropTypes.func.isRequired,
     getUserList: PropTypes.func.isRequired,
     postProfileImage: PropTypes.func.isRequired,
     selectEventIdMapView: PropTypes.func.isRequired,
@@ -247,9 +243,6 @@ class UserView extends Component {
       club,
       config,
       deleteProfileImage,
-      // getClubMembers,
-      // getUserById,
-      // getUserList,
       ownProfile,
       postProfileImage,
       selectUserToDisplay,
@@ -280,9 +273,6 @@ class UserView extends Component {
         changePassword={changePassword} // prop
         clubList={clubList} // prop (club)
         deleteProfileImage={deleteProfileImage} // prop
-        // getClubMembers={getClubMembers} // prop
-        // getUserById={getUserById} // prop
-        // getUserList={getUserList} // prop
         isAdmin={isAdmin} // derived
         language={language} // prop (config)
         postProfileImage={postProfileImage} // prop
@@ -299,7 +289,6 @@ class UserView extends Component {
     const {
       user,
       deleteUser,
-      // getUserList,
       ownProfile,
       setUserViewMode,
       setUserViewModeSelf,
@@ -317,7 +306,6 @@ class UserView extends Component {
     return (
       <UserDelete
         deleteUser={deleteUser} // prop
-        // getUserList={getUserList} // prop
         isSelf={isSelf} // derived
         selectedUser={selectedUser} // derived
         setUserViewMode={(ownProfile) ? setUserViewModeSelf : setUserViewMode} // props
@@ -338,7 +326,6 @@ class UserView extends Component {
       current,
       details,
       errorMessage,
-      // eventLists,
       selectedUserId,
     } = user;
     const { language } = config;
@@ -435,9 +422,7 @@ const mapDispatchToProps = {
   changePassword: changePasswordAction,
   deleteProfileImage: deleteProfileImageAction,
   deleteUser: deleteUserAction,
-  // getClubMembers: getClubMembersAction,
   getUserById: getUserByIdAction,
-  // getUserEvents: getUserEventsAction,
   getUserList: getUserListAction,
   postProfileImage: postProfileImageAction,
   selectEventIdMapView: selectEventIdMapViewAction,

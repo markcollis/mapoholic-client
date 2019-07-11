@@ -25,9 +25,6 @@ const HomeAdminNotes = () => {
             Finish introductory/help text on Home view
             &nbsp;(first pass done 8/7)
           </li>
-          <li>Refactor user reducer and components to avoid unnecessary API calls</li>
-          <li>Refactor club reducer and components to avoid unnecessary API calls</li>
-          <li>EN and CZ specific screenshots?</li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -350,11 +347,20 @@ const HomeAdminNotes = () => {
             <del>Investigate making results editable/uploadable if not on ORIS</del>
             &nbsp;(CSV/JSON results upload and dowload added 9-10/7)
           </li>
+          <li>
+            <del>Refactor user reducer and components to avoid unnecessary API calls</del>
+            &nbsp;(done 10/7)
+          </li>
+          <li>
+            <del>Refactor club reducer and components to avoid unnecessary API calls</del>
+            &nbsp;(done 10/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
       <Collapse title="Other ideas for the future (non-essential):">
         <ol>
+          <li>EN and CZ specific screenshots? Maybe later for final polish!</li>
           <li>Support re-ordering of multi-part maps</li>
           <li>
             Investigate overlays - drawing own route, adding annotations, etc. =&gt;

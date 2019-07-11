@@ -16,6 +16,7 @@ import {
   USER_SELECT_USER,
 } from '../actions/types';
 import { logAPICalls } from '../config';
+/* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // update user list as necessary for all actions that receive full details of an updated user
@@ -64,7 +65,6 @@ const INITIAL_STATE = {
   viewModeSelf: 'view', // configuration of own profile page: view, edit, delete
   details: {}, // all user records viewed, key is userId
   selectedUserId: '', // userId of user to display in UserDetails
-  // eventLists: {}, // all event list records viewed, key is userId
   errorMessage: '', // empty unless an error occurs
 };
 
@@ -96,13 +96,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
       };
-    // case USER_GOT_EVENTS:  redundant
-    //   if (logAPICalls) console.log('USER_GOT_EVENTS payload:', action.payload);
-    //   return {
-    //     ...state,
-    //     eventLists: { ...state.eventLists, [action.payload.userId]: action.payload.eventList },
-    //     errorMessage: '',
-    //   };
     case USER_UPDATED:
       if (logAPICalls) console.log('USER_UPDATED payload:', action.payload);
       return {

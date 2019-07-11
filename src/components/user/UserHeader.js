@@ -4,9 +4,9 @@ import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 
 const UserHeader = ({
+  getUserList,
   searchField,
   setUserSearchField,
-  getUserList,
 }) => {
   return (
     <div className="ui stackable grid">
@@ -39,9 +39,9 @@ const UserHeader = ({
 };
 
 UserHeader.propTypes = {
+  getUserList: PropTypes.func.isRequired,
   searchField: PropTypes.string.isRequired,
   setUserSearchField: PropTypes.func.isRequired,
-  getUserList: PropTypes.func.isRequired,
 };
 
 export default UserHeader;
