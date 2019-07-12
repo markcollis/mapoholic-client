@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { typesOptionsLocale } from '../../common/data';
 import { reformatTimestampDateOnly } from '../../common/conversions';
-import { MAPOHOLIC_SERVER } from '../../config';
+// import { MAPOHOLIC_SERVER } from '../../config';
 
+import EventThumbnails from './EventThumbnails';
 import Collapse from '../generic/Collapse';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventDetails = ({
   canEdit,
+  currentUserId,
   language,
   organisingClubs,
   refreshCollapse,
@@ -18,7 +19,8 @@ const EventDetails = ({
   setEventViewModeEvent,
 }) => {
   // console.log('selectedEvent in EventDetails:', selectedEvent);
-  if (!selectedEvent._id) {
+  const { _id: eventId } = selectedEvent;
+  if (!eventId) {
     return (
       <div className="ui segment">
         <div className="ui active inline centered text loader"><Trans>Loading event details...</Trans></div>
@@ -44,33 +46,65 @@ const EventDetails = ({
     website,
     results,
   } = selectedEvent;
-  const mapFiles = [];
+  const ownMapFiles = [];
+  const otherMapFiles = [];
   runners.forEach((runner) => {
-    const { maps } = runner;
+    const { maps, user } = runner;
+    const { _id: runnerId } = user;
     maps.forEach((map) => {
-      const { course, route } = map;
+      const {
+        course,
+        courseUpdated,
+        route,
+        routeUpdated,
+      } = map;
       if (course && course !== '') {
-        mapFiles.push(course);
-      } else if (route && route !== '') {
-        mapFiles.push(route);
+        const mapFile = {
+          mapType: 'course',
+          file: course,
+          updated: courseUpdated,
+        };
+        if (currentUserId && runnerId === currentUserId) ownMapFiles.push(mapFile);
+        else otherMapFiles.push(mapFile);
+      } else if (route && route !== '') { // only add route if there is no course
+        const mapFile = {
+          mapType: 'route',
+          file: route,
+          updated: routeUpdated,
+        };
+        if (currentUserId && runnerId === currentUserId) ownMapFiles.push(mapFile);
+        else otherMapFiles.push(mapFile);
       }
     });
   });
-  // console.log('mapFiles:', mapFiles);
-  const renderThumbnail = (mapFiles.length > 0)
-    ? (
-      <img
-        className="ui image right floated"
-        alt="map thumbnail"
-        onLoad={() => {
-          // console.log('image loaded!');
-          requestRefreshCollapse();
-        }}
-        src={`${MAPOHOLIC_SERVER}/${mapFiles[0]
-          .slice(0, -4).concat('-thumb').concat(mapFiles[0].slice(-4))}`}
-      />
-    )
-    : null;
+  // console.log('mapFiles:', ownMapFiles, otherMapFiles);
+  const mapFiles = [...ownMapFiles, ...otherMapFiles];
+
+  // let mapForThumbnail = null;
+  // if (ownMapFiles.length > 0) {
+  //   [mapForThumbnail] = ownMapFiles;
+  // } else if (otherMapFiles.length > 0) {
+  //   [mapForThumbnail] = otherMapFiles;
+  // }
+
+  // const mapForThumbnail = (ownMapFiles.length > 0) ? ownMapFiles[0] : null;
+  // const renderThumbnail = (mapFile) => {
+  //   if (!mapFile) return null;
+  //   const { file, updated } = mapFile;
+  //   return (
+  //     <img
+  //       className="ui image right floated"
+  //       alt="map thumbnail"
+  //       onLoad={() => {
+  //         // console.log('image loaded!');
+  //         requestRefreshCollapse();
+  //       }}
+  //       src={`${MAPOHOLIC_SERVER}/${file.slice(0, -4)}-thumb${file.slice(-4)}?${updated}}`}
+  //     />
+  //   );
+  // };
+  // const thumbnail = renderThumbnail(mapForThumbnail);
+
   const showEdit = (canEdit)
     ? (
       <div className="event-details__edit-block">
@@ -135,7 +169,11 @@ const EventDetails = ({
   const country = (locCountry && locCountry !== '') ? locCountry : null;
   const displayEventDetails = (
     <div>
-      {renderThumbnail}
+      <EventThumbnails
+        key={mapFiles.length} // to reset whenever mapFiles change
+        mapFiles={mapFiles}
+        requestRefreshCollapse={requestRefreshCollapse}
+      />
       <h3 className="header">
         {name}
         <br />
@@ -183,11 +221,12 @@ const EventDetails = ({
               <div className="content">
                 {organisingClubs.map((club, index) => {
                   if (!club) return null;
+                  const { _id: clubId } = club;
                   if (club.website && club.website !== '') {
                     return (
-                      <span key={club._id}>
+                      <span key={clubId}>
                         {(index > 0) ? ', ' : ''}
-                        <a key={club._id} href={club.website} target="_blank" rel="noopener noreferrer">
+                        <a key={clubId} href={club.website} target="_blank" rel="noopener noreferrer">
                           {`${club.fullName} (${club.shortName})`}
                         </a>
                       </span>
@@ -243,6 +282,7 @@ const EventDetails = ({
 
 EventDetails.propTypes = {
   canEdit: PropTypes.bool,
+  currentUserId: PropTypes.string,
   language: PropTypes.string,
   organisingClubs: PropTypes.arrayOf(PropTypes.any),
   refreshCollapse: PropTypes.number.isRequired,
@@ -252,6 +292,7 @@ EventDetails.propTypes = {
 };
 EventDetails.defaultProps = {
   canEdit: false,
+  currentUserId: null,
   language: 'en',
   organisingClubs: [],
   selectedEvent: {},

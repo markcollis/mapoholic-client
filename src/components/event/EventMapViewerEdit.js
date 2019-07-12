@@ -7,28 +7,21 @@ import { MAPOHOLIC_SERVER } from '../../config';
 
 class EventMapViewerEdit extends Component {
   static propTypes = {
-    courseImg: PropTypes.string,
     deleteMap: PropTypes.func.isRequired,
     eventId: PropTypes.string.isRequired,
-    mapTitle: PropTypes.string,
+    map: PropTypes.objectOf(PropTypes.any),
     postMap: PropTypes.func.isRequired,
-    routeImg: PropTypes.string,
     selectedRunnerMaps: PropTypes.arrayOf(PropTypes.object),
-    updateEventRunner: PropTypes.func,
-    updateMapImageArray: PropTypes.func.isRequired,
+    updateEventRunner: PropTypes.func.isRequired,
     userId: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
-    courseImg: null,
-    mapTitle: null, // i.e. entirely new; if an existing title is empty, mapTitle = ''
-    routeImg: null,
+    map: {},
     selectedRunnerMaps: [],
-    updateEventRunner: () => {},
   };
 
   state = {
-    changesMade: false,
     courseMapToUpload: null,
     dropZoneKeyCourse: 0,
     dropZoneKeyRoute: 0,
@@ -38,11 +31,11 @@ class EventMapViewerEdit extends Component {
   };
 
   componentDidMount() {
-    const { mapTitle } = this.props;
-    // console.log('mapTitle "', mapTitle, '"');
-    if (mapTitle || mapTitle === '') {
+    const { map } = this.props;
+    const { title } = map;
+    if (title || title === '') {
       this.setState({
-        mapTitleToUpload: mapTitle,
+        mapTitleToUpload: title,
         mapTitleEditable: false,
       });
     }
@@ -53,7 +46,6 @@ class EventMapViewerEdit extends Component {
       eventId,
       userId,
       postMap,
-      updateMapImageArray,
     } = this.props;
     // console.log('upload course map');
     const {
@@ -72,11 +64,8 @@ class EventMapViewerEdit extends Component {
       postMap(parameters, courseMapToUpload, (successful) => {
         if (successful) {
           this.setState({
-            changesMade: true,
             courseMapToUpload: null,
             dropZoneKeyCourse: dropZoneKeyCourse + 1,
-          }, () => {
-            updateMapImageArray();
           });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('course map upload successful');
@@ -92,9 +81,6 @@ class EventMapViewerEdit extends Component {
       eventId,
       userId,
       deleteMap,
-      courseImg,
-      routeImg,
-      updateMapImageArray,
     } = this.props;
     // console.log(`delete ${mapType} map`);
     const { mapTitleToUpload } = this.state;
@@ -104,12 +90,8 @@ class EventMapViewerEdit extends Component {
       mapType,
       mapTitle: mapTitleToUpload,
     };
-    const willUnmount = (mapType === 'course' && !routeImg)
-      || (mapType === 'route' && !courseImg);
     deleteMap(parameters, (successful) => {
       if (successful) {
-        updateMapImageArray();
-        if (!willUnmount) this.setState({ changesMade: true });
         // console.log(`${mapType} map delete successful`);
       } else {
         // console.log(`${mapType} map delete failed`);
@@ -122,7 +104,6 @@ class EventMapViewerEdit extends Component {
       eventId,
       userId,
       postMap,
-      updateMapImageArray,
     } = this.props;
     // console.log('upload route map');
     const {
@@ -141,11 +122,8 @@ class EventMapViewerEdit extends Component {
       postMap(parameters, routeMapToUpload, (successful) => {
         if (successful) {
           this.setState({
-            changesMade: true,
             routeMapToUpload: null,
             dropZoneKeyRoute: dropZoneKeyRoute + 1,
-          }, () => {
-            updateMapImageArray();
           });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('route map upload successful');
@@ -160,16 +138,17 @@ class EventMapViewerEdit extends Component {
     const { mapTitleEditable, mapTitleToUpload } = this.state;
     if (!mapTitleEditable) this.setState({ mapTitleEditable: true });
     const {
-      mapTitle,
+      map,
       eventId,
       userId,
       selectedRunnerMaps,
       updateEventRunner,
     } = this.props;
+    const { title: mapTitle } = map;
     if (mapTitleEditable && (mapTitleToUpload !== mapTitle)) {
-      const newMaps = selectedRunnerMaps.map((map) => {
-        const newMap = map;
-        if (map.title === mapTitle) newMap.title = mapTitleToUpload;
+      const newMaps = selectedRunnerMaps.map((eachMap) => {
+        const newMap = eachMap;
+        if (eachMap.title === mapTitle) newMap.title = mapTitleToUpload;
         return newMap;
       });
       // console.log('newMaps', newMaps);
@@ -178,10 +157,11 @@ class EventMapViewerEdit extends Component {
   }
 
   onCancelEditTitle = () => {
-    const { mapTitle } = this.props;
+    const { map } = this.props;
+    const { title } = map;
     this.setState({
       mapTitleEditable: false,
-      mapTitleToUpload: mapTitle,
+      mapTitleToUpload: title,
     });
   }
 
@@ -189,43 +169,43 @@ class EventMapViewerEdit extends Component {
     // console.log('props in EventMapViewerEdit:', this.props);
     // console.log('state in EventMapViewerEdit:', this.state);
     const {
-      mapTitle,
+      map,
       selectedRunnerMaps,
-      courseImg,
-      routeImg,
     } = this.props;
+    const {
+      title,
+      course,
+      courseUpdated,
+      route,
+      routeUpdated,
+    } = map;
     const {
       mapTitleToUpload,
       mapTitleEditable,
-      changesMade,
       dropZoneKeyCourse,
       dropZoneKeyRoute,
       courseMapToUpload,
       routeMapToUpload,
     } = this.state;
-    const mapTitlesInUse = selectedRunnerMaps.map(map => map.title);
-    const mapTitleIsDuplicate = (mapTitleEditable && (mapTitleToUpload !== mapTitle)
+    const mapTitlesInUse = selectedRunnerMaps.map(eachMap => eachMap.title);
+    const mapTitleIsDuplicate = (mapTitleEditable && (mapTitleToUpload !== title)
       && mapTitlesInUse.includes(mapTitleToUpload));
-    const now = new Date();
-    const srcSuffix = (changesMade) ? `?${now.getTime()}` : ''; // to force reload on change
-    // edge case - not applied if a map is completely deleted then one of the same name added
-    // from the default empty component
-    const courseThumbnail = (courseImg)
-      ? courseImg.slice(0, -4).concat('-thumb').concat(courseImg.slice(-4))
+    const courseThumbnail = (course)
+      ? `${course.slice(0, -4)}-thumb${course.slice(-4)}?${courseUpdated}`
       : null;
     const renderCourseThumbnail = (courseThumbnail)
-      ? <img src={`${MAPOHOLIC_SERVER}/${courseThumbnail}${srcSuffix}`} alt="course thumbnail" />
+      ? <img src={`${MAPOHOLIC_SERVER}/${courseThumbnail}`} alt="course thumbnail" />
       : (
         <div>
           <i className="close icon" />
           <Trans>no map yet</Trans>
         </div>
       );
-    const routeThumbnail = (routeImg)
-      ? routeImg.slice(0, -4).concat('-thumb').concat(routeImg.slice(-4))
+    const routeThumbnail = (route)
+      ? `${route.slice(0, -4)}-thumb${route.slice(-4)}?${routeUpdated}`
       : null;
     const renderRouteThumbnail = (routeThumbnail)
-      ? <img src={`${MAPOHOLIC_SERVER}/${routeThumbnail}${srcSuffix}`} alt="route thumbnail" />
+      ? <img src={`${MAPOHOLIC_SERVER}/${routeThumbnail}`} alt="route thumbnail" />
       : (
         <div>
           <i className="close icon" />
@@ -259,11 +239,8 @@ class EventMapViewerEdit extends Component {
       )
       : <h4>{mapTitleToUpload}</h4>;
     let editTitleButtonText = <Trans>Change title</Trans>;
-    if (mapTitle === '') editTitleButtonText = <Trans>Add title</Trans>;
+    if (title === '') editTitleButtonText = <Trans>Add title</Trans>;
     if (mapTitleEditable) editTitleButtonText = <Trans>Confirm change</Trans>;
-    // const editTitleButtonText = (mapTitleEditable)
-    //   ? <Trans>Confirm change</Trans>
-    //   : (mapTitle === '') ? <Trans>Add title</Trans> : <Trans>Change title</Trans>;
     const renderEditTitleButton = (typeof mapTitle === 'string')
       ? (
         <button
@@ -275,7 +252,7 @@ class EventMapViewerEdit extends Component {
         </button>
       )
       : null;
-    const renderCancelEditTitleButton = (mapTitle && mapTitleEditable)
+    const renderCancelEditTitleButton = (title && mapTitleEditable)
       ? (
         <div>
           <p />

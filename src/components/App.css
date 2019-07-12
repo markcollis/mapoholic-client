@@ -301,6 +301,13 @@ select, optgroup {
 .event-runners-item__deleted { /* only admin users should ever see this */
   color: red !important;
 }
+/* settings for EventThumbnails */
+.event-thumbnails {
+  background-color: transparent;
+  border: none;
+  float: right;
+  margin-bottom: 1em;
+}
 
 /* Home components */
 /* --------------- */

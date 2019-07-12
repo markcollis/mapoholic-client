@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import EventMapViewerEdit from './EventMapViewerEdit';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 const EventMapViewerDetails = ({
   deleteMap,
@@ -10,33 +9,30 @@ const EventMapViewerDetails = ({
   selectedEvent,
   selectedRunner,
   updateEventRunner,
-  updateMapImageArray,
 }) => {
   // console.log('selectedEvent in EventMapViewerDetails', selectedEvent);
-  const eventId = selectedEvent._id;
-  const selectedEventRunners = selectedEvent.runners;
-  const selectedRunnerDetails = (selectedEventRunners)
-    ? selectedEventRunners.find(runner => runner.user._id === selectedRunner)
+  const { _id: eventId, runners } = selectedEvent;
+  const selectedRunnerDetails = (runners)
+    ? runners.find((runner) => {
+      const { user } = runner;
+      const { _id: runnerId } = user;
+      return (runnerId === selectedRunner);
+    })
     : null;
   const selectedRunnerMaps = (selectedRunnerDetails) ? selectedRunnerDetails.maps : [];
   const mapViewerEditArray = selectedRunnerMaps.map((map) => {
     const {
       title,
-      course,
-      route,
     } = map;
     return (
       <EventMapViewerEdit
         key={title}
-        courseImg={course}
         deleteMap={deleteMap}
         eventId={eventId}
-        mapTitle={title}
+        map={map}
         postMap={postMap}
-        routeImg={route}
         selectedRunnerMaps={selectedRunnerMaps}
         updateEventRunner={updateEventRunner}
-        updateMapImageArray={updateMapImageArray}
         userId={selectedRunner}
       />
     );
@@ -48,7 +44,8 @@ const EventMapViewerDetails = ({
         deleteMap={deleteMap}
         eventId={eventId}
         postMap={postMap}
-        updateMapImageArray={updateMapImageArray}
+        selectedRunnerMaps={selectedRunnerMaps}
+        updateEventRunner={() => {}} // no title to update if no map yet
         userId={selectedRunner}
       />,
     );
@@ -68,7 +65,6 @@ EventMapViewerDetails.propTypes = {
   selectedEvent: PropTypes.objectOf(PropTypes.any).isRequired,
   selectedRunner: PropTypes.string.isRequired,
   updateEventRunner: PropTypes.func.isRequired,
-  updateMapImageArray: PropTypes.func.isRequired,
 };
 
 export default EventMapViewerDetails;

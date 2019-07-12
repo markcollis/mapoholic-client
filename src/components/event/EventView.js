@@ -355,6 +355,7 @@ class EventView extends Component {
     const tagLists = this.getTagLists(list, mineOnly, current, language);
     const selectedEvent = this.getSelectedEvent(details, selectedEventId, errorMessage);
     // different to MapView version
+    const currentUserId = this.getCurrentUserId(current);
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
     // console.log('canEdit, current, selectedEvent:', canEdit, current, selectedEvent);
@@ -395,6 +396,7 @@ class EventView extends Component {
         return (
           <EventDetails
             canEdit={canEdit} // derived
+            currentUserId={currentUserId} // derived
             language={language} // prop (config)
             organisingClubs={organisingClubs} // derived
             refreshCollapse={refreshCollapseEventDetails} // state (value increments to trigger)
@@ -424,8 +426,6 @@ class EventView extends Component {
         return (
           <EventDelete
             deleteEvent={deleteEvent} // prop
-            // getEventLinkList={getEventLinkList} // prop
-            // getEventList={getEventList} // prop
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
           />

@@ -7,12 +7,13 @@ const HomeWhatIsIt = () => {
       <h3><Trans>What is it?</Trans></h3>
       <p>
         <Trans>
-          The core functionality of MapOholic is to provide an online repository for scanned
+          The core functionality of MapOholic is to provide an online home for scanned
           images of your orienteering maps, together with your routes if you have them
-          (whether drawn manually or using a GPS watch/tracker and a tool such as&nbsp;
+          (whether drawn manually, or captured with a GPS watch/tracker and drawn in&nbsp;
           <a href="http://www.matstroeng.se/quickroute/en/" target="_blank" rel="noopener noreferrer">QuickRoute</a>
-          *). You can zoom in and rotate maps, switch easily between the plain course and your
-          route, and multi-part courses with different maps are supported.
+          *). You can zoom in and rotate maps and switch easily between the plain course and your
+          route. More than one map can be uploaded for an event, for multi-part courses or when
+          you ran more than one course at a single event or training session.
         </Trans>
       </p>
       <p>
@@ -29,12 +30,11 @@ const HomeWhatIsIt = () => {
       <p>
         <Trans>
           <em>
-            * QuickRoute is an excellent tool and I use it for all races where I have a GPS track.
+            * QuickRoute is an excellent tool for processing GPS tracks.
             The JPG images of routes exported from it include track data and MapOholic can use
             this to determine the location of a map without needing to enter it manually. When
-            no accompanying GPS track is available, any simple graphics editor can be used to draw
-            a route on a scanned map. Capturing and displaying vector route overlays is on the
-            future feature list!
+            you don&apos;t have a GPS track available, any graphics editor can be used to draw
+            a route on a scanned map.
           </em>
         </Trans>
       </p>

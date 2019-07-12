@@ -29,7 +29,6 @@ import {
   deleteEventRunnerAction,
   deleteMapAction,
   getEventByIdAction,
-  // getEventLinkListAction,
   getEventListAction,
   postCommentAction,
   postMapAction,
@@ -65,11 +64,9 @@ class MapView extends Component {
     deleteEventRunner: PropTypes.func.isRequired,
     deleteMap: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
-    // getEventLinkList: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
     postMap: PropTypes.func.isRequired,
-    // selectEventId: PropTypes.func.isRequired,
     selectEventIdMapView: PropTypes.func.isRequired,
     selectMapToDisplay: PropTypes.func.isRequired,
     selectRunnerToDisplay: PropTypes.func.isRequired,
@@ -332,7 +329,6 @@ class MapView extends Component {
       user,
       deleteEvent,
       getEventList,
-      // getEventLinkList,
       setEventViewModeEvent,
       updateEvent,
     } = this.props;
@@ -348,6 +344,7 @@ class MapView extends Component {
     const { language } = config;
     const { current, list: userList } = user;
     const selectedEvent = this.getSelectedEvent(details, selectedEventIdMapView, errorMessage);
+    const currentUserId = this.getCurrentUserId(current);
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
     const organisingClubs = this.getOrganisingClubs(selectedEvent, clubDetails);
@@ -365,6 +362,7 @@ class MapView extends Component {
         return (
           <EventDetails
             canEdit={canEdit} // derived
+            currentUserId={currentUserId} // derived
             language={language} // prop (config)
             organisingClubs={organisingClubs} // derived
             refreshCollapse={refreshCollapseEventDetails} // state (value increments to trigger)

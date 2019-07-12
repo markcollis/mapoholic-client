@@ -9,11 +9,6 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do:">
         <ol>
           <li>
-            Investigate issue with not loading thumbnail after uploading map (timing?)
-            (possibly fixed 5/7 using setState callback, need to test - still seems
-            to be an issue when connection is slow/server is overloaded)
-          </li>
-          <li>
             Complete lingui translations and check that nothing is missing
             (done all except long paragraphs on Home page 29/6)
           </li>
@@ -354,6 +349,12 @@ const HomeAdminNotes = () => {
           <li>
             <del>Refactor club reducer and components to avoid unnecessary API calls</del>
             &nbsp;(done 10/7)
+          </li>
+          <li>
+            <del>Investigate issue with not loading thumbnail after uploading map (timing?)</del>
+            &nbsp;(possibly fixed 5/7 using setState callback, need to test - still seems
+            to be an issue when connection is slow/server is overloaded; now addressed
+            through major refactor of image/extract/thumbnail management code 11/7)
           </li>
         </ol>
       </Collapse>

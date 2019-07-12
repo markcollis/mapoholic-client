@@ -132,7 +132,6 @@ class EventMapViewerCanvas extends Component {
       mouseDownZoomOut: false,
       mouseDownRotateLeft: false,
       mouseDownRotateRight: false,
-      // firstLoad: false,
     });
   };
 
@@ -396,7 +395,6 @@ class EventMapViewerCanvas extends Component {
             onBlur={() => this.handleMouseUpZoomIn()}
             onTouchStart={() => this.handleMouseDownZoomIn()}
             onTouchEnd={() => this.handleMouseUpZoomIn()}
-            // data-tooltip="zoom in"
           >
             <i className="icon zoom-in" />
           </button>

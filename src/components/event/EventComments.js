@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import EventCommentsAdd from './EventCommentsAdd';
 import EventCommentsList from './EventCommentsList';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 const EventComments = ({
   currentUser,
@@ -18,24 +17,32 @@ const EventComments = ({
 }) => {
   const { _id: eventId } = selectedEvent;
   const runnerData = (selectedEvent.runners)
-    ? selectedEvent.runners.find(runner => runner.user._id.toString() === selectedRunner)
+    ? selectedEvent.runners.find((runner) => {
+      const { user } = runner;
+      const { _id: runnerId } = user;
+      return runnerId === selectedRunner;
+    })
     : null;
   const isAdmin = (currentUser && currentUser.role === 'admin');
   const isStandard = (currentUser && currentUser.role === 'standard');
   const canPostComments = isAdmin || isStandard;
-  const currentUserId = (currentUser) ? currentUser._id : null;
+  let currentUserId = null;
+  if (currentUser) {
+    const { _id: userId } = currentUser;
+    currentUserId = userId;
+  }
 
   const title = <Trans>Comments</Trans>;
   return (
     <div className="ui segment">
       <Collapse title={title} refreshCollapse={refreshCollapse}>
         <EventCommentsList
-          requestRefreshCollapse={requestRefreshCollapse}
           currentUserId={currentUserId}
           deleteComment={deleteComment}
           eventId={eventId}
           isAdmin={isAdmin}
           refreshCollapse={refreshCollapse}
+          requestRefreshCollapse={requestRefreshCollapse}
           runnerData={runnerData}
           updateComment={updateComment}
         />
@@ -44,10 +51,10 @@ const EventComments = ({
             <div>
               <hr className="divider" />
               <EventCommentsAdd
-                requestRefreshCollapse={requestRefreshCollapse}
                 eventId={eventId}
                 postComment={postComment}
                 refreshCollapse={refreshCollapse}
+                requestRefreshCollapse={requestRefreshCollapse}
                 runnerData={runnerData}
               />
             </div>

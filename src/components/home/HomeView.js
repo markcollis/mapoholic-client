@@ -163,12 +163,31 @@ class HomeView extends Component {
       currentUser,
     } = this.props;
     const ownEvents = this.getOwnEvents(eventList, currentUser);
+    if (auth) {
+      return (
+        <div className="row">
+          <div className="six wide column">
+            <HomeWelcome
+              auth={auth}
+              currentUser={currentUser}
+              ownEvents={ownEvents}
+            />
+          </div>
+          <div className="ten wide column middle aligned">
+            <img src={logo} alt="MapOholic logo" />
+          </div>
+        </div>
+      );
+    }
     return (
-      <HomeWelcome
-        auth={auth}
-        currentUser={currentUser}
-        ownEvents={ownEvents}
-      />
+      <div className="row">
+        <div className="ten wide column">
+          <HomeWelcome />
+        </div>
+        <div className="six wide column middle aligned">
+          <img src={logo} alt="MapOholic logo" />
+        </div>
+      </div>
     );
   }
 
@@ -237,14 +256,7 @@ class HomeView extends Component {
     return (
       <div className="ui vertically padded stackable grid home-view">
         {this.renderError()}
-        <div className="row">
-          <div className="six wide column">
-            {this.renderHomeWelcome()}
-          </div>
-          <div className="ten wide column middle aligned">
-            <img src={logo} alt="MapOholic logo" />
-          </div>
-        </div>
+        {this.renderHomeWelcome()}
         {this.renderHomeRecent()}
         {this.renderHomeAdminPanel()}
         <div className="row">

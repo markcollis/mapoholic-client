@@ -131,7 +131,7 @@ const HomeAboutAuthor = ({ language }) => {
             collection it is not always easy to find a map from a particular event,
             or of a particular area. These days details and results are all online,
             and routes are more commonly captured by a GPS tracker than drawn on the map.
-            While I&apos;ve developed Mapoholic to meet my own particular requirements
+            While I&apos;ve developed MapOholic to meet my own particular requirements
             and priorities I hope others will find it useful too.
           </Trans>
         </li>

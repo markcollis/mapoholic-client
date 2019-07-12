@@ -439,6 +439,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         }
         return runner;
       });
+      console.log('updatedEventDetails:', updatedEventDetails);
       return {
         ...state,
         details: {

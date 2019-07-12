@@ -5,7 +5,6 @@ import memoize from 'memoize-one';
 import EventMapViewerCanvas from './EventMapViewerCanvas';
 import EventMapViewerDetails from './EventMapViewerDetails';
 import { MAPOHOLIC_SERVER } from '../../config';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
 class EventMapViewer extends Component {
   static propTypes = {
@@ -33,7 +32,6 @@ class EventMapViewer extends Component {
   state = {
     mapContainerWidth: null,
     mapContainerHeight: null,
-    mapUpdates: 0,
     showMapViewerDetails: false,
   };
 
@@ -67,14 +65,16 @@ class EventMapViewer extends Component {
   }
 
   // helper to derive mapImageArray if input props have changed (different event or runner)
-  getMapImageArray = memoize((selectedEvent, selectedRunner, mapUpdates) => {
-    // console.log('getMapImageArray called:', selectedEvent, selectedRunner, mapUpdates);
+  getMapImageArray = memoize((selectedEvent, selectedRunner) => {
+    // console.log('getMapImageArray called:', selectedEvent, selectedRunner);
     const runnerData = (selectedEvent.runners)
-      ? selectedEvent.runners.find(runner => runner.user._id === selectedRunner)
+      ? selectedEvent.runners.find((runner) => {
+        const { user } = runner;
+        const { _id: runnerId } = user;
+        return (runnerId === selectedRunner);
+      })
       : null;
     const hasMaps = runnerData && runnerData.maps.length > 0;
-    const now = new Date();
-    const srcSuffix = (mapUpdates > 0) ? `?${now.getTime()}` : ''; // to force reload if image changed
     const mapImages = (hasMaps)
       ? runnerData.maps.map((map) => {
         const {
@@ -82,6 +82,8 @@ class EventMapViewer extends Component {
           title,
           course,
           route,
+          courseUpdated,
+          routeUpdated,
         } = map;
         const defaultPreferType = 'Course'; // consider making this a per-user config option later
         const hasCourseMap = (course && course !== '');
@@ -100,11 +102,10 @@ class EventMapViewer extends Component {
           title,
           empty: false,
           preferType,
-          srcCourse: (hasCourseMap) ? `${MAPOHOLIC_SERVER}/${course}${srcSuffix}` : null,
+          srcCourse: (hasCourseMap) ? `${MAPOHOLIC_SERVER}/${course}?${courseUpdated}` : null,
           altCourse: (hasCourseMap) ? `${(title === '') ? 'map' : title}: course` : null,
-          srcRoute: (hasRouteMap) ? `${MAPOHOLIC_SERVER}/${route}${srcSuffix}` : null,
+          srcRoute: (hasRouteMap) ? `${MAPOHOLIC_SERVER}/${route}?${routeUpdated}` : null,
           altRoute: (hasRouteMap) ? `${(title === '') ? 'map' : title}: route` : null,
-          // translation needed?
         };
       })
       : [];
@@ -127,18 +128,12 @@ class EventMapViewer extends Component {
     selectMapToDisplay(mapId);
   }
 
-  handleMapUpdated = () => {
-    const { mapUpdates } = this.state;
-    this.setState({ mapUpdates: mapUpdates + 1 });
-  }
-
   render() {
     // console.log('this.props in EventMapViewer:', this.props);
     // console.log('this.state in EventMapViewer:', this.state);
     const {
       mapContainerHeight,
       mapContainerWidth,
-      mapUpdates,
       showMapViewerDetails,
     } = this.state;
     const {
@@ -152,7 +147,7 @@ class EventMapViewer extends Component {
       setMapViewParameters,
       updateEventRunner,
     } = this.props;
-    const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner, mapUpdates);
+    const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
     // console.log('mapImageArray returned:', mapImageArray);
     const hasMaps = (mapImageArray.length > 0);
     const addDeleteTitle = (showMapViewerDetails)
@@ -218,7 +213,6 @@ class EventMapViewer extends Component {
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
           updateEventRunner={updateEventRunner}
-          updateMapImageArray={() => this.handleMapUpdated()}
         />
       </div>
     );
