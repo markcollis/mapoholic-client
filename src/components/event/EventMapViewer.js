@@ -33,6 +33,7 @@ class EventMapViewer extends Component {
     mapContainerWidth: null,
     mapContainerHeight: null,
     showMapViewerDetails: false,
+    selectedOverlays: [], // to be populated if any of the overlay checkboxes are ticked
   };
 
   componentDidMount() {
@@ -45,24 +46,50 @@ class EventMapViewer extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      selectedEvent,
-      selectedMap,
-      selectedRunner,
-    } = this.props;
-    const { mapUpdates } = this.state;
-    const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner, mapUpdates);
-    const hasMaps = mapImageArray.length > 0;
-    const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
-    if (hasMaps && !selectedMapImage) {
-      // console.log('selecting map to display');
-      this.handleSelectMapImage(mapImageArray[0].mapId);
-    }
+    // const {
+    //   selectedEvent,
+    //   selectedMap,
+    //   selectedRunner,
+    // } = this.props;
+    // const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
+    // const hasMaps = mapImageArray.length > 0;
+    // const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
+    // if (hasMaps && !selectedMapImage) {
+    //   // console.log('selecting map to display');
+    //   this.handleSelectMapImage(mapImageArray[0].mapId);
+    // }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize, false);
   }
+
+  // helper to get list of available overlays if input props have changed
+  getOverlays = memoize((selectedEvent) => {
+    const overlays = [];
+    const { runners } = selectedEvent;
+    if (!runners || runners.length === 0) return overlays;
+    runners.forEach((runner) => {
+      const { maps, user, courseTitle } = runner;
+      const outputCourseTitle = courseTitle || '';
+      if (maps.length > 0) {
+        maps.forEach((map) => {
+          const { _id: userId, displayName } = user;
+          const { overlay, overlayUpdated, title } = map;
+          if (overlay && overlay !== '') {
+            overlays.push({
+              userId,
+              displayName,
+              courseTitle: outputCourseTitle,
+              mapTitle: title,
+              overlay: `${overlay}?${overlayUpdated}`,
+            });
+          }
+        });
+      }
+    });
+    return overlays;
+  });
 
   // helper to derive mapImageArray if input props have changed (different event or runner)
   getMapImageArray = memoize((selectedEvent, selectedRunner) => {
@@ -128,6 +155,18 @@ class EventMapViewer extends Component {
     selectMapToDisplay(mapId);
   }
 
+  handleCheckboxChange = (filename) => {
+    const { selectedOverlays } = this.state;
+    const position = selectedOverlays.indexOf(filename);
+    if (position === -1) { // add to array
+      const newSelectedOverlays = [...selectedOverlays, filename];
+      this.setState({ selectedOverlays: newSelectedOverlays });
+    } else { // remove from array
+      const newSelectedOverlays = selectedOverlays.filter(el => el !== filename);
+      this.setState({ selectedOverlays: newSelectedOverlays });
+    }
+  }
+
   render() {
     // console.log('this.props in EventMapViewer:', this.props);
     // console.log('this.state in EventMapViewer:', this.state);
@@ -135,6 +174,7 @@ class EventMapViewer extends Component {
       mapContainerHeight,
       mapContainerWidth,
       showMapViewerDetails,
+      selectedOverlays,
     } = this.state;
     const {
       canEdit,
@@ -150,6 +190,14 @@ class EventMapViewer extends Component {
     const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
     // console.log('mapImageArray returned:', mapImageArray);
     const hasMaps = (mapImageArray.length > 0);
+    const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
+    if (hasMaps && !selectedMapImage) {
+      // console.log('selecting map to display');
+      this.handleSelectMapImage(mapImageArray[0].mapId);
+    }
+
+    const overlays = this.getOverlays(selectedEvent);
+    // console.log('overlays:', overlays);
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>
       : <Trans>Add or Delete maps</Trans>;
@@ -199,6 +247,7 @@ class EventMapViewer extends Component {
               containerHeight={mapContainerHeight}
               viewParameters={mapViewParameters[mapId]}
               setMapViewParameters={setMapViewParameters}
+              overlays={selectedOverlays}
             />
           </div>
         );
@@ -216,10 +265,54 @@ class EventMapViewer extends Component {
         />
       </div>
     );
+    const overlayCheckboxes = (overlays.length > 0)
+      ? overlays.map((overlay) => {
+        const {
+          displayName,
+          courseTitle,
+          mapTitle,
+          overlay: filename,
+        } = overlay;
+        const overlayPath = `${MAPOHOLIC_SERVER}/${filename}`;
+        const overlayOrder = selectedOverlays.indexOf(overlayPath) + 1;
+        const checked = (overlayOrder > 0);
+        return (
+          <li
+            key={filename}
+            className={`event-map-viewer-canvas-render__overlay-${overlayOrder}`}
+          >
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={() => this.handleCheckboxChange(overlayPath)}
+            />
+            {`${displayName} (${courseTitle}/${mapTitle})`}
+          </li>
+        );
+      })
+      : null;
+    const renderOverlaySelector = (overlays.length > 0)
+      ? (
+        <div className="event-map-viewer__overlay-selector">
+          <hr className="divider" />
+          <label><Trans>Show routes as highlighted overlays:</Trans></label>
+          <ul>
+            {overlayCheckboxes}
+          </ul>
+          <p>
+            <Trans>
+            Note: The overlays will only be aligned properly if the course map they were
+            drawn on is exactly the same.
+            </Trans>
+          </p>
+        </div>
+      )
+      : null;
+
     const showMapContainer = (mapContainerHeight > 0 && (showMapViewerDetails || !hasMaps));
     return (
       <div className="ui segment">
-        <div className="ui top attached tabular menu">
+        <div className="ui top attached tabular menu stackable">
           <div className="item"><h3><Trans>Map Viewer</Trans></h3></div>
           {renderTabsOrNoMaps}
           <div className="right menu">
@@ -236,6 +329,7 @@ class EventMapViewer extends Component {
           {renderMaps}
         </div>
         {renderMapViewerDetails}
+        {renderOverlaySelector}
       </div>
     );
   }

@@ -20,6 +20,29 @@ const HomeAdminNotes = () => {
             Finish introductory/help text on Home view
             &nbsp;(first pass done 8/7)
           </li>
+          <li>
+            If a user with no maps logs in, go to Events not MyMaps
+            (not as easy as it looks!)
+          </li>
+          <li>
+            Disable upload map button when already uploading
+          </li>
+          <li>
+            <del>Investigate extracting the route from a course/route combination</del>
+            &nbsp;(Implemented 15/7 - overlay PNG produced whenever course and route
+            exist, are the same size and are not identical)
+          </li>
+          <li>
+            <del>
+              View a list of course names at an event for which maps have been uploaded.
+              Also view the course name in EventRunners?
+            </del>
+            &nbsp;(now listed in EventRunners 15/7)
+          </li>
+          <li>
+            <del>View multiple routes for the same course together? (based on overlays)</del>
+            &nbsp;(done 25/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -361,23 +384,27 @@ const HomeAdminNotes = () => {
       <hr className="divider" />
       <Collapse title="Other ideas for the future (non-essential):">
         <ol>
+          <li>Manual editing of map corner coordinates in EventEdit?</li>
+          <li>
+            Refresh results via ORIS? Direct from front end in EventResults
+            as an alternative to direct upload. Potential to automatically parse
+            other online results too if they are in a consistent format.
+          </li>
           <li>EN and CZ specific screenshots? Maybe later for final polish!</li>
           <li>Support re-ordering of multi-part maps</li>
-          <li>
-            Investigate overlays - drawing own route, adding annotations, etc. =&gt;
-            need to be able to save too... *react-canvas-draw*
-          </li>
           <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
           <li>
             Remove refresh list buttons? Should only be needed if a different user has updated
             something, how important is it? Definitely not needed if sockets implemented
+            (removed from mobile views 12/7)
           </li>
           <li>Web services interface to take direct feed from QuickRoute</li>
           <li>User-specific preferences (e.g. language)</li>
           <li>Real-time (non-persistent) chat??</li>
           <li>
-            View multiple routes for the same course together? (e.g. 50% opacity for each?)
-            Will only work well if course is an overlay not complete image
+          Investigate overlays - drawing own route, adding annotations, etc. =&gt;
+          need to be able to save too... *react-canvas-draw*
+          (course overlay is PNG with transparent background, park annotations for now)
           </li>
         </ol>
       </Collapse>

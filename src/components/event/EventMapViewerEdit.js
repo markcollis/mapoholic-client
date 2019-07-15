@@ -28,6 +28,7 @@ class EventMapViewerEdit extends Component {
     mapTitleToUpload: '',
     mapTitleEditable: true,
     routeMapToUpload: null,
+    isUploading: false,
   };
 
   componentDidMount() {
@@ -61,15 +62,18 @@ class EventMapViewerEdit extends Component {
         mapType: 'course',
         mapTitle: mapTitleToUpload,
       };
+      this.setState({ isUploading: true });
       postMap(parameters, courseMapToUpload, (successful) => {
         if (successful) {
           this.setState({
             courseMapToUpload: null,
             dropZoneKeyCourse: dropZoneKeyCourse + 1,
+            isUploading: false,
           });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('course map upload successful');
         } else {
+          this.setState({ isUploading: false });
           // console.log('course map upload failed');
         }
       });
@@ -119,15 +123,18 @@ class EventMapViewerEdit extends Component {
         mapType: 'route',
         mapTitle: mapTitleToUpload,
       };
+      this.setState({ isUploading: true });
       postMap(parameters, routeMapToUpload, (successful) => {
         if (successful) {
           this.setState({
             routeMapToUpload: null,
             dropZoneKeyRoute: dropZoneKeyRoute + 1,
+            isUploading: false,
           });
           if (mapTitleEditable) this.setState({ mapTitleToUpload: '' });
           // console.log('route map upload successful');
         } else {
+          this.setState({ isUploading: false });
           // console.log('route map upload failed');
         }
       });
@@ -186,6 +193,7 @@ class EventMapViewerEdit extends Component {
       dropZoneKeyRoute,
       courseMapToUpload,
       routeMapToUpload,
+      isUploading,
     } = this.state;
     const mapTitlesInUse = selectedRunnerMaps.map(eachMap => eachMap.title);
     const mapTitleIsDuplicate = (mapTitleEditable && (mapTitleToUpload !== title)
@@ -241,17 +249,15 @@ class EventMapViewerEdit extends Component {
     let editTitleButtonText = <Trans>Change title</Trans>;
     if (title === '') editTitleButtonText = <Trans>Add title</Trans>;
     if (mapTitleEditable) editTitleButtonText = <Trans>Confirm change</Trans>;
-    const renderEditTitleButton = (typeof mapTitle === 'string')
-      ? (
-        <button
-          className={`ui tiny button primary fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
-          type="button"
-          onClick={() => this.onEditTitle()}
-        >
-          {editTitleButtonText}
-        </button>
-      )
-      : null;
+    const renderEditTitleButton = (
+      <button
+        className={`ui tiny button primary fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+        type="button"
+        onClick={() => this.onEditTitle()}
+      >
+        {editTitleButtonText}
+      </button>
+    );
     const renderCancelEditTitleButton = (title && mapTitleEditable)
       ? (
         <div>
@@ -315,7 +321,7 @@ class EventMapViewerEdit extends Component {
             <div className="column three wide">
               <button
                 type="button"
-                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate || !courseMapToUpload) ? 'disabled' : null}`}
+                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate || !courseMapToUpload || isUploading) ? 'disabled' : null}`}
                 onClick={() => this.onUploadCourseMap()}
               >
                 <Trans>Upload selected</Trans>
@@ -323,7 +329,7 @@ class EventMapViewerEdit extends Component {
               <p />
               <button
                 type="button"
-                className={`ui tiny negative button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+                className={`ui tiny negative button fluid ${(mapTitleIsDuplicate || isUploading) ? 'disabled' : null}`}
                 onClick={() => this.onDeleteMap('course')}
               >
                 <Trans>Delete current</Trans>
@@ -346,7 +352,7 @@ class EventMapViewerEdit extends Component {
             <div className="column three wide">
               <button
                 type="button"
-                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate || !routeMapToUpload) ? 'disabled' : null}`}
+                className={`ui tiny primary button fluid ${(mapTitleIsDuplicate || !routeMapToUpload || isUploading) ? 'disabled' : null}`}
                 onClick={() => this.onUploadRouteMap()}
               >
                 <Trans>Upload selected</Trans>
@@ -354,7 +360,7 @@ class EventMapViewerEdit extends Component {
               <p />
               <button
                 type="button"
-                className={`ui tiny negative button fluid ${(mapTitleIsDuplicate) ? 'disabled' : null}`}
+                className={`ui tiny negative button fluid ${(mapTitleIsDuplicate || isUploading) ? 'disabled' : null}`}
                 onClick={() => this.onDeleteMap('route')}
               >
                 <Trans>Delete current</Trans>

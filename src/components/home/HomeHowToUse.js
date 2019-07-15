@@ -7,7 +7,8 @@ const HomeHowToUse = () => {
       <h3><Trans>How to use MapOholic</Trans></h3>
       <p>
         <Trans>
-          Sample workflow: [to flesh out]
+          So, you&amp;ve created an account and logged in for the first time. What
+          do you do next? I&amp;ll assume that you already have some scanned maps ready.
         </Trans>
       </p>
       <ul>
@@ -59,11 +60,6 @@ const HomeHowToUse = () => {
           </Trans>
         </li>
       </ul>
-      <p>
-        <Trans>
-          Other user stories to be added - see requirements document!
-        </Trans>
-      </p>
     </div>
   );
 };

@@ -271,7 +271,7 @@ class HomeView extends Component {
           <div className="ten wide column middle aligned">
             <HomeHowToUse />
           </div>
-          <div className="six wide column">
+          <div className="six wide column hide-on-mobile">
             <img src={screenshotEventList} alt="screenshot" className="home-view__screenshot" />
             <img src={screenshotEventMap} alt="screenshot" className="home-view__screenshot" />
           </div>

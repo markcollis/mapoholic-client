@@ -22,8 +22,12 @@ msgid "* Since you are reading the English version of the site, you may not know
 msgstr "* Since you are reading the English version of the site, you may not know what ORIS is. It is the Czech Orienteering Federation portal that provides a common database for events, including handling entries, publishing results and producing rankings. All significant events in the Czech Republic are included, as are many smaller local ones. As an added bonus, there is a public API which exposes this data so that MapOholic can import and exploit it."
 
 #: src/components/home/HomeWhatIsIt.js:30
-msgid "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
-msgstr "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
+#~ msgid "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
+#~ msgstr "<0>* QuickRoute is an excellent tool and I use it for all races where I have a GPS track. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When no accompanying GPS track is available, any simple graphics editor can be used to draw a route on a scanned map. Capturing and displaying vector route overlays is on the future feature list!</0>"
+
+#: src/components/home/HomeWhatIsIt.js:31
+msgid "<0>* QuickRoute is an excellent tool for processing GPS tracks. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When you don't have a GPS track available, any graphics editor can be used to draw a route on a scanned map.</0>"
+msgstr "<0>* QuickRoute is an excellent tool for processing GPS tracks. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When you don't have a GPS track available, any graphics editor can be used to draw a route on a scanned map.</0>"
 
 #: src/components/Header.js:213
 #: src/components/Header.js:233
@@ -103,11 +107,11 @@ msgstr "Add event"
 msgid "Add new event link"
 msgstr "Add new event link"
 
-#: src/components/event/EventMapViewer.js:160
+#: src/components/event/EventMapViewer.js:155
 msgid "Add or Delete maps"
 msgstr "Add or Delete maps"
 
-#: src/components/event/EventMapViewerDetails.js:59
+#: src/components/event/EventMapViewerDetails.js:56
 msgid "Add or change maps"
 msgstr "Add or change maps"
 
@@ -115,7 +119,7 @@ msgstr "Add or change maps"
 msgid "Add or change user profile image"
 msgstr "Add or change user profile image"
 
-#: src/components/event/EventMapViewerEdit.js:262
+#: src/components/event/EventMapViewerEdit.js:242
 msgid "Add title"
 msgstr "Add title"
 
@@ -159,7 +163,7 @@ msgstr "Behind"
 #~ msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps."
 #~ msgstr "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps."
 
-#: src/components/home/HomeWhatIsIt.js:19
+#: src/components/home/HomeWhatIsIt.js:20
 msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps. The search filter matches event and map names, dates, places and the different types of tags so that your maps are easy to find."
 msgstr "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps. The search filter matches event and map names, dates, places and the different types of tags so that your maps are easy to find."
 
@@ -172,7 +176,7 @@ msgstr "But there is much more to it than that. The maps can be linked to detail
 #: src/components/event/EventEdit.js:554
 #: src/components/event/EventLinkedDelete.js:47
 #: src/components/event/EventLinkedEdit.js:117
-#: src/components/event/EventMapViewerEdit.js:287
+#: src/components/event/EventMapViewerEdit.js:264
 #: src/components/event/EventResults.js:260
 #: src/components/event/EventRunnerDelete.js:74
 #: src/components/event/EventRunnerEdit.js:248
@@ -191,7 +195,7 @@ msgstr "Change Password"
 msgid "Change password"
 msgstr "Change password"
 
-#: src/components/event/EventMapViewerEdit.js:261
+#: src/components/event/EventMapViewerEdit.js:241
 msgid "Change title"
 msgstr "Change title"
 
@@ -227,11 +231,11 @@ msgstr "Clubs that event is organised by"
 msgid "Clubs that user is a member of"
 msgstr "Clubs that user is a member of"
 
-#: src/components/event/EventComments.js:28
+#: src/components/event/EventComments.js:35
 msgid "Comments"
 msgstr "Comments"
 
-#: src/components/event/EventMapViewerEdit.js:263
+#: src/components/event/EventMapViewerEdit.js:243
 msgid "Confirm change"
 msgstr "Confirm change"
 
@@ -244,7 +248,7 @@ msgstr "Country"
 msgid "Country in which club is based"
 msgstr "Country in which club is based"
 
-#: src/components/event/EventMapViewerEdit.js:325
+#: src/components/event/EventMapViewerEdit.js:302
 msgid "Course"
 msgstr "Course"
 
@@ -279,7 +283,7 @@ msgid "Create event using ORIS data"
 msgstr "Create event using ORIS data"
 
 #: src/components/club/ClubDetails.js:47
-#: src/components/event/EventDetails.js:83
+#: src/components/event/EventDetails.js:117
 msgid "Created: {0}"
 msgstr "Created: {0}"
 
@@ -337,13 +341,13 @@ msgstr "Delete club"
 msgid "Delete comment"
 msgstr "Delete comment"
 
-#: src/components/event/EventMapViewerEdit.js:352
-#: src/components/event/EventMapViewerEdit.js:383
+#: src/components/event/EventMapViewerEdit.js:329
+#: src/components/event/EventMapViewerEdit.js:360
 #: src/components/user/UserEditProfileImage.js:68
 msgid "Delete current"
 msgstr "Delete current"
 
-#: src/components/event/EventDetails.js:94
+#: src/components/event/EventDetails.js:128
 msgid "Delete event"
 msgstr "Delete event"
 
@@ -391,7 +395,7 @@ msgstr "Download current results: {downloadCSV} {downloadJSON}"
 msgid "Download results template: {downloadCSV} {downloadJSON}"
 msgstr "Download results template: {downloadCSV} {downloadJSON}"
 
-#: src/components/event/EventMapViewerEdit.js:255
+#: src/components/event/EventMapViewerEdit.js:235
 msgid "Duplicate map title"
 msgstr "Duplicate map title"
 
@@ -420,7 +424,7 @@ msgstr "Edit User Details"
 msgid "Edit club details"
 msgstr "Edit club details"
 
-#: src/components/event/EventDetails.js:97
+#: src/components/event/EventDetails.js:131
 msgid "Edit event details"
 msgstr "Edit event details"
 
@@ -486,7 +490,7 @@ msgstr "Error: Incorrect file type. Please check and try again."
 
 #: src/components/club/ClubView.js:296
 #: src/components/event/EventView.js:579
-#: src/components/event/MapView.js:602
+#: src/components/event/MapView.js:600
 #: src/components/home/HomeView.js:153
 #: src/components/user/UserView.js:144
 msgid "Error: {errorMessage}"
@@ -500,7 +504,7 @@ msgstr "Error: {errorMessage} Please try again."
 msgid "Event List"
 msgstr "Event List"
 
-#: src/components/event/EventDetails.js:234
+#: src/components/event/EventDetails.js:273
 msgid "Event details"
 msgstr "Event details"
 
@@ -528,7 +532,7 @@ msgstr "Event location (longitude)"
 msgid "Event tags"
 msgstr "Event tags"
 
-#: src/components/event/EventDetails.js:208
+#: src/components/event/EventDetails.js:247
 msgid "Event website"
 msgstr "Event website"
 
@@ -597,8 +601,12 @@ msgid "Internal ID: {userId}"
 msgstr "Internal ID: {userId}"
 
 #: src/components/home/HomeAboutAuthor.js:128
-msgid "It is a tool that I often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed Mapoholic to meet my own particular requirements and priorities I hope others will find it useful too."
-msgstr "It is a tool that I often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed Mapoholic to meet my own particular requirements and priorities I hope others will find it useful too."
+msgid "It is a tool that I have often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed MapOholic to meet my own particular requirements and priorities, I hope others may find it useful too."
+msgstr "It is a tool that I have often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed MapOholic to meet my own particular requirements and priorities, I hope others may find it useful too."
+
+#: src/components/home/HomeAboutAuthor.js:128
+#~ msgid "It is a tool that I often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed Mapoholic to meet my own particular requirements and priorities I hope others will find it useful too."
+#~ msgstr "It is a tool that I often wished that I could have. Over 25 years' worth of maps fills eight large ring binders and while it's a nice collection it is not always easy to find a map from a particular event, or of a particular area. These days details and results are all online, and routes are more commonly captured by a GPS tracker than drawn on the map. While I've developed Mapoholic to meet my own particular requirements and priorities I hope others will find it useful too."
 
 #: src/components/home/HomeAboutAuthor.js:139
 msgid "It is also a practical demonstration of my full stack web development skills and I have produced it to both improve and showcase those skills through developing a solution to a real requirement. For the technically minded, the front end is based on {linkReact} and {linkRedux}, the back end on {linkNode} and {linkExpress} with all the data (other than the image files) stored in {linkMongo}. Both are open source (ISC) and can be found on Github ({linkGithubClient}/{linkGithubServer}) if you are interested."
@@ -608,7 +616,7 @@ msgstr "It is also a practical demonstration of my full stack web development sk
 msgid "It links the following events:"
 msgstr "It links the following events:"
 
-#: src/components/home/HomeHowToUse.js:40
+#: src/components/home/HomeHowToUse.js:41
 msgid "It's now time to add some maps! Click the big \"Add or Delete maps\" button at the top, which enables you to upload both a course map and a route map (i.e. the same map with the route drawn on). You can also give the map a title, which will be shown if you add a different map for the same event later, for example if the course was in two parts. For the course map, you are given the option to add a border. This makes it easier to work with QuickRoute, which outputs images bigger than the original when you have added a route; without the border switching between course and route would not be smooth. If you do not have a route to upload, or you drew it on the course map with a different tool, you can ignore this option."
 msgstr "It's now time to add some maps! Click the big \"Add or Delete maps\" button at the top, which enables you to upload both a course map and a route map (i.e. the same map with the route drawn on). You can also give the map a title, which will be shown if you add a different map for the same event later, for example if the course was in two parts. For the course map, you are given the option to add a border. This makes it easier to work with QuickRoute, which outputs images bigger than the original when you have added a route; without the border switching between course and route would not be smooth. If you do not have a route to upload, or you drew it on the course map with a different tool, you can ignore this option."
 
@@ -617,7 +625,7 @@ msgid "Joined: {0}"
 msgstr "Joined: {0}"
 
 #: src/components/club/ClubDetails.js:52
-#: src/components/event/EventDetails.js:88
+#: src/components/event/EventDetails.js:122
 #: src/components/user/UserDetails.js:54
 msgid "Last updated: {0}"
 msgstr "Last updated: {0}"
@@ -655,7 +663,7 @@ msgstr "Linked to"
 msgid "Loading club details..."
 msgstr "Loading club details..."
 
-#: src/components/event/EventDetails.js:24
+#: src/components/event/EventDetails.js:26
 #: src/components/event/EventRunnerDetails.js:27
 msgid "Loading event details..."
 msgstr "Loading event details..."
@@ -713,7 +721,7 @@ msgstr "Manage linked events"
 msgid "Map"
 msgstr "Map"
 
-#: src/components/event/EventMapViewer.js:229
+#: src/components/event/EventMapViewer.js:223
 msgid "Map Viewer"
 msgstr "Map Viewer"
 
@@ -721,7 +729,7 @@ msgstr "Map Viewer"
 msgid "Map name"
 msgstr "Map name"
 
-#: src/components/event/EventMapViewerEdit.js:240
+#: src/components/event/EventMapViewerEdit.js:220
 msgid "Map title"
 msgstr "Map title"
 
@@ -731,8 +739,12 @@ msgstr "Map title"
 #~ msgstr "Map view"
 
 #: src/components/home/HomeAboutAuthor.js:110
-msgid "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there has a particular demand for a different language and is willing to do the translations!)"
-msgstr "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there has a particular demand for a different language and is willing to do the translations!)"
+#~ msgid "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there has a particular demand for a different language and is willing to do the translations!)"
+#~ msgstr "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there has a particular demand for a different language and is willing to do the translations!)"
+
+#: src/components/home/HomeAboutAuthor.js:110
+msgid "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there would like to use a different language and is willing to do the translations!)"
+msgstr "MapOholic has been, and is still being, developed by {linkMark}. I am a British orienteer living in Prague and a member of {linkDKP} and {linkDRONGO}, hence the integration with {linkORIS} * and the whole site being translated into Czech. (There are no technical reasons why it can't support other languages that I don't speak, if anyone out there would like to use a different language and is willing to do the translations!)"
 
 #: src/components/home/HomeAboutAuthor.js:10
 #~ msgid "MapOholic was developed by..."
@@ -806,7 +818,7 @@ msgstr "Number of controls on course"
 msgid "ORIS ID: {orisId}"
 msgstr "ORIS ID: {orisId}"
 
-#: src/components/home/HomeHowToUse.js:25
+#: src/components/home/HomeHowToUse.js:26
 msgid "Once you have created the event, or are looking at its details if it already exists, add yourself as a runner (below the details in list view, to the right of the details in map view). This will take you to the Current Map screen with this event selected. Again, there is a bonus if the event and your entry are in ORIS, because course details and results can be populated automatically too. Edit runner details allows you to enter course details manually, as well as to add personal tags to help you search your collection later and to decide who else can see your maps for this particular event (just you, anyone who is a member of the same club as you, all registered users of the site, or anyone anywhere in the entire world)."
 msgstr "Once you have created the event, or are looking at its details if it already exists, add yourself as a runner (below the details in list view, to the right of the details in map view). This will take you to the Current Map screen with this event selected. Again, there is a bonus if the event and your entry are in ORIS, because course details and results can be populated automatically too. Edit runner details allows you to enter course details manually, as well as to add personal tags to help you search your collection later and to decide who else can see your maps for this particular event (just you, anyone who is a member of the same club as you, all registered users of the site, or anyone anywhere in the entire world)."
 
@@ -815,8 +827,8 @@ msgid "Organised by"
 msgstr "Organised by"
 
 #: src/components/home/HomeHowToUse.js:63
-msgid "Other user stories to be added - see requirements document!"
-msgstr "Other user stories to be added - see requirements document!"
+#~ msgid "Other user stories to be added - see requirements document!"
+#~ msgstr "Other user stories to be added - see requirements document!"
 
 #: src/components/club/ClubEdit.js:154
 #: src/components/event/EventEdit.js:523
@@ -832,7 +844,7 @@ msgid "Owner of event record in this database"
 msgstr "Owner of event record in this database"
 
 #: src/components/club/ClubDetails.js:42
-#: src/components/event/EventDetails.js:78
+#: src/components/event/EventDetails.js:112
 msgid "Owner: {0}"
 msgstr "Owner: {0}"
 
@@ -882,7 +894,7 @@ msgid "Recent Activity"
 msgstr "Recent Activity"
 
 #: src/components/club/ClubHeader.js:46
-#: src/components/event/EventHeader.js:105
+#: src/components/event/EventHeader.js:109
 #: src/components/user/UserHeader.js:34
 msgid "Refresh list"
 msgstr "Refresh list"
@@ -903,13 +915,13 @@ msgstr "Registration number"
 msgid "Result: <0>{time}</0>"
 msgstr "Result: <0>{time}</0>"
 
-#: src/components/event/EventDetails.js:220
+#: src/components/event/EventDetails.js:259
 #: src/components/event/EventEdit.js:465
 #: src/components/event/EventResults.js:319
 msgid "Results"
 msgstr "Results"
 
-#: src/components/event/EventMapViewer.js:159
+#: src/components/event/EventMapViewer.js:154
 msgid "Return to map view"
 msgstr "Return to map view"
 
@@ -917,7 +929,7 @@ msgstr "Return to map view"
 msgid "Role"
 msgstr "Role"
 
-#: src/components/event/EventMapViewerEdit.js:357
+#: src/components/event/EventMapViewerEdit.js:334
 msgid "Route"
 msgstr "Route"
 
@@ -930,8 +942,8 @@ msgid "Runners at event (select one to see their maps)"
 msgstr "Runners at event (select one to see their maps)"
 
 #: src/components/home/HomeHowToUse.js:9
-msgid "Sample workflow: [to flesh out]"
-msgstr "Sample workflow: [to flesh out]"
+#~ msgid "Sample workflow: [to flesh out]"
+#~ msgstr "Sample workflow: [to flesh out]"
 
 #: src/components/event/EventResults.js:251
 msgid "Save Results"
@@ -949,7 +961,7 @@ msgstr "Save changes"
 msgid "Search for events"
 msgstr "Search for events"
 
-#: src/components/home/HomeHowToUse.js:15
+#: src/components/home/HomeHowToUse.js:16
 msgid "Search for the event you ran at: if it's there, great; if not you can add it. If it happens to be a Czech event on ORIS, you're lucky and can import all the event information automatically, just select it from the list of recent events at the top. Otherwise you can enter as much information about the event as you like, only the date and its name are required."
 msgstr "Search for the event you ran at: if it's there, great; if not you can add it. If it happens to be a Czech event on ORIS, you're lucky and can import all the event information automatically, just select it from the list of recent events at the top. Otherwise you can enter as much information about the event as you like, only the date and its name are required."
 
@@ -965,7 +977,7 @@ msgstr "See below for detailed results ({0} runners)"
 msgid "Select a club from the list to show further details here"
 msgstr "Select a club from the list to show further details here"
 
-#: src/components/event/MapView.js:281
+#: src/components/event/MapView.js:278
 msgid "Select a runner from the list to show further details here"
 msgstr "Select a runner from the list to show further details here"
 
@@ -977,7 +989,7 @@ msgstr "Select a user from the list to show further details here"
 msgid "Select your JSON or CSV results file (drag and drop or click to open file dialogue)."
 msgstr "Select your JSON or CSV results file (drag and drop or click to open file dialogue)."
 
-#: src/components/event/EventMapViewerEdit.js:296
+#: src/components/event/EventMapViewerEdit.js:273
 msgid "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 
@@ -985,7 +997,7 @@ msgstr "Select your course map file (drag and drop or click to open file dialogu
 msgid "Select your file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 1MB."
 msgstr "Select your file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 1MB."
 
-#: src/components/event/EventMapViewerEdit.js:304
+#: src/components/event/EventMapViewerEdit.js:281
 msgid "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 
@@ -1005,12 +1017,16 @@ msgstr "Sign up"
 msgid "Sign up for MapOholic"
 msgstr "Sign up for MapOholic"
 
+#: src/components/home/HomeHowToUse.js:9
+msgid "So, you&ve created an account and logged in for the first time. What do you do next? I&ll assume that you already have some scanned maps ready."
+msgstr "So, you&ve created an account and logged in for the first time. What do you do next? I&ll assume that you already have some scanned maps ready."
+
 #: src/components/auth/Logout.js:21
 msgid "Sorry to see you leave, come back again soon!"
 msgstr "Sorry to see you leave, come back again soon!"
 
-#: src/components/event/EventView.js:370
-#: src/components/event/MapView.js:360
+#: src/components/event/EventView.js:371
+#: src/components/event/MapView.js:357
 msgid "Sorry, no event is selected."
 msgstr "Sorry, no event is selected."
 
@@ -1022,7 +1038,7 @@ msgstr "Sorry, no event links found."
 msgid "Sorry, no matching runner details were found."
 msgstr "Sorry, no matching runner details were found."
 
-#: src/components/event/EventMapViewerCanvas.js:499
+#: src/components/event/EventMapViewerCanvas.js:497
 msgid "Sorry, there are no maps to display."
 msgstr "Sorry, there are no maps to display."
 
@@ -1055,7 +1071,7 @@ msgstr "Tags (customisable)"
 msgid "Tags for event"
 msgstr "Tags for event"
 
-#: src/components/home/HomeHowToUse.js:55
+#: src/components/home/HomeHowToUse.js:56
 msgid "That's it for this event, now upload some more maps for another event, browse other users' maps for this event or search through the archive for any other maps of interest."
 msgstr "That's it for this event, now upload some more maps for another event, browse other users' maps for this event or search through the archive for any other maps of interest."
 
@@ -1068,12 +1084,16 @@ msgid "The club {0} was updated by {1}"
 msgstr "The club {0} was updated by {1}"
 
 #: src/components/home/HomeWhatIsIt.js:9
+msgid "The core functionality of MapOholic is to provide an online home for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually, or captured with a GPS watch/tracker and drawn in <0>QuickRoute</0>*). You can zoom in and rotate maps and switch easily between the plain course and your route. More than one map can be uploaded for an event, for multi-part courses or when you ran more than one course at a single event or training session."
+msgstr "The core functionality of MapOholic is to provide an online home for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually, or captured with a GPS watch/tracker and drawn in <0>QuickRoute</0>*). You can zoom in and rotate maps and switch easily between the plain course and your route. More than one map can be uploaded for an event, for multi-part courses or when you ran more than one course at a single event or training session."
+
+#: src/components/home/HomeWhatIsIt.js:9
 #~ msgid "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*)."
 #~ msgstr "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*)."
 
 #: src/components/home/HomeWhatIsIt.js:9
-msgid "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*). You can zoom in and rotate maps, switch easily between the plain course and your route, and multi-part courses with different maps are supported."
-msgstr "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*). You can zoom in and rotate maps, switch easily between the plain course and your route, and multi-part courses with different maps are supported."
+#~ msgid "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*). You can zoom in and rotate maps, switch easily between the plain course and your route, and multi-part courses with different maps are supported."
+#~ msgstr "The core functionality of MapOholic is to provide an online repository for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually or using a GPS watch/tracker and a tool such as <0>QuickRoute</0>*). You can zoom in and rotate maps, switch easily between the plain course and your route, and multi-part courses with different maps are supported."
 
 #: src/components/home/HomeRecentListItem.js:256
 msgid "The event {0} was deleted by {1}"
@@ -1140,7 +1160,7 @@ msgstr "Time behind winner"
 msgid "Time taken"
 msgstr "Time taken"
 
-#: src/components/event/EventMapViewerEdit.js:246
+#: src/components/event/EventMapViewerEdit.js:226
 msgid "Title for map (e.g. \"Part 1\")"
 msgstr "Title for map (e.g. \"Part 1\")"
 
@@ -1176,8 +1196,8 @@ msgstr "Unknown actionType {actionType}"
 msgid "Update"
 msgstr "Update"
 
-#: src/components/event/EventMapViewerEdit.js:344
-#: src/components/event/EventMapViewerEdit.js:375
+#: src/components/event/EventMapViewerEdit.js:321
+#: src/components/event/EventMapViewerEdit.js:352
 #: src/components/user/UserEditProfileImage.js:61
 msgid "Upload selected"
 msgstr "Upload selected"
@@ -1278,12 +1298,12 @@ msgstr "client"
 msgid "log in"
 msgstr "log in"
 
-#: src/components/event/EventMapViewerEdit.js:221
-#: src/components/event/EventMapViewerEdit.js:232
+#: src/components/event/EventMapViewerEdit.js:201
+#: src/components/event/EventMapViewerEdit.js:212
 msgid "no map yet"
 msgstr "no map yet"
 
-#: src/components/event/EventMapViewer.js:194
+#: src/components/event/EventMapViewer.js:189
 msgid "no maps found"
 msgstr "no maps found"
 
@@ -1325,7 +1345,7 @@ msgstr "sign up"
 msgid "themselves"
 msgstr "themselves"
 
-#: src/components/event/EventMapViewer.js:187
+#: src/components/event/EventMapViewer.js:182
 msgid "untitled"
 msgstr "untitled"
 

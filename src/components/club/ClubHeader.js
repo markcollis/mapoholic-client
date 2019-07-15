@@ -40,7 +40,7 @@ const ClubHeader = ({
         </button>
         <button
           type="button"
-          className="ui tiny button right floated"
+          className="ui tiny button right floated hide-on-mobile"
           onClick={() => getClubList()}
         >
           <Trans>Refresh list</Trans>

@@ -49,7 +49,7 @@ const EventFilter = ({
       </div>
       <div className="column five wide">
         <div className="ui form">
-          <div className="ui right labeled input event-header__tag-filter">
+          <div className="ui right labeled input fluid event-header__tag-filter">
             <I18n>
               {({ i18n }) => (
                 <select
@@ -101,7 +101,11 @@ const EventFilter = ({
             </button>
           )
           : null}
-        <button type="button" className="ui tiny button right floated" onClick={() => getEventList()}>
+        <button
+          type="button"
+          className="ui tiny button right floated hide-on-mobile"
+          onClick={() => getEventList()}
+        >
           <Trans>Refresh list</Trans>
         </button>
       </div>

@@ -422,7 +422,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         userId,
         mapTitle,
       } = parameters;
-      const updatedEventDetails = state.details[eventId];
+      const updatedEventDetails = { ...state.details[eventId] };
       updatedEventDetails.locCornerNE = updatedEvent.locCornerNE;
       updatedEventDetails.locCornerNW = updatedEvent.locCornerNW;
       updatedEventDetails.locCornerSW = updatedEvent.locCornerSW;
@@ -439,7 +439,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         }
         return runner;
       });
-      console.log('updatedEventDetails:', updatedEventDetails);
+      // console.log('updatedEventDetails:', updatedEventDetails);
       return {
         ...state,
         details: {

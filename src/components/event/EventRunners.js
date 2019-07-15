@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
@@ -21,23 +21,43 @@ const EventRunners = ({
   if (!selectedEvent._id) return null;
   const { _id: eventId, runners, orisId } = selectedEvent;
   const isCurrentRunner = runners.some(runner => runner.user._id === currentUserId);
+  const runnersByCourse = {};
   const runnersArray = [...runners]
     .sort((a, b) => {
       return (a.user.displayName < b.user.displayName) ? 0 : -1;
-    })
-    .map((runner) => {
-      const { _id: runnerId } = runner;
-      return (
-        <EventRunnersItem
-          key={runnerId}
-          currentUserId={currentUserId}
-          eventId={eventId}
-          handleSelectEventRunner={handleSelectEventRunner}
-          runner={runner}
-          selectedRunner={selectedRunner}
-        />
-      );
     });
+  runnersArray.forEach((runner) => {
+    const { _id: runnerId, courseTitle } = runner;
+    const courseTitleKey = (!courseTitle || courseTitle === '') ? 'none' : courseTitle;
+    const runnerToAdd = (
+      <EventRunnersItem
+        key={runnerId}
+        currentUserId={currentUserId}
+        eventId={eventId}
+        handleSelectEventRunner={handleSelectEventRunner}
+        runner={runner}
+        selectedRunner={selectedRunner}
+      />
+    );
+    if (runnersByCourse[courseTitleKey]) {
+      runnersByCourse[courseTitleKey].push(runnerToAdd);
+    } else {
+      runnersByCourse[courseTitleKey] = [runnerToAdd];
+    }
+  });
+  // console.log('runnersByCourse', runnersByCourse);
+  const courseTitles = Object.keys(runnersByCourse);
+  const runnersToDisplay = courseTitles.map((courseTitle) => {
+    const courseTitleToDisplay = (courseTitle === 'none')
+      ? <Trans>[unknown]</Trans>
+      : courseTitle;
+    return ( // can't use <> shorthand with key
+      <Fragment key={courseTitle}>
+        <h3 className="event-runners__class-title">{courseTitleToDisplay}</h3>
+        {runnersByCourse[courseTitle].map(el => el)}
+      </Fragment>
+    );
+  });
 
   const useOrisToAdd = orisId && orisId !== '' && currentUserOrisId && currentUserOrisId !== '';
   const renderEventRunnerAdd = (isCurrentRunner || !currentUserId)
@@ -76,7 +96,7 @@ const EventRunners = ({
     <div className="ui segment">
       <Collapse title={title}>
         <div className="ui link cards card-list">
-          {runnersArray}
+          {runnersToDisplay}
         </div>
         {renderEventRunnerAdd}
       </Collapse>

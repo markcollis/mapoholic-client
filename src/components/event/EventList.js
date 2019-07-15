@@ -22,7 +22,9 @@ const EventList = ({
   }
   const eventsArray = [...events]
     .sort((a, b) => {
-      return (a.date < b.date) ? 0 : -1;
+      if (a.date < b.date) return 1;
+      if (a.date > b.date) return -1;
+      return 0;
     })
     .map((oevent) => {
       const { _id: eventId } = oevent;

@@ -48,7 +48,7 @@ const HomeRecent = ({
 
   return (
     <div className="ui segment home-recent">
-      <Collapse title={title}>
+      <Collapse title={title} startHidden>
         <ul>
           {renderActivityList}
         </ul>

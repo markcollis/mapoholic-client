@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
+// import diff from '../../graphics/diff.png';
 
 class EventCourseMapCanvasRender extends Component {
   state = {
@@ -28,6 +29,7 @@ class EventCourseMapCanvasRender extends Component {
     imageSrc: PropTypes.string,
     imageAlt: PropTypes.string,
     isLoading: PropTypes.bool,
+    overlays: PropTypes.arrayOf(PropTypes.string).isRequired,
     handlePanImage: PropTypes.func.isRequired,
     switchCourseRoute: PropTypes.func.isRequired,
     startZoomIn: PropTypes.func.isRequired,
@@ -276,13 +278,38 @@ class EventCourseMapCanvasRender extends Component {
       imageSrc,
       imageAlt,
       isLoading,
+      overlays,
     } = this.props;
     const imageClass = 'event-map-viewer-canvas-render__map-image';
     const imageStyle = {
+      position: 'absolute',
       width: `${width}px`,
       height: `${height}px`,
       transform: `translateX(${(left) ? `${left}px` : 'auto'}) translateY(${top}px) scale(${scale}) rotate(${rotate}deg)`,
     };
+    const overlaysToDisplay = (overlays.length > 0)
+      ? (
+        overlays.map((overlay, index) => {
+          return (
+            <img
+              className={`event-map-viewer-canvas-render__overlay-${index + 1}`}
+              key={overlay}
+              src={overlay}
+              alt="overlay"
+              style={imageStyle}
+              onMouseDown={this.handleMouseDown}
+              onMouseOut={this.handleMouseOut}
+              onBlur={this.handleMouseOut}
+              onMouseOver={this.handleMouseOver}
+              onFocus={this.handleMouseOver}
+              onDoubleClick={this.handleDoubleClick}
+              onTouchStart={this.handleTouchStart}
+              onTouchMove={this.handleTouchMove}
+            />
+          );
+        })
+      )
+      : null;
     const imgToDisplay = (imageSrc === '')
       ? null
       : (
@@ -301,6 +328,7 @@ class EventCourseMapCanvasRender extends Component {
             onTouchStart={this.handleTouchStart}
             onTouchMove={this.handleTouchMove}
           />
+          {overlaysToDisplay}
         </div>
       );
     return (isLoading)
@@ -316,3 +344,18 @@ class EventCourseMapCanvasRender extends Component {
 }
 
 export default EventCourseMapCanvasRender;
+
+// <img
+//   className={imageClass}
+//   style={imageStyleOverlay}
+//   src={diff}
+//   alt="diff"
+//   onMouseDown={this.handleMouseDown}
+//   onMouseOut={this.handleMouseOut}
+//   onBlur={this.handleMouseOut}
+//   onMouseOver={this.handleMouseOver}
+//   onFocus={this.handleMouseOver}
+//   onDoubleClick={this.handleDoubleClick}
+//   onTouchStart={this.handleTouchStart}
+//   onTouchMove={this.handleTouchMove}
+// />

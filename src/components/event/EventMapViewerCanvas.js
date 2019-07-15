@@ -9,6 +9,7 @@ import EventMapViewerCanvasRender from './EventMapViewerCanvasRender';
 
 class EventMapViewerCanvas extends Component {
   static propTypes = {
+    overlays: PropTypes.arrayOf(PropTypes.string),
     mapImage: PropTypes.objectOf(PropTypes.any),
     containerHeight: PropTypes.number,
     containerWidth: PropTypes.number,
@@ -17,6 +18,7 @@ class EventMapViewerCanvas extends Component {
   };
 
   static defaultProps = {
+    overlays: [],
     mapImage: {},
     containerHeight: null,
     containerWidth: null,
@@ -356,8 +358,9 @@ class EventMapViewerCanvas extends Component {
 
   render() {
     // console.log('this.mapRef in render:', this.mapRef);
+    // console.log('this.props in render:', this.props);
     // console.log('this.state in render:', this.state);
-    const { mapImage } = this.props;
+    const { mapImage, overlays } = this.props;
     const {
       activeType,
       width,
@@ -479,6 +482,7 @@ class EventMapViewerCanvas extends Component {
             imageSrc={mapImage[`src${activeType}`]}
             imageAlt={mapImage[`alt${activeType}`]}
             isLoading={isLoading}
+            overlays={overlays}
             handlePanImage={this.handlePanImage}
             switchCourseRoute={this.switchCourseRoute}
             startZoomIn={this.handleMouseDownZoomIn}

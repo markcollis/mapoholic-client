@@ -118,21 +118,21 @@ const HomeAboutAuthor = ({ language }) => {
           {linkORIS}
           * and the whole site being translated into Czech.
           (There are no technical reasons why it can&apos;t support other
-          languages that I don&apos;t speak, if anyone out there has a particular
-          demand for a different language and is willing to do the translations!)
+          languages that I don&apos;t speak, if anyone out there would like to
+          use a different language and is willing to do the translations!)
         </Trans>
       </p>
       <p><Trans>I developed MapOholic for two reasons:</Trans></p>
       <ul>
         <li>
           <Trans>
-            It is a tool that I often wished that I could have. Over 25 years&apos;
+            It is a tool that I have often wished that I could have. Over 25 years&apos;
             worth of maps fills eight large ring binders and while it&apos;s a nice
             collection it is not always easy to find a map from a particular event,
             or of a particular area. These days details and results are all online,
             and routes are more commonly captured by a GPS tracker than drawn on the map.
             While I&apos;ve developed MapOholic to meet my own particular requirements
-            and priorities I hope others will find it useful too.
+            and priorities, I hope others may find it useful too.
           </Trans>
         </li>
         <li>

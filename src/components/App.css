@@ -33,6 +33,12 @@ body {
   max-height: 50em;
   overflow-y: auto;
 }
+@media only screen and (max-width: 767px) {
+  .card-list--limit-height {
+    max-height: 30em;
+    overflow-y: auto;
+  }
+}
 /* highlight entries in card lists (e.g. ClubListItem, EventListItem, EventRunnersItem,
 EventLinkedItem, UserListItem) */
 .card-list--item-current-user { /* card represents currently logged in user */
@@ -49,8 +55,12 @@ EventLinkedItem, UserListItem) */
 .section-header {
   padding-bottom: 0 !important;
 }
+/* simplify interface and */
 /* float buttons right when columns are collapsed on small screens */
 @media only screen and (max-width: 767px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
   .ui[class*="right floated"].button {
     float: none;
   }
@@ -274,11 +284,26 @@ select, optgroup {
   width: 100%;
   overflow: hidden;
 }
+.event-map-viewer__overlay-selector {
+  font-size: 120%;
+  margin: 0.5em;
+}
+.event-map-viewer__overlay-selector label, p {
+  margin-left: 2em;
+}
+.event-map-viewer__overlay-selector ul {
+  margin: 0.2em;
+  list-style: none;
+}
+.event-map-viewer__overlay-selector input {
+  margin-right: 0.5em;
+}
 .event-map-viewer-canvas-render__loader {
   margin-top: 10px !important;
   height: 540px;
 }
 .event-map-viewer-canvas-render__canvas {
+  position: relative;
   margin-top: 5px;
   overflow: hidden;
   height: 555px;
@@ -290,9 +315,29 @@ select, optgroup {
 .event-map-viewer-canvas-render__map-image { /* prevent unwanted scrolling */
   touch-action: none;
 }
+.event-map-viewer-canvas-render__overlay-1 {
+  filter: drop-shadow(0 0 1px red);
+}
+.event-map-viewer-canvas-render__overlay-2 {
+  filter: drop-shadow(0 0 1px blue);
+}
+.event-map-viewer-canvas-render__overlay-3 {
+  filter: drop-shadow(0 0 1px #ff00ff); /* fuschia */
+}
+.event-map-viewer-canvas-render__overlay-4 {
+  filter: drop-shadow(0 0 1px #ffd700); /* dark yellow */
+}
+.event-map-viewer-canvas-render__overlay-5 {
+  filter: drop-shadow(0 0 1px #00bbbb); /* light blue */
+}
 /* settings for EventRunnerDetails */
 .event-runner-details--highlight {
   font-weight: bold;
+}
+/* settings for EventRunners */
+.event-runners__class-title {
+  color: #2185d0;
+  margin-bottom: 0;
 }
 /* settings for EventRunnersItem */
 .event-runners-item .label {

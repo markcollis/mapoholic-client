@@ -25,7 +25,7 @@ const UserHeader = ({
           <i className="circular search icon" />
         </div>
       </div>
-      <div className="column four wide right floated">
+      <div className="column four wide right floated hide-on-mobile">
         <button
           type="button"
           className="ui tiny button right floated"
