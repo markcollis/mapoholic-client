@@ -276,6 +276,16 @@ class EventMapViewer extends Component {
         const overlayPath = `${MAPOHOLIC_SERVER}/${filename}`;
         const overlayOrder = selectedOverlays.indexOf(overlayPath) + 1;
         const checked = (overlayOrder > 0);
+        let routeName = displayName;
+        if (courseTitle && courseTitle !== '') {
+          if (mapTitle && mapTitle !== '') {
+            routeName = `${displayName} (${courseTitle}/${mapTitle})`;
+          } else {
+            routeName = `${displayName} (${courseTitle})`;
+          }
+        } else if (mapTitle && mapTitle !== '') {
+          routeName = `${displayName} (${mapTitle})`;
+        }
         return (
           <li
             key={filename}
@@ -286,7 +296,7 @@ class EventMapViewer extends Component {
               checked={checked}
               onChange={() => this.handleCheckboxChange(overlayPath)}
             />
-            {`${displayName} (${courseTitle}/${mapTitle})`}
+            {routeName}
           </li>
         );
       })
@@ -301,8 +311,8 @@ class EventMapViewer extends Component {
           </ul>
           <p>
             <Trans>
-            Note: The overlays will only be aligned properly if the course map they were
-            drawn on is exactly the same.
+            Note: The overlays will only be perfectly aligned if they were drawn on the
+            same course map.
             </Trans>
           </p>
         </div>

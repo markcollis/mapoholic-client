@@ -107,7 +107,7 @@ msgstr "Přidat závod"
 msgid "Add new event link"
 msgstr "Přidat nové závodní spojení"
 
-#: src/components/event/EventMapViewer.js:155
+#: src/components/event/EventMapViewer.js:203
 msgid "Add or Delete maps"
 msgstr "Přidat nebo Smazat mapy"
 
@@ -119,11 +119,11 @@ msgstr "Přidat nebo změnit mapy"
 msgid "Add or change user profile image"
 msgstr "Přidat nebo změnit obrázek uživatele"
 
-#: src/components/event/EventMapViewerEdit.js:242
+#: src/components/event/EventMapViewerEdit.js:250
 msgid "Add title"
 msgstr "Přidat titul"
 
-#: src/components/event/EventRunners.js:71
+#: src/components/event/EventRunners.js:91
 msgid "Add yourself as a runner"
 msgstr "Přidat se jako běžec"
 
@@ -176,7 +176,7 @@ msgstr "##### to translate #####"
 #: src/components/event/EventEdit.js:554
 #: src/components/event/EventLinkedDelete.js:47
 #: src/components/event/EventLinkedEdit.js:117
-#: src/components/event/EventMapViewerEdit.js:264
+#: src/components/event/EventMapViewerEdit.js:270
 #: src/components/event/EventResults.js:260
 #: src/components/event/EventRunnerDelete.js:74
 #: src/components/event/EventRunnerEdit.js:248
@@ -195,7 +195,7 @@ msgstr "Změnit Heslo"
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: src/components/event/EventMapViewerEdit.js:241
+#: src/components/event/EventMapViewerEdit.js:249
 msgid "Change title"
 msgstr "Změnit titul"
 
@@ -235,7 +235,7 @@ msgstr "Kluby, kterých uživatel je člen"
 msgid "Comments"
 msgstr "Připomínky"
 
-#: src/components/event/EventMapViewerEdit.js:243
+#: src/components/event/EventMapViewerEdit.js:251
 msgid "Confirm change"
 msgstr "Potvrdit změnu"
 
@@ -248,7 +248,7 @@ msgstr "Země"
 msgid "Country in which club is based"
 msgstr "Země klubu"
 
-#: src/components/event/EventMapViewerEdit.js:302
+#: src/components/event/EventMapViewerEdit.js:308
 msgid "Course"
 msgstr "Trať"
 
@@ -341,8 +341,8 @@ msgstr "Smazat klub"
 msgid "Delete comment"
 msgstr "Smazat přípominku"
 
-#: src/components/event/EventMapViewerEdit.js:329
-#: src/components/event/EventMapViewerEdit.js:360
+#: src/components/event/EventMapViewerEdit.js:335
+#: src/components/event/EventMapViewerEdit.js:366
 #: src/components/user/UserEditProfileImage.js:68
 msgid "Delete current"
 msgstr "Smazat aktuální"
@@ -395,7 +395,7 @@ msgstr "Stáhnout stávající výsledky"
 msgid "Download results template: {downloadCSV} {downloadJSON}"
 msgstr "Stáhnout šablonu výsledků"
 
-#: src/components/event/EventMapViewerEdit.js:235
+#: src/components/event/EventMapViewerEdit.js:243
 msgid "Duplicate map title"
 msgstr "Duplikát titul mapy"
 
@@ -721,7 +721,7 @@ msgstr "Spravovat spojené závody"
 msgid "Map"
 msgstr "Mapa"
 
-#: src/components/event/EventMapViewer.js:223
+#: src/components/event/EventMapViewer.js:316
 msgid "Map Viewer"
 msgstr "Prohlízec map"
 
@@ -729,7 +729,7 @@ msgstr "Prohlízec map"
 msgid "Map name"
 msgstr "Název mapy"
 
-#: src/components/event/EventMapViewerEdit.js:220
+#: src/components/event/EventMapViewerEdit.js:228
 msgid "Map title"
 msgstr "Titul mapy"
 
@@ -804,6 +804,10 @@ msgstr "Není výsledek zobrazit."
 #: src/components/event/EventDelete.js:18
 msgid "Note: Deletion is only permitted by standard users if there are no runners at the event, or you are the only runner. Deleting an event also removes all references to it in linked events."
 msgstr "##### to translate #####"
+
+#: src/components/event/EventMapViewer.js:303
+msgid "Note: The overlays will only be aligned properly if the course map they were drawn on is exactly the same."
+msgstr ""
 
 #: src/components/event/EventRunnerEdit.js:119
 msgid "Number of controls"
@@ -921,7 +925,7 @@ msgstr "Výsledek: <0>{time}</0>"
 msgid "Results"
 msgstr "Výsledky"
 
-#: src/components/event/EventMapViewer.js:154
+#: src/components/event/EventMapViewer.js:202
 msgid "Return to map view"
 msgstr "Návrat do mapového pohledu"
 
@@ -929,7 +933,7 @@ msgstr "Návrat do mapového pohledu"
 msgid "Role"
 msgstr "Role"
 
-#: src/components/event/EventMapViewerEdit.js:334
+#: src/components/event/EventMapViewerEdit.js:340
 msgid "Route"
 msgstr "Postup"
 
@@ -937,7 +941,7 @@ msgstr "Postup"
 msgid "Runner details"
 msgstr "Detaíly běžce"
 
-#: src/components/event/EventRunners.js:74
+#: src/components/event/EventRunners.js:94
 msgid "Runners at event (select one to see their maps)"
 msgstr "Běžci na závod (vyberte jednu abyste zobrazili své mapy)"
 
@@ -989,7 +993,7 @@ msgstr "Chcete-li zobrazit více informaci, vyberte uživatele ze seznamu"
 msgid "Select your JSON or CSV results file (drag and drop or click to open file dialogue)."
 msgstr "Vyberte soubor výsledků CSV nebo JSON (přetažením nebo kliknutím otevřete dialog souborů)."
 
-#: src/components/event/EventMapViewerEdit.js:273
+#: src/components/event/EventMapViewerEdit.js:279
 msgid "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Vyberte soubor mapy trati (přetažením nebo kliknutím otevřete dialog souborů). Musí být soubor obrázku JPEG nebo PNG, maximální velikost 5MB."
 
@@ -997,13 +1001,17 @@ msgstr "Vyberte soubor mapy trati (přetažením nebo kliknutím otevřete dialo
 msgid "Select your file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 1MB."
 msgstr "Vyberte soubor (přetažením nebo kliknutím otevřete dialog souborů). Musí být soubor obrázku JPEG nebo PNG, maximální velikost 1MB."
 
-#: src/components/event/EventMapViewerEdit.js:281
+#: src/components/event/EventMapViewerEdit.js:287
 msgid "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Vyberte soubor mapy postupu (přetažením nebo kliknutím otevřete dialog souborů). Musí být soubor obrázku JPEG nebo PNG, maximální velikost 5MB."
 
 #: src/components/event/EventLinkedManage.js:155
 msgid "Show event link list"
 msgstr "Zobrazit seznam spojení"
+
+#: src/components/event/EventMapViewer.js:298
+msgid "Show routes as highlighted overlays:"
+msgstr ""
 
 #: src/components/Header.js:294
 msgid "Sign Up"
@@ -1038,7 +1046,7 @@ msgstr "Je nám líto, ale nejsou žádné závodných spojení."
 msgid "Sorry, no matching runner details were found."
 msgstr "Je nám líto, ale nejsou žádné takové běžce."
 
-#: src/components/event/EventMapViewerCanvas.js:497
+#: src/components/event/EventMapViewerCanvas.js:501
 msgid "Sorry, there are no maps to display."
 msgstr "Je nám líto, ale nejsou žádné mapy zobrazit."
 
@@ -1156,7 +1164,7 @@ msgstr "Čas za vítězem"
 msgid "Time taken"
 msgstr "Čas"
 
-#: src/components/event/EventMapViewerEdit.js:226
+#: src/components/event/EventMapViewerEdit.js:234
 msgid "Title for map (e.g. \"Part 1\")"
 msgstr "Titul mapy (např. \"1. Část\")"
 
@@ -1192,8 +1200,8 @@ msgstr "Neznamený actionType {actionType}"
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: src/components/event/EventMapViewerEdit.js:321
-#: src/components/event/EventMapViewerEdit.js:352
+#: src/components/event/EventMapViewerEdit.js:327
+#: src/components/event/EventMapViewerEdit.js:358
 #: src/components/user/UserEditProfileImage.js:61
 msgid "Upload selected"
 msgstr "Nahrát vybraný"
@@ -1281,6 +1289,10 @@ msgstr "Vaše Vlastní Poslední Aktivita"
 msgid "Your own password"
 msgstr "Vaše vlastní heslo"
 
+#: src/components/event/EventRunners.js:52
+msgid "[unknown]"
+msgstr ""
+
 #: src/components/home/HomeWelcome.js:35
 #: src/components/home/HomeWelcome.js:37
 msgid "by name"
@@ -1294,12 +1306,12 @@ msgstr "klienta"
 msgid "log in"
 msgstr "přihlasit se"
 
-#: src/components/event/EventMapViewerEdit.js:201
-#: src/components/event/EventMapViewerEdit.js:212
+#: src/components/event/EventMapViewerEdit.js:209
+#: src/components/event/EventMapViewerEdit.js:220
 msgid "no map yet"
 msgstr "už není mapa"
 
-#: src/components/event/EventMapViewer.js:189
+#: src/components/event/EventMapViewer.js:237
 msgid "no maps found"
 msgstr "žádné map našly"
 
@@ -1341,7 +1353,7 @@ msgstr "zaregistrovat se"
 msgid "themselves"
 msgstr "pro sebe"
 
-#: src/components/event/EventMapViewer.js:182
+#: src/components/event/EventMapViewer.js:230
 msgid "untitled"
 msgstr "bez titulu"
 

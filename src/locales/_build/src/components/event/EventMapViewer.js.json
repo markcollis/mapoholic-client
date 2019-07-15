@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        154
+        202
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        155
+        203
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        182
+        230
       ]
     ]
   },
@@ -27,7 +27,23 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        189
+        237
+      ]
+    ]
+  },
+  "Show routes as highlighted overlays:": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewer.js",
+        298
+      ]
+    ]
+  },
+  "Note: The overlays will only be aligned properly if the course map they were drawn on is exactly the same.": {
+    "origin": [
+      [
+        "src/components/event/EventMapViewer.js",
+        303
       ]
     ]
   },
@@ -35,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        223
+        316
       ]
     ]
   }

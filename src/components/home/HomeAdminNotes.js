@@ -24,25 +24,6 @@ const HomeAdminNotes = () => {
             If a user with no maps logs in, go to Events not MyMaps
             (not as easy as it looks!)
           </li>
-          <li>
-            Disable upload map button when already uploading
-          </li>
-          <li>
-            <del>Investigate extracting the route from a course/route combination</del>
-            &nbsp;(Implemented 15/7 - overlay PNG produced whenever course and route
-            exist, are the same size and are not identical)
-          </li>
-          <li>
-            <del>
-              View a list of course names at an event for which maps have been uploaded.
-              Also view the course name in EventRunners?
-            </del>
-            &nbsp;(now listed in EventRunners 15/7)
-          </li>
-          <li>
-            <del>View multiple routes for the same course together? (based on overlays)</del>
-            &nbsp;(done 25/7)
-          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -379,11 +360,35 @@ const HomeAdminNotes = () => {
             to be an issue when connection is slow/server is overloaded; now addressed
             through major refactor of image/extract/thumbnail management code 11/7)
           </li>
+          <li>
+            <del>Disable upload map button when already uploading</del>
+            &nbsp;(done 15/7)
+          </li>
+          <li>
+            <del>Investigate extracting the route from a course/route combination</del>
+            &nbsp;(Implemented 15/7 - overlay PNG produced whenever course and route
+            exist, are the same size and are not identical)
+          </li>
+          <li>
+            <del>
+              View a list of course names at an event for which maps have been uploaded.
+              Also view the course name in EventRunners?
+            </del>
+            &nbsp;(now listed in EventRunners 15/7)
+          </li>
+          <li>
+            <del>View multiple routes for the same course together? (based on overlays)</del>
+            &nbsp;(done 25/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
       <Collapse title="Other ideas for the future (non-essential):">
         <ol>
+          <li>
+            Consider how to better handle events at which someone ran TWO courses
+            (not a two-part course) - e.g. sprint relay training 2 legs
+          </li>
           <li>Manual editing of map corner coordinates in EventEdit?</li>
           <li>
             Refresh results via ORIS? Direct from front end in EventResults
