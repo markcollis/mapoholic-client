@@ -63,7 +63,6 @@ class EventEditLocationMap extends Component {
   }
 
   render() {
-    console.log('props in EventEditLocationMap', this.props);
     const { mapZoomLevel } = this.state;
     const { locLat, locLong } = this.props;
     if (!locLat || !locLong) return null;

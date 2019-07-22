@@ -19,27 +19,6 @@ const HomeAdminNotes = () => {
           <li>
             Handle multi-day events in Events.orisCreateEvent
           </li>
-          <li>
-            Refresh results via ORIS? Direct from front end in EventResults
-            as an alternative to direct upload. Potential to automatically parse
-            other online results too if they are in a consistent format.
-          </li>
-          <li>
-            <del>
-            If a user with no maps logs in, go to Events not MyMaps
-            (not as easy as it looks!)
-            -&gt; if *any* user with no maps visits MyMaps, redirect to Events
-            </del>
-            &nbsp;(done 22/7)
-          </li>
-          <li>
-            <del>Manual editing of map corner coordinates in EventEdit</del>
-            &nbsp;(done 22/7, also location map for EventDetails)
-          </li>
-          <li>
-            <del>Finish introductory/help text on Home view</del>
-            &nbsp;(first pass done 8/7, complete 22/7)
-          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -396,6 +375,29 @@ const HomeAdminNotes = () => {
             <del>View multiple routes for the same course together? (based on overlays)</del>
             &nbsp;(done 25/7)
           </li>
+          <li>
+            <del>
+            If a user with no maps logs in, go to Events not MyMaps
+            (not as easy as it looks!)
+            -&gt; if *any* user with no maps visits MyMaps, redirect to Events
+            </del>
+            &nbsp;(done 22/7)
+          </li>
+          <li>
+            <del>Manual editing of map corner coordinates in EventEdit</del>
+            &nbsp;(done 22/7, also location map for EventDetails)
+          </li>
+          <li>
+            <del>Finish introductory/help text on Home view</del>
+            &nbsp;(first pass done 8/7, complete 22/7)
+          </li>
+          <li>
+            <del>
+            Refresh results via ORIS? Direct from front end in EventResults
+            as an alternative to direct upload.
+            </del>
+            &nbsp;(done via support for JSON upload in ORIS API format 22/7)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -422,6 +424,11 @@ const HomeAdminNotes = () => {
           More on overlays - drawing own route, adding annotations, etc. =&gt;
           need to be able to save too... *react-canvas-draw*
           (course overlay is PNG with transparent background, park annotations for now)
+          </li>
+          <li>
+            Investigate potential to automatically parse other online results
+            too if they are in a consistent format (e.g. O-liga, BOF).
+            Test of apify?
           </li>
         </ol>
       </Collapse>

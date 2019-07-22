@@ -7,11 +7,6 @@ import Collapse from '../generic/Collapse';
 import FileDropzone from '../generic/FileDropzone';
 import Table from '../generic/Table';
 import { TEMPLATE } from '../../common/fileData';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-
-// Component displays results if present in event record (e.g. from ORIS)
-// (manual adding, editing, deleting results to be done later)
-// (consider also highlighting other registered users on same course?)
 
 class EventResults extends Component {
   static propTypes = {
@@ -35,7 +30,10 @@ class EventResults extends Component {
   getRunnerData = memoize((selectedEvent, selectedRunner) => {
     const { runners } = selectedEvent;
     if (!runners) return null;
-    const runnerData = runners.find(runner => runner.user._id === selectedRunner);
+    const runnerData = runners.find(({ user }) => {
+      const { _id: runnerId } = user;
+      return runnerId === selectedRunner;
+    });
     return runnerData;
   });
 
@@ -88,8 +86,59 @@ class EventResults extends Component {
 
   handleOnloadJSON = (e) => { // parse uploaded CSV file and store in uploadedResults
     const contents = e.target.result;
-    const uploadedResults = JSON.parse(contents);
-    // console.log('uploadedResults parsed:', uploadedResults);
+    const uploadedResults = [];
+    const rawUploadedResults = JSON.parse(contents);
+    console.log('uploadedResults parsed:', rawUploadedResults);
+    if (Array.isArray(rawUploadedResults)) { // process array in required format
+      rawUploadedResults.forEach((result) => {
+        const {
+          place,
+          sort,
+          name,
+          regNumber,
+          clubShort,
+          club,
+          time,
+          loss,
+        } = result;
+        const resultToUpload = {
+          place: place || '',
+          sort: sort || '',
+          name: name || '',
+          regNumber: regNumber || '',
+          clubShort: clubShort || '',
+          club: club || '',
+          time: time || '',
+          loss: loss || '',
+        };
+        uploadedResults.push(resultToUpload);
+      });
+    } else if (rawUploadedResults.Method === 'getEventResults') { // process ORIS data
+      const { Data: orisData } = rawUploadedResults;
+      const classResultsData = Object.keys(orisData).map(resultKey => orisData[resultKey]);
+      classResultsData.forEach((result) => {
+        const {
+          Place: place,
+          Sort: sort,
+          Name: name,
+          RegNo: regNumber,
+          ClubNameResults: club,
+          Time: time,
+          Loss: loss,
+        } = result;
+        const resultToUpload = {
+          place,
+          sort,
+          name,
+          regNumber,
+          clubShort: regNumber.slice(0, 3),
+          club,
+          time,
+          loss,
+        };
+        uploadedResults.push(resultToUpload);
+      });
+    }
     this.setState({ uploadedResults });
   };
 
@@ -168,10 +217,9 @@ class EventResults extends Component {
     );
   };
 
-  renderEditPanel = (existingResults) => {
+  renderEditPanel = (existingResults, selectedEvent, courseTitle) => {
     const { uploadedResults } = this.state;
-    const { selectedEvent } = this.props;
-    const { name, date } = selectedEvent;
+    const { name, date, orisId } = selectedEvent;
     const downloadName = (existingResults)
       ? name.replace(/\s/g, '').concat(date)
       : 'ResultsTemplate';
@@ -229,6 +277,28 @@ class EventResults extends Component {
         </Trans>
       </div>
     );
+    const orisLink = (orisId && orisId !== '')
+      ? (
+        <div className="row">
+          <div className="column sixteen wide">
+            <p>
+              <Trans>
+                As this event has an ORIS ID,&nbsp;
+                <a
+                  href={`https://oris.orientacnisporty.cz/API/?format=json&method=getEventResults&eventid=${orisId}&classname=${courseTitle}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  results in JSON format
+                </a>
+                &nbsp;may be available and can be imported by downloading the file from ORIS
+                and then uploading it here.
+              </Trans>
+            </p>
+          </div>
+        </div>
+      )
+      : '';
     return (
       <div className="ui grid middle aligned">
         <div className="row">
@@ -268,6 +338,7 @@ class EventResults extends Component {
             {downloadLinks}
           </div>
         </div>
+        {orisLink}
       </div>
     );
   };
@@ -320,7 +391,9 @@ class EventResults extends Component {
     return (
       <div className="ui segment">
         <Collapse title={title}>
-          {(isEditing) ? this.renderEditPanel(existingResults) : editButton}
+          {(isEditing)
+            ? this.renderEditPanel(existingResults, selectedEvent, courseTitle)
+            : editButton}
           {(resultsToShow) ? courseHeading : ''}
           {(resultsToShow) ? this.renderResultsTable(resultsToShow, regNumberArray) : ''}
         </Collapse>

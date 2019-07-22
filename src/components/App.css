@@ -166,6 +166,8 @@ select, optgroup {
 /* enable scrolling if table is too wide for its container */
 .table-component { /* 'table' on its own conflicts with Semantic UI*/
   overflow-x: auto;
+  clear: both;
+  margin-top: 1em;
 }
 /* settings for TablePagination */
 /* override margin for control buttons */
