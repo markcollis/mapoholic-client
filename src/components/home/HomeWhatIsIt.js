@@ -12,8 +12,7 @@ const HomeWhatIsIt = () => {
           (whether drawn manually, or captured with a GPS watch/tracker and drawn in&nbsp;
           <a href="http://www.matstroeng.se/quickroute/en/" target="_blank" rel="noopener noreferrer">QuickRoute</a>
           *). You can zoom in and rotate maps and switch easily between the plain course and your
-          route. More than one map can be uploaded for an event, for multi-part courses or when
-          you ran more than one course at a single event or training session.
+          route. More than one map can be uploaded for an event, to allow for multi-part courses.
         </Trans>
       </p>
       <p>

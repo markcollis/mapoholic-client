@@ -228,6 +228,17 @@ select, optgroup {
 .event-details__edit-block {
   clear: both;
 }
+/* settings for EventEdit */
+.event-edit__label {
+  margin: 0 0 4px 0;
+  font-weight: 700;
+  font-size: 13px;
+}
+.event-edit__map-corner-image {
+  width: 40%;
+  display: block;
+  margin: 1em auto 1em auto;
+}
 /* settings for EventHeader */
 .event-header__tag-filter--empty {
   color: rgba(0, 0, 0, 0.3) !important;
@@ -269,6 +280,17 @@ select, optgroup {
   color: #000;
   padding: 0.2em;
 }
+/* settings for EventEditLocationMap */
+.event-edit-location-map {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  height: 200px !important; /* override leaflet-container default */
+}
+/* settings for EventLocationMap */
+.event-location-map {
+  margin-top: 1em;
+  height: 200px !important; /* override leaflet-container default */
+}
 /* settings for EventMap (leaflet) */
 .leaflet-container { /* essential for leaflet to render properly */
   height: 400px;
@@ -288,7 +310,10 @@ select, optgroup {
   font-size: 120%;
   margin: 0.5em;
 }
-.event-map-viewer__overlay-selector label, p {
+.event-map-viewer__overlay-selector label {
+  margin-left: 2em;
+}
+.event-map-viewer__overlay-selector p {
   margin-left: 2em;
 }
 .event-map-viewer__overlay-selector ul {

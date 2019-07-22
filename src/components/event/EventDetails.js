@@ -6,6 +6,7 @@ import { reformatTimestampDateOnly } from '../../common/conversions';
 // import { MAPOHOLIC_SERVER } from '../../config';
 
 import EventThumbnails from './EventThumbnails';
+import EventLocationMap from './EventLocationMap';
 import Collapse from '../generic/Collapse';
 
 const EventDetails = ({
@@ -266,6 +267,7 @@ const EventDetails = ({
           {renderTypes}
           {renderTags}
         </div>
+        <EventLocationMap selectedEvent={selectedEvent} />
         {showEdit}
       </div>
     </div>

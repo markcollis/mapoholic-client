@@ -19,6 +19,8 @@ import {
   validationErrorsLocale,
 } from '../../common/data';
 import { dateToDateString, dateStringToDate } from '../../common/conversions';
+import mapCorners from '../../graphics/mapCorners.png';
+import EventEditLocationMap from './EventEditLocationMap';
 
 registerLocale('cs', cs);
 registerLocale('en', enGB);
@@ -65,6 +67,7 @@ class EventEdit extends Component {
     orisOptions: [],
     regionOptions: [],
     tagsOptions: [{ value: 'default', label: 'default' }],
+    showCornerLatLong: false,
   };
 
   componentDidMount() {
@@ -136,6 +139,7 @@ class EventEdit extends Component {
       orisOptions,
       regionOptions,
       tagsOptions,
+      showCornerLatLong,
     } = this.state;
     // console.log('state in EventEdit:', this.state);
     const {
@@ -362,46 +366,221 @@ class EventEdit extends Component {
                   { touched.locRegions && errors.locRegions && <div className="ui warning message">{errors.locRegions}</div> }
                 </label>
               </div>
+              <p className="event-edit__label">
+                <Trans>Location of event (latitude/longitude)</Trans>
+              </p>
               <div className="fields">
                 <div className="eight wide field">
-                  <label htmlFor="locLat">
-                    <Trans>Latitude</Trans>
-                    <I18n>
-                      {({ i18n }) => (
-                        <Field
-                          name="locLat"
-                          type="number"
-                          min="-90"
-                          max="90"
-                          placeholder={i18n._(t`Event location (latitude)`)}
-                          autoComplete="off"
-                        />
-                      )}
-                    </I18n>
-                    { touched.locLat && errors.locLat
-                      && <div className="ui warning message">{validationErrors[errors.locLat] || '!'}</div> }
-                  </label>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Field
+                        name="locLat"
+                        type="number"
+                        min="-90"
+                        max="90"
+                        step="0.001"
+                        placeholder={i18n._(t`Event location (latitude)`)}
+                        autoComplete="off"
+                      />
+                    )}
+                  </I18n>
+                  { touched.locLat && errors.locLat
+                    && <div className="ui warning message">{validationErrors[errors.locLat] || '!'}</div> }
                 </div>
                 <div className="eight wide field">
-                  <label htmlFor="locLong">
-                    <Trans>Longitude</Trans>
-                    <I18n>
-                      {({ i18n }) => (
-                        <Field
-                          name="locLong"
-                          type="number"
-                          min="-180"
-                          max="180"
-                          placeholder={i18n._(t`Event location (longitude)`)}
-                          autoComplete="off"
-                        />
-                      )}
-                    </I18n>
-                    { touched.locLong && errors.locLong
-                      && <div className="ui warning message">{validationErrors[errors.locLong] || '!'}</div> }
-                  </label>
+                  <I18n>
+                    {({ i18n }) => (
+                      <Field
+                        name="locLong"
+                        type="number"
+                        min="-180"
+                        max="180"
+                        step="0.001"
+                        placeholder={i18n._(t`Event location (longitude)`)}
+                        autoComplete="off"
+                      />
+                    )}
+                  </I18n>
+                  { touched.locLong && errors.locLong
+                    && <div className="ui warning message">{validationErrors[errors.locLong] || '!'}</div> }
                 </div>
               </div>
+              <EventEditLocationMap
+                locLat={(values.locLat !== '') ? values.locLat : null}
+                locLong={(values.locLong !== '') ? values.locLong : null}
+                locCornerNW={(values.locCornerNWLat !== '' && values.locCornerNWLong !== '')
+                  ? [values.locCornerNWLat, values.locCornerNWLong]
+                  : [null, null]}
+                locCornerNE={(values.locCornerNELat !== '' && values.locCornerNELong !== '')
+                  ? [values.locCornerNELat, values.locCornerNELong]
+                  : [null, null]}
+                locCornerSW={(values.locCornerSWLat !== '' && values.locCornerSWLong !== '')
+                  ? [values.locCornerSWLat, values.locCornerSWLong]
+                  : [null, null]}
+                locCornerSE={(values.locCornerSELat !== '' && values.locCornerSELong !== '')
+                  ? [values.locCornerSELat, values.locCornerSELong]
+                  : [null, null]}
+              />
+              {(showCornerLatLong)
+                ? (
+                  <>
+                    <p className="event-edit__label">
+                      <Trans>Locations of map corners (four latitude/longitude pairs)</Trans>
+                    </p>
+                    <div className="fields">
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerNWLat"
+                              type="number"
+                              min="-90"
+                              max="90"
+                              step="0.001"
+                              placeholder={i18n._(t`NW`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerNWLat && errors.locCornerNWLat
+                          && <div className="ui warning message">{validationErrors[errors.locCornerNWLat] || '!'}</div> }
+                      </div>
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerNWLong"
+                              type="number"
+                              min="-180"
+                              max="180"
+                              step="0.001"
+                              placeholder={i18n._(t`NW`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerNWLong && errors.locCornerNWLong
+                          && <div className="ui warning message">{validationErrors[errors.locCornerNWLong] || '!'}</div> }
+                      </div>
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerNELat"
+                              type="number"
+                              min="-90"
+                              max="90"
+                              step="0.001"
+                              placeholder={i18n._(t`NE`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerNELat && errors.locCornerNELat
+                          && <div className="ui warning message">{validationErrors[errors.locCornerNELat] || '!'}</div> }
+                      </div>
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerNELong"
+                              type="number"
+                              min="-180"
+                              max="180"
+                              step="0.001"
+                              placeholder={i18n._(t`NE`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerNELong && errors.locCornerNELong
+                          && <div className="ui warning message">{validationErrors[errors.locCornerNELong] || '!'}</div> }
+                      </div>
+                    </div>
+                    <img className="event-edit__map-corner-image" src={mapCorners} alt="map corners" />
+                    <div className="fields">
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerSWLat"
+                              type="number"
+                              min="-90"
+                              max="90"
+                              step="0.001"
+                              placeholder={i18n._(t`SW`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerSWLat && errors.locCornerSWLat
+                          && <div className="ui warning message">{validationErrors[errors.locCornerSWLat] || '!'}</div> }
+                      </div>
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerSWLong"
+                              type="number"
+                              min="-180"
+                              max="180"
+                              step="0.001"
+                              placeholder={i18n._(t`SW`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerSWLong && errors.locCornerSWLong
+                          && <div className="ui warning message">{validationErrors[errors.locCornerSWLong] || '!'}</div> }
+                      </div>
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerSELat"
+                              type="number"
+                              min="-90"
+                              max="90"
+                              step="0.001"
+                              placeholder={i18n._(t`SE`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerSELat && errors.locCornerSELat
+                          && <div className="ui warning message">{validationErrors[errors.locCornerSELat] || '!'}</div> }
+                      </div>
+                      <div className="four wide field">
+                        <I18n>
+                          {({ i18n }) => (
+                            <Field
+                              name="locCornerSELong"
+                              type="number"
+                              min="-180"
+                              max="180"
+                              step="0.001"
+                              placeholder={i18n._(t`SE`)}
+                              autoComplete="off"
+                            />
+                          )}
+                        </I18n>
+                        { touched.locCornerSELong && errors.locCornerSELong
+                          && <div className="ui warning message">{validationErrors[errors.locCornerSELong] || '!'}</div> }
+                      </div>
+                    </div>
+                  </>
+                )
+                : (
+                  <div className="field">
+                    <button
+                      type="button"
+                      className="ui button tiny"
+                      onClick={() => this.setState({ showCornerLatLong: true })}
+                    >
+                      <Trans>Show and edit map corner locations</Trans>
+                    </button>
+                  </div>
+                )}
               <div className="field">
                 <label htmlFor="types">
                   <Trans>Type(s) of event</Trans>
@@ -574,9 +753,10 @@ class EventEdit extends Component {
 const formikEventEdit = withFormik({
   mapPropsToValues({ selectedEvent, eventMode, language }) {
     if (eventMode === 'edit' && selectedEvent) {
-      // console.log('initialised:', countryOptionsLocale[language].filter((el) => {
-      //   return el.value === selectedEvent.locCountry;
-      // }) || null);
+      const roundTo3dp = (number) => {
+        const result = Math.round(number * 1000) / 1000;
+        return result;
+      };
       return {
         owner: { value: selectedEvent.owner._id, label: selectedEvent.owner.displayName },
         date: dateStringToDate(selectedEvent.date),
@@ -586,16 +766,22 @@ const formikEventEdit = withFormik({
         locRegions: selectedEvent.locRegions.map((region) => {
           if (!selectedEvent.locCountry) return null;
           const regionOptions = regionOptionSets[selectedEvent.locCountry];
-          // console.log('regionOptions in mapPropsToValues', regionOptions);
           const selectedRegion = regionOptions.filter(el => el.value === region)[0];
-          // console.log('selectedRegion in mapPropsToValues', selectedRegion);
           return selectedRegion;
         }) || [],
         locCountry: countryOptionsLocale[language].find((el) => {
           return el.value === selectedEvent.locCountry;
         }) || null,
-        locLat: selectedEvent.locLat || '',
-        locLong: selectedEvent.locLong || '',
+        locLat: roundTo3dp(selectedEvent.locLat) || '',
+        locLong: roundTo3dp(selectedEvent.locLong) || '',
+        locCornerNWLat: roundTo3dp(selectedEvent.locCornerNW[0]) || '',
+        locCornerNWLong: roundTo3dp(selectedEvent.locCornerNW[1]) || '',
+        locCornerNELat: roundTo3dp(selectedEvent.locCornerNE[0]) || '',
+        locCornerNELong: roundTo3dp(selectedEvent.locCornerNE[1]) || '',
+        locCornerSWLat: roundTo3dp(selectedEvent.locCornerSW[0]) || '',
+        locCornerSWLong: roundTo3dp(selectedEvent.locCornerSW[1]) || '',
+        locCornerSELat: roundTo3dp(selectedEvent.locCornerSE[0]) || '',
+        locCornerSELong: roundTo3dp(selectedEvent.locCornerSE[1]) || '',
         types: selectedEvent.types.map((type) => {
           return typesOptionsLocale[language].find(el => el.value === type);
         }) || [],
@@ -628,6 +814,14 @@ const formikEventEdit = withFormik({
       locCountry: null,
       locLat: '',
       locLong: '',
+      locCornerNWLat: '',
+      locCornerNWLong: '',
+      locCornerNELat: '',
+      locCornerNELong: '',
+      locCornerSWLat: '',
+      locCornerSWLong: '',
+      locCornerSELat: '',
+      locCornerSELong: '',
       types: [],
       tags: [],
       website: '',
@@ -642,6 +836,14 @@ const formikEventEdit = withFormik({
     locPlace: Yup.string(),
     locLat: Yup.number().moreThan(-90, 'invalidLatLow').lessThan(90, 'invalidLatHigh'),
     locLong: Yup.number().moreThan(-180, 'invalidLongLow').lessThan(180, 'invalidLongHigh'),
+    locCornerNWLat: Yup.number().moreThan(-90, 'invalidLatLow').lessThan(90, 'invalidLatHigh'),
+    locCornerNELat: Yup.number().moreThan(-90, 'invalidLatLow').lessThan(90, 'invalidLatHigh'),
+    locCornerSWLat: Yup.number().moreThan(-90, 'invalidLatLow').lessThan(90, 'invalidLatHigh'),
+    locCornerSELat: Yup.number().moreThan(-90, 'invalidLatLow').lessThan(90, 'invalidLatHigh'),
+    locCornerNWLong: Yup.number().moreThan(-180, 'invalidLongLow').lessThan(180, 'invalidLongHigh'),
+    locCornerNELong: Yup.number().moreThan(-180, 'invalidLongLow').lessThan(180, 'invalidLongHigh'),
+    locCornerSWLong: Yup.number().moreThan(-180, 'invalidLongLow').lessThan(180, 'invalidLongHigh'),
+    locCornerSELong: Yup.number().moreThan(-180, 'invalidLongLow').lessThan(180, 'invalidLongHigh'),
     website: Yup.string().url('invalidUrl'),
     results: Yup.string().url('invalidUrl'),
   }),
@@ -654,12 +856,24 @@ const formikEventEdit = withFormik({
       setEventViewModeEvent,
       selectedEvent,
     } = props;
-    const valuesToSubmit = (values.locCountry)
-      ? { ...values, locCountry: values.locCountry.value }
-      : { ...values, locCountry: '' };
+    const valuesToSubmit = { // simple fields first
+      name: values.name,
+      date: dateToDateString(values.date),
+      mapName: values.mapName,
+      locPlace: values.locPlace,
+      locLat: values.locLat,
+      locLong: values.locLong,
+      website: values.website,
+      results: values.results,
+    };
+    valuesToSubmit.locCountry = (values.locCountry) ? values.locCountry.value : '';
     valuesToSubmit.locRegions = (values.locRegions && values.locRegions.length > 0)
       ? values.locRegions.map(el => el.value)
       : [];
+    valuesToSubmit.locCornerNW = [values.locCornerNWLat, values.locCornerNWLong];
+    valuesToSubmit.locCornerNE = [values.locCornerNELat, values.locCornerNELong];
+    valuesToSubmit.locCornerSW = [values.locCornerSWLat, values.locCornerSWLong];
+    valuesToSubmit.locCornerSE = [values.locCornerSELat, values.locCornerSELong];
     valuesToSubmit.types = (values.types && values.types.length > 0)
       ? values.types.map(el => el.value)
       : [];
@@ -672,7 +886,6 @@ const formikEventEdit = withFormik({
     valuesToSubmit.linkedTo = (values.linkedTo && values.linkedTo.length > 0)
       ? values.linkedTo.map(el => el.value)
       : [];
-    valuesToSubmit.date = dateToDateString(values.date);
     if (values.owner) valuesToSubmit.owner = values.owner.value;
     // console.log('valuesToSubmit:', valuesToSubmit);
     if (eventMode === 'add') {

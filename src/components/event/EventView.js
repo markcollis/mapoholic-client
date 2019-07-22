@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
@@ -14,6 +14,7 @@ import EventLinkedManage from './EventLinkedManage';
 import EventList from './EventList';
 import EventMap from './EventMap';
 import EventRunners from './EventRunners';
+// import EventLocationMap from './EventLocationMap';
 // support dev without repeatedly calling ORIS API
 // import { testOrisList } from '../../common/data';
 import { reformatTimestampDateOnly } from '../../common/conversions';
@@ -99,18 +100,34 @@ class EventView extends Component {
     refreshCollapseEventDetails: 0,
   }
 
+  // helper to check whether to redirect from MyMaps because there aren't any
+  redirectToEvents = memoize((list, current, mineOnly) => {
+    if (!list) return false;
+    if (!current) return false;
+    if (!mineOnly) return false;
+    const { _id: currentUserId } = current;
+    const myEvents = list.filter((eachEvent) => {
+      const { runners } = eachEvent;
+      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      return runnerIds.includes(currentUserId);
+    });
+    if (myEvents.length === 0) return true;
+    return false;
+  });
+
   // helper to create event list if relevant props change
   getEventListArray = memoize((list, searchField, tagFilter, current, mineOnly, language) => {
     // console.log('refreshing event list array');
     // console.log('tagFilter:', tagFilter);
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
-    return list
-      .filter((eachEvent) => { // if mineOnly, select only those with current user as runner
-        const { runners } = eachEvent;
-        const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
-        return !mineOnly || runnerIds.includes(currentUserId);
-      })
+    const filteredListMineOnly = list.filter((eachEvent) => {
+      // if mineOnly, select only those with current user as runner
+      const { runners } = eachEvent;
+      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      return !mineOnly || runnerIds.includes(currentUserId);
+    });
+    const filteredList = filteredListMineOnly
       .filter((eachEvent) => { // use tag filter if set
         if (tagFilter === '') return true;
         const { runners, tags } = eachEvent;
@@ -153,6 +170,7 @@ class EventView extends Component {
         return (matchName || matchMapName || matchDate || matchPlace || matchCountry
           || matchOrganisedBy || matchTypes || matchTags || matchOwnTags);
       });
+    return filteredList;
   });
 
   // helper to get details of selected event if input props have changed
@@ -322,7 +340,6 @@ class EventView extends Component {
       createEventOris, // different to MapView version
       deleteEvent,
       getEventList,
-      // getEventLinkList,
       mineOnly,
       selectEventIdEvents,
       selectEventIdMyMaps,
@@ -358,9 +375,7 @@ class EventView extends Component {
     const currentUserId = this.getCurrentUserId(current);
     const isAdmin = this.getIsAdmin(current);
     const canEdit = this.getCanEditEvent(current, selectedEvent);
-    // console.log('canEdit, current, selectedEvent:', canEdit, current, selectedEvent);
     const organisingClubs = this.getOrganisingClubs(selectedEvent, clubDetails);
-    // const orisList = testOrisList; // different to MapView version, temporary while developing
     const { orisList } = oevent;
     const orisEventsList = this.getOrisList(current, orisList, eventMode);
 
@@ -372,7 +387,6 @@ class EventView extends Component {
           </div>
         );
       case 'add': // not provided in MapView version
-        // console.log('orisList prop for EventEdit:', orisList);
         return (
           <EventEdit // same form component handles both create and update
             clubList={clubList} // prop (club)
@@ -561,6 +575,24 @@ class EventView extends Component {
     );
   }
 
+  // renderEventLocationMap = () => {
+  //   const {
+  //     oevent,
+  //     mineOnly,
+  //   } = this.props;
+  //   const {
+  //     details,
+  //     errorMessage,
+  //     selectedEventIdEvents,
+  //     selectedEventIdMyMaps,
+  //   } = oevent;
+  //   const selectedEventId = (mineOnly) ? selectedEventIdMyMaps : selectedEventIdEvents;
+  //   const selectedEvent = this.getSelectedEvent(details, selectedEventId, errorMessage);
+  //   return (
+  //     <EventLocationMap selectedEvent={selectedEvent} />
+  //   );
+  // };
+
   renderError = () => {
     const { oevent, cancelEventError } = this.props;
     const { errorMessage } = oevent;
@@ -738,13 +770,36 @@ class EventView extends Component {
     );
   }
 
+  renderRedirectEvents = (redirect) => {
+    if (redirect) {
+      return <Redirect to="/events" />;
+    }
+    return null;
+  }
+
+  renderRedirectEventsMap = (redirect) => {
+    if (redirect) {
+      return <Redirect to="/eventsmap" />;
+    }
+    return null;
+  }
+
   render() {
     // console.log('state in EventView:', this.state);
     // console.log('props in EventView:', this.props);
-    const { mineOnly, showMap } = this.props;
+    const {
+      mineOnly,
+      oevent,
+      showMap,
+      user,
+    } = this.props;
+    const { list } = oevent;
+    const { current } = user;
+    const redirectToEvents = this.redirectToEvents(list, current, mineOnly);
     if (showMap) {
       return (
         <div className="ui vertically padded stackable grid">
+          {this.renderRedirectEventsMap(redirectToEvents)}
           {this.renderError()}
           <div className="sixteen wide column section-header">
             {this.renderEventHeader()}
@@ -771,6 +826,7 @@ class EventView extends Component {
 
     return (
       <div className="ui vertically padded stackable grid">
+        {this.renderRedirectEvents(redirectToEvents)}
         {this.renderError()}
         <div className="sixteen wide column section-header">
           {this.renderEventHeader()}
@@ -815,7 +871,6 @@ const mapDispatchToProps = {
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
   getEventById: getEventByIdAction,
-  // getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,
   selectEventIdEvents: selectEventIdEventsAction,

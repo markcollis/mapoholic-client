@@ -17,12 +17,28 @@ const HomeAdminNotes = () => {
             &nbsp;(DB migrated to MongoDB Atlas online service 5/7)
           </li>
           <li>
-            Finish introductory/help text on Home view
-            &nbsp;(first pass done 8/7)
+            Handle multi-day events in Events.orisCreateEvent
           </li>
           <li>
+            Refresh results via ORIS? Direct from front end in EventResults
+            as an alternative to direct upload. Potential to automatically parse
+            other online results too if they are in a consistent format.
+          </li>
+          <li>
+            <del>
             If a user with no maps logs in, go to Events not MyMaps
             (not as easy as it looks!)
+            -&gt; if *any* user with no maps visits MyMaps, redirect to Events
+            </del>
+            &nbsp;(done 22/7)
+          </li>
+          <li>
+            <del>Manual editing of map corner coordinates in EventEdit</del>
+            &nbsp;(done 22/7, also location map for EventDetails)
+          </li>
+          <li>
+            <del>Finish introductory/help text on Home view</del>
+            &nbsp;(first pass done 8/7, complete 22/7)
           </li>
         </ol>
       </Collapse>
@@ -388,12 +404,8 @@ const HomeAdminNotes = () => {
           <li>
             Consider how to better handle events at which someone ran TWO courses
             (not a two-part course) - e.g. sprint relay training 2 legs
-          </li>
-          <li>Manual editing of map corner coordinates in EventEdit?</li>
-          <li>
-            Refresh results via ORIS? Direct from front end in EventResults
-            as an alternative to direct upload. Potential to automatically parse
-            other online results too if they are in a consistent format.
+            The data model doesn&apos;t support this, would need 2 runner records
+            for the same event or 2 course/results records for a runner
           </li>
           <li>EN and CZ specific screenshots? Maybe later for final polish!</li>
           <li>Support re-ordering of multi-part maps</li>
@@ -407,7 +419,7 @@ const HomeAdminNotes = () => {
           <li>User-specific preferences (e.g. language)</li>
           <li>Real-time (non-persistent) chat??</li>
           <li>
-          Investigate overlays - drawing own route, adding annotations, etc. =&gt;
+          More on overlays - drawing own route, adding annotations, etc. =&gt;
           need to be able to save too... *react-canvas-draw*
           (course overlay is PNG with transparent background, park annotations for now)
           </li>
