@@ -7,7 +7,7 @@
       ]
     ]
   },
-  "So, you&ve created an account and logged in for the first time. What do you do next? I&ll assume that you already have some scanned maps ready.": {
+  "So, you've created an account and logged in for the first time. What do you do next? I&ll assume that you already have some scanned maps ready to upload.": {
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        16
+        17
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        26
+        27
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        41
+        42
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        56
+        57
       ]
     ]
   }

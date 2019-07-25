@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventView.js",
-        371
+        386
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventView.js",
-        579
+        611
       ]
     ]
   }

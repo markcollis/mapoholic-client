@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        156
+        160
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        156
+        160
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        206
+        210
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        214
+        218
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        232
+        236
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        257
+        261
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        273
+        277
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        278
+        282
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        289
+        293
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        294
+        298
       ]
     ]
   },
@@ -83,7 +83,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        304
+        308
       ]
     ]
   },
@@ -91,7 +91,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        309
+        313
       ]
     ]
   },
@@ -99,7 +99,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        319
+        323
       ]
     ]
   },
@@ -107,7 +107,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        324
+        328
       ]
     ]
   },
@@ -115,7 +115,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        347
+        351
       ]
     ]
   },
@@ -123,15 +123,15 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        352
+        356
       ]
     ]
   },
-  "Latitude": {
+  "Location of event (latitude/longitude)": {
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        368
+        370
       ]
     ]
   },
@@ -139,15 +139,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        376
-      ]
-    ]
-  },
-  "Longitude": {
-    "origin": [
-      [
-        "src/components/event/EventEdit.js",
-        387
+        382
       ]
     ]
   },
@@ -155,7 +147,71 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        395
+        399
+      ]
+    ]
+  },
+  "Locations of map corners (four latitude/longitude pairs)": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        428
+      ]
+    ]
+  },
+  "NW": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        440
+      ],
+      [
+        "src/components/event/EventEdit.js",
+        457
+      ]
+    ]
+  },
+  "NE": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        474
+      ],
+      [
+        "src/components/event/EventEdit.js",
+        491
+      ]
+    ]
+  },
+  "SW": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        511
+      ],
+      [
+        "src/components/event/EventEdit.js",
+        528
+      ]
+    ]
+  },
+  "SE": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        545
+      ],
+      [
+        "src/components/event/EventEdit.js",
+        562
+      ]
+    ]
+  },
+  "Show and edit map corner locations": {
+    "origin": [
+      [
+        "src/components/event/EventEdit.js",
+        580
       ]
     ]
   },
@@ -163,7 +219,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        407
+        586
       ]
     ]
   },
@@ -171,7 +227,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        412
+        591
       ]
     ]
   },
@@ -179,7 +235,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        430
+        609
       ]
     ]
   },
@@ -187,7 +243,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        435
+        614
       ]
     ]
   },
@@ -195,7 +251,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        449
+        628
       ]
     ]
   },
@@ -203,7 +259,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        454
+        633
       ]
     ]
   },
@@ -211,7 +267,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        465
+        644
       ]
     ]
   },
@@ -219,7 +275,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        470
+        649
       ]
     ]
   },
@@ -227,7 +283,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        481
+        660
       ]
     ]
   },
@@ -235,7 +291,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        486
+        665
       ]
     ]
   },
@@ -243,7 +299,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        500
+        679
       ]
     ]
   },
@@ -251,7 +307,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        505
+        684
       ]
     ]
   },
@@ -259,7 +315,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        523
+        702
       ]
     ]
   },
@@ -267,7 +323,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        528
+        707
       ]
     ]
   },
@@ -275,7 +331,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        554
+        733
       ]
     ]
   },
@@ -283,7 +339,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        563
+        742
       ]
     ]
   },
@@ -291,7 +347,7 @@
     "origin": [
       [
         "src/components/event/EventEdit.js",
-        564
+        743
       ]
     ]
   }

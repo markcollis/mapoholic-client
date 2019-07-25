@@ -7,7 +7,7 @@
       ]
     ]
   },
-  "The core functionality of MapOholic is to provide an online home for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually, or captured with a GPS watch/tracker and drawn in <0>QuickRoute</0>*). You can zoom in and rotate maps and switch easily between the plain course and your route. More than one map can be uploaded for an event, for multi-part courses or when you ran more than one course at a single event or training session.": {
+  "The core functionality of MapOholic is to provide an online home for scanned images of your orienteering maps, together with your routes if you have them (whether drawn manually, or captured with a GPS watch/tracker and drawn in <0>QuickRoute</0>*). You can zoom in and rotate maps and switch easily between the plain course and your route. More than one map can be uploaded for an event, to allow for multi-part courses.": {
     "origin": [
       [
         "src/components/home/HomeWhatIsIt.js",
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/home/HomeWhatIsIt.js",
-        20
+        19
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/home/HomeWhatIsIt.js",
-        31
+        30
       ]
     ]
   }

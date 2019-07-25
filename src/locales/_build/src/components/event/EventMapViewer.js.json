@@ -35,15 +35,15 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        298
+        308
       ]
     ]
   },
-  "Note: The overlays will only be aligned properly if the course map they were drawn on is exactly the same.": {
+  "Note: The overlays will only be perfectly aligned if they were drawn on the same course map.": {
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        303
+        313
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        316
+        326
       ]
     ]
   }

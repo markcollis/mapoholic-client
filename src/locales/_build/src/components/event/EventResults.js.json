@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        137
+        186
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        137
+        186
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        137
+        186
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        137
+        186
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        203
+        251
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        213
+        261
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        222
+        270
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        223
+        271
       ]
     ]
   },
@@ -67,7 +67,15 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        227
+        275
+      ]
+    ]
+  },
+  "As this event has an ORIS ID, <0>results in JSON format</0>may be available and can be imported by downloading the file from ORIS and then uploading it here.": {
+    "origin": [
+      [
+        "src/components/event/EventResults.js",
+        285
       ]
     ]
   },
@@ -75,7 +83,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        251
+        321
       ]
     ]
   },
@@ -83,7 +91,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        260
+        330
       ]
     ]
   },
@@ -91,7 +99,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        295
+        366
       ]
     ]
   },
@@ -99,7 +107,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        295
+        366
       ]
     ]
   },
@@ -107,7 +115,7 @@
     "origin": [
       [
         "src/components/event/EventResults.js",
-        319
+        390
       ]
     ]
   }
