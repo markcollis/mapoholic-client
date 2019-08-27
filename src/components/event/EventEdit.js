@@ -17,7 +17,7 @@ import {
   roleOptionsLocale,
   typesOptionsLocale,
   validationErrorsLocale,
-} from '../../common/data';
+} from '../../common/formData';
 import { dateToDateString, dateStringToDate } from '../../common/conversions';
 import mapCorners from '../../graphics/mapCorners.png';
 import EventEditLocationMap from './EventEditLocationMap';

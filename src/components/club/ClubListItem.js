@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { countryCodesConversion } from '../../common/data';
+import { countryCodesConversion } from '../../common/formData';
 
 const ClubListItem = ({
   club,

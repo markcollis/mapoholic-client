@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { roleOptionsLocale } from '../../common/data';
+import { roleOptionsLocale } from '../../common/formData';
 import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 

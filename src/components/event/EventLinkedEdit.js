@@ -5,7 +5,7 @@ import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
-import { validationErrorsLocale } from '../../common/data';
+import { validationErrorsLocale } from '../../common/formData';
 /* eslint no-underscore-dangle: 0 */
 
 // renders form to either create or edit an event link record

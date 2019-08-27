@@ -5,7 +5,7 @@ import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
-import { validationErrorsLocale } from '../../common/data';
+import { validationErrorsLocale } from '../../common/formData';
 
 const UserChangePassword = ({
   errors,

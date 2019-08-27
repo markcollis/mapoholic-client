@@ -1,15 +1,14 @@
-// Private configuration data
-
-export const defaultLanguage = 'en';
+// Set global configuration variables
 
 // console.logs server response to every API call made
-export const logAPICalls = true;
+export const logAPICalls = false;
 
-// *** need to ensure that certificate on server matches ***
+// API
+export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';
+
 // crius on Wifi (Seven)
 // export const MAPOHOLIC_SERVER = 'https://192.168.0.15:3090';
 // export const MAPOHOLIC_SERVER = 'http://192.168.0.15:3090';
-export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';
 
 // crius as localhost if no internet connection and using a local test DB
 // export const MAPOHOLIC_SERVER = 'https://localhost:3090';

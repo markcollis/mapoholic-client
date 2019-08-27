@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
-import { tableAllLocale } from '../../common/data';
+import { tableAllLocale } from '../../common/formData';
 
 const TablePagination = ({
   language,

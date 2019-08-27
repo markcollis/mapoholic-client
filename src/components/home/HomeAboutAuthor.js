@@ -5,7 +5,7 @@ import { Trans } from '@lingui/macro';
 const HomeAboutAuthor = ({ language }) => {
   const linkMark = (
     <a
-      href="mailto:mark@markandblanka.com" // replace with personal site when done
+      href="https://markcollis.dev"
       target="_blank"
       rel="noopener noreferrer"
     >

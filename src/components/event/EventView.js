@@ -16,7 +16,7 @@ import EventMap from './EventMap';
 import EventRunners from './EventRunners';
 // import EventLocationMap from './EventLocationMap';
 // support dev without repeatedly calling ORIS API
-// import { testOrisList } from '../../common/data';
+// import { testOrisList } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import {
   addEventRunnerAction,

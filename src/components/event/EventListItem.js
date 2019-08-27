@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
-import { typesOptionsLocale } from '../../common/data';
+import { typesOptionsLocale } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import { MAPOHOLIC_SERVER } from '../../config';
 

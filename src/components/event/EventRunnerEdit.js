@@ -9,7 +9,7 @@ import CreatableSelect from 'react-select/creatable';
 import {
   visibilityOptionsLocale,
   // validationErrorsLocale,
-} from '../../common/data';
+} from '../../common/formData';
 
 /* eslint no-underscore-dangle: 0 */
 

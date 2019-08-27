@@ -9,7 +9,7 @@ import {
   countryOptionsLocale,
   roleOptionsLocale,
   validationErrorsLocale,
-} from '../../common/data';
+} from '../../common/formData';
 /* eslint no-underscore-dangle: 0 */
 
 // renders form to submit credentials either for login or creating account

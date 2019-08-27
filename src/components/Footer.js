@@ -13,7 +13,7 @@ const Footer = () => {
       MapOholic
       </a>
       &nbsp;&copy;&nbsp;
-      <a href="mailto:mark@markandblanka.com">Mark Collis</a>
+      <a href="mailto:mark@markcollis.dev">Mark Collis</a>
       &nbsp;2019
     </div>
   );

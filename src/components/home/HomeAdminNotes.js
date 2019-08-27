@@ -197,7 +197,7 @@ const HomeAdminNotes = () => {
             &nbsp;(completed 27/6, together with new reusable Table component)
           </li>
           <li>
-            <del>Complete common/data translations and check that nothing is missing</del>
+            <del>Complete common/formData translations and check that nothing is missing</del>
             &nbsp;(done 28/6)
           </li>
           <li>

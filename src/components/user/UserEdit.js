@@ -5,7 +5,7 @@ import { Trans, t } from '@lingui/macro';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
-import { roleOptionsLocale, visibilityOptionsLocale, validationErrorsLocale } from '../../common/data';
+import { roleOptionsLocale, visibilityOptionsLocale, validationErrorsLocale } from '../../common/formData';
 import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 import UserChangePassword from './UserChangePassword';
