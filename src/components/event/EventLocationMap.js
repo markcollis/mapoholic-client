@@ -37,11 +37,9 @@ class EventLocationMap extends Component {
       locCornerSE, // * may be missing in some older records *
     } = selectedEvent;
     const flagMarkerPos = [locLat, locLong];
-    const polygonBounds = (!locCornerNW || locCornerNW.length === 0)
-      ? [locCornerSW, [locCornerNE[0], locCornerSW[1]],
-        locCornerNE, [locCornerSW[0], locCornerNE[1]]]
-      : [locCornerSW, locCornerNW, locCornerNE, locCornerSE];
-    if (mapZoomLevel < 11 || locCornerSW.length === 0) {
+    const markerOnly = (!locCornerSW || !locCornerSW[0] || !locCornerSW[1]
+      || !locCornerNE || locCornerNE[0] || locCornerNE[1]);
+    if (mapZoomLevel < 11 || markerOnly) {
       return (
         <Marker
           position={flagMarkerPos}
@@ -50,6 +48,10 @@ class EventLocationMap extends Component {
         />
       );
     }
+    const polygonBounds = (!locCornerNW || locCornerNW.length === 0)
+      ? [locCornerSW, [locCornerNE[0], locCornerSW[1]],
+        locCornerNE, [locCornerSW[0], locCornerNE[1]]]
+      : [locCornerSW, locCornerNW, locCornerNE, locCornerSE];
     return (
       <Polygon
         positions={polygonBounds}

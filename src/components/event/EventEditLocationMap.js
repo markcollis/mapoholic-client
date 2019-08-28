@@ -49,10 +49,10 @@ class EventEditLocationMap extends Component {
       locCornerSE, // * may be missing in some older records *
     } = this.props;
     const polygonBounds = [];
-    if (locCornerNW[0] && locCornerNW[1]) polygonBounds.push(locCornerNW);
-    if (locCornerNE[0] && locCornerNE[1]) polygonBounds.push(locCornerNE);
-    if (locCornerSE[0] && locCornerSE[1]) polygonBounds.push(locCornerSE);
-    if (locCornerSW[0] && locCornerSW[1]) polygonBounds.push(locCornerSW);
+    if (locCornerNW && locCornerNW[0] && locCornerNW[1]) polygonBounds.push(locCornerNW);
+    if (locCornerNE && locCornerNE[0] && locCornerNE[1]) polygonBounds.push(locCornerNE);
+    if (locCornerSE && locCornerSE[0] && locCornerSE[1]) polygonBounds.push(locCornerSE);
+    if (locCornerSW && locCornerSW[0] && locCornerSW[1]) polygonBounds.push(locCornerSW);
     if (polygonBounds.length < 2) return null;
     return (
       <Polygon
