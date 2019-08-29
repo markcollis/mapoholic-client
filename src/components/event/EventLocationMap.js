@@ -7,6 +7,7 @@ import {
   TileLayer,
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
+import getPolygonBounds from './getPolygonBounds';
 
 const osmTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const osmAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -31,15 +32,16 @@ class EventLocationMap extends Component {
     const {
       locLat,
       locLong,
-      locCornerSW,
-      locCornerNW, // * may be missing in some older records *
-      locCornerNE,
-      locCornerSE, // * may be missing in some older records *
+      // locCornerSW,
+      // locCornerNW, // * may be missing in some older records *
+      // locCornerNE,
+      // locCornerSE, // * may be missing in some older records *
     } = selectedEvent;
     const flagMarkerPos = [locLat, locLong];
-    const markerOnly = (!locCornerSW || !locCornerSW[0] || !locCornerSW[1]
-      || !locCornerNE || !locCornerNE[0] || !locCornerNE[1]);
-    if (mapZoomLevel < 11 || markerOnly) {
+    const polygonBounds = getPolygonBounds(selectedEvent);
+    // const markerOnly = (!locCornerSW || !locCornerSW[0] || !locCornerSW[1]
+    //   || !locCornerNE || !locCornerNE[0] || !locCornerNE[1]);
+    if (mapZoomLevel < 11 || polygonBounds.length < 3) {
       return (
         <Marker
           position={flagMarkerPos}
@@ -48,10 +50,10 @@ class EventLocationMap extends Component {
         />
       );
     }
-    const polygonBounds = (!locCornerNW || locCornerNW.length === 0)
-      ? [locCornerSW, [locCornerNE[0], locCornerSW[1]],
-        locCornerNE, [locCornerSW[0], locCornerNE[1]]]
-      : [locCornerSW, locCornerNW, locCornerNE, locCornerSE];
+    // const polygonBounds = (!locCornerNW || locCornerNW.length === 0)
+    //   ? [locCornerSW, [locCornerNE[0], locCornerSW[1]],
+    //     locCornerNE, [locCornerSW[0], locCornerNE[1]]]
+    //   : [locCornerSW, locCornerNW, locCornerNE, locCornerSE];
     return (
       <Polygon
         positions={polygonBounds}
