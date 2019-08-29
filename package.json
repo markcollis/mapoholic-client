@@ -1,6 +1,7 @@
 {
   "name": "mapoholic-client",
   "version": "0.1.0",
+  "license": "ISC",
   "private": true,
   "dependencies": {
     "@lingui/macro": "^2.7.4",

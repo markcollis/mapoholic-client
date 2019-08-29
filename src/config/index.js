@@ -1,7 +1,7 @@
 // Set global configuration variables
 
 // console.logs server response to every API call made
-export const logAPICalls = false;
+export const logAPICalls = true;
 
 // API
 export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';

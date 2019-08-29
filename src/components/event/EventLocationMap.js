@@ -38,7 +38,7 @@ class EventLocationMap extends Component {
     } = selectedEvent;
     const flagMarkerPos = [locLat, locLong];
     const markerOnly = (!locCornerSW || !locCornerSW[0] || !locCornerSW[1]
-      || !locCornerNE || locCornerNE[0] || locCornerNE[1]);
+      || !locCornerNE || !locCornerNE[0] || !locCornerNE[1]);
     if (mapZoomLevel < 11 || markerOnly) {
       return (
         <Marker

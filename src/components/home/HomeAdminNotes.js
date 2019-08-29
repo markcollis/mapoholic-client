@@ -13,11 +13,14 @@ const HomeAdminNotes = () => {
             (done all except long paragraphs on Home page 29/6)
           </li>
           <li>
-            Test it out on a real Internet-facing server
-            &nbsp;(DB migrated to MongoDB Atlas online service 5/7)
+            Handle multi-day events in Events.orisCreateEvent
           </li>
           <li>
-            Handle multi-day events in Events.orisCreateEvent
+            Bug: Strange behaviour when switching to an event at which you are
+            not a runner and trying to add maps (only as admin?)
+          </li>
+          <li>
+            Investigate better overall error handling
           </li>
         </ol>
       </Collapse>
@@ -397,6 +400,23 @@ const HomeAdminNotes = () => {
             as an alternative to direct upload.
             </del>
             &nbsp;(done via support for JSON upload in ORIS API format 22/7)
+          </li>
+          <li>
+            <del>Test it out on a real Internet-facing server</del>
+            &nbsp;(DB migrated to MongoDB Atlas online service 5/7,
+            front end and API moved to markcollis.dev 3/8)
+          </li>
+          <li>
+            <del>Bug: missing corner coordinates breaks EventDetails</del>
+            &nbsp;(fixed 28/8)
+          </li>
+          <li>
+            <del>Bug: missing corner coordinates breaks EventMap</del>
+            &nbsp;(fixed 29/8)
+          </li>
+          <li>
+            <del>Bug: Corner coordinates of [null, null] are not superseded</del>
+            &nbsp;(fixed 29/8)
           </li>
         </ol>
       </Collapse>

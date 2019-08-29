@@ -119,18 +119,33 @@ class EventMap extends Component {
             _id: eventId,
             locLat,
             locLong,
-            locCornerSW,
+            locCornerSW, // not always present, revert to marker
             locCornerNW, // * may be missing in some older records *
-            locCornerNE,
+            locCornerNE, // not always present, revert to marker
             locCornerSE, // * may be missing in some older records *
           } = eventDetails;
-          const flagMarkerPos = [locLat, locLong];
-
-          const polygonBounds = (!locCornerNW || locCornerNW.length === 0)
-            ? [locCornerSW, [locCornerNE[0], locCornerSW[1]],
-              locCornerNE, [locCornerSW[0], locCornerNE[1]]]
-            : [locCornerSW, locCornerNW, locCornerNE, locCornerSE];
-          // const rectangleBounds = [locCornerSW, locCornerNE];
+          const flagMarkerPos = [locLat, locLong]; // fallback
+          const polygonBounds = [];
+          // add SW corner if it exists
+          if (locCornerSW && locCornerSW[0] && locCornerSW[1]) {
+            polygonBounds.push(locCornerSW);
+          }
+          // add NW corner if it exists or assume rectangle if only SW and NE corners exist
+          if (locCornerNW && locCornerNW[0] && locCornerNW[1]) {
+            polygonBounds.push(locCornerNW);
+          } else if (locCornerSW && locCornerSW[1] && locCornerNE && locCornerNE[0]) {
+            polygonBounds.push([locCornerNE[0], locCornerSW[1]]);
+          }
+          // add NE corner if it exists
+          if (locCornerNE && locCornerNE[0] && locCornerNE[1]) {
+            polygonBounds.push(locCornerNE);
+          }
+          // add SE corner if it exists or assume rectangle if only SW and NE corners exist
+          if (locCornerSE && locCornerSE[0] && locCornerSE[1]) {
+            polygonBounds.push(locCornerSE);
+          } else if (locCornerSW && locCornerSW[0] && locCornerNE && locCornerNE[1]) {
+            polygonBounds.push([locCornerSW[0], locCornerNE[1]]);
+          }
           const tooltip = (
             <Tooltip
               direction="right"
@@ -147,7 +162,7 @@ class EventMap extends Component {
             </Tooltip>
           );
           // const coords = [[locLat - 0.01, locLong - 0.01], [locLat + 0.01, locLong + 0.01]];
-          if (!mapZoomLevel || mapZoomLevel < 11 || locCornerSW.length === 0) {
+          if (!mapZoomLevel || mapZoomLevel < 11 || polygonBounds.length < 3) {
             return (
               <Marker
                 key={eventId}
