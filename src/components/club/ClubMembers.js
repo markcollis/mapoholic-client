@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Trans, Plural } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
-import noAvatar from '../../graphics/noAvatar.png';
+import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
 
 // The ClubMembers component renders a list of users that are members of

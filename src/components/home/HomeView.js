@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
-import logo from '../../graphics/mapoholicLogo.png';
+import logo from '../../graphics/mapoholicLogo.jpg';
 import mark from '../../graphics/mark.jpg';
-import screenshotCourseMap from '../../graphics/screenshotCourseMapSmall.png';
-import screenshotEventList from '../../graphics/screenshotEventListSmall.png';
-import screenshotEventMap from '../../graphics/screenshotEventMapSmall.png';
+import screenshotCourseMap from '../../graphics/screenshotCourseMapSmall.jpg';
+import screenshotEventList from '../../graphics/screenshotEventListSmall.jpg';
+import screenshotEventMap from '../../graphics/screenshotEventMapSmall.jpg';
 
 import HomeWelcome from './HomeWelcome';
 import HomeRecent from './HomeRecent';

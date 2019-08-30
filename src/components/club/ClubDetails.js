@@ -4,7 +4,7 @@ import { Trans } from '@lingui/macro';
 
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import Collapse from '../generic/Collapse';
-import forest from '../../graphics/blueForest.png';
+import forest from '../../graphics/blueForest.jpg';
 
 // The ClubDetails component renders information about the selected club
 const ClubDetails = ({

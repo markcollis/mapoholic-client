@@ -15,7 +15,7 @@ Contents:
 
 /* apply fixed background image */
 body {
-  background-image: url('../graphics/blueForestBackground.png');
+  background-image: url('../graphics/blueForestBackground.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

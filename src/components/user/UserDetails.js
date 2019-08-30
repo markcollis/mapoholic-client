@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
-import forest from '../../graphics/blueForest.png';
-import noAvatar from '../../graphics/noAvatar.png';
+import forest from '../../graphics/blueForest.jpg';
+import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 

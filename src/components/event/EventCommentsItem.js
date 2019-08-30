@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { reformatTimestamp } from '../../common/conversions';
-import noAvatar from '../../graphics/noAvatar.png';
+import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
 
 class EventCommentsItem extends Component {

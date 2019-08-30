@@ -12,7 +12,7 @@ import {
   getUserListAction,
   setLanguageAction,
 } from '../actions';
-import noAvatar from '../graphics/noAvatar.png';
+import noAvatar from '../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../config';
 
 // The Header component is always rendered at the top of every page

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
-// import diff from '../../graphics/diff.png';
 
 class EventCourseMapCanvasRender extends Component {
   state = {
