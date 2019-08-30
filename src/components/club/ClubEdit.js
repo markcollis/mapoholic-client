@@ -10,9 +10,8 @@ import {
   roleOptionsLocale,
   validationErrorsLocale,
 } from '../../common/formData';
-/* eslint no-underscore-dangle: 0 */
 
-// renders form to submit credentials either for login or creating account
+// The ClubEdit component renders a form to enable club properties to be added or edited
 class ClubEdit extends Component {
   static propTypes = {
     errors: PropTypes.objectOf(PropTypes.any).isRequired, // input validation
@@ -62,10 +61,11 @@ class ClubEdit extends Component {
     const roleOptions = roleOptionsLocale[language];
     const ownerOptions = userList
       .map((user) => {
-        const roleOption = roleOptions.find((el => el.value === user.role));
-        const role = roleOption.label;
-        const label = `${user.displayName} (${role})`;
-        return { value: user._id, label };
+        const { _id: userId, role, displayName } = user;
+        const roleOption = roleOptions.find((el => el.value === role));
+        const roleLabel = roleOption.label;
+        const label = `${displayName} (${roleLabel})`;
+        return { value: userId, label };
       })
       .sort((a, b) => {
         if (a.label > b.label) return 1;
@@ -201,14 +201,22 @@ class ClubEdit extends Component {
 const formikClubEdit = withFormik({
   mapPropsToValues({ language = 'en', selectedClub, viewMode }) {
     if (viewMode === 'edit' && selectedClub) {
+      const {
+        shortName,
+        fullName,
+        country,
+        website,
+        owner,
+      } = selectedClub;
+      const { _id: userId, displayName } = owner;
       return {
-        shortName: selectedClub.shortName || '',
-        fullName: selectedClub.fullName || '',
+        shortName: shortName || '',
+        fullName: fullName || '',
         country: countryOptionsLocale[language].find((el) => {
-          return el.value === selectedClub.country;
+          return el.value === country;
         }) || null,
-        website: selectedClub.website || '',
-        owner: { value: selectedClub.owner._id, label: selectedClub.owner.displayName },
+        website: website || '',
+        owner: { value: userId, label: displayName },
       };
     }
     return {
@@ -231,6 +239,7 @@ const formikClubEdit = withFormik({
       setClubViewMode,
       selectedClub,
     } = props;
+    const { _id: clubId } = selectedClub;
     const valuesToSubmit = (values.country)
       ? { ...values, country: values.country.value }
       : { ...values, country: '' };
@@ -241,7 +250,7 @@ const formikClubEdit = withFormik({
         else setSubmitting(false);
       });
     } else {
-      updateClub(selectedClub._id, valuesToSubmit, (didSucceed) => {
+      updateClub(clubId, valuesToSubmit, (didSucceed) => {
         if (didSucceed) setClubViewMode('view');
         else setSubmitting(false);
       });

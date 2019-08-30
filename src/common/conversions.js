@@ -1,3 +1,5 @@
+// Utility functions related to date and time formats
+
 // For event dates - does not need to take timezones into account as only the
 // date is stored (as a string). Do not use for timestamps (create/update).
 // convert JS Date to YYYY-MM-DD

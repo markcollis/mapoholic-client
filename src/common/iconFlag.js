@@ -1,3 +1,5 @@
+// Orienteering flag icon for use in map overlays
+
 import L from 'leaflet';
 import iconFile from '../graphics/o.png';
 

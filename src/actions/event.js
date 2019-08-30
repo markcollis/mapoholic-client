@@ -38,7 +38,6 @@ import {
   EVENT_MAP_SET_BOUNDS_MYMAPS,
 } from './types';
 import { MAPOHOLIC_SERVER } from '../config';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
 
 // *** Local Actions ***
 // change event view mode (events - Events view)
@@ -312,13 +311,14 @@ export const postMapAction = (parameters, file, callback) => async (dispatch, ge
     // const sanitisedMapTitle = mapTitle.replace(/[`~!@#$%^&*()|+=?;:'",.<>{}\]\\/\s]/gi, '');
     const formData = new FormData();
     formData.append('upload', file, file.name);
+    const { _boundary: dataBoundary } = formData;
     const response = await axios.post(
       `${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}/${mapType}/${(mapTitle) ? encodeURIComponent(mapTitle) : ''}`,
       formData,
       {
         headers: {
           Authorization: `bearer ${token}`,
-          'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+          'Content-Type': `multipart/form-data; boundary=${dataBoundary}`,
         },
       },
     );

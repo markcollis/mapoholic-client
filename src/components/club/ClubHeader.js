@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 
+// The ClubHeader component renders the search bar and other controls at
+// the top of the club view
 const ClubHeader = ({
   getClubList,
   searchField,

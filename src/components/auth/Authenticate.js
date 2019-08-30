@@ -7,11 +7,11 @@ import * as Yup from 'yup';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 
-// import { i18nInstance } from '../App'; doesn't work properly, needs more investigation
 import { loginAction, signupAction, cancelAuthErrorAction } from '../../actions';
 import { validationErrorsLocale } from '../../common/formData';
 
-// renders form to submit credentials either for login or creating account
+// The Authenticate component renders a form to submit credentials either for
+// logging in or creating an account
 class Authenticate extends Component {
   static propTypes = {
     language: PropTypes.string.isRequired,
@@ -134,7 +134,7 @@ const formikAuthenticate = withFormik({
   mapPropsToValues({ email, displayName }) {
     return {
       email: email || '', // can set a value to pass in as a prop, if we ever want to
-      password: '', // don't ever want to pass THIS in as a prop...
+      password: '',
       displayName: displayName || '',
     };
   },

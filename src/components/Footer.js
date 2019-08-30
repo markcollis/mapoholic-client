@@ -1,6 +1,7 @@
 import React from 'react';
 import forestBar from '../graphics/blueForestBarWide.png';
 
+// The Footer component is rendered at the bottom of every page
 const Footer = () => {
   return (
     <div className="footer">

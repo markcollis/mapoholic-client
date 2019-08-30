@@ -1,3 +1,5 @@
+// Single source for constants used to prompt/validate form input
+
 export const countryCodesConversion = { // for flag icons
   AUS: 'au',
   AUT: 'at',

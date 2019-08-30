@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { logoutAction } from '../../actions';
 
+// When rendered, the Logout component logs the current user out and displays an appropriate message
 class Logout extends Component {
   static propTypes = {
     logout: PropTypes.func.isRequired,

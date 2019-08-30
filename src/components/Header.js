@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
+
 import {
   getClubListAction,
   getCurrentUserAction,
@@ -14,6 +15,7 @@ import {
 import noAvatar from '../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../config';
 
+// The Header component is always rendered at the top of every page
 class Header extends Component {
   static propTypes = {
     auth: PropTypes.string,
@@ -118,8 +120,6 @@ class Header extends Component {
       linkEvents,
       linkMyMaps,
     } = this.state;
-    // console.log('props in Header:', this.props);
-    // console.log('state in Header:', this.state);
     const {
       auth,
       location,
@@ -155,9 +155,6 @@ class Header extends Component {
     const isClubs = (location.pathname === '/clubs');
     const isCurrentUser = (location.pathname === '/me');
 
-    // const linkEvents = '/events';
-    // const linkMyMaps = '/mymaps';
-
     const selectLanguage = (
       <div className="item">
         <i
@@ -176,32 +173,6 @@ class Header extends Component {
         />
       </div>
     );
-
-    // const myMapsSubMenu = (isMyMapsGroup)
-    //   ? (
-    //     <div className="ui top attached tabular menu">
-    //       <Link to="/mymaps" className={(isMyMapsList) ? 'active item' : 'item'}>
-    //         <Trans>List view</Trans>
-    //       </Link>
-    //       <Link to="/mymapsmap" className={(isMyMapsMap) ? 'active item' : 'item'}>
-    //         <Trans>Map view</Trans>
-    //       </Link>
-    //     </div>
-    //   )
-    //   : null;
-    //
-    // const eventsSubMenu = (isEventsGroup)
-    //   ? (
-    //     <div className="ui top attached tabular menu">
-    //       <Link to="/events" className={(isEventsList) ? 'active item' : 'item'}>
-    //         <Trans>List view</Trans>
-    //       </Link>
-    //       <Link to="/eventsmap" className={(isEventsMap) ? 'active item' : 'item'}>
-    //         <Trans>Map view</Trans>
-    //       </Link>
-    //     </div>
-    //   )
-    //   : null;
 
     const renderEvents = (isEventsGroup)
       ? (
@@ -244,7 +215,7 @@ class Header extends Component {
       );
 
     if (auth) {
-      return (
+      return ( // header for logged in users
         <div>
           <div className="ui menu secondary pointing stackable">
             <Link to="/" className={(isHome) ? 'active item' : 'item'}><i className="icon home" /></Link>
@@ -283,7 +254,7 @@ class Header extends Component {
         </div>
       );
     }
-    return (
+    return ( // header if not logged in
       <div>
         <div className="ui menu secondary pointing">
           <Link to="/" className={(isHome) ? 'active blue item' : 'item'}><i className="icon home" /></Link>

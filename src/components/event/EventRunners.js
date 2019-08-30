@@ -49,7 +49,7 @@ const EventRunners = ({
   const courseTitles = Object.keys(runnersByCourse);
   const runnersToDisplay = courseTitles.map((courseTitle) => {
     const courseTitleToDisplay = (courseTitle === 'none')
-      ? <Trans>[unknown]</Trans>
+      ? <Trans>[unknown course]</Trans>
       : courseTitle;
     return ( // can't use <> shorthand with key
       <Fragment key={courseTitle}>

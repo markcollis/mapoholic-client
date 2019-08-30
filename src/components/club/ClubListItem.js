@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { countryCodesConversion } from '../../common/formData';
 
+// The ClubListItem component renders the basic details for an individual
+// club and can be selected to trigger the display of full details.
 const ClubListItem = ({
   club,
   selectClubToDisplay,

@@ -5,6 +5,8 @@ import { Trans } from '@lingui/macro';
 import ClubListItem from './ClubListItem';
 import Collapse from '../generic/Collapse';
 
+// The ClubList component renders a list of clubs with basic details that
+// can be selected to show further details
 const ClubList = ({
   clubList,
   selectClubToDisplay,

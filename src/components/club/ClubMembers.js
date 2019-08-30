@@ -6,6 +6,8 @@ import Collapse from '../generic/Collapse';
 import noAvatar from '../../graphics/noAvatar.png';
 import { MAPOHOLIC_SERVER } from '../../config';
 
+// The ClubMembers component renders a list of users that are members of
+// the selected club
 const ClubMembers = ({
   history,
   eventList,
@@ -16,7 +18,6 @@ const ClubMembers = ({
   if (membersList.length === 0) {
     return null;
   }
-  // console.log('fullEventList:', fullEventList);
   const mapCountByUserId = {};
   if (eventList) {
     eventList.forEach((eventSummary) => {
@@ -33,7 +34,6 @@ const ClubMembers = ({
       }
     });
   }
-  // console.log('mapCountByUserId:', mapCountByUserId);
 
   const handleSelectUser = (userId) => {
     selectUserToDisplay(userId);
@@ -48,7 +48,6 @@ const ClubMembers = ({
       fullName,
       profileImage,
     } = member;
-    // console.log('maps', mapCountByUserId[userId]);
     const mapCountText = (mapCountByUserId[userId] && mapCountByUserId[userId] > 0)
       ? (
         <Plural

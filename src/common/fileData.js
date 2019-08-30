@@ -1,3 +1,5 @@
+// Single source for constants associated with file upload (images and results data)
+
 export const FILETYPE_ACCEPT = {
   image: '.jpg, .jpeg, .png, image/jpeg, image/png',
   results: '.csv, .json, text/csv, application/json',

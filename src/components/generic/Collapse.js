@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+// The Collapse component is a wrapper to enable content to be collapsed down
+// to a heading and expanded again, giving the user control of their screen space
 class Collapse extends Component {
   static propTypes = {
     title: PropTypes.oneOfType([
@@ -80,7 +82,6 @@ class Collapse extends Component {
 
   render() {
     const { title, children } = this.props;
-    // console.log('props and state in Collapse', title, this.props, this.state);
     const { hideContent, contentHeight, propsChanged } = this.state;
     const currentHeight = `${(hideContent) ? 0 : contentHeight}px`;
     const contentStyle = (propsChanged) ? { visibility: 'hidden', maxHeight: '' } : { maxHeight: currentHeight };

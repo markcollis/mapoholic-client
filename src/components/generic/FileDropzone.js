@@ -4,6 +4,8 @@ import { Trans } from '@lingui/macro';
 
 import { FILETYPE_ACCEPT, FILETYPE_MIME } from '../../common/fileData';
 
+// The FileDropzone component enables the user to upload files of the appropriate
+// type either by drag and drop or a dialogue box
 class FileDropzone extends Component {
   static propTypes = {
     disabled: PropTypes.bool,
@@ -47,7 +49,6 @@ class FileDropzone extends Component {
     e.preventDefault();
     if (!disabled) {
       const file = e.dataTransfer.files[0];
-      // console.log('file dropped:', file);
       if (allowedFileTypes.includes(file.type)) {
         onFileAdded(file);
         this.setState({
@@ -138,7 +139,6 @@ class FileDropzone extends Component {
   }
 
   render() {
-    // console.log('props in FileDropzone', this.props);
     const {
       disabled,
       icon,

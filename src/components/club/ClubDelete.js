@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
+// The ClubDelete component provides a confirmatory prompt before deleting a club record
 const ClubDelete = ({
   deleteClub,
   selectedClub,

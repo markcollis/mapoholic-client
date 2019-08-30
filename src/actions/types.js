@@ -1,3 +1,5 @@
+// Definition of action types
+
 // app configuration
 export const CONFIG_SET_LANGUAGE = 'CONFIG_SET_LANGUAGE';
 // home view (activities)

@@ -6,8 +6,7 @@ import { reformatTimestampDateOnly } from '../../common/conversions';
 import Collapse from '../generic/Collapse';
 import forest from '../../graphics/blueForest.png';
 
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-
+// The ClubDetails component renders information about the selected club
 const ClubDetails = ({
   canEdit,
   language,
@@ -15,8 +14,8 @@ const ClubDetails = ({
   selectedClub,
   setClubViewMode,
 }) => {
-  // console.log(selectedClub);
-  if (!selectedClub._id) {
+  const { _id: selectedClubId } = selectedClub;
+  if (!selectedClubId) {
     return (
       <div className="ui segment">
         <div className="ui active inline centered text loader">
@@ -70,7 +69,6 @@ const ClubDetails = ({
         alt="forest"
         src={forest}
         onLoad={() => {
-          // console.log('image loaded!');
           requestRefreshCollapse();
         }}
       />

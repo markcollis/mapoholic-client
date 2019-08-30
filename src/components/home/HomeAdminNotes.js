@@ -10,7 +10,7 @@ const HomeAdminNotes = () => {
         <ol>
           <li>
             Complete lingui translations and check that nothing is missing
-            (done all except long paragraphs on Home page 29/6)
+            (done all except long paragraphs on Home page 29/6, Blanka reviewing)
           </li>
           <li>
             Handle multi-day events in Events.orisCreateEvent
@@ -21,6 +21,12 @@ const HomeAdminNotes = () => {
           </li>
           <li>
             Investigate better overall error handling
+          </li>
+          <li>
+            Find a better picture of me!
+          </li>
+          <li>
+            Write a proper README
           </li>
         </ol>
       </Collapse>

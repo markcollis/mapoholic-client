@@ -15,7 +15,6 @@ import {
   USER_SELECT_USER,
 } from './types';
 import { MAPOHOLIC_SERVER } from '../config';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_boundary"]}] */
 
 // *** Local Actions ***
 // change user view mode
@@ -113,10 +112,11 @@ export const postProfileImageAction = (userId, file, callback) => async (dispatc
     const formData = new FormData();
     formData.append('upload', file, file.name);
     const token = auth.authenticated;
+    const { _boundary: dataBoundary } = formData;
     const response = await axios.post(`${MAPOHOLIC_SERVER}/users/${userId}/profileImage`, formData, {
       headers: {
         Authorization: `bearer ${token}`,
-        'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+        'Content-Type': `multipart/form-data; boundary=${dataBoundary}`,
       },
     });
     dispatch({

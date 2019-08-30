@@ -13,10 +13,11 @@ import MapView from './event/MapView';
 import UserView from './user/UserView';
 import ClubView from './club/ClubView';
 
-// This component limits access to certain components for users who are not logged in
+// The RouteHandler component renders the appropriate view for a given path
+// (access to some of them depends on whether the the user is logged in)
 const RouteHandler = ({ auth }) => {
   if (auth) {
-    return (
+    return ( // available views for currently logged in users
       <div>
         <Route path="/" component={Header} />
         <Switch>
@@ -39,8 +40,9 @@ const RouteHandler = ({ auth }) => {
     );
   }
 
-  // include logout to provide escape route from 'unclean' logout that does not empty localStorage
-  return (
+  // include logout to provide an escape route in case of 'unclean' logout
+  // that does not empty localStorage, leaving an invalid token
+  return ( // available views if not currently logged in
     <div>
       <Route path="/" component={Header} />
       <Switch>

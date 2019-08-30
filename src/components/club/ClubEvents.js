@@ -6,6 +6,7 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import EventListItem from '../event/EventListItem';
 
+// The ClubEvents component renders a list of events organised by a club
 const ClubEvents = ({
   eventsList,
   history,
