@@ -9,6 +9,7 @@ import 'focus-visible';
 import reducers from './reducers';
 import RouteHandler from './components/RouteHandler';
 import App from './components/App';
+import ErrorBoundary from './components/generic/ErrorBoundary';
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -22,9 +23,11 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App>
-        <RouteHandler />
-      </App>
+      <ErrorBoundary>
+        <App>
+          <RouteHandler />
+        </App>
+      </ErrorBoundary>
     </BrowserRouter>
   </Provider>,
   document.querySelector('#root'),

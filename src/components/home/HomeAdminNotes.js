@@ -20,7 +20,9 @@ const HomeAdminNotes = () => {
             not a runner and trying to add maps (only as admin?)
           </li>
           <li>
-            Investigate better overall error handling
+            <del>Investigate better overall error handling</del>
+            &nbsp;(done 30/8 - ErrorBoundary component at top level, for each View
+            and for each main component within each View)
           </li>
           <li>
             Find a better picture of me!

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
+import ErrorBoundary from '../generic/ErrorBoundary';
 import UserDelete from './UserDelete';
 import UserDetails from './UserDetails';
 import UserEdit from './UserEdit';
@@ -366,40 +367,54 @@ class UserView extends Component {
 
     if (ownProfile) {
       return (
-        <div className="ui vertically padded stackable grid">
-          {this.renderError()}
-          <div className="eight wide column">
-            {(viewModeSelf === 'view') ? this.renderUserDetails() : null}
-            {(viewModeSelf === 'edit') ? this.renderUserEdit() : null}
-            {(viewModeSelf === 'delete') ? this.renderUserDelete() : null}
+        <ErrorBoundary>
+          <div className="ui vertically padded stackable grid">
+            {this.renderError()}
+            <div className="eight wide column">
+              <ErrorBoundary>
+                {(viewModeSelf === 'view') ? this.renderUserDetails() : null}
+                {(viewModeSelf === 'edit') ? this.renderUserEdit() : null}
+                {(viewModeSelf === 'delete') ? this.renderUserDelete() : null}
+              </ErrorBoundary>
+            </div>
+            <div className="eight wide column">
+              <ErrorBoundary>
+                {this.renderUserEvents()}
+              </ErrorBoundary>
+            </div>
           </div>
-          <div className="eight wide column">
-            {this.renderUserEvents()}
-          </div>
-        </div>
+        </ErrorBoundary>
       );
     }
     return (
-      <div className="ui vertically padded stackable grid">
-        {this.renderError()}
-        <div className="sixteen wide column section-header">
-          {this.renderUserHeader()}
+      <ErrorBoundary>
+        <div className="ui vertically padded stackable grid">
+          {this.renderError()}
+          <div className="sixteen wide column section-header">
+            <ErrorBoundary>
+              {this.renderUserHeader()}
+            </ErrorBoundary>
+          </div>
+          <div className="seven wide column">
+            <ErrorBoundary>
+              {this.renderUserList()}
+            </ErrorBoundary>
+          </div>
+          <div className="nine wide column">
+            <ErrorBoundary>
+              {(viewMode === 'none') ? (
+                <div className="ui segment">
+                  <p><Trans>Select a user from the list to show further details here</Trans></p>
+                </div>
+              ) : null}
+              {(viewMode === 'view') ? this.renderUserDetails() : null}
+              {(viewMode === 'edit') ? this.renderUserEdit() : null}
+              {(viewMode === 'delete') ? this.renderUserDelete() : null}
+              {(viewMode === 'view' || viewMode === 'edit') ? this.renderUserEvents() : null}
+            </ErrorBoundary>
+          </div>
         </div>
-        <div className="seven wide column">
-          {this.renderUserList()}
-        </div>
-        <div className="nine wide column">
-          {(viewMode === 'none') ? (
-            <div className="ui segment">
-              <p><Trans>Select a user from the list to show further details here</Trans></p>
-            </div>
-          ) : null}
-          {(viewMode === 'view') ? this.renderUserDetails() : null}
-          {(viewMode === 'edit') ? this.renderUserEdit() : null}
-          {(viewMode === 'delete') ? this.renderUserDelete() : null}
-          {(viewMode === 'view' || viewMode === 'edit') ? this.renderUserEvents() : null}
-        </div>
-      </div>
+      </ErrorBoundary>
     );
   }
 }

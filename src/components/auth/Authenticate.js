@@ -9,6 +9,7 @@ import { Trans, t } from '@lingui/macro';
 
 import { loginAction, signupAction, cancelAuthErrorAction } from '../../actions';
 import { validationErrorsLocale } from '../../common/formData';
+import ErrorBoundary from '../generic/ErrorBoundary';
 
 // The Authenticate component renders a form to submit credentials either for
 // logging in or creating an account
@@ -122,9 +123,11 @@ class Authenticate extends Component {
       : <Trans>Log in to MapOholic</Trans>;
     return (
       <div className="ui segment">
-        <h3 className="header">{headerText}</h3>
-        {this.renderForm()}
-        {this.renderError()}
+        <ErrorBoundary>
+          <h3 className="header">{headerText}</h3>
+          {this.renderForm()}
+          {this.renderError()}
+        </ErrorBoundary>
       </div>
     );
   }

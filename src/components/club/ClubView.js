@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
+import ErrorBoundary from '../generic/ErrorBoundary';
 import ClubDelete from './ClubDelete';
 import ClubDetails from './ClubDetails';
 import ClubEdit from './ClubEdit';
@@ -295,16 +296,24 @@ class ClubView extends Component {
 
   render() {
     return (
-      <div className="ui vertically padded stackable grid">
-        {this.renderError()}
-        <div className="sixteen wide column section-header">
-          {this.renderClubHeader()}
+      <ErrorBoundary>
+        <div className="ui vertically padded stackable grid">
+          {this.renderError()}
+          <div className="sixteen wide column section-header">
+            <ErrorBoundary>
+              {this.renderClubHeader()}
+            </ErrorBoundary>
+          </div>
+          <div className="six wide column">
+            <ErrorBoundary>
+              {this.renderClubList()}
+            </ErrorBoundary>
+          </div>
+          <ErrorBoundary>
+            {this.renderClubDetails()}
+          </ErrorBoundary>
         </div>
-        <div className="six wide column">
-          {this.renderClubList()}
-        </div>
-        {this.renderClubDetails()}
-      </div>
+      </ErrorBoundary>
     );
   }
 }

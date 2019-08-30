@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
+import ErrorBoundary from '../generic/ErrorBoundary';
 import EventComments from './EventComments';
 import EventDelete from './EventDelete';
 import EventDetails from './EventDetails';
@@ -604,7 +605,6 @@ class MapView extends Component {
   }
 
   render() {
-    // console.log('state in MapView:', this.state);
     const { oevent } = this.props;
     const { selectedEventIdMapView } = oevent;
     if (!selectedEventIdMapView) {
@@ -612,22 +612,38 @@ class MapView extends Component {
       return <Redirect to="/events" />;
     }
     return (
-      <div className="ui vertically padded stackable grid">
-        {this.renderError()}
-        <div className="sixteen wide column">
-          {this.renderEventMapViewer()}
+      <ErrorBoundary>
+        <div className="ui vertically padded stackable grid">
+          {this.renderError()}
+          <div className="sixteen wide column">
+            <ErrorBoundary>
+              {this.renderEventMapViewer()}
+            </ErrorBoundary>
+          </div>
+          <div className="eight wide column">
+            <ErrorBoundary>
+              {this.renderEventDetails()}
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {this.renderEventRunners()}
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {this.renderLinkedEvents()}
+            </ErrorBoundary>
+          </div>
+          <div className="eight wide column">
+            <ErrorBoundary>
+              {this.renderEventRunnerDetails()}
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {this.renderEventComments()}
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {this.renderEventResults()}
+            </ErrorBoundary>
+          </div>
         </div>
-        <div className="eight wide column">
-          {this.renderEventDetails()}
-          {this.renderEventRunners()}
-          {this.renderLinkedEvents()}
-        </div>
-        <div className="eight wide column">
-          {this.renderEventRunnerDetails()}
-          {this.renderEventComments()}
-          {this.renderEventResults()}
-        </div>
-      </div>
+      </ErrorBoundary>
     );
   }
 }
@@ -656,9 +672,7 @@ const mapDispatchToProps = {
   deleteEventRunner: deleteEventRunnerAction,
   deleteMap: deleteMapAction,
   getEventById: getEventByIdAction,
-  // getEventLinkList: getEventLinkListAction,
   getEventList: getEventListAction,
-  // getUserById: getUserByIdAction,
   postComment: postCommentAction,
   postMap: postMapAction,
   selectEventIdMapView: selectEventIdMapViewAction,

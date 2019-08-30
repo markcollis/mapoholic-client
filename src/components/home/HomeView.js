@@ -9,6 +9,7 @@ import screenshotCourseMap from '../../graphics/screenshotCourseMapSmall.jpg';
 import screenshotEventList from '../../graphics/screenshotEventListSmall.jpg';
 import screenshotEventMap from '../../graphics/screenshotEventMapSmall.jpg';
 
+import ErrorBoundary from '../generic/ErrorBoundary';
 import HomeWelcome from './HomeWelcome';
 import HomeRecent from './HomeRecent';
 import HomeWhatIsIt from './HomeWhatIsIt';
@@ -167,11 +168,13 @@ class HomeView extends Component {
       return (
         <div className="row">
           <div className="six wide column">
-            <HomeWelcome
-              auth={auth}
-              currentUser={currentUser}
-              ownEvents={ownEvents}
-            />
+            <ErrorBoundary>
+              <HomeWelcome
+                auth={auth}
+                currentUser={currentUser}
+                ownEvents={ownEvents}
+              />
+            </ErrorBoundary>
           </div>
           <div className="ten wide column middle aligned">
             <img src={logo} alt="MapOholic logo" />
@@ -182,7 +185,9 @@ class HomeView extends Component {
     return (
       <div className="row">
         <div className="ten wide column">
-          <HomeWelcome />
+          <ErrorBoundary>
+            <HomeWelcome />
+          </ErrorBoundary>
         </div>
         <div className="six wide column middle aligned">
           <img src={logo} alt="MapOholic logo" />
@@ -204,27 +209,33 @@ class HomeView extends Component {
     if (role === 'guest') {
       return (
         <div className="sixteen wide column">
-          <HomeRecent activityList={activityAll} language={language} userList={userList} />
+          <ErrorBoundary>
+            <HomeRecent activityList={activityAll} language={language} userList={userList} />
+          </ErrorBoundary>
         </div>
       );
     }
     return (
       <div className="row">
         <div className="eight wide column">
-          <HomeRecent
-            activityList={activityOwn}
-            language={language}
-            isOwn
-            userList={userList}
-          />
+          <ErrorBoundary>
+            <HomeRecent
+              activityList={activityOwn}
+              language={language}
+              isOwn
+              userList={userList}
+            />
+          </ErrorBoundary>
         </div>
         <div className="eight wide column">
-          <HomeRecent
-            activityList={activityAll}
-            language={language}
-            isAll
-            userList={userList}
-          />
+          <ErrorBoundary>
+            <HomeRecent
+              activityList={activityAll}
+              language={language}
+              isAll
+              userList={userList}
+            />
+          </ErrorBoundary>
         </div>
       </div>
     );
@@ -239,52 +250,60 @@ class HomeView extends Component {
     const { activityAdmin } = activity;
     return (
       <div className="sixteen wide column">
-        <HomeAdminPanel
-          activityList={activityAdmin}
-          language={language}
-          refreshCollapse={refreshCollapseAdminActivity}
-          requestRefreshCollapse={this.requestRefreshCollapseAdminActivity}
-        />
+        <ErrorBoundary>
+          <HomeAdminPanel
+            activityList={activityAdmin}
+            language={language}
+            refreshCollapse={refreshCollapseAdminActivity}
+            requestRefreshCollapse={this.requestRefreshCollapseAdminActivity}
+          />
+        </ErrorBoundary>
       </div>
     );
   }
 
   render() {
     const { language } = this.props;
-    // console.log('state in HomeView', this.state);
-    // console.log('props in HomeView', this.props);
     return (
-      <div className="ui vertically padded stackable grid home-view">
-        {this.renderError()}
-        {this.renderHomeWelcome()}
-        {this.renderHomeRecent()}
-        {this.renderHomeAdminPanel()}
-        <div className="row">
-          <div className="six wide column">
-            <img src={screenshotCourseMap} alt="screenshot" className="home-view__screenshot" />
+      <ErrorBoundary>
+        <div className="ui vertically padded stackable grid home-view">
+          {this.renderError()}
+          {this.renderHomeWelcome()}
+          {this.renderHomeRecent()}
+          {this.renderHomeAdminPanel()}
+          <div className="row">
+            <div className="six wide column">
+              <img src={screenshotCourseMap} alt="screenshot" className="home-view__screenshot" />
+            </div>
+            <div className="ten wide column middle aligned">
+              <ErrorBoundary>
+                <HomeWhatIsIt />
+              </ErrorBoundary>
+            </div>
           </div>
-          <div className="ten wide column middle aligned">
-            <HomeWhatIsIt />
+          <div className="row">
+            <div className="ten wide column middle aligned">
+              <ErrorBoundary>
+                <HomeHowToUse />
+              </ErrorBoundary>
+            </div>
+            <div className="six wide column hide-on-mobile">
+              <img src={screenshotEventList} alt="screenshot" className="home-view__screenshot" />
+              <img src={screenshotEventMap} alt="screenshot" className="home-view__screenshot" />
+            </div>
+          </div>
+          <div className="row">
+            <div className="four wide column">
+              <img className="ui medium circular image" src={mark} alt="Mark Collis" />
+            </div>
+            <div className="twelve wide column">
+              <ErrorBoundary>
+                <HomeAboutAuthor language={language} />
+              </ErrorBoundary>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="ten wide column middle aligned">
-            <HomeHowToUse />
-          </div>
-          <div className="six wide column hide-on-mobile">
-            <img src={screenshotEventList} alt="screenshot" className="home-view__screenshot" />
-            <img src={screenshotEventMap} alt="screenshot" className="home-view__screenshot" />
-          </div>
-        </div>
-        <div className="row">
-          <div className="four wide column">
-            <img className="ui medium circular image" src={mark} alt="Mark Collis" />
-          </div>
-          <div className="twelve wide column">
-            <HomeAboutAuthor language={language} />
-          </div>
-        </div>
-      </div>
+      </ErrorBoundary>
     );
   }
 }

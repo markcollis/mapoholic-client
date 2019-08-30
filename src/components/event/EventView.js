@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 
+import ErrorBoundary from '../generic/ErrorBoundary';
 import EventDelete from './EventDelete';
 import EventDetails from './EventDetails';
 import EventEdit from './EventEdit';
@@ -14,9 +15,6 @@ import EventLinkedManage from './EventLinkedManage';
 import EventList from './EventList';
 import EventMap from './EventMap';
 import EventRunners from './EventRunners';
-// import EventLocationMap from './EventLocationMap';
-// support dev without repeatedly calling ORIS API
-// import { testOrisList } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import {
   addEventRunnerAction,
@@ -175,8 +173,6 @@ class EventView extends Component {
 
   // helper to get details of selected event if input props have changed
   getSelectedEvent = memoize((details, selectedEventId, errorMessage) => {
-    // console.log('getting selected event');
-    // console.log('details, selectedEventId:', details, selectedEventId);
     // get detailed data for selected event if not already available
     if (selectedEventId && !details[selectedEventId] && !errorMessage) {
       const { getEventById } = this.props;
@@ -196,8 +192,6 @@ class EventView extends Component {
 
   // helper to determine if current user can edit event if input props have changed
   getCanEditEvent = memoize((current, selectedEvent) => {
-    // console.log('checking if user can edit event');
-    // console.log('current, selectedEvent', current, selectedEvent);
     if (!current || !selectedEvent) return false;
     const isAdmin = (current.role === 'admin');
     if (isAdmin) return true;
@@ -208,7 +202,6 @@ class EventView extends Component {
       ? selectedEvent.runners.map(runner => runner.user._id)
       : [];
     const isRunner = runnerList.includes(current._id);
-    // console.log('isRunner:', isRunner);
     return isRunner;
   });
 
@@ -236,7 +229,6 @@ class EventView extends Component {
   // helper to extract lists of event tags (all events) and personal tags (from user's
   // own runner entries) if input props have changed
   getTagLists = memoize((list, mineOnly, current, language) => {
-    // console.log('getting tag lists');
     const emptyTagList = { eventTags: [], personalTags: [] };
     if (!list) return emptyTagList;
     const currentUserId = (current) ? current._id : '';
@@ -457,8 +449,6 @@ class EventView extends Component {
       user,
       createEventLink,
       deleteEventLink,
-      // getEventLinkList,
-      // getEventList,
       mineOnly,
       selectEventIdEvents,
       selectEventIdMyMaps,
@@ -520,8 +510,6 @@ class EventView extends Component {
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
               eventList={list} // prop (oevent)
-              // getEventLinkList={getEventLinkList} // prop
-              // getEventList={getEventList} // prop
               isAdmin={isAdmin} // derived
               language={language} // prop (config)
               linkList={linkList} // prop (oevent)
@@ -574,24 +562,6 @@ class EventView extends Component {
       />
     );
   }
-
-  // renderEventLocationMap = () => {
-  //   const {
-  //     oevent,
-  //     mineOnly,
-  //   } = this.props;
-  //   const {
-  //     details,
-  //     errorMessage,
-  //     selectedEventIdEvents,
-  //     selectedEventIdMyMaps,
-  //   } = oevent;
-  //   const selectedEventId = (mineOnly) ? selectedEventIdMyMaps : selectedEventIdEvents;
-  //   const selectedEvent = this.getSelectedEvent(details, selectedEventId, errorMessage);
-  //   return (
-  //     <EventLocationMap selectedEvent={selectedEvent} />
-  //   );
-  // };
 
   renderError = () => {
     const { oevent, cancelEventError } = this.props;
@@ -714,7 +684,6 @@ class EventView extends Component {
     // need to consider reducing the number shown if there are many many events...
     const eventListArray = this.getEventListArray(list, searchField, tagFilter,
       current, mineOnly, language);
-    // console.log('eventListArray', eventListArray);
     return (
       <div className="card-list--limit-height">
         <EventList
@@ -785,8 +754,6 @@ class EventView extends Component {
   }
 
   render() {
-    // console.log('state in EventView:', this.state);
-    // console.log('props in EventView:', this.props);
     const {
       mineOnly,
       oevent,
@@ -798,48 +765,72 @@ class EventView extends Component {
     const redirectToEvents = this.redirectToEvents(list, current, mineOnly);
     if (showMap) {
       return (
-        <div className="ui vertically padded stackable grid">
-          {this.renderRedirectEventsMap(redirectToEvents)}
-          {this.renderError()}
-          <div className="sixteen wide column section-header">
-            {this.renderEventHeader()}
-          </div>
-          <div className="sixteen wide column">
-            {this.renderEventMap()}
-          </div>
-          {(mineOnly)
-            ? ''
-            : (
-              <div className="row">
-                <div className="eight wide column">
-                  {this.renderEventDetails()}
-                  {this.renderLinkedEvents()}
+        <ErrorBoundary>
+          <div className="ui vertically padded stackable grid">
+            {this.renderRedirectEventsMap(redirectToEvents)}
+            {this.renderError()}
+            <div className="sixteen wide column section-header">
+              <ErrorBoundary>
+                {this.renderEventHeader()}
+              </ErrorBoundary>
+            </div>
+            <div className="sixteen wide column">
+              <ErrorBoundary>
+                {this.renderEventMap()}
+              </ErrorBoundary>
+            </div>
+            {(mineOnly)
+              ? ''
+              : (
+                <div className="row">
+                  <div className="eight wide column">
+                    <ErrorBoundary>
+                      {this.renderEventDetails()}
+                    </ErrorBoundary>
+                    <ErrorBoundary>
+                      {this.renderLinkedEvents()}
+                    </ErrorBoundary>
+                  </div>
+                  <div className="eight wide column">
+                    <ErrorBoundary>
+                      {this.renderEventRunners()}
+                    </ErrorBoundary>
+                  </div>
                 </div>
-                <div className="eight wide column">
-                  {this.renderEventRunners()}
-                </div>
-              </div>
-            )}
-        </div>
+              )}
+          </div>
+        </ErrorBoundary>
       );
     }
 
     return (
-      <div className="ui vertically padded stackable grid">
-        {this.renderRedirectEvents(redirectToEvents)}
-        {this.renderError()}
-        <div className="sixteen wide column section-header">
-          {this.renderEventHeader()}
+      <ErrorBoundary>
+        <div className="ui vertically padded stackable grid">
+          {this.renderRedirectEvents(redirectToEvents)}
+          {this.renderError()}
+          <div className="sixteen wide column section-header">
+            <ErrorBoundary>
+              {this.renderEventHeader()}
+            </ErrorBoundary>
+          </div>
+          <div className="eight wide column">
+            <ErrorBoundary>
+              {this.renderEventList()}
+            </ErrorBoundary>
+          </div>
+          <div className="eight wide column">
+            <ErrorBoundary>
+              {this.renderEventDetails()}
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {this.renderEventRunners()}
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {this.renderLinkedEvents()}
+            </ErrorBoundary>
+          </div>
         </div>
-        <div className="eight wide column">
-          {this.renderEventList()}
-        </div>
-        <div className="eight wide column">
-          {this.renderEventDetails()}
-          {this.renderEventRunners()}
-          {this.renderLinkedEvents()}
-        </div>
-      </div>
+      </ErrorBoundary>
     );
   }
 }
