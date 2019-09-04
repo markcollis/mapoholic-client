@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "license": "ISC",
   "dependencies": {
-    "@lingui/macro": "^2.8.3",
-    "@lingui/react": "^2.8.3",
-    "axios": "^0.19.0",
+    "@lingui/macro": "^2.7.4",
+    "@lingui/react": "^2.7.4",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",    "axios": "^0.19.0",
+    "babel-loader": "^8.0.6",
     "date-fns": "^2.0.0-beta.2",
+    "dotenv": "^8.0.0",
     "focus-visible": "^5.0.1",
     "formik": "^1.5.0",
     "leaflet": "^1.4.0",
@@ -20,8 +23,10 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.1.1",
     "react-select": "^3.0.3",
+    "react-table": "^6.10.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "typescript": "^3.6.2",
     "yup": "^0.27.0"
   },
   "scripts": {
@@ -49,6 +54,12 @@
     "@babel/core": "^7.4.3",
     "@lingui/cli": "^2.7.4",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-plugin-macros": "^2.6.1"
+    "babel-plugin-macros": "^2.6.1",
+    "eslint": "^6.2.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^2.0.1"
   }
 }

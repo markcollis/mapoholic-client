@@ -15,7 +15,7 @@ import {
   USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
 } from '../actions/types';
-import { logAPICalls } from '../config';
+import { LOG_API_CALLS } from '../config';
 /* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
@@ -74,14 +74,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
       // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case USER_GOT_LIST:
-      if (logAPICalls) console.log('USER_GOT_LIST payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_GOT_LIST payload:', action.payload);
       return {
         ...state,
         list: action.payload,
         errorMessage: '',
       };
     case USER_GOT_CURRENT:
-      if (logAPICalls) console.log('USER_GOT_CURRENT payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_GOT_CURRENT payload:', action.payload);
       return {
         ...state,
         current: action.payload,
@@ -89,7 +89,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_GOT_BY_ID:
-      if (logAPICalls) console.log('USER_GOT_BY_ID payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_GOT_BY_ID payload:', action.payload);
       return {
         ...state,
         current: (state.current._id === action.payload._id) ? action.payload : { ...state.current },
@@ -97,7 +97,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_UPDATED:
-      if (logAPICalls) console.log('USER_UPDATED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -105,7 +105,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         list: getUpdatedUserList(state.list, action.payload),
       };
     case USER_POSTED_IMAGE:
-      if (logAPICalls) console.log('USER_POSTED_IMAGE payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_POSTED_IMAGE payload:', action.payload);
       return {
         ...state,
         list: (state.list)
@@ -128,10 +128,10 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_CHANGED_PASSWORD:
-      if (logAPICalls) console.log('USER_CHANGED_PASSWORD payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_CHANGED_PASSWORD payload:', action.payload);
       return state;
     case USER_DELETED:
-      if (logAPICalls) console.log('USER_DELETED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
@@ -140,7 +140,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_DELETED_IMAGE:
-      if (logAPICalls) console.log('USER_DELETED_IMAGE payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_DELETED_IMAGE payload:', action.payload);
       return {
         ...state,
         list: (state.list)
@@ -163,7 +163,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_ERROR:
-      if (logAPICalls) console.log('USER_ERROR payload:', action.payload);
+      if (LOG_API_CALLS) console.log('USER_ERROR payload:', action.payload);
       return { ...state, errorMessage: action.payload };
     case USER_CHANGE_SEARCH_FIELD:
       // console.log('USER_CHANGE_SEARCH_FIELD payload:', action.payload);

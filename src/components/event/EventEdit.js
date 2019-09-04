@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import enGB from 'date-fns/locale/en-GB';
 import cs from 'date-fns/locale/cs';
 // import cs from '../../common/cs'; NO LONGER NEEDED AS date-fns NOW INCLUDES cs
+
 import {
   countryOptionsLocale,
   regionOptionSets,
@@ -22,12 +23,11 @@ import { dateToDateString, dateStringToDate } from '../../common/conversions';
 import mapCorners from '../../graphics/mapCorners.png';
 import EventEditLocationMap from './EventEditLocationMap';
 
+// DatePicker localisation
 registerLocale('cs', cs);
 registerLocale('en', enGB);
 
-/* eslint no-underscore-dangle: 0 */
-
-// renders form to either create or edit an event record
+// The EventEdit component renders a form to either create or edit an event record
 class EventEdit extends Component {
   static propTypes = {
     clubList: PropTypes.arrayOf(PropTypes.object),
@@ -164,10 +164,11 @@ class EventEdit extends Component {
     const validationErrors = validationErrorsLocale[language];
     const ownerOptions = userList
       .map((user) => {
+        const { _id: userId, displayName } = user;
         const roleOption = roleOptions.find((el => el.value === user.role));
         const role = roleOption.label;
-        const label = `${user.displayName} (${role})`;
-        return { value: user._id, label };
+        const label = `${displayName} (${role})`;
+        return { value: userId, label };
       })
       .sort((a, b) => {
         if (a.label > b.label) return 1;
@@ -193,7 +194,8 @@ class EventEdit extends Component {
       });
     const linkedToOptions = eventLinkList
       .map((link) => {
-        return { value: link._id, label: link.displayName };
+        const { _id: linkId, displayName } = link;
+        return { value: linkId, label: displayName };
       })
       .sort((a, b) => {
         if (a.label > b.label) return 1;
@@ -330,8 +332,6 @@ class EventEdit extends Component {
                         options={countryOptions}
                         onChange={(value) => {
                           setFieldValue('locCountry', value);
-                          // console.log('regionOptionSets[value]', regionOptionSets[value]);
-                          // console.log('value', value);
                           if (value) {
                             this.setState({ regionOptions: regionOptionSets[value.value] });
                           }
@@ -757,50 +757,66 @@ const formikEventEdit = withFormik({
         const result = Math.round(number * 1000) / 1000;
         return result;
       };
+      const {
+        owner,
+        date,
+        name,
+        mapName,
+        locPlace,
+        locRegions,
+        locCountry,
+        locLat,
+        locLong,
+        locCornerNW,
+        locCornerNE,
+        locCornerSW,
+        locCornerSE,
+        types,
+        tags,
+        website,
+        results,
+        organisedBy,
+        linkedTo,
+      } = selectedEvent;
+      const { _id: ownerId, displayName: ownerName } = owner;
       return {
-        owner: { value: selectedEvent.owner._id, label: selectedEvent.owner.displayName },
-        date: dateStringToDate(selectedEvent.date),
-        name: selectedEvent.name,
-        mapName: selectedEvent.mapName || '',
-        locPlace: selectedEvent.locPlace || '',
-        locRegions: selectedEvent.locRegions.map((region) => {
-          if (!selectedEvent.locCountry) return null;
-          const regionOptions = regionOptionSets[selectedEvent.locCountry];
+        owner: { value: ownerId, label: ownerName },
+        date: dateStringToDate(date),
+        name,
+        mapName: mapName || '',
+        locPlace: locPlace || '',
+        locRegions: locRegions.map((region) => {
+          if (!locCountry) return null;
+          const regionOptions = regionOptionSets[locCountry];
           const selectedRegion = regionOptions.filter(el => el.value === region)[0];
           return selectedRegion;
         }) || [],
         locCountry: countryOptionsLocale[language].find((el) => {
-          return el.value === selectedEvent.locCountry;
+          return el.value === locCountry;
         }) || null,
-        locLat: roundTo3dp(selectedEvent.locLat) || '',
-        locLong: roundTo3dp(selectedEvent.locLong) || '',
-        locCornerNWLat: roundTo3dp(selectedEvent.locCornerNW[0]) || '',
-        locCornerNWLong: roundTo3dp(selectedEvent.locCornerNW[1]) || '',
-        locCornerNELat: roundTo3dp(selectedEvent.locCornerNE[0]) || '',
-        locCornerNELong: roundTo3dp(selectedEvent.locCornerNE[1]) || '',
-        locCornerSWLat: roundTo3dp(selectedEvent.locCornerSW[0]) || '',
-        locCornerSWLong: roundTo3dp(selectedEvent.locCornerSW[1]) || '',
-        locCornerSELat: roundTo3dp(selectedEvent.locCornerSE[0]) || '',
-        locCornerSELong: roundTo3dp(selectedEvent.locCornerSE[1]) || '',
-        types: selectedEvent.types.map((type) => {
+        locLat: roundTo3dp(locLat) || '',
+        locLong: roundTo3dp(locLong) || '',
+        locCornerNWLat: roundTo3dp(locCornerNW[0]) || '',
+        locCornerNWLong: roundTo3dp(locCornerNW[1]) || '',
+        locCornerNELat: roundTo3dp(locCornerNE[0]) || '',
+        locCornerNELong: roundTo3dp(locCornerNE[1]) || '',
+        locCornerSWLat: roundTo3dp(locCornerSW[0]) || '',
+        locCornerSWLong: roundTo3dp(locCornerSW[1]) || '',
+        locCornerSELat: roundTo3dp(locCornerSE[0]) || '',
+        locCornerSELong: roundTo3dp(locCornerSE[1]) || '',
+        types: types.map((type) => {
           return typesOptionsLocale[language].find(el => el.value === type);
         }) || [],
-        tags: selectedEvent.tags.map((tag) => {
+        tags: tags.map((tag) => {
           return { value: tag, label: tag };
         }) || [],
-        website: selectedEvent.website || '',
-        results: selectedEvent.results || '',
-        organisedBy: selectedEvent.organisedBy.map((club) => {
-          return {
-            value: club._id,
-            label: club.shortName,
-          };
+        website: website || '',
+        results: results || '',
+        organisedBy: organisedBy.map(({ _id: clubId, shortName }) => {
+          return { value: clubId, label: shortName };
         }) || [],
-        linkedTo: selectedEvent.linkedTo.map((link) => {
-          return {
-            value: link._id,
-            label: link.displayName,
-          };
+        linkedTo: linkedTo.map(({ _id: linkId, displayName }) => {
+          return { value: linkId, label: displayName };
         }) || [],
       };
     }
@@ -856,6 +872,7 @@ const formikEventEdit = withFormik({
       setEventViewModeEvent,
       selectedEvent,
     } = props;
+    const { _id: selectedEventId } = selectedEvent;
     const valuesToSubmit = { // simple fields first
       name: values.name,
       date: dateToDateString(values.date),
@@ -907,7 +924,7 @@ const formikEventEdit = withFormik({
         });
       }
     } else {
-      updateEvent(selectedEvent._id, valuesToSubmit, (didSucceed) => {
+      updateEvent(selectedEventId, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           setEventViewModeEvent('view');
         } else {

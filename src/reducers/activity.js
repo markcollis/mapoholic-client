@@ -5,7 +5,7 @@ import {
   ACTIVITY_GOT_OWN,
   ACTIVITY_ERROR,
 } from '../actions/types';
-import { logAPICalls } from '../config';
+import { LOG_API_CALLS } from '../config';
 /* eslint-disable no-console */
 
 const INITIAL_STATE = {
@@ -21,28 +21,28 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case ACTIVITY_GOT_ADMIN:
-      if (logAPICalls) console.log('ACTIVITY_GOT_ADMIN payload:', action.payload);
+      if (LOG_API_CALLS) console.log('ACTIVITY_GOT_ADMIN payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
         activityAdmin: action.payload,
       };
     case ACTIVITY_GOT_ALL:
-      if (logAPICalls) console.log('ACTIVITY_GOT_ALL payload:', action.payload);
+      if (LOG_API_CALLS) console.log('ACTIVITY_GOT_ALL payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
         activityAll: action.payload,
       };
     case ACTIVITY_GOT_OWN:
-      if (logAPICalls) console.log('ACTIVITY_GOT_OWN payload:', action.payload);
+      if (LOG_API_CALLS) console.log('ACTIVITY_GOT_OWN payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
         activityOwn: action.payload,
       };
     case ACTIVITY_ERROR:
-      if (logAPICalls) console.log('ACTIVITY_ERROR payload:', action.payload);
+      if (LOG_API_CALLS) console.log('ACTIVITY_ERROR payload:', action.payload);
       return {
         ...state,
         errorMessage: action.payload,

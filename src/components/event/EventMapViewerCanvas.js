@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
 import EventMapViewerCanvasRender from './EventMapViewerCanvasRender';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 /* eslint react/no-did-update-set-state: 0 */
-/* eslint react/sort-comp: 0 */
 
+// The EventMapViewerCanvas component renders an individual map and manages its
+// size, position, rotation, zoom, etc.
 class EventMapViewerCanvas extends Component {
   static propTypes = {
     overlays: PropTypes.arrayOf(PropTypes.string),
@@ -45,13 +45,10 @@ class EventMapViewerCanvas extends Component {
 
   componentDidMount() {
     const { viewParameters } = this.props;
-    // console.log('EventMapViewerCanvas mounted, props:', this.props);
     this.loadImage(viewParameters);
   }
 
   componentDidUpdate(prevProps) {
-    // console.log('EventMapViewerCanvas updated, props:', this.props);
-    // console.log('props and state on update:', this.props, this.state);
     const {
       mapImage,
       containerWidth,
@@ -60,14 +57,12 @@ class EventMapViewerCanvas extends Component {
     } = this.props;
     // load image when container first initialised
     if (containerWidth && !prevProps.containerWidth) {
-      // console.log('Loading image when container first initialised');
       this.loadImage(viewParameters);
     }
     // load image if maps change
     if (prevProps.mapImage.mapId !== mapImage.mapId
       || prevProps.mapImage.srcCourse !== mapImage.srcCourse
       || prevProps.mapImage.srcRoute !== mapImage.srcRoute) {
-      // console.log('Loading image as mapId or URLs have changed');
       this.loadImage(viewParameters);
     }
     // reset when window size changes
@@ -77,12 +72,10 @@ class EventMapViewerCanvas extends Component {
       if (width && height) {
         const left = (containerWidth - width) / 2;
         const top = (containerHeight - height) / 2;
-        // console.log('left, top calculated in componentDidUpdate:', left, top);
         this.setState({ // safe due to conditional
           left,
           top,
         });
-        // console.log('state after window resize:', this.state);
       }
     }
   }
@@ -106,7 +99,6 @@ class EventMapViewerCanvas extends Component {
   }
 
   loadImageSuccess = (imageWidth, imageHeight, viewParameters) => {
-    // console.log('width/height in loadImageSuccess:', imageWidth, imageHeight);
     const { containerWidth, containerHeight } = this.props;
     const applyViewParameters = viewParameters;
     const adjustedHeight = containerHeight - 40; // allowing for toolbar
@@ -120,7 +112,6 @@ class EventMapViewerCanvas extends Component {
     const top = (applyViewParameters) ? viewParameters.top : (adjustedHeight - height) / 2;
     const rotate = (applyViewParameters) ? viewParameters.rotate : 0;
     const scale = (applyViewParameters) ? viewParameters.scale : 1;
-    // console.log('left, top, rotate, scale in loadImageSuccess:', left, top, rotate, scale);
     this.setState({
       width,
       height,
@@ -147,17 +138,14 @@ class EventMapViewerCanvas extends Component {
     } else {
       const activeType = mapImage.preferType;
       const img = new Image();
-      // console.log('started loading');
       this.setState({
         activeType,
         isLoading: true,
       }, () => {
         img.onload = () => {
-          // console.log('img.onload');
           this.loadImageSuccess(img.width, img.height, viewParameters);
         };
         img.onerror = () => {
-          // console.log('img.onerror');
           this.setState({
             activeType,
             isLoading: false,
@@ -165,12 +153,10 @@ class EventMapViewerCanvas extends Component {
         };
       });
       img.src = mapImage[`src${activeType}`];
-      // console.log('loading image:', img.src);
       const otherType = (activeType === 'Course') ? 'Route' : 'Course';
       if (mapImage[`src${otherType}`]) {
         const img2 = new Image();
         img2.src = mapImage[`src${otherType}`]; // load alternative in background
-        // console.log('loading image 2:', img2.src);
       }
     }
   }
@@ -209,7 +195,6 @@ class EventMapViewerCanvas extends Component {
       height,
     } = this.state;
     const currentCentre = { x: left + width / 2, y: top + height / 2 };
-    // console.log('initial and current centres', initialCentre, currentCentre);
     const offsetX = currentCentre.x - initialCentre.x;
     const offsetY = currentCentre.y - initialCentre.y;
     if (mouseDownRotateLeft) {
@@ -217,7 +202,6 @@ class EventMapViewerCanvas extends Component {
       const deltaYfromX = offsetX * this.sinDeg(-rotateStep) * this.cosDeg(-rotateStep);
       const deltaXfromY = offsetY * this.sinDeg(-rotateStep) * this.cosDeg(-rotateStep);
       const deltaYfromY = offsetY * this.sinDeg(-rotateStep) * this.sinDeg(-rotateStep);
-      // console.log('deltas:', deltaXfromX, deltaYfromX, deltaXfromY, deltaYfromY);
       this.setState({
         rotate: rotate - rotateStep,
         left: left - deltaXfromX - deltaXfromY,
@@ -231,7 +215,6 @@ class EventMapViewerCanvas extends Component {
       const deltaYfromX = offsetX * this.sinDeg(rotateStep) * this.cosDeg(rotateStep);
       const deltaXfromY = offsetY * this.sinDeg(rotateStep) * this.cosDeg(rotateStep);
       const deltaYfromY = offsetY * this.sinDeg(rotateStep) * this.sinDeg(rotateStep);
-      // console.log('deltas:', deltaXfromX, deltaYfromX, deltaXfromY, deltaYfromY);
       this.setState({
         rotate: rotate + rotateStep,
         left: left - deltaXfromX - deltaXfromY,
@@ -278,28 +261,25 @@ class EventMapViewerCanvas extends Component {
 
   zoom = () => {
     const {
+      height,
+      initialCentre,
+      left,
       mouseDownZoomIn,
       mouseDownZoomOut,
       scale,
-      zoomScaleFactor,
-      initialCentre,
       top,
-      left,
       width,
-      height,
+      zoomScaleFactor,
     } = this.state;
     const currentCentre = {
       x: left + width / 2,
       y: top + height / 2,
     };
-    // console.log('state in zoom (scale/top/left):', scale, top, left);
-    // console.log('initial and current centres', initialCentre, currentCentre);
     const offsetX = currentCentre.x - initialCentre.x;
     const offsetY = currentCentre.y - initialCentre.y;
     if (mouseDownZoomIn) {
       const deltaX = offsetX * (zoomScaleFactor - 1);
       const deltaY = offsetY * (zoomScaleFactor - 1);
-      // console.log('deltas:', deltaX, deltaY);
       this.setState({
         scale: scale * zoomScaleFactor,
         top: top + deltaY,
@@ -311,7 +291,6 @@ class EventMapViewerCanvas extends Component {
     if (mouseDownZoomOut) {
       const deltaX = offsetX * (zoomScaleFactor - 1);
       const deltaY = offsetY * (zoomScaleFactor - 1);
-      // console.log('deltas:', deltaX, deltaY);
       this.setState({
         scale: scale / zoomScaleFactor,
         top: top - deltaY,
@@ -357,19 +336,16 @@ class EventMapViewerCanvas extends Component {
   }
 
   render() {
-    // console.log('this.mapRef in render:', this.mapRef);
-    // console.log('this.props in render:', this.props);
-    // console.log('this.state in render:', this.state);
     const { mapImage, overlays } = this.props;
     const {
       activeType,
-      width,
       height,
-      top,
+      isLoading,
       left,
       rotate,
       scale,
-      isLoading,
+      top,
+      width,
     } = this.state;
 
     const actionsToolbar = (
@@ -460,15 +436,6 @@ class EventMapViewerCanvas extends Component {
       </div>
     );
 
-    // <button // full screen (not done yet)
-    //   className="ui button"
-    //   type="button"
-    //   onClick={() => this.handleFullScreen()}
-    // >
-    //   <i className="icon expand arrows alternate" />
-    // </button>
-
-    // console.log('mapImage:', mapImage);
     const mapsToDisplay = (mapImage && !mapImage.empty)
       ? (
         <div>

@@ -6,6 +6,8 @@ import EventMapViewerCanvas from './EventMapViewerCanvas';
 import EventMapViewerDetails from './EventMapViewerDetails';
 import { MAPOHOLIC_SERVER } from '../../config';
 
+// The EventMapViewer component is the top level container for all maps associated with
+// a particular runner at a particular event
 class EventMapViewer extends Component {
   static propTypes = {
     canEdit: PropTypes.bool,
@@ -37,27 +39,11 @@ class EventMapViewer extends Component {
   };
 
   componentDidMount() {
-    // console.log('EventMapViewer mounted, props:', this.props);
     this.setState({
       mapContainerWidth: this.mapRef.current.offsetWidth,
       mapContainerHeight: this.mapRef.current.offsetHeight,
     });
     window.addEventListener('resize', this.handleResize, false);
-  }
-
-  componentDidUpdate() {
-    // const {
-    //   selectedEvent,
-    //   selectedMap,
-    //   selectedRunner,
-    // } = this.props;
-    // const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
-    // const hasMaps = mapImageArray.length > 0;
-    // const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
-    // if (hasMaps && !selectedMapImage) {
-    //   // console.log('selecting map to display');
-    //   this.handleSelectMapImage(mapImageArray[0].mapId);
-    // }
   }
 
   componentWillUnmount() {
@@ -93,7 +79,6 @@ class EventMapViewer extends Component {
 
   // helper to derive mapImageArray if input props have changed (different event or runner)
   getMapImageArray = memoize((selectedEvent, selectedRunner) => {
-    // console.log('getMapImageArray called:', selectedEvent, selectedRunner);
     const runnerData = (selectedEvent.runners)
       ? selectedEvent.runners.find((runner) => {
         const { user } = runner;
@@ -136,7 +121,6 @@ class EventMapViewer extends Component {
         };
       })
       : [];
-    // console.log('new mapImageArray:', mapImages);
     return mapImages;
   });
 
@@ -168,8 +152,6 @@ class EventMapViewer extends Component {
   }
 
   render() {
-    // console.log('this.props in EventMapViewer:', this.props);
-    // console.log('this.state in EventMapViewer:', this.state);
     const {
       mapContainerHeight,
       mapContainerWidth,
@@ -188,16 +170,12 @@ class EventMapViewer extends Component {
       updateEventRunner,
     } = this.props;
     const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
-    // console.log('mapImageArray returned:', mapImageArray);
     const hasMaps = (mapImageArray.length > 0);
     const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
     if (hasMaps && !selectedMapImage) {
-      // console.log('selecting map to display');
       this.handleSelectMapImage(mapImageArray[0].mapId);
     }
-
     const overlays = this.getOverlays(selectedEvent);
-    // console.log('overlays:', overlays);
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>
       : <Trans>Add or Delete maps</Trans>;

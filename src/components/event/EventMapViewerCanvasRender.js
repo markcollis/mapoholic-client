@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
 
+// The EventMapViewerCanvasRender component renders the actual map image and
+// detects interactions with it
 class EventCourseMapCanvasRender extends Component {
   state = {
-    isKeyDown: {
-      // ArrowLeft: false,
-      // ArrowRight: false,
-      // ArrowUp: false,
-      // ArrowDown: false,
-    },
     isMouseDown: false,
     isMouseOver: false,
     maxPanStep: 10, // pixels
@@ -59,7 +55,6 @@ class EventCourseMapCanvasRender extends Component {
     document.addEventListener('click', this.handleMouseUp, false);
     document.addEventListener('touchend', this.handleMouseUp, false);
     document.addEventListener('mousemove', this.handleMouseMove, false);
-    // document.addEventListener('touchmove', this.handleTouchMove, { passive: false });
   }
 
   componentWillUnmount() {
@@ -68,14 +63,9 @@ class EventCourseMapCanvasRender extends Component {
     document.removeEventListener('click', this.handleMouseUp, false);
     document.removeEventListener('touchend', this.handleMouseUp, false);
     document.removeEventListener('mousemove', this.handleMouseMove, false);
-    // document.removeEventListener('touchmove', this.handleTouchMove, { passive: false });
   }
 
   handleTouchStart = (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
-    // console.log('touchStart', e);
-    // console.log('touches', e.touches);
     const touchPoint = e.touches[0];
     this.setState({
       isMouseDown: true,
@@ -85,9 +75,6 @@ class EventCourseMapCanvasRender extends Component {
   }
 
   handleTouchMove = (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
-    // console.log('touchMove touches', e.touches);
     const touchPoint = e.touches[0];
     const {
       handlePanImage,
@@ -95,7 +82,6 @@ class EventCourseMapCanvasRender extends Component {
       left,
     } = this.props;
     const { isMouseDown, mouseX, mouseY } = this.state;
-    // console.log('state in handleTouchMove:', isMouseDown, mouseX, mouseY);
     if (isMouseDown) {
       const dX = touchPoint.clientX - mouseX;
       const dY = touchPoint.clientY - mouseY;
@@ -157,7 +143,6 @@ class EventCourseMapCanvasRender extends Component {
       startRotateRight,
     } = this.props;
     const { isKeyDown, isMouseOver, maxPanStep } = this.state;
-    // console.log('isKeyDown:', isKeyDown);
     if (isMouseOver) {
       const keyCode = e.code;
       if (!isKeyDown[keyCode]) {
@@ -257,7 +242,6 @@ class EventCourseMapCanvasRender extends Component {
       if (arrowKey === 'ArrowRight') newLeft += step;
       if (arrowKey === 'ArrowUp') newTop -= step;
       if (arrowKey === 'ArrowDown') newTop += step;
-      // console.log('top/left old/new', arrowKey, top, left, newTop, newLeft);
       handlePanImage(newTop, newLeft);
       const newStep = Math.min(step + 1, maxStep);
       setTimeout(() => this.panKeyboard(arrowKey, newStep, maxStep), panTimeInterval);
@@ -265,8 +249,6 @@ class EventCourseMapCanvasRender extends Component {
   }
 
   render() {
-    // console.log('props in EventMapViewerCanvasRender:', this.props);
-    // console.log('state in EventMapViewerCanvasRender:', this.state);
     const {
       width,
       height,
@@ -343,18 +325,3 @@ class EventCourseMapCanvasRender extends Component {
 }
 
 export default EventCourseMapCanvasRender;
-
-// <img
-//   className={imageClass}
-//   style={imageStyleOverlay}
-//   src={diff}
-//   alt="diff"
-//   onMouseDown={this.handleMouseDown}
-//   onMouseOut={this.handleMouseOut}
-//   onBlur={this.handleMouseOut}
-//   onMouseOver={this.handleMouseOver}
-//   onFocus={this.handleMouseOver}
-//   onDoubleClick={this.handleDoubleClick}
-//   onTouchStart={this.handleTouchStart}
-//   onTouchMove={this.handleTouchMove}
-// />

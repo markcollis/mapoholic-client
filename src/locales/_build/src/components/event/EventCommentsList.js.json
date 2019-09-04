@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventCommentsList.js",
-        27
+        28
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventCommentsList.js",
-        34
+        35
       ]
     ]
   }

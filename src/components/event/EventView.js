@@ -47,6 +47,10 @@ import {
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
+// The EventView component is the top level component for browsing events.
+// The same component covers both rendering a list of events and showing them
+// as points on a map, as the event array and many other components are common.
+// It also covers both 'all events' and 'my maps' which is constrained to the current user.
 class EventView extends Component {
   static propTypes = {
     history: PropTypes.objectOf(PropTypes.any).isRequired,

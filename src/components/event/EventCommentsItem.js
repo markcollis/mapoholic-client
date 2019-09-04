@@ -5,6 +5,7 @@ import { reformatTimestamp } from '../../common/conversions';
 import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
 
+// The EventCommentsItem component renders and individual comment
 class EventCommentsItem extends Component {
   static propTypes = {
     comment: PropTypes.objectOf(PropTypes.any).isRequired,

@@ -7,6 +7,8 @@ import EventLinkedList from './EventLinkedList';
 import EventLinkedEdit from './EventLinkedEdit';
 import EventLinkedDelete from './EventLinkedDelete';
 
+// The EventLinkedManage component renders an interface for listing, selecting,
+// editing and deleting links between events, independently of the event currently being viewed
 class EventLinkedManage extends Component {
   state = {
     showEventLinkedList: false,
@@ -17,8 +19,6 @@ class EventLinkedManage extends Component {
     deleteEventLink: PropTypes.func.isRequired,
     eventLinkMode: PropTypes.string.isRequired,
     eventList: PropTypes.arrayOf(PropTypes.any),
-    // getEventLinkList: PropTypes.func.isRequired,
-    // getEventList: PropTypes.func.isRequired,
     isAdmin: PropTypes.bool.isRequired,
     language: PropTypes.string.isRequired,
     linkList: PropTypes.arrayOf(PropTypes.any),
@@ -33,12 +33,13 @@ class EventLinkedManage extends Component {
     linkList: [],
   };
 
-  /* eslint-disable no-underscore-dangle */
   getEventLinkData = memoize((linkList, selectedEventLinkId) => {
-    const selectedLink = linkList.find(eachLink => eachLink._id === selectedEventLinkId);
+    const selectedLink = linkList.find((eachLink) => {
+      const { _id: linkId } = eachLink;
+      return linkId === selectedEventLinkId;
+    });
     return selectedLink;
   });
-  /* eslint-enable */
 
   renderEventLinkedList = () => {
     const {
@@ -62,8 +63,6 @@ class EventLinkedManage extends Component {
       createEventLink,
       eventLinkMode,
       eventList,
-      // getEventLinkList,
-      // getEventList,
       language,
       setEventViewModeEventLink,
     } = this.props;
@@ -72,8 +71,6 @@ class EventLinkedManage extends Component {
         createEventLink={createEventLink}
         eventLinkMode={eventLinkMode}
         eventList={eventList}
-        // getEventLinkList={getEventLinkList}
-        // getEventList={getEventList}
         language={language}
         setEventViewModeEventLink={setEventViewModeEventLink}
       />
@@ -84,8 +81,6 @@ class EventLinkedManage extends Component {
     const {
       eventLinkMode,
       eventList,
-      // getEventLinkList,
-      // getEventList,
       language,
       linkList,
       selectedEventLinkId,
@@ -98,8 +93,6 @@ class EventLinkedManage extends Component {
       <EventLinkedEdit
         eventLinkMode={eventLinkMode}
         eventList={eventList}
-        // getEventLinkList={getEventLinkList}
-        // getEventList={getEventList}
         language={language}
         linkData={linkData}
         setEventViewModeEventLink={setEventViewModeEventLink}
@@ -111,8 +104,6 @@ class EventLinkedManage extends Component {
   renderEventLinkedDelete = () => {
     const {
       deleteEventLink,
-      // getEventList,
-      // getEventLinkList,
       language,
       linkList,
       selectedEventLinkId,
@@ -123,8 +114,6 @@ class EventLinkedManage extends Component {
     return (
       <EventLinkedDelete
         deleteEventLink={deleteEventLink}
-        // getEventLinkList={getEventLinkList}
-        // getEventList={getEventList}
         language={language}
         linkData={linkData}
         setEventViewModeEventLink={setEventViewModeEventLink}

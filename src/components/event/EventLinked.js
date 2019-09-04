@@ -4,6 +4,8 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import EventLinkedItem from './EventLinkedItem';
 
+// The EventLinked component renders a set of events that are linked together
+// and controls for editing or deleting this particular link
 const EventLinked = ({
   canEdit,
   eventLinkMode,

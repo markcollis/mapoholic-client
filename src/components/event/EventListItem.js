@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
+
 import { typesOptionsLocale } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import { MAPOHOLIC_SERVER } from '../../config';
 
+// The EventListItem component renders key information about an event as a selectable list item
 const EventListItem = ({
   currentUserId,
   handleSelectEvent,
@@ -29,7 +31,6 @@ const EventListItem = ({
   const currentRunnerTags = [];
   if (runners && runners.length > 0) {
     runners.forEach((runner) => {
-      // console.log('runner:', runner);
       if (!mapExtractToDisplay && runner.mapExtract) {
         mapExtractToDisplay = runner.mapExtract;
       }
@@ -160,9 +161,9 @@ const EventListItem = ({
 
 EventListItem.propTypes = {
   currentUserId: PropTypes.string,
+  handleSelectEvent: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   oevent: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleSelectEvent: PropTypes.func.isRequired,
   selectedEventId: PropTypes.string.isRequired,
 };
 EventListItem.defaultProps = {

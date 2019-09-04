@@ -11,7 +11,7 @@ import {
   CLUB_SELECT_CLUB_MEMBER,
   CLUB_SELECT_CLUB_EVENT,
 } from '../actions/types';
-import { logAPICalls } from '../config';
+import { LOG_API_CALLS } from '../config';
 /* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
@@ -52,7 +52,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case CLUB_GOT_LIST: {
-      if (logAPICalls) console.log('CLUB_GOT_LIST payload:', action.payload);
+      if (LOG_API_CALLS) console.log('CLUB_GOT_LIST payload:', action.payload);
       // console.log('details:', state.details);
       const newDetails = { ...state.details };
       if (action.payload.length > 0) {
@@ -69,7 +69,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case CLUB_CREATED:
-      if (logAPICalls) console.log('CLUB_CREATED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('CLUB_CREATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -78,7 +78,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         selectedClubId: action.payload._id,
       };
     case CLUB_UPDATED:
-      if (logAPICalls) console.log('CLUB_UPDATED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('CLUB_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -86,7 +86,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case CLUB_DELETED:
-      if (logAPICalls) console.log('CLUB_DELETED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('CLUB_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
@@ -95,7 +95,7 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         selectedClubId: '',
       };
     case CLUB_ERROR:
-      if (logAPICalls) console.log('CLUB_ERROR payload:', action.payload);
+      if (LOG_API_CALLS) console.log('CLUB_ERROR payload:', action.payload);
       return {
         ...state,
         errorMessage: action.payload,

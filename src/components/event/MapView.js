@@ -49,6 +49,7 @@ import {
 } from '../../actions';
 /* eslint no-underscore-dangle: 0 */
 
+// The MapView component is the top level component for viewing uploaded maps
 class MapView extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,

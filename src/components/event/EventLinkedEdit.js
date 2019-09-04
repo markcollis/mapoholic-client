@@ -6,19 +6,18 @@ import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import { validationErrorsLocale } from '../../common/formData';
-/* eslint no-underscore-dangle: 0 */
 
-// renders form to either create or edit an event link record
+// The EventLinkedEdit component renders a form to either create or edit an event link record
 class EventLinkedEdit extends Component {
   static propTypes = {
     // Formik
-    touched: PropTypes.objectOf(PropTypes.any).isRequired,
     errors: PropTypes.objectOf(PropTypes.any).isRequired, // input validation
-    values: PropTypes.objectOf(PropTypes.any).isRequired,
     isSubmitting: PropTypes.bool.isRequired,
     resetForm: PropTypes.func.isRequired,
-    setFieldValue: PropTypes.func.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
+    setFieldValue: PropTypes.func.isRequired,
+    touched: PropTypes.objectOf(PropTypes.any).isRequired,
+    values: PropTypes.objectOf(PropTypes.any).isRequired,
     // passed down from parent
     eventLinkMode: PropTypes.string.isRequired,
     eventList: PropTypes.arrayOf(PropTypes.object),
@@ -40,15 +39,15 @@ class EventLinkedEdit extends Component {
   renderForm() {
     const {
       errors,
-      touched,
-      values,
-      setFieldValue,
-      setFieldTouched,
-      isSubmitting,
       eventLinkMode,
       eventList,
+      isSubmitting,
       language,
       setEventViewModeEventLink,
+      setFieldTouched,
+      setFieldValue,
+      touched,
+      values,
     } = this.props;
     const submitButtonText = (eventLinkMode === 'add') ? <Trans>Create</Trans> : <Trans>Update</Trans>;
     const sortedEventList = [...eventList].sort((a, b) => {
@@ -121,7 +120,6 @@ class EventLinkedEdit extends Component {
   }
 
   render() {
-    // console.log('this.props in EventLinkedEdit:', this.props);
     return (
       <div>
         {this.renderForm()}
@@ -142,9 +140,10 @@ const formikEventLinkedEdit = withFormik({
       return {
         displayName,
         includes: sortedIncludes.map((includedEvent) => {
+          const { _id: eventId, name, date } = includedEvent;
           return {
-            value: includedEvent._id,
-            label: `${includedEvent.name} (${includedEvent.date})`,
+            value: eventId,
+            label: `${name} (${date})`,
           };
         }) || [],
       };
@@ -161,8 +160,6 @@ const formikEventLinkedEdit = withFormik({
     const {
       eventLinkMode,
       createEventLink,
-      // getEventLinkList,
-      // getEventList,
       linkData,
       updateEventLink,
       setEventViewModeEventLink,
@@ -176,9 +173,6 @@ const formikEventLinkedEdit = withFormik({
       createEventLink(valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           setEventViewModeEventLink('view');
-          // getEventList(null, () => {
-          //   getEventLinkList(); // want to eliminate this in reducer
-          // });
         } else {
           setSubmitting(false);
         }
@@ -188,9 +182,6 @@ const formikEventLinkedEdit = withFormik({
       updateEventLink(selectedEventLinkId, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           setEventViewModeEventLink('view');
-          // getEventList(null, () => {
-          //   getEventLinkList(); // want to eliminate this in reducer
-          // });
         } else {
           setSubmitting(false);
         }

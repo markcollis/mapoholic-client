@@ -4,6 +4,7 @@ import { Trans } from '@lingui/macro';
 import EventListItem from './EventListItem';
 import Collapse from '../generic/Collapse';
 
+// The EventList component renders a list of events, or a message to say that there aren't any
 const EventList = ({
   currentUserId,
   language,

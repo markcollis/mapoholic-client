@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/club/ClubList.js",
-        18
+        20
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/club/ClubList.js",
-        39
+        41
       ]
     ]
   }

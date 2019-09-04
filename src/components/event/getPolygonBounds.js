@@ -1,3 +1,4 @@
+// Return appropriate polygon bounds for location maps
 const getPolygonBounds = ({
   locCornerSW, // not always present, revert to marker
   locCornerNW, // * may be missing in some older records *

@@ -27,7 +27,7 @@ class ErrorBoundary extends Component {
       return null;
     }).filter(name => name).join(', or ');
     if (childComponents !== '') {
-      console.log('childComponents:', childComponents);
+      // console.log('childComponents:', childComponents);
     }
     const { error } = this.state;
     if (error) {
@@ -43,7 +43,7 @@ class ErrorBoundary extends Component {
       return (
         <div className="ui error message">
           <Trans>
-            {`Sorry, something has gone wrong with this part of the application${(childComponents)
+            {`Sorry, something has gone wrong with this part of MapOholic${(childComponents)
               ? `: ${childComponents}` : ''}. Please try again in case it is a temporary problem.
               Other functionality should not be affected.`}
           </Trans>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 
+// The EventFilter component renders filtering and selection inputs for events
 const EventFilter = ({
   clearEventSearchField,
   clearEventTagFilter,
@@ -18,8 +19,6 @@ const EventFilter = ({
   tagFilter,
   tagLists,
 }) => {
-  // const dropdownStyle = {};
-  // if (tagFilter === '') dropdownStyle.color = 'rgba(0, 0, 0, 0.3)';
   let dropdownClass = 'ui dropdown event-header__tag-filter';
   if (tagFilter === '') dropdownClass = dropdownClass.concat('--empty');
   if (tagLists.eventTags.includes(tagFilter)) dropdownClass = dropdownClass.concat('--event');

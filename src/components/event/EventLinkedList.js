@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Trans, Plural } from '@lingui/macro';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
+// The EventLinkedList component renders a list of event links from which one
+// can be selected for viewing
 const EventLinkedList = ({
   isAdmin,
   language,
   linkList,
   setEventViewModeEventLink,
 }) => {
-  // console.log('linkList in EventLinkedList:', linkList);
   if (linkList.length === 0) return <p><Trans>Sorry, no event links found.</Trans></p>;
   const linkArray = linkList
     .map((link) => { // process event summary data

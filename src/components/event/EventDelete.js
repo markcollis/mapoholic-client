@@ -2,15 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
+// The EventDelete component renders a final confirmation request prior to deleting an event
 const EventDelete = ({
   deleteEvent,
-  // getEventLinkList,
-  // getEventList,
   selectedEvent,
   setEventViewModeEvent,
 }) => {
   if (!selectedEvent) return null;
-  const { _id: eventId, name, date } = selectedEvent;
+  const {
+    _id: eventId,
+    name,
+    date,
+  } = selectedEvent;
   return (
     <div className="ui segment">
       <h3><Trans>{`Delete Event: ${name} (${date})`}</Trans></h3>
@@ -28,13 +31,6 @@ const EventDelete = ({
           deleteEvent(eventId, (didSucceed) => {
             if (didSucceed) {
               setEventViewModeEvent('none');
-              // getEventList(null, () => { // want to eliminate this in reducer
-              //   getEventLinkList(); // want to eliminate this in reducer
-              //   // reset selectedEventId whether viewing or not - moved to reducer
-              //   // if (eventId === selectedEventIdEvents) selectEventIdEvents('');
-              //   // if (eventId === selectedEventIdMyMaps) selectEventIdMyMaps('');
-              //   // if (eventId === selectedEventIdMapView) selectEventIdMapView('');
-              // });
             }
           });
         }}
@@ -54,8 +50,6 @@ const EventDelete = ({
 
 EventDelete.propTypes = {
   selectedEvent: PropTypes.objectOf(PropTypes.any),
-  // getEventList: PropTypes.func.isRequired,
-  // getEventLinkList: PropTypes.func.isRequired,
   deleteEvent: PropTypes.func.isRequired,
   setEventViewModeEvent: PropTypes.func.isRequired,
 };

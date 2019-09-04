@@ -37,7 +37,7 @@ import {
   EVENT_SET_MAP_VIEW_PARAMETERS,
   EVENT_UPDATED,
 } from '../actions/types';
-import { logAPICalls } from '../config';
+import { LOG_API_CALLS } from '../config';
 /* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
@@ -376,14 +376,14 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       // list: null, // replaced each time API is queried
       // details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
     case EVENT_GOT_LIST: // populate list (overwrites any earlier version)
-      if (logAPICalls) console.log('EVENT_GOT_LIST payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_GOT_LIST payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
         list: action.payload,
       };
     case EVENT_GOT_BY_ID: // update entry in both details and list
-      if (logAPICalls) console.log('EVENT_GOT_BY_ID payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_GOT_BY_ID payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -391,7 +391,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         list: getUpdatedEventList(state.list, action.payload),
       };
     case EVENT_CREATED: // add to details and list, make currently selected event
-      if (logAPICalls) console.log('EVENT_CREATED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_CREATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -405,7 +405,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_RUNNER_ADDED: // same thing, runner addition returns whole event
     case EVENT_RUNNER_DELETED: // same thing, runner delete returns whole event minus runner
     case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
-      if (logAPICalls) console.log('EVENT_UPDATED (or RUNNER_ADDED, DELETED, UPDATED) payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_UPDATED (or RUNNER_ADDED, DELETED, UPDATED) payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -415,7 +415,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     case EVENT_MAP_UPLOADED: // update list and details, including summary data
     case EVENT_MAP_DELETED: { // same actions required
-      if (logAPICalls) console.log('EVENT_MAP_UPLOADED/DELETED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_MAP_UPLOADED/DELETED payload:', action.payload);
       const { parameters, updatedEvent } = action.payload;
       const {
         eventId,
@@ -454,7 +454,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_COMMENT_ADDED: // update details entry, list unaffected
     case EVENT_COMMENT_UPDATED:
     case EVENT_COMMENT_DELETED: { // API returns relevant comments array
-      if (logAPICalls) console.log('EVENT_COMMENT_ADDED/UPDATED/DELETED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_COMMENT_ADDED/UPDATED/DELETED payload:', action.payload);
       const { eventId, userId, comments } = action.payload;
       const runnersInState = state.details[eventId].runners;
       const updatedRunners = runnersInState.map((runner) => {
@@ -477,7 +477,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     }
     case EVENT_DELETED: // remove from details and list, clear any current views,
       // fix linkList if required
-      if (logAPICalls) console.log('EVENT_DELETED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
@@ -497,7 +497,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // linkList: null, // replaced each time API is queried
     case EVENT_GOT_EVENT_LINK_LIST: { // populate linkList
-      if (logAPICalls) console.log('EVENT_GOT_EVENT_LINK_LIST payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_GOT_EVENT_LINK_LIST payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -505,7 +505,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case EVENT_LINK_CREATED: // add new entry to linkList, add to list and details entries
-      if (logAPICalls) console.log('EVENT_LINK_CREATED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_LINK_CREATED payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -514,7 +514,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
       // *** need to add appropriate updates to details, list and linkedList *** //
     case EVENT_LINK_UPDATED: // replace entry in linkList, update list and details entries
-      if (logAPICalls) console.log('EVENT_LINK_UPDATED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_LINK_UPDATED payload:', action.payload);
       return {
         ...state,
         linkList: state.linkList.map((link) => {
@@ -528,7 +528,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
       // *** need to add appropriate updates to details, list and linkedList *** //
     case EVENT_LINK_DELETED: // remove entry from linkList,
-      if (logAPICalls) console.log('EVENT_LINK_DELETED payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_LINK_DELETED payload:', action.payload);
       return {
         ...state,
         // linkDetails: { ...state.linkDetails, [action.payload._id]: null },
@@ -540,7 +540,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // orisList: null, // replaced each time API is queried, list specific to current user
     case EVENT_GOT_ORIS_LIST:
-      if (logAPICalls) console.log('EVENT_GOT_ORIS_LIST payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_GOT_ORIS_LIST payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -549,7 +549,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // errorMessage: '', // empty unless an error occurs
     case EVENT_ERROR:
-      if (logAPICalls) console.log('EVENT_ERROR payload:', action.payload);
+      if (LOG_API_CALLS) console.log('EVENT_ERROR payload:', action.payload);
       return {
         ...state,
         errorMessage: action.payload,

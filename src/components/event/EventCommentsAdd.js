@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
+// The EventCommentsAdd component provides input to type and submit a new
+// comment (and buttons to initiate or cancel this action)
 class EventCommentsAdd extends Component {
   static propTypes = {
     requestRefreshCollapse: PropTypes.func.isRequired,

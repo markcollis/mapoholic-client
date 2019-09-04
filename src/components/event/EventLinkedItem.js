@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
+// The EventLinkedItem component renders an individual event link as a list item
 const EventLinkedItem = ({
   eventId,
   language,

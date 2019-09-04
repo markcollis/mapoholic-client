@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { typesOptionsLocale } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
-// import { MAPOHOLIC_SERVER } from '../../config';
 
 import EventThumbnails from './EventThumbnails';
 import EventLocationMap from './EventLocationMap';
 import Collapse from '../generic/Collapse';
 
+// The EventDetails component renders detailed information about a particular event
 const EventDetails = ({
   canEdit,
   currentUserId,
@@ -80,31 +80,6 @@ const EventDetails = ({
   });
   // console.log('mapFiles:', ownMapFiles, otherMapFiles);
   const mapFiles = [...ownMapFiles, ...otherMapFiles];
-
-  // let mapForThumbnail = null;
-  // if (ownMapFiles.length > 0) {
-  //   [mapForThumbnail] = ownMapFiles;
-  // } else if (otherMapFiles.length > 0) {
-  //   [mapForThumbnail] = otherMapFiles;
-  // }
-
-  // const mapForThumbnail = (ownMapFiles.length > 0) ? ownMapFiles[0] : null;
-  // const renderThumbnail = (mapFile) => {
-  //   if (!mapFile) return null;
-  //   const { file, updated } = mapFile;
-  //   return (
-  //     <img
-  //       className="ui image right floated"
-  //       alt="map thumbnail"
-  //       onLoad={() => {
-  //         // console.log('image loaded!');
-  //         requestRefreshCollapse();
-  //       }}
-  //       src={`${MAPOHOLIC_SERVER}/${file.slice(0, -4)}-thumb${file.slice(-4)}?${updated}}`}
-  //     />
-  //   );
-  // };
-  // const thumbnail = renderThumbnail(mapForThumbnail);
 
   const showEdit = (canEdit)
     ? (

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
+// The EventLinkedDelete component renders a confirmation dialogue for deleting an event link
 const EventLinkedDelete = ({
   deleteEventLink,
-  // getEventList,
-  // getEventLinkList,
   language,
   linkData,
   setEventViewModeEventLink,
@@ -30,9 +29,6 @@ const EventLinkedDelete = ({
           deleteEventLink(eventLinkId, (didSucceed) => {
             if (didSucceed) {
               setEventViewModeEventLink('view');
-              // getEventList(null, () => { // want to eliminate this using reducer
-              //   getEventLinkList(); // want to eliminate this using reducer
-              // });
             }
           });
         }}
@@ -52,8 +48,6 @@ const EventLinkedDelete = ({
 
 EventLinkedDelete.propTypes = {
   deleteEventLink: PropTypes.func.isRequired,
-  // getEventList: PropTypes.func.isRequired,
-  // getEventLinkList: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   linkData: PropTypes.objectOf(PropTypes.any).isRequired,
   setEventViewModeEventLink: PropTypes.func.isRequired,

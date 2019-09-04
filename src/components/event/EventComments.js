@@ -5,6 +5,8 @@ import Collapse from '../generic/Collapse';
 import EventCommentsAdd from './EventCommentsAdd';
 import EventCommentsList from './EventCommentsList';
 
+// The EventComments component is the parent for viewing and editing
+// all comments related to a particular event/runner combination
 const EventComments = ({
   currentUser,
   deleteComment,

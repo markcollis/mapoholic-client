@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans, Plural } from '@lingui/macro';
 import EventCommentsItem from './EventCommentsItem';
 
+// The EventCommentsList component renders a list of comments from a runner record
 const EventCommentsList = ({
   currentUserId,
   deleteComment,
