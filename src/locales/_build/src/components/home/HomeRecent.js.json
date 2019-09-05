@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/home/HomeRecent.js",
-        20
+        21
       ]
     ]
   },
@@ -11,19 +11,11 @@
     "origin": [
       [
         "src/components/home/HomeRecent.js",
-        28
+        29
       ]
     ]
   },
-  "Recent Activity": {
-    "origin": [
-      [
-        "src/components/home/HomeRecent.js",
-        33
-      ]
-    ]
-  },
-  "All Recent Activity": {
+  "Recent activity": {
     "origin": [
       [
         "src/components/home/HomeRecent.js",
@@ -31,11 +23,19 @@
       ]
     ]
   },
-  "Your Own Recent Activity": {
+  "All recent activity": {
     "origin": [
       [
         "src/components/home/HomeRecent.js",
         35
+      ]
+    ]
+  },
+  "Your own recent activity": {
+    "origin": [
+      [
+        "src/components/home/HomeRecent.js",
+        36
       ]
     ]
   }

@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        202
+        180
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        203
+        181
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        230
+        208
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        237
+        215
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        308
+        286
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        313
+        291
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/event/EventMapViewer.js",
-        326
+        304
       ]
     ]
   }

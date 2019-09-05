@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        28
+        27
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        29
+        28
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        32
+        31
       ]
     ]
   },
@@ -27,11 +27,23 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        33
+        32
       ]
     ]
   },
   "by name": {
+    "origin": [
+      [
+        "src/components/home/HomeWelcome.js",
+        33
+      ],
+      [
+        "src/components/home/HomeWelcome.js",
+        35
+      ]
+    ]
+  },
+  "on a map": {
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
@@ -43,23 +55,11 @@
       ]
     ]
   },
-  "on a map": {
-    "origin": [
-      [
-        "src/components/home/HomeWelcome.js",
-        35
-      ],
-      [
-        "src/components/home/HomeWelcome.js",
-        37
-      ]
-    ]
-  },
   "As a guest user, you are able to browse or search for maps {eventsListLink} or {eventsMapLink}, but can not upload or comment on them. If you would like to add some maps of your own, please {signUpLink} for an individual account.": {
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        41
+        40
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        50
+        49
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        57
+        56
       ]
     ]
   },
@@ -83,7 +83,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        66
+        65
       ]
     ]
   },
@@ -91,7 +91,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        73
+        72
       ]
     ]
   },
@@ -99,7 +99,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        75
+        74
       ]
     ]
   },
@@ -107,7 +107,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        90
+        89
       ]
     ]
   },
@@ -115,7 +115,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        98
+        96
       ]
     ]
   },
@@ -123,7 +123,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        101
+        99
       ]
     ]
   },
@@ -131,7 +131,7 @@
     "origin": [
       [
         "src/components/home/HomeWelcome.js",
-        106
+        104
       ]
     ]
   }

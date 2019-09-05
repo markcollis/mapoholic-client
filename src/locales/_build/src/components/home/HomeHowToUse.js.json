@@ -3,15 +3,15 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        7
+        8
       ]
     ]
   },
-  "So, you've created an account and logged in for the first time. What do you do next? I&ll assume that you already have some scanned maps ready to upload.": {
+  "So, you've created an account and logged in for the first time. What do you do next? I'll assume that you already have some scanned maps ready to upload.": {
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        9
+        10
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        17
+        18
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        27
+        28
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        42
+        43
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/home/HomeHowToUse.js",
-        57
+        58
       ]
     ]
   }
