@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 import logo from '../../graphics/mapoholicLogo.jpg';
-import mark from '../../graphics/mark.jpg';
+import mark from '../../graphics/markRunning.jpg';
 import screenshotCourseMap from '../../graphics/screenshotCourseMapSmall.jpg';
 import screenshotEventList from '../../graphics/screenshotEventListSmall.jpg';
 import screenshotEventMap from '../../graphics/screenshotEventMapSmall.jpg';
@@ -292,7 +292,7 @@ class HomeView extends Component {
           </div>
           <div className="row">
             <div className="four wide column">
-              <img className="ui medium circular image" src={mark} alt="Mark Collis" />
+              <img className="ui medium image rounded" src={mark} alt="Mark Collis" />
             </div>
             <div className="twelve wide column">
               <ErrorBoundary>

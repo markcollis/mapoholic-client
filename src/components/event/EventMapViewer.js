@@ -279,7 +279,7 @@ class EventMapViewer extends Component {
         );
       })
       : null;
-    const renderOverlaySelector = (overlays.length > 0)
+    const renderOverlaySelector = (overlays.length > 0 && hasMaps)
       ? (
         <div className="event-map-viewer__overlay-selector">
           <hr className="divider" />

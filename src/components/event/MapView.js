@@ -128,6 +128,16 @@ class MapView extends Component {
     return isAdmin || isSelectedRunner;
   });
 
+  // helper to determine if currently selected runner is present in currently selected event
+  getIsRunnerPresent = memoize((selectedEvent, selectedRunner) => {
+    if (!selectedEvent || !selectedRunner || selectedRunner === '') return false;
+    const runnerList = (selectedEvent.runners)
+      ? selectedEvent.runners.map(runner => runner.user._id)
+      : [];
+    const isRunnerPresent = runnerList.includes(selectedRunner);
+    return isRunnerPresent;
+  });
+
   // helper to get details of organising clubs if input props have changed
   getOrganisingClubs = memoize((selectedEvent, clubDetails) => {
     const organisingClubs = (selectedEvent.organisedBy)
@@ -394,8 +404,6 @@ class MapView extends Component {
         return (
           <EventDelete
             deleteEvent={deleteEvent} // prop
-            // getEventLinkList={getEventLinkList} // prop
-            // getEventList={getEventList} // prop
             selectedEvent={selectedEvent} // derived
             setEventViewModeEvent={setEventViewModeEvent} // prop
           />
@@ -602,42 +610,59 @@ class MapView extends Component {
 
   render() {
     const { oevent } = this.props;
-    const { selectedEventIdMapView } = oevent;
+    const {
+      details,
+      errorMessage,
+      selectedEventIdMapView,
+      selectedRunner,
+    } = oevent;
     if (!selectedEventIdMapView) {
       // no event selected, redirecting to events list
       return <Redirect to="/events" />;
     }
+    const selectedEvent = this.getSelectedEvent(details, selectedEventIdMapView, errorMessage);
+    const isRunnerPresent = this.getIsRunnerPresent(selectedEvent, selectedRunner);
     return (
       <ErrorBoundary>
         <div className="ui vertically padded stackable grid">
           {this.renderError()}
-          <div className="sixteen wide column">
-            <ErrorBoundary>
-              {this.renderEventMapViewer()}
-            </ErrorBoundary>
-          </div>
+          {(isRunnerPresent)
+            ? (
+              <div className="sixteen wide column">
+                <ErrorBoundary>
+                  {this.renderEventMapViewer()}
+                </ErrorBoundary>
+              </div>
+            )
+            : null
+          }
           <div className="eight wide column">
             <ErrorBoundary>
-              {this.renderEventDetails()}
+              {this.renderEventRunners()}
             </ErrorBoundary>
             <ErrorBoundary>
-              {this.renderEventRunners()}
+              {this.renderEventDetails()}
             </ErrorBoundary>
             <ErrorBoundary>
               {this.renderLinkedEvents()}
             </ErrorBoundary>
           </div>
-          <div className="eight wide column">
-            <ErrorBoundary>
-              {this.renderEventRunnerDetails()}
-            </ErrorBoundary>
-            <ErrorBoundary>
-              {this.renderEventComments()}
-            </ErrorBoundary>
-            <ErrorBoundary>
-              {this.renderEventResults()}
-            </ErrorBoundary>
-          </div>
+          {(isRunnerPresent)
+            ? (
+              <div className="eight wide column">
+                <ErrorBoundary>
+                  {this.renderEventRunnerDetails()}
+                </ErrorBoundary>
+                <ErrorBoundary>
+                  {this.renderEventComments()}
+                </ErrorBoundary>
+                <ErrorBoundary>
+                  {this.renderEventResults()}
+                </ErrorBoundary>
+              </div>
+            )
+            : null
+          }
         </div>
       </ErrorBoundary>
     );

@@ -11,15 +11,8 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do before first release:">
         <ol>
           <li>
-            Possible bug: Strange behaviour observed when switching to an event at
-            which you are not a runner and trying to add maps (only as admin?)
-          </li>
-          <li>
             Write a proper README for each repository
             &nbsp;(front end completed 4/9)
-          </li>
-          <li>
-            Find a better picture of me for the front page
           </li>
           <li>
             When ready to release, replace this component with notes of more relevance
@@ -431,7 +424,26 @@ const HomeAdminNotes = () => {
             <del>Complete lingui translations and check that nothing is missing</del>
             (done all except long paragraphs on Home page 29/6, Blanka reviewing, completed 4/9)
           </li>
-
+          <li>
+            <del>Find a better picture of me for the front page</del>
+            &nbsp;(done 5/9)
+          </li>
+          <li>
+            <del>
+            Possible bug: Strange behaviour observed when switching to an event at
+            which you are not a runner and trying to add maps (NOT only as admin)
+            (selecting a linked event while in map view does not select a runner)
+            =&gt; need to hide Add or Delete maps when no runner selected
+            </del>
+            &nbsp;(fixed 5/9 - hide map if selected runner is not present at event)
+          </li>
+          <li>
+            <del>
+            Supplementary - hide overlay option when there is no map to display
+            (also comments component)
+            </del>
+            &nbsp;(fixed 5/9)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
