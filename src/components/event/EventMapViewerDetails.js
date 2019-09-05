@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import EventMapViewerEdit from './EventMapViewerEdit';
 
+// The EventMapViewerDetails component renders an editor component for each map associated
+// with a runner at an event plus one for adding a new map
 const EventMapViewerDetails = ({
   deleteMap,
   postMap,
@@ -10,7 +12,6 @@ const EventMapViewerDetails = ({
   selectedRunner,
   updateEventRunner,
 }) => {
-  // console.log('selectedEvent in EventMapViewerDetails', selectedEvent);
   const { _id: eventId, runners } = selectedEvent;
   const selectedRunnerDetails = (runners)
     ? runners.find((runner) => {

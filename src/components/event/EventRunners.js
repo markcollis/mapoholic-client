@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import EventRunnersItem from './EventRunnersItem';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
+// The EventRunners component renders a list of runners at an event
 const EventRunners = ({
   addEventRunner,
   addEventRunnerOris,
@@ -18,9 +18,13 @@ const EventRunners = ({
   selectEventId,
   selectRunnerToDisplay,
 }) => {
-  if (!selectedEvent._id) return null;
-  const { _id: eventId, runners, orisId } = selectedEvent;
-  const isCurrentRunner = runners.some(runner => runner.user._id === currentUserId);
+  const { _id: selectedEventId } = selectedEvent;
+  if (!selectedEventId) return null;
+  const { runners, orisId } = selectedEvent;
+  const isCurrentRunner = runners.some(({ user }) => {
+    const { _id: runnerId } = user;
+    return runnerId === currentUserId;
+  });
   const runnersByCourse = {};
   const runnersArray = [...runners]
     .sort((a, b) => {
@@ -33,7 +37,7 @@ const EventRunners = ({
       <EventRunnersItem
         key={runnerId}
         currentUserId={currentUserId}
-        eventId={eventId}
+        eventId={selectedEventId}
         handleSelectEventRunner={handleSelectEventRunner}
         runner={runner}
         selectedRunner={selectedRunner}
@@ -45,7 +49,6 @@ const EventRunners = ({
       runnersByCourse[courseTitleKey] = [runnerToAdd];
     }
   });
-  // console.log('runnersByCourse', runnersByCourse);
   const courseTitles = Object.keys(runnersByCourse);
   const runnersToDisplay = courseTitles.map((courseTitle) => {
     const courseTitleToDisplay = (courseTitle === 'none')
@@ -68,18 +71,18 @@ const EventRunners = ({
         className="ui tiny primary right floated button"
         onClick={() => {
           if (useOrisToAdd) {
-            addEventRunnerOris(eventId, (successful) => {
+            addEventRunnerOris(selectedEventId, (successful) => {
               if (successful) {
-                selectEventId(eventId);
+                selectEventId(selectedEventId);
                 selectRunnerToDisplay(currentUserId);
                 history.push('/mapview');
                 window.scrollTo(0, 0);
               }
             });
           } else {
-            addEventRunner(eventId, (successful) => {
+            addEventRunner(selectedEventId, (successful) => {
               if (successful) {
-                selectEventId(eventId);
+                selectEventId(selectedEventId);
                 selectRunnerToDisplay(currentUserId);
                 history.push('/mapview');
                 window.scrollTo(0, 0);

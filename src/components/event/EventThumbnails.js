@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MAPOHOLIC_SERVER } from '../../config';
 
+// The EventThumbnails component renders small thumbnail versions of uploaded
+// maps to show as part of the event details
 class EventThumbnails extends Component {
   static propTypes = {
     mapFiles: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -20,8 +22,6 @@ class EventThumbnails extends Component {
   }
 
   render() {
-    // console.log('props in EventThumbnails:', this.props);
-    // console.log('state in EventThumbnails:', this.state);
     const { mapFiles, requestRefreshCollapse } = this.props;
     const { currentIndex } = this.state;
     if (!mapFiles || mapFiles.length === 0) return null;
@@ -38,7 +38,6 @@ class EventThumbnails extends Component {
           src={`${MAPOHOLIC_SERVER}/${file.slice(0, -4)}-thumb${file.slice(-4)}?${updated}}`}
           alt={`${mapType} thumbnail`}
           onLoad={() => {
-            // console.log('image loaded!');
             requestRefreshCollapse();
           }}
         />

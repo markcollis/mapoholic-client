@@ -10,20 +10,22 @@ import screenshotEventList from '../../graphics/screenshotEventListSmall.jpg';
 import screenshotEventMap from '../../graphics/screenshotEventMapSmall.jpg';
 
 import ErrorBoundary from '../generic/ErrorBoundary';
-import HomeWelcome from './HomeWelcome';
-import HomeRecent from './HomeRecent';
-import HomeWhatIsIt from './HomeWhatIsIt';
-import HomeHowToUse from './HomeHowToUse';
 import HomeAboutAuthor from './HomeAboutAuthor';
 import HomeAdminPanel from './HomeAdminPanel';
-
+import HomeHowToUse from './HomeHowToUse';
+import HomeRecent from './HomeRecent';
+import HomeWelcome from './HomeWelcome';
+import HomeWhatIsIt from './HomeWhatIsIt';
 import {
   getActivityLogAdminAction,
   getActivityLogAllAction,
   getActivityLogOwnAction,
   cancelActivityErrorAction,
 } from '../../actions';
+import { DEFAULT_ACTIVITY_LENGTH } from '../../config';
 
+// The HomeView component renders information about MapOholic and how to use it
+// as well as a summary of recent activity (if logged in)
 class HomeView extends Component {
   static propTypes = {
     activity: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -61,7 +63,6 @@ class HomeView extends Component {
   }
 
   getActivityLists = () => {
-    // console.log('state', this.state);
     const {
       gettingActivityAdmin,
       gettingActivityAll,
@@ -79,11 +80,9 @@ class HomeView extends Component {
       activityAll,
       activityOwn,
     } = activity;
-    const DEFAULT_ACTIVITY_LENGTH = 10; // set here for now, could make config option later
     if (currentUser) {
       if (currentUser.role === 'admin') {
         if (!activityAdmin && !gettingActivityAdmin) {
-          // console.log('getting complete activity log for admin');
           getActivityLogAdmin(null, (successful) => {
             if (successful) this.setState({ gettingActivityAdmin: false });
           });
@@ -116,7 +115,6 @@ class HomeView extends Component {
   getOwnEvents = memoize((eventList, currentUser) => {
     if (!eventList || !currentUser) return [];
     const { _id: currentUserId } = currentUser;
-    // if (!currentUserId) return [];
     const ownEventList = eventList.filter((eachEvent) => {
       const { runners } = eachEvent;
       const runnerIds = (runners) ? runners.map(runner => runner.user) : [];

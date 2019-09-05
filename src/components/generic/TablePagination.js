@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { tableAllLocale } from '../../common/formData';
 
+// The TablePagination component renders controls to navigate the pages of a multi-page table
 const TablePagination = ({
   language,
   pageNumber,

@@ -8,6 +8,8 @@ import FileDropzone from '../generic/FileDropzone';
 import Table from '../generic/Table';
 import { TEMPLATE } from '../../common/fileData';
 
+// The EventResults component renders the results of a runner's course and provides
+// an interface for removing and uploading new results.
 class EventResults extends Component {
   static propTypes = {
     language: PropTypes.string.isRequired,
@@ -88,7 +90,7 @@ class EventResults extends Component {
     const contents = e.target.result;
     const uploadedResults = [];
     const rawUploadedResults = JSON.parse(contents);
-    console.log('uploadedResults parsed:', rawUploadedResults);
+    // console.log('uploadedResults parsed:', rawUploadedResults);
     if (Array.isArray(rawUploadedResults)) { // process array in required format
       rawUploadedResults.forEach((result) => {
         const {
@@ -175,7 +177,6 @@ class EventResults extends Component {
       updateEventRunner(eventId, selectedRunner, valuesToSubmit, (didSucceed) => {
         if (didSucceed) {
           this.setState({ isEditing: false, uploadedResults: null });
-          // console.log('updated runner successfully - is anything else needed?');
         }
       });
     }
@@ -346,8 +347,6 @@ class EventResults extends Component {
   render() {
     const { isEditing, uploadedResults } = this.state;
     const { selectedEvent, selectedRunner } = this.props;
-    // console.log('selectedEvent:', selectedEvent);
-    // console.log('selectedRunner:', selectedRunner);
     const runnerData = this.getRunnerData(selectedEvent, selectedRunner);
     if (!runnerData) return null;
     const {
@@ -383,9 +382,6 @@ class EventResults extends Component {
     const courseHeading = (courseHeadingArray.length > 0)
       ? <h4>{courseHeadingArray.join('')}</h4>
       : '';
-    // console.log('runnerData:', runnerData);
-    // console.log('existingResults:', existingResults);
-    // console.log('uploadedResults:', uploadedResults);
 
     const title = <Trans>Results</Trans>;
     return (

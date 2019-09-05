@@ -6,6 +6,7 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import EventListItem from '../event/EventListItem';
 
+// The UserEvents component renders a list of events that a user has attended
 const UserEvents = ({
   eventsList,
   history,

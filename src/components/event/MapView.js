@@ -413,8 +413,6 @@ class MapView extends Component {
       user,
       createEventLink,
       deleteEventLink,
-      // getEventLinkList,
-      // getEventList,
       selectEventIdMapView,
       setEventViewModeEvent,
       setEventViewModeEventLink,
@@ -467,8 +465,6 @@ class MapView extends Component {
               deleteEventLink={deleteEventLink} // prop
               eventLinkMode={eventLinkMode} // prop (oevent)
               eventList={list} // prop (oevent)
-              // getEventLinkList={getEventLinkList} // prop
-              // getEventList={getEventList} // prop
               isAdmin={isAdmin} // derived
               language={language} // prop (config)
               linkList={linkList} // prop (oevent)
@@ -557,9 +553,8 @@ class MapView extends Component {
     );
   }
 
-  // render EventResults component (self-contained with add/edit/delete)
-  // *** consider whether add/edit might need wider screen? ***
-  renderEventResults = () => { // simple viewer done, not editable yet
+  // render EventResults component (self-contained with add/delete - 'edit' by uploading new)
+  renderEventResults = () => {
     const { refreshCollapseEventResults } = this.state;
     const { config, oevent, updateEventRunner } = this.props;
     const { language } = config;
@@ -609,7 +604,7 @@ class MapView extends Component {
     const { oevent } = this.props;
     const { selectedEventIdMapView } = oevent;
     if (!selectedEventIdMapView) {
-      // console.log('no event selected, redirecting to events list');
+      // no event selected, redirecting to events list
       return <Redirect to="/events" />;
     }
     return (

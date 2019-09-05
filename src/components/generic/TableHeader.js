@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToString } from 'react-dom/server';
 
+// The TableHeader component renders the header row of a table
 const TableHeader = ({
   setSortColumn,
   sortColumn,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Trans } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
 import Table from '../generic/Table';
@@ -19,6 +20,8 @@ import {
   setUserViewModeAction,
 } from '../../actions';
 
+// The HomeAdminActivity component renders a detailed table recording all site activity
+// to inform administrative users
 class HomeAdminActivity extends Component {
   static propTypes = {
     activityList: PropTypes.arrayOf(PropTypes.object),
@@ -152,7 +155,7 @@ class HomeAdminActivity extends Component {
 
   renderSpecificUserLink = (user) => {
     const { active, _id: userId, displayName } = user;
-    if (!active) return displayName; // will it show 'deleted'?
+    if (!active) return displayName;
     return (
       <a
         href="/users"
@@ -173,7 +176,6 @@ class HomeAdminActivity extends Component {
       refreshCollapse,
       requestRefreshCollapse,
     } = this.props;
-    // console.log('activityList, language:', activityList, language);
     const tableHead = ['actionBy', 'actionType', 'club', 'event', 'eventRunner', 'linkedEvent', 'user', 'timestamp'];
     const tableData = (activityList)
       ? (
@@ -218,8 +220,9 @@ class HomeAdminActivity extends Component {
       )
       : null;
 
+    const title = <Trans>Site activity history</Trans>;
     return (
-      <Collapse title="Site activity history" refreshCollapse={refreshCollapse}>
+      <Collapse title={title} refreshCollapse={refreshCollapse}>
         <Table
           language={language}
           tableHead={tableHead}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/macro';
 
+// The HomeWhatIsIt component renders an introduction to MapOholic
 const HomeWhatIsIt = () => {
   return (
     <div className="ui segment">

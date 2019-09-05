@@ -7,8 +7,9 @@ import Collapse from '../generic/Collapse';
 import { visibilityOptionsLocale } from '../../common/formData';
 import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
+// The EventRunnerDetails component renders detailed information about a runner and
+// their particular run at a particular event
 const EventRunnerDetails = ({
   canEdit,
   history,
@@ -21,7 +22,8 @@ const EventRunnerDetails = ({
   setEventViewModeRunner,
   userList,
 }) => {
-  if (!selectedEvent._id) {
+  const { _id: selectedEventId } = selectedEvent;
+  if (!selectedEventId) {
     return (
       <div className="ui segment">
         <div className="ui active inline centered text loader"><Trans>Loading event details...</Trans></div>
@@ -30,7 +32,10 @@ const EventRunnerDetails = ({
   }
   const visibilityOptions = visibilityOptionsLocale[language];
   const selectedRunnerDetails = selectedEvent.runners
-    .find(runner => runner.user._id === selectedRunner);
+    .find(({ user }) => {
+      const { _id: runnerId } = user;
+      return runnerId === selectedRunner;
+    });
   if (!selectedRunnerDetails) {
     return (
       <div className="ui segment">
@@ -38,7 +43,6 @@ const EventRunnerDetails = ({
       </div>
     );
   }
-  // console.log('selectedRunnerDetails:', selectedRunnerDetails);
   const {
     user,
     visibility,
@@ -71,7 +75,10 @@ const EventRunnerDetails = ({
   );
 
   const nameToDisplay = `${displayName} ${(fullName && fullName !== '') ? `(${fullName})` : ''}`;
-  const renderHeader = (userList && userList.find(eachUser => eachUser._id === userId))
+  const renderHeader = (userList && userList.find((eachUser) => {
+    const { _id: eachUserId } = eachUser;
+    return eachUserId === userId;
+  }))
     ? (
       <h3 className="header">
         <a

@@ -5,6 +5,8 @@ import { Trans, t } from '@lingui/macro';
 import FileDropzone from '../generic/FileDropzone';
 import { MAPOHOLIC_SERVER } from '../../config';
 
+// The EventMapViewerEdit component renders fields for uploading course and route maps
+// for each named instance, and for editing the map title
 class EventMapViewerEdit extends Component {
   static propTypes = {
     deleteMap: PropTypes.func.isRequired,
@@ -48,12 +50,11 @@ class EventMapViewerEdit extends Component {
       userId,
       postMap,
     } = this.props;
-    // console.log('upload course map');
     const {
       courseMapToUpload,
-      mapTitleToUpload,
-      mapTitleEditable,
       dropZoneKeyCourse,
+      mapTitleEditable,
+      mapTitleToUpload,
     } = this.state;
     if (courseMapToUpload) {
       const parameters = {
@@ -109,12 +110,11 @@ class EventMapViewerEdit extends Component {
       userId,
       postMap,
     } = this.props;
-    // console.log('upload route map');
     const {
-      routeMapToUpload,
-      mapTitleToUpload,
-      mapTitleEditable,
       dropZoneKeyRoute,
+      mapTitleEditable,
+      mapTitleToUpload,
+      routeMapToUpload,
     } = this.state;
     if (routeMapToUpload) {
       const parameters = {
@@ -145,11 +145,11 @@ class EventMapViewerEdit extends Component {
     const { mapTitleEditable, mapTitleToUpload } = this.state;
     if (!mapTitleEditable) this.setState({ mapTitleEditable: true });
     const {
-      map,
       eventId,
-      userId,
+      map,
       selectedRunnerMaps,
       updateEventRunner,
+      userId,
     } = this.props;
     const { title: mapTitle } = map;
     if (mapTitleEditable && (mapTitleToUpload !== mapTitle)) {
@@ -158,7 +158,6 @@ class EventMapViewerEdit extends Component {
         if (eachMap.title === mapTitle) newMap.title = mapTitleToUpload;
         return newMap;
       });
-      // console.log('newMaps', newMaps);
       updateEventRunner(eventId, userId, { maps: newMaps });
     }
   }
@@ -173,8 +172,6 @@ class EventMapViewerEdit extends Component {
   }
 
   render() {
-    // console.log('props in EventMapViewerEdit:', this.props);
-    // console.log('state in EventMapViewerEdit:', this.state);
     const {
       map,
       selectedRunnerMaps,

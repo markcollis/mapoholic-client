@@ -28,6 +28,7 @@ import {
   updateUserAction,
 } from '../../actions';
 
+// The UserView component is the top level component for selecting users and viewing details
 class UserView extends Component {
   static propTypes = {
     club: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -66,7 +67,6 @@ class UserView extends Component {
       return (eachUser.displayName.toLowerCase().includes(searchField.toLowerCase())
         || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase()));
     });
-    // console.log('filteredList in UserView:', filteredList);
     return filteredList;
   });
 

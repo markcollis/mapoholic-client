@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import { validationErrorsLocale } from '../../common/formData';
 
+// The UserChangePassword component renders an interface to enable a user to change their password
 const UserChangePassword = ({
   errors,
   hide,

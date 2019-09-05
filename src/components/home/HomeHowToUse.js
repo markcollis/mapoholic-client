@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/macro';
 
+// The HomeHowToUse component renders text describing the basics of using MapOholic
 const HomeHowToUse = () => {
   return (
     <div className="ui segment">
@@ -8,7 +9,7 @@ const HomeHowToUse = () => {
       <p>
         <Trans>
           So, you&apos;ve created an account and logged in for the first time. What
-          do you do next? I&amp;ll assume that you already have some scanned maps ready
+          do you do next? I&apos;ll assume that you already have some scanned maps ready
           to upload.
         </Trans>
       </p>

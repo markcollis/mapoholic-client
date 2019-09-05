@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 
+// The TableFilter component renders a search filter for a table
 const TableFilter = ({ filter, setTableFilter }) => {
   return (
     <span className="ui icon input">

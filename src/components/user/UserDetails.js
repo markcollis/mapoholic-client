@@ -8,6 +8,7 @@ import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
+// The UserDetails component renders full details about a user
 const UserDetails = ({
   language,
   refreshCollapse,

@@ -1,34 +1,30 @@
 import React from 'react';
 import Collapse from '../generic/Collapse';
 
+// The HomeAdminNotes component renders a list of notes and actions to aid development
+// (much of which will be deleted once an initial release is complete)
 const HomeAdminNotes = () => {
   return (
     <div>
-      <h3>Development notes</h3>
+      <h3>Development notes [English only]</h3>
       <hr className="divider" />
-      <Collapse title="Checklist of things still to do:">
+      <Collapse title="Checklist of things still to do before first release:">
         <ol>
           <li>
-            Complete lingui translations and check that nothing is missing
-            (done all except long paragraphs on Home page 29/6, Blanka reviewing)
+            Possible bug: Strange behaviour observed when switching to an event at
+            which you are not a runner and trying to add maps (only as admin?)
           </li>
           <li>
-            Handle multi-day events in Events.orisCreateEvent
+            Write a proper README for each repository
+            &nbsp;(front end completed 4/9)
           </li>
           <li>
-            Bug: Strange behaviour when switching to an event at which you are
-            not a runner and trying to add maps (only as admin?)
+            Find a better picture of me for the front page
           </li>
           <li>
-            <del>Investigate better overall error handling</del>
-            &nbsp;(done 30/8 - ErrorBoundary component at top level, for each View
-            and for each main component within each View)
-          </li>
-          <li>
-            Find a better picture of me!
-          </li>
-          <li>
-            Write a proper README
+            When ready to release, replace this component with notes of more relevance
+            to the admin _user_, rather than developer. Development notes/issues should
+            move to Github.
           </li>
         </ol>
       </Collapse>
@@ -426,38 +422,53 @@ const HomeAdminNotes = () => {
             <del>Bug: Corner coordinates of [null, null] are not superseded</del>
             &nbsp;(fixed 29/8)
           </li>
+          <li>
+            <del>Investigate better overall error handling</del>
+            &nbsp;(done 30/8 - ErrorBoundary component at top level, for each View
+            and for each main component within each View)
+          </li>
+          <li>
+            <del>Complete lingui translations and check that nothing is missing</del>
+            (done all except long paragraphs on Home page 29/6, Blanka reviewing, completed 4/9)
+          </li>
+
         </ol>
       </Collapse>
       <hr className="divider" />
       <Collapse title="Other ideas for the future (non-essential):">
         <ol>
+          <strong>Presentation:</strong>
+          <li>EN and CZ specific screenshots in HomeView?</li>
+          <strong>Map handling:</strong>
           <li>
             Consider how to better handle events at which someone ran TWO courses
             (not a two-part course) - e.g. sprint relay training 2 legs
             The data model doesn&apos;t support this, would need 2 runner records
             for the same event or 2 course/results records for a runner
           </li>
-          <li>EN and CZ specific screenshots? Maybe later for final polish!</li>
           <li>Support re-ordering of multi-part maps</li>
+          <li>
+            More on overlays - drawing own route, adding annotations, etc. =&gt;
+            need to be able to save too... *react-canvas-draw*
+            (course overlay is PNG with transparent background, park annotations for now)
+          </li>
+          <strong>Real-time updates:</strong>
           <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
           <li>
             Remove refresh list buttons? Should only be needed if a different user has updated
             something, how important is it? Definitely not needed if sockets implemented
             (removed from mobile views 12/7)
           </li>
+          <li>Real-time (non-persistent) chat?</li>
+          <strong>Interfaces/API:</strong>
+          <li>Handle multi-day events in Events.orisCreateEvent</li>
           <li>Web services interface to take direct feed from QuickRoute</li>
-          <li>User-specific preferences (e.g. language)</li>
-          <li>Real-time (non-persistent) chat??</li>
-          <li>
-          More on overlays - drawing own route, adding annotations, etc. =&gt;
-          need to be able to save too... *react-canvas-draw*
-          (course overlay is PNG with transparent background, park annotations for now)
-          </li>
           <li>
             Investigate potential to automatically parse other online results
-            too if they are in a consistent format (e.g. O-liga, BOF).
-            Test of apify?
+            too if they are in a consistent format (e.g. O-liga, BOF). Check out Apify?
           </li>
+          <strong>Configuration:</strong>
+          <li>User-specific preferences (e.g. language)</li>
         </ol>
       </Collapse>
     </div>

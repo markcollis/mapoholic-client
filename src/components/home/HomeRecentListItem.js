@@ -21,6 +21,7 @@ import {
   setUserViewModeAction,
 } from '../../actions';
 
+// The HomeRecentListItem component renders an individual activity as a line of text
 class HomeRecentListItem extends Component {
   static propTypes = {
     activity: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -103,12 +104,13 @@ class HomeRecentListItem extends Component {
       const { _id: eventRunnerId } = eventRunner;
       if (eventRunnerId === userId) return <Trans>themselves</Trans>;
     }
-    if (!active) return displayName; // will it show 'deleted'?
+    if (!active) return displayName;
     // specifically for actionBy, it is possible that the current user will
     // not have permission to view this particular user's profile - need to check
-    // console.log('userList', userList);
-    const inUserList = userList.find(eachUser => eachUser._id === userId);
-    // console.log('inUserList', inUserList);
+    const inUserList = userList.find((eachUser) => {
+      const { _id: eachUserId } = eachUser;
+      return eachUserId === userId;
+    });
     if (!inUserList) return displayName;
     return (
       <a
@@ -169,7 +171,7 @@ class HomeRecentListItem extends Component {
     const { eventRunner } = activity;
     if (!eventRunner) return '...';
     const { active, _id: eventRunnerId, displayName } = eventRunner;
-    if (!active) return displayName; // will it show 'deleted'?
+    if (!active) return displayName;
     return (
       <a
         href="/users"
@@ -193,7 +195,7 @@ class HomeRecentListItem extends Component {
   renderUserLink = (activity) => {
     const { user } = activity;
     const { active, _id: userId, displayName } = user;
-    if (!active) return displayName; // will it show 'deleted'?
+    if (!active) return displayName;
     return (
       <a
         href="/users"
@@ -318,7 +320,6 @@ class HomeRecentListItem extends Component {
   });
 
   render() {
-    // console.log('props in HomeRecentListItem:', this.props);
     const { activity, language, userList } = this.props;
     const { timestamp } = activity;
     const activityTime = reformatTimestamp(timestamp, language);

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
+// The HomeAboutAuthor component renders a brief profile of the author
 const HomeAboutAuthor = ({ language }) => {
   const linkMark = (
     <a

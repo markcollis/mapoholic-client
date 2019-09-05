@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { Redirect } from 'react-router-dom';
 
+// The UserDelete component renders a confirmatory dialogue to enable a user to be deleted
+// (either by themselves or an administrator)
 class UserDelete extends Component {
   static propTypes = {
     deleteUser: PropTypes.func.isRequired,
@@ -21,8 +23,6 @@ class UserDelete extends Component {
   };
 
   render() {
-    // console.log('this.props in UserDelete', this.props);
-    // console.log('this.state in UserDelete', this.state);
     const { redirectToLogout } = this.state;
     if (redirectToLogout) return <Redirect to="/logout" push />;
     const {

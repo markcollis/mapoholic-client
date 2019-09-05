@@ -119,8 +119,6 @@ class EventView extends Component {
 
   // helper to create event list if relevant props change
   getEventListArray = memoize((list, searchField, tagFilter, current, mineOnly, language) => {
-    // console.log('refreshing event list array');
-    // console.log('tagFilter:', tagFilter);
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
     const filteredListMineOnly = list.filter((eachEvent) => {
@@ -703,12 +701,12 @@ class EventView extends Component {
 
   renderEventMap = () => {
     const {
-      mineOnly,
       config,
+      mineOnly,
       oevent,
-      user,
       setMapBoundsEvents,
       setMapBoundsMyMaps,
+      user,
     } = this.props;
     const {
       mapBoundsEvents,

@@ -4,8 +4,9 @@ import { Trans } from '@lingui/macro';
 
 import HomeRecentListItem from './HomeRecentListItem';
 import Collapse from '../generic/Collapse';
-// import { reformatTimestamp } from '../../common/conversions';
 
+// The HomeRecent component renders a short list of recent activity on the site,
+// either a user's own or for all users
 const HomeRecent = ({
   activityList,
   isOwn,
@@ -30,9 +31,9 @@ const HomeRecent = ({
     );
   }
   // otherwise we need to create a list to display from the array
-  let title = <Trans>Recent Activity</Trans>;
-  if (isAll) title = <Trans>All Recent Activity</Trans>;
-  if (isOwn) title = <Trans>Your Own Recent Activity</Trans>;
+  let title = <Trans>Recent activity</Trans>;
+  if (isAll) title = <Trans>All recent activity</Trans>;
+  if (isOwn) title = <Trans>Your own recent activity</Trans>;
 
   const renderActivityList = activityList.map((activity) => {
     const { timestamp } = activity;

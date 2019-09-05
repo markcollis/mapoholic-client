@@ -4,6 +4,7 @@ import { Trans } from '@lingui/macro';
 import UserListItem from './UserListItem';
 import Collapse from '../generic/Collapse';
 
+// The UserList component renders a list of users
 const UserList = ({
   currentUserId,
   language,

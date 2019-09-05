@@ -1,4 +1,6 @@
-// Set global configuration variables
+// Set global configuration variables that can not be changed by users
+// *** configuration that can be changed by users (e.g. language) is managed
+// in the config reducer ***
 
 // console.logs server response to every API call made
 export const LOG_API_CALLS = false;
@@ -21,3 +23,6 @@ export const MAP_CREDIT = '&copy; <a href="https://www.openstreetmap.org/copyrig
 // another alternative map source
 // export const MAP_TILES = 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png';
 // export const MAP_CREDIT = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+
+// Number of activities to show in HomeRecent
+export const DEFAULT_ACTIVITY_LENGTH = 10;

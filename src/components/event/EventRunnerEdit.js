@@ -6,14 +6,12 @@ import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
+
 import {
   visibilityOptionsLocale,
-  // validationErrorsLocale,
 } from '../../common/formData';
 
-/* eslint no-underscore-dangle: 0 */
-
-// renders form to edit runner details for a specific event and runner
+// The EventRunnerEdit component renders form to edit runner details for a specific event and runner
 class EventRunnerEdit extends Component {
   static propTypes = {
     touched: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -23,8 +21,6 @@ class EventRunnerEdit extends Component {
     setFieldValue: PropTypes.func.isRequired,
     setFieldTouched: PropTypes.func.isRequired,
     language: PropTypes.string.isRequired,
-    // selectedEvent: PropTypes.objectOf(PropTypes.any),
-    // selectedRunner: PropTypes.string,
     setEventViewModeRunner: PropTypes.func.isRequired,
     tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
@@ -41,15 +37,12 @@ class EventRunnerEdit extends Component {
       return { value: tag, label: tag };
     });
     this.setState({ tagsOptions });
-    // console.log('mounted with tagsOptions;', tagsOptions);
   }
 
   renderForm() {
     const {
       tagsOptions,
     } = this.state;
-    // console.log('props:', this.props);
-    // console.log('state:', this.state);
     const {
       language,
       errors,
@@ -58,11 +51,9 @@ class EventRunnerEdit extends Component {
       setFieldValue,
       setFieldTouched,
       isSubmitting,
-      // isAdmin,
       setEventViewModeRunner,
     } = this.props;
     const visibilityOptions = visibilityOptionsLocale[language];
-    // const validationErrors = validationErrorsLocale[language];
 
     return (
       <Form className="ui warning form" noValidate>
@@ -264,7 +255,10 @@ class EventRunnerEdit extends Component {
 const formikEventRunnerEdit = withFormik({
   mapPropsToValues({ selectedEvent, selectedRunner, language }) {
     const selectedRunnerDetails = selectedEvent.runners
-      .find(runner => runner.user._id === selectedRunner);
+      .find(({ user }) => {
+        const { _id: runnerId } = user;
+        return runnerId === selectedRunner;
+      });
     return {
       // user: not allowed to change this
       visibility: visibilityOptionsLocale[language]
@@ -273,7 +267,7 @@ const formikEventRunnerEdit = withFormik({
       courseLength: selectedRunnerDetails.courseLength || '',
       courseClimb: selectedRunnerDetails.courseClimb || '',
       courseControls: selectedRunnerDetails.courseControls || '',
-      // fullResults: not currently editable, in future would be in EventResults component
+      // fullResults: edit via EventResults component
       time: selectedRunnerDetails.time || '',
       place: selectedRunnerDetails.place || '',
       timeBehind: selectedRunnerDetails.timeBehind || '',
@@ -302,14 +296,14 @@ const formikEventRunnerEdit = withFormik({
       setEventViewModeRunner,
       updateEventRunner,
     } = props;
+    const { _id: selectedEventId } = selectedEvent;
     const valuesToSubmit = { ...values, visibility: values.visibility.value };
     valuesToSubmit.tags = (values.tags && values.tags.length > 0)
       ? values.tags.map(el => el.value)
       : [];
     // console.log('valuesToSubmit:', valuesToSubmit);
-    updateEventRunner(selectedEvent._id, selectedRunner, valuesToSubmit, (didSucceed) => {
+    updateEventRunner(selectedEventId, selectedRunner, valuesToSubmit, (didSucceed) => {
       if (didSucceed) {
-        // console.log('updated runner successfully - is anything else needed?');
         setEventViewModeRunner('view');
       } else {
         setSubmitting(false);

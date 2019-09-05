@@ -5,6 +5,7 @@ import { roleOptionsLocale } from '../../common/formData';
 import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
 
+// The UserListItem component renders a summary of a user's details as a selectable list item
 const UserListItem = ({
   currentUserId,
   language,

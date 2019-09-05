@@ -11,7 +11,7 @@ import { MAPOHOLIC_SERVER } from '../../config';
 import UserChangePassword from './UserChangePassword';
 import UserEditProfileImage from './UserEditProfileImage';
 
-// renders form to submit credentials either for login or creating account
+// The UserEdit component renders a form for amending a user's profile details
 class UserEdit extends Component {
   static propTypes = {
     // Formik props

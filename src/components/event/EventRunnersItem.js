@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import noAvatar from '../../graphics/noAvatar.jpg';
 import { MAPOHOLIC_SERVER } from '../../config';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
+// The EventRunnersItem component renders key information about a runner as a selectable list item
 const EventRunnersItem = ({
   currentUserId,
   eventId,
@@ -20,9 +20,8 @@ const EventRunnersItem = ({
   } = runner.user;
   // check if runner has been deleted (as 'deletion' involves setting runner
   // records to 'private' instead of completely deleting them)
-  // only admin users should ever see deleted runners displayed
+  // *** only admin users should ever see deleted runners displayed ***
   const isDeleted = (displayName.slice(-21, -14) === 'deleted');
-  // console.log('isDeleted', isDeleted);
   const headerClass = (isDeleted)
     ? 'header event-runners-item__deleted'
     : 'header';

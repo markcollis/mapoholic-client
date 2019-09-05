@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 import { reformatTimestampDateOnly } from '../../common/conversions';
-/* eslint no-underscore-dangle: 0 */
 
+// The EventRunnerDelete component renders a confirmation dialogue for deleting a
+// runner from an event
 class EventRunnerDelete extends Component {
   static propTypes = {
     deleteEventRunner: PropTypes.func.isRequired,
@@ -40,10 +41,12 @@ class EventRunnerDelete extends Component {
       date,
       runners,
     } = selectedEvent;
-    const runnerDetails = runners.find(runner => runner.user._id === selectedRunner);
+    const runnerDetails = runners.find((runner) => {
+      const { _id: userId } = runner;
+      return userId === selectedRunner;
+    });
     if (!runnerDetails) return null;
     const runnerName = runnerDetails.user.displayName;
-    // console.log('selectedEvent, runnerName', selectedEvent, runnerName);
     return (
       <div className="ui segment">
         <h3><Trans>Delete Runner</Trans></h3>

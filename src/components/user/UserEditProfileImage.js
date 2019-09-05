@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import FileDropzone from '../generic/FileDropzone';
 
+// The UserEditProfileImage component renders an interface to add or change a profile picture
 class UserEditProfileImage extends Component {
   static propTypes = {
     user: PropTypes.objectOf(PropTypes.any).isRequired,

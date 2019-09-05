@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// The TableRow component renders a normal row of a table
 const TableRow = ({ highlightRow, rowData }) => {
   const rowTdArray = rowData.map((row) => {
     const { render, highlight, id } = row;

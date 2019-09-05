@@ -6,6 +6,7 @@ import { Trans, Plural } from '@lingui/macro';
 /* eslint react/jsx-one-expression-per-line: 0  */
 /* warning deactivated to avoid unwanted spaces in Trans components */
 
+// The HomeWelcome component renders an appropriate welcome message for each type of user
 const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
   const attendedEvents = ownEvents.length;
   let currentUserId = null;
@@ -15,7 +16,6 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
     currentUserId = userId;
     currentRole = role;
   }
-  // identify user type
   const isGuest = (currentRole === 'guest');
   const isStandardOrAdmin = (currentRole === 'standard' || currentRole === 'admin');
 
@@ -24,7 +24,6 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
     return acc + runnerSelf.numberMaps;
   }, 0);
   const hasMaps = (uploadedMaps > 0);
-  // console.log(attendedEvents, uploadedMaps);
   const uploadedMapsText = <Plural value={uploadedMaps} one="# map" other="# maps" />;
   const attendedEventsText = <Plural value={attendedEvents} one="# event" other="# events" />;
 
@@ -91,7 +90,6 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
     </a>
   );
 
-  // <img className="ui medium right floated image home-image" src={logo} alt="MapOholic logo" />
   return (
     <div className="ui segment">
       <p className="home-welcome__header">

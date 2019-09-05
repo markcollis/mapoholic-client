@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
-// import Collapse from '../generic/Collapse';
 import HomeAdminActivity from './HomeAdminActivity';
 import HomeAdminNotes from './HomeAdminNotes';
 
+// The HomeAdminPanel component renders additional information for administrative users
 const HomeAdminPanel = ({
   activityList,
   language,

@@ -1,12 +1,11 @@
-// This and its constituent components are intended to provide a simple way of
-// rendering tables consistently, supporting:
-//  filter (matching any part of a row)
-//  pagination (break up long tables)
-//  sorting (on any column)
-//  highlighting (row or single element)
+// The Table component and its constituent components are intended to provide
+// a simple way of rendering tables consistently, supporting:
+//  - filter (matching any part of a row)
+//  - pagination (break up long tables)
+//  - sorting (on any column)
+//  - highlighting (row or single element)
 
-// initially developed for HomeAdminActivity, can also be used for EventResults
-
+// Initially developed for HomeAdminActivity, now also used in EventResults
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
@@ -33,7 +32,6 @@ class Table extends Component {
     showPagination: PropTypes.bool,
     showFilter: PropTypes.bool,
     tableData: PropTypes.arrayOf(PropTypes.object),
-    // highlightRow: boolean, rowData: [ { render:node, sort:string, highlight:boolean} ]
     tableHead: PropTypes.arrayOf(PropTypes.node),
   };
 
@@ -182,21 +180,16 @@ class Table extends Component {
     } = this.state;
     if (!tableData) return null;
     const keyedData = this.getKeyedData(tableData);
-    // console.log('keyedData:', keyedData);
     const filteredData = this.getFilteredData(keyedData, filter);
-    // console.log('filteredData:', filteredData);
     const sortedData = this.getSortedData(filteredData, sortColumn, sortAscending);
-    // console.log('sortedData:', sortedData);
     const totalPages = (showPagination)
       ? this.getTotalPages(sortedData, rowsPerPage)
       : 1;
-    // console.log('totalPages:', totalPages);
     // need this check as filtering may have reduced the total number of pages
     const pageNumberToUse = (pageNumber > totalPages) ? totalPages : pageNumber;
     const pageData = (showPagination)
       ? this.getPageData(sortedData, pageNumberToUse, rowsPerPage)
       : sortedData;
-    // console.log('pageData:', pageData);
 
     return (
       <div className="table-component">
