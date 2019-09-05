@@ -42,18 +42,18 @@ Different types of users will interact with MapOholic in different ways. Any giv
 
 The following user stories describe the key features that I wanted MapOholic to have before starting to use it for real. They were used to guide design and development of each aspect of the application.
 
-1. *Anonymous user*
-  1. As an anonymous visitor, I want to be presented with a clear summary of the application so that I can understand what it is and whether I am interested in investigating further.
-  2. As an anonymous visitor, I want to be able to browse those maps that have been saved without restrictions.
-  3. As an anonymous visitor, I want to be able to sign up for an account so that I can use the application myself.
-  4. As an existing user that is not currently logged in, I want to be able to log in so that I access my map collection. *Access should be password protected, with passwords not being stored in plain text.*
+*Anonymous user*
+1. As an anonymous visitor, I want to be presented with a clear summary of the application so that I can understand what it is and whether I am interested in investigating further.
+2. As an anonymous visitor, I want to be able to browse those maps that have been saved without restrictions.
+3. As an anonymous visitor, I want to be able to sign up for an account so that I can use the application myself.
+4. As an existing user that is not currently logged in, I want to be able to log in so that I access my map collection. *Access should be password protected, with passwords not being stored in plain text.*
 
-2. *Guest user*
-  1. As a guest user, I want to be able to search for and maps that have been published either to all registered users or to members of the same club(s) as the guest account.
-  2. As a guest user, I want to be able to view the maps and associated details that I have access to.
+*Guest user*
+1. As a guest user, I want to be able to search for and maps that have been published either to all registered users or to members of the same club(s) as the guest account.
+2. As a guest user, I want to be able to view the maps and associated details that I have access to.
 
-3. *Standard user*
-  1. Events
+*Standard user*
+  * Events
     1. As a standard user, I want to be able to search for events by name, date, location, etc. so that I can find a specific event of interest.
     2. As a standard user, I want to be able to browse events either in a list or on a map so that I can decide which ones may be of interest to me.
     3. As a standard user, I want to be able to view event details so that I can either confirm that it is the one I was looking for or find out more about it.
@@ -70,28 +70,28 @@ The following user stories describe the key features that I wanted MapOholic to 
     14. As a standard user, I want to be able to limit access to my maps and associated details either to myself, to members of the same club(s), or to signed in users, so that I have control over who can see my data.
     15. As a standard user, I want to be able to exploit the [ORIS API](https://oris.orientacnisporty.cz/API) to quickly import relevant details for Czech events registered in that system so that I don't have to re-enter data already available online.
 
-  2. Users
+  * Users
     1. As a standard user, I want to be able to search for a specific user by name or browse the user list so that I can find other users of interest to me.
     2. As a standard user, I want to be able to view user details so that I can find out more about them.
     3. As a standard user, I want to be able to edit and delete my own user profile so that I can control what others know about me.
     4. As a standard user, I want to be able to limit access to my user profile either to myself, to members of the same club(s), or to signed in users, so that I have control over who can see my data.
 
-  3. Clubs
+  * Clubs
     1. As a standard user, I want to be able to search for a specific club by name or browse a list of clubs so that I can find clubs that are of interest to me.
     2. As a standard user, I want to be able to view club details (including members of the club and events organised by them) so that I can find out more about them.
     3. As a standard user, I want to be able to add a club to the database so that I can identify myself as a member or identify events organised by that club.
     4. As a standard user, I want to be able to edit club details so that I can add or amend information.
     5. As a standard user, I want to be able to delete a club that I have added in error. *This should only be possible if no other users are affected.*
 
-  4. Other
+  * Other
     1. As a standard user, I want to be able to view basic instructions for use of the application so that I can use it effectively.
     2. As a standard user, I want to be able to see a summary of recent activity so that I can identify recent changes of interest and remind myself of what I was recently doing.
     3. As a standard user, I want to remain logged in if the browser restarts so that I don't have to re-enter a password unneccesarily.
     4. As a standard user, I want to be able to log off and clear all locally stored data when I no longer want to use the application.
 
-4. *Admin user*
-  1. As an administrative user, I want to be able to access, edit and delete data across the application so that I can identify and resolve any issues that may arise (performance, data quality, forgotten passwords, etc.).
-  2. As an administrative user, I want to be able to view all users' activity in detail so that I can identify an resolve any issues that may arise.
+*Admin user*
+1. As an administrative user, I want to be able to access, edit and delete data across the application so that I can identify and resolve any issues that may arise (performance, data quality, forgotten passwords, etc.).
+2. As an administrative user, I want to be able to view all users' activity in detail so that I can identify an resolve any issues that may arise.
 
 (Note that the type of data stored in MapOholic is not particularly personal or confidential, so it does not seem unreasonable for an administrator to have wide-ranging access.)
 
