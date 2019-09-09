@@ -52,9 +52,7 @@ class UserDelete extends Component {
           className="ui red button"
           onClick={() => deleteUser(userId, (successful) => {
             if (successful && isSelf) {
-              this.setState({ redirectToLogout: true }, () => {
-                setUserViewMode('none');
-              });
+              this.setState({ redirectToLogout: true });
             }
           })}
         >

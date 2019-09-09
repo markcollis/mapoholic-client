@@ -3,7 +3,7 @@
 // in the config reducer ***
 
 // console.logs server response to every API call made
-export const LOG_API_CALLS = false;
+export const LOG_API_CALLS = true;
 
 // API
 // export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';

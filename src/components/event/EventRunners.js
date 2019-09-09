@@ -21,7 +21,7 @@ const EventRunners = ({
   const { _id: selectedEventId } = selectedEvent;
   if (!selectedEventId) return null;
   const { runners, orisId } = selectedEvent;
-  const isCurrentRunner = runners.some(({ user }) => {
+  const isCurrentRunner = runners && runners.some(({ user }) => {
     const { _id: runnerId } = user;
     return runnerId === currentUserId;
   });

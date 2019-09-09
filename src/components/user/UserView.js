@@ -110,7 +110,7 @@ class UserView extends Component {
     if (!eventList) return [];
     const eventsList = eventList.filter((eachEvent) => {
       const { runners } = eachEvent;
-      const isRunner = runners.some(runner => runner.user === selectedUserId);
+      const isRunner = runners && runners.some(runner => runner.user === selectedUserId);
       return isRunner;
     });
     return eventsList;

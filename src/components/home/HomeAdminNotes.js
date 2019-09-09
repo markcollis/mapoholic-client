@@ -19,6 +19,17 @@ const HomeAdminNotes = () => {
             (in progress)
           </li>
           <li>
+            <del>Bug: error in user event list if event.runners is undefined</del>
+            &nbsp;(fixed 9/9 as well as similar potential issue in EventRunners)
+          </li>
+          <li>
+            <del>Bug: user deleting themselves leads to an actions must be plain objects error</del>
+            &nbsp;(fixed 9/9)
+          </li>
+          <li>
+            React-select uses outdated componentWillReceiveProps - monitor for library update
+          </li>
+          <li>
             When ready to release, replace this component with notes of more relevance
             to the admin _user_, rather than developer. Development notes/issues should
             move to Github.
