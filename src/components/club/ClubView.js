@@ -13,6 +13,7 @@ import ClubHeader from './ClubHeader';
 import ClubList from './ClubList';
 import ClubMembers from './ClubMembers';
 import {
+  cancelClubErrorAction,
   createClubAction,
   deleteClubAction,
   getClubListAction,
@@ -34,6 +35,7 @@ class ClubView extends Component {
     config: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
     user: PropTypes.objectOf(PropTypes.any).isRequired,
+    cancelClubError: PropTypes.func.isRequired,
     createClub: PropTypes.func.isRequired,
     deleteClub: PropTypes.func.isRequired,
     getClubList: PropTypes.func.isRequired,
@@ -241,22 +243,26 @@ class ClubView extends Component {
   }
 
   renderError = () => {
-    const { club, user } = this.props;
+    const { cancelClubError, club } = this.props;
     const { errorMessage } = club;
-    const { errorMessage: userErrorMessage } = user;
-    if (errorMessage || userErrorMessage) {
-      return (
-        <div className="sixteen wide column">
-          {(errorMessage)
-            ? <div className="ui error message"><Trans>{`Error: ${errorMessage}`}</Trans></div>
-            : null}
-          {(userErrorMessage)
-            ? <div className="ui error message"><Trans>{`Error (get user): ${userErrorMessage}`}</Trans></div>
-            : null}
-        </div>
-      );
-    }
-    return null;
+    if (!errorMessage) return null;
+    return (
+      <div className="sixteen wide column">
+        {(errorMessage)
+          ? (
+            <div className="ui error message">
+              <i
+                role="button"
+                className="close icon"
+                onClick={() => cancelClubError()}
+                onKeyPress={() => cancelClubError()}
+                tabIndex="0"
+              />
+              <Trans>{`Error: ${errorMessage}`}</Trans>
+            </div>
+          ) : null}
+      </div>
+    );
   }
 
   renderClubHeader = () => {
@@ -332,17 +338,18 @@ const mapStateToProps = ({
   };
 };
 const mapDispatchToProps = {
-  setClubSearchField: event => setClubSearchFieldAction(event.target.value),
-  setClubViewMode: setClubViewModeAction,
+  cancelClubError: cancelClubErrorAction,
+  createClub: createClubAction,
+  deleteClub: deleteClubAction,
   getClubList: getClubListAction,
   selectClubToDisplay: selectClubToDisplayAction,
   selectEventId: selectEventIdEventsAction, // forwards to Events view
   selectUserToDisplay: selectUserToDisplayAction,
+  setClubSearchField: event => setClubSearchFieldAction(event.target.value),
+  setClubViewMode: setClubViewModeAction,
   setEventViewModeEvent: setEventViewModeEventEventsAction, // forwards to Events view
   setUserViewMode: setUserViewModeAction,
-  createClub: createClubAction,
   updateClub: updateClubAction,
-  deleteClub: deleteClubAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClubView);

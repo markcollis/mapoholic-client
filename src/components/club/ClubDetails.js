@@ -5,6 +5,7 @@ import { Trans } from '@lingui/macro';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import Collapse from '../generic/Collapse';
 import forest from '../../graphics/blueForest.jpg';
+import { countryOptionsLocale } from '../../common/formData';
 
 // The ClubDetails component renders information about the selected club
 const ClubDetails = ({
@@ -34,6 +35,11 @@ const ClubDetails = ({
     createdAt,
     updatedAt,
   } = selectedClub;
+  const countryOptions = countryOptionsLocale[language];
+  const countryMatch = countryOptions.find((eachCountry) => {
+    return eachCountry.value === country;
+  });
+  const countryToDisplay = countryMatch ? countryMatch.label : country;
   const showEdit = (canEdit)
     ? (
       <div>
@@ -81,7 +87,7 @@ const ClubDetails = ({
           <div className="item">
             <i className="marker icon" />
             <div className="content">
-              {country}
+              {countryToDisplay}
             </div>
           </div>
           <div className="item">

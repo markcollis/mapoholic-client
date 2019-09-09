@@ -4,7 +4,7 @@ export const countryCodesConversion = { // for flag icons
   AUS: 'au',
   AUT: 'at',
   BEL: 'be',
-  BUL: 'bg',
+  BGR: 'bg',
   CAN: 'ca',
   CZE: 'cz',
   DEN: 'dk',
@@ -41,9 +41,9 @@ export const countryOptions = [ // limited set of IOF member countries for now
   { value: 'AUS', label: 'AUS: Australia' },
   { value: 'AUT', label: 'AUT: Austria' },
   { value: 'BEL', label: 'BEL: Belgium' },
-  { value: 'BUL', label: 'BUL: Bulgaria' },
+  { value: 'BGR', label: 'BUL: Bulgaria' }, // ISO is BGR but BUL is used for sport
   { value: 'CAN', label: 'CAN: Canada' },
-  { value: 'HRV', label: 'CRO: Croatia' }, // ISO is HRV but CRO is usually used in sport
+  { value: 'HRV', label: 'CRO: Croatia' }, // ISO is HRV but CRO is used for sport
   { value: 'CZE', label: 'CZE: Czech Republic' },
   { value: 'DEN', label: 'DEN: Denmark' },
   { value: 'ESP', label: 'ESP: Spain' },
@@ -79,7 +79,7 @@ export const countryOptionsLocale = {
     { value: 'AUS', label: 'AUS: Austrálie' },
     { value: 'AUT', label: 'AUT: Rakousko' },
     { value: 'BEL', label: 'BEL: Belgie' },
-    { value: 'BUL', label: 'BUL: Bulharsko' },
+    { value: 'BGR', label: 'BUL: Bulharsko' },
     { value: 'CAN', label: 'CAN: Kanada' },
     { value: 'HRV', label: 'CRO: Chorvatsko' },
     { value: 'CZE', label: 'CZE: Česká Republika' },

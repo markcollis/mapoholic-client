@@ -15,9 +15,21 @@ const HomeAdminNotes = () => {
             &nbsp;(front end completed 4/9)
           </li>
           <li>
+            Refactor back end to better separate controller and service functions
+            (in progress)
+          </li>
+          <li>
             When ready to release, replace this component with notes of more relevance
             to the admin _user_, rather than developer. Development notes/issues should
             move to Github.
+          </li>
+          <li>
+            <del>Bug: Club errors not cancellable</del>
+            &nbsp;(fixed 9/9)
+          </li>
+          <li>
+            <del>Display country name in place of abbreviation?</del>
+            &nbsp;(done for ClubDetails 9/9, left as abbreviation for events to save space)
           </li>
         </ol>
       </Collapse>
