@@ -19,14 +19,6 @@ const HomeAdminNotes = () => {
             (in progress)
           </li>
           <li>
-            <del>Bug: error in user event list if event.runners is undefined</del>
-            &nbsp;(fixed 9/9 as well as similar potential issue in EventRunners)
-          </li>
-          <li>
-            <del>Bug: user deleting themselves leads to an actions must be plain objects error</del>
-            &nbsp;(fixed 9/9)
-          </li>
-          <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>
@@ -42,8 +34,20 @@ const HomeAdminNotes = () => {
             <del>Display country name in place of abbreviation?</del>
             &nbsp;(done for ClubDetails 9/9, left as abbreviation for events to save space)
           </li>
-        </ol>
+          <li>
+            <del>Bug: error in user event list if event.runners is undefined</del>
+            &nbsp;(fixed 9/9 as well as similar potential issue in EventRunners)
+          </li>
+          <li>
+            <del>Bug: user deleting themselves leads to an actions must be plain objects error</del>
+            &nbsp;(fixed 9/9)
+          </li>
+          <li>
+            <del>Bug: user list needs refreshCollapse triggered by picture loading</del>
+            &nbsp;(fixed 9/9 using CSS - issue was height:auto profile image size on first render)
+          </li>
       </Collapse>
+      </ol>
       <hr className="divider" />
       <Collapse title="What has already been done:" startHidden>
         <ol>

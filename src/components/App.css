@@ -419,3 +419,6 @@ select, optgroup {
   margin-top: 1em !important;
   margin-bottom: 0 !important;
 }
+.user-list-item--profile-image {
+  height: 80px !important; /* set explicitly so Collapse gets height right on first render */
+}

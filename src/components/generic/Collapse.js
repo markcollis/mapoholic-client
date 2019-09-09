@@ -26,7 +26,7 @@ class Collapse extends Component {
     this.state = {
       hideContent: false,
       contentHeight: null,
-      propsChanged: true,
+      propsChanged: false,
       children: null,
       refreshCollapse: null,
     };

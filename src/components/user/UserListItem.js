@@ -45,7 +45,7 @@ const UserListItem = ({
     >
       <div className="content">
         <img
-          className="left floated ui tiny image"
+          className="left floated ui tiny image user-list-item--profile-image"
           alt="avatar"
           src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
         />
