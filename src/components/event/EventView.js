@@ -25,6 +25,7 @@ import {
   createEventOrisAction,
   deleteEventAction,
   deleteEventLinkAction,
+  getClubListAction,
   getEventByIdAction,
   getEventListAction,
   getEventListOrisAction,
@@ -72,6 +73,7 @@ class EventView extends Component {
     createEventOris: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deleteEventLink: PropTypes.func.isRequired,
+    getClubList: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
     getEventList: PropTypes.func.isRequired,
     getEventListOris: PropTypes.func.isRequired,
@@ -333,6 +335,7 @@ class EventView extends Component {
       createEvent, // different to MapView version
       createEventOris, // different to MapView version
       deleteEvent,
+      getClubList,
       getEventList,
       mineOnly,
       selectEventIdEvents,
@@ -389,6 +392,7 @@ class EventView extends Component {
             eventLinkList={linkList} // prop (oevent)
             eventList={list} // prop (oevent)
             eventMode={eventMode} // prop (oevent)
+            getClubList={getClubList} // prop
             getEventList={getEventList} // prop
             isAdmin={isAdmin} // derived
             language={language} // prop (config)
@@ -420,6 +424,7 @@ class EventView extends Component {
             eventLinkList={linkList} // prop (oevent)
             eventList={list} // prop (oevent)
             eventMode={eventMode} // prop (oevent)
+            getClubList={getClubList} // prop
             getEventList={getEventList} // prop
             isAdmin={isAdmin} // derived
             language={language} // prop (config)
@@ -863,6 +868,7 @@ const mapDispatchToProps = {
   createEventOris: createEventOrisAction,
   deleteEvent: deleteEventAction,
   deleteEventLink: deleteEventLinkAction,
+  getClubList: getClubListAction,
   getEventById: getEventByIdAction,
   getEventList: getEventListAction,
   getEventListOris: getEventListOrisAction,

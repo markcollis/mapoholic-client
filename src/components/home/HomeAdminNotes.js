@@ -50,6 +50,10 @@ const HomeAdminNotes = () => {
             <del>Bug: Matching linked event records not updated when creating event</del>
             &nbsp;(fixed 10/9)
           </li>
+          <li>
+            <del>Bug: clubs created alongside an event automatically are not shown</del>
+            &nbsp;(fixed 10/9 - refresh club list after createEventOris)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />

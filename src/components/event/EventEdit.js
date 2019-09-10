@@ -868,6 +868,7 @@ const formikEventEdit = withFormik({
       eventMode,
       createEvent,
       createEventOris,
+      getClubList,
       updateEvent,
       setEventViewModeEvent,
       selectedEvent,
@@ -912,11 +913,12 @@ const formikEventEdit = withFormik({
       ? values.linkedTo.map(el => el.value)
       : [];
     if (values.owner) valuesToSubmit.owner = values.owner.value;
-    console.log('valuesToSubmit:', valuesToSubmit);
+    // console.log('valuesToSubmit:', valuesToSubmit);
     if (eventMode === 'add') {
       if (values.orisId) {
         createEventOris(values.orisId.value, (didSucceed) => {
           if (didSucceed) {
+            getClubList(); // refresh in case organising club(s) were created automatically
             setEventViewModeEvent('view');
           } else {
             setSubmitting(false);
