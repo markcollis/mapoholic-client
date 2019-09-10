@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // detects interactions with it
 class EventCourseMapCanvasRender extends Component {
   state = {
+    isKeyDown: {},
     isMouseDown: false,
     isMouseOver: false,
     maxPanStep: 10, // pixels

@@ -64,6 +64,10 @@ const HomeAdminNotes = () => {
             </del>
             &nbsp;(fixed 10/9, runner.user._id not runner._id, removed redirect)
           </li>
+          <li>
+            <del>Bug: EventMapViewerCanvasRender crashes when pressing a key immediately</del>
+            &nbsp;(fixed 10/9 - state.isKeyDown not initialised)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
