@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
@@ -20,13 +19,7 @@ class EventRunnerDelete extends Component {
     selectedRunner: null,
   };
 
-  state = {
-    redirectToEventsList: false,
-  };
-
   render() {
-    const { redirectToEventsList } = this.state;
-    if (redirectToEventsList) return <Redirect to="/events" push />;
     const {
       deleteEventRunner,
       language,
@@ -41,8 +34,8 @@ class EventRunnerDelete extends Component {
       date,
       runners,
     } = selectedEvent;
-    const runnerDetails = runners.find((runner) => {
-      const { _id: userId } = runner;
+    const runnerDetails = runners.find(({ user }) => {
+      const { _id: userId } = user;
       return userId === selectedRunner;
     });
     if (!runnerDetails) return null;
@@ -61,7 +54,6 @@ class EventRunnerDelete extends Component {
           onClick={() => {
             deleteEventRunner(eventId, selectedRunner, (didSucceed) => {
               if (didSucceed) {
-                this.setState({ redirectToEventsList: true });
                 setEventViewModeRunner('view');
               }
             });

@@ -19,6 +19,9 @@ const HomeAdminNotes = () => {
             (in progress)
           </li>
           <li>
+            Bug: runner list needs CSS fix (height:auto profile image size on first render)
+          </li>
+          <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>
@@ -53,6 +56,13 @@ const HomeAdminNotes = () => {
           <li>
             <del>Bug: clubs created alongside an event automatically are not shown</del>
             &nbsp;(fixed 10/9 - refresh club list after createEventOris)
+          </li>
+          <li>
+            <del>
+              Bugs: unable to delete runner because EventRunnerDelete is hidden,
+              then redirect is broken due to component being unmounted
+            </del>
+            &nbsp;(fixed 10/9, runner.user._id not runner._id, removed redirect)
           </li>
         </ol>
       </Collapse>
