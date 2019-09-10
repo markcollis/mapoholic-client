@@ -46,8 +46,12 @@ const HomeAdminNotes = () => {
             <del>Bug: user list needs refreshCollapse triggered by picture loading</del>
             &nbsp;(fixed 9/9 using CSS - issue was height:auto profile image size on first render)
           </li>
+          <li>
+            <del>Bug: Matching linked event records not updated when creating event</del>
+            &nbsp;(fixed 10/9)
+          </li>
+        </ol>
       </Collapse>
-      </ol>
       <hr className="divider" />
       <Collapse title="What has already been done:" startHidden>
         <ol>

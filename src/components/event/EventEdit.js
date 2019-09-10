@@ -887,10 +887,18 @@ const formikEventEdit = withFormik({
     valuesToSubmit.locRegions = (values.locRegions && values.locRegions.length > 0)
       ? values.locRegions.map(el => el.value)
       : [];
-    valuesToSubmit.locCornerNW = [values.locCornerNWLat, values.locCornerNWLong];
-    valuesToSubmit.locCornerNE = [values.locCornerNELat, values.locCornerNELong];
-    valuesToSubmit.locCornerSW = [values.locCornerSWLat, values.locCornerSWLong];
-    valuesToSubmit.locCornerSE = [values.locCornerSELat, values.locCornerSELong];
+    if (typeof values.locCornerNWLat === 'number' && typeof values.locCornerNWLong === 'number') {
+      valuesToSubmit.locCornerNW = [values.locCornerNWLat, values.locCornerNWLong];
+    }
+    if (typeof values.locCornerNELat === 'number' && typeof values.locCornerNELong === 'number') {
+      valuesToSubmit.locCornerNE = [values.locCornerNELat, values.locCornerNELong];
+    }
+    if (typeof values.locCornerSWLat === 'number' && typeof values.locCornerSWLong === 'number') {
+      valuesToSubmit.locCornerSW = [values.locCornerSWLat, values.locCornerSWLong];
+    }
+    if (typeof values.locCornerSELat === 'number' && typeof values.locCornerSELong === 'number') {
+      valuesToSubmit.locCornerSE = [values.locCornerSELat, values.locCornerSELong];
+    }
     valuesToSubmit.types = (values.types && values.types.length > 0)
       ? values.types.map(el => el.value)
       : [];
@@ -904,7 +912,7 @@ const formikEventEdit = withFormik({
       ? values.linkedTo.map(el => el.value)
       : [];
     if (values.owner) valuesToSubmit.owner = values.owner.value;
-    // console.log('valuesToSubmit:', valuesToSubmit);
+    console.log('valuesToSubmit:', valuesToSubmit);
     if (eventMode === 'add') {
       if (values.orisId) {
         createEventOris(values.orisId.value, (didSucceed) => {
