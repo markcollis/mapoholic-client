@@ -19,9 +19,6 @@ const HomeAdminNotes = () => {
             (same with deleting)
           </li>
           <li>
-            Enhancement: disable delete user profile image button when not present
-          </li>
-          <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>
@@ -91,6 +88,10 @@ const HomeAdminNotes = () => {
           <li>
             <del>Bug: recent activity does not include current session</del>
             &nbsp;(added sessionActivity 11/9, a few gaps in data where not detectable from payload)
+          </li>
+          <li>
+            <del>Enhancement: disable delete user profile image button when not present</del>
+            &nbsp;(done 11/9)
           </li>
         </ol>
       </Collapse>

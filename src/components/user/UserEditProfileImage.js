@@ -33,7 +33,8 @@ class UserEditProfileImage extends Component {
       hide,
       deleteProfileImage,
     } = this.props;
-    const { _id: userId } = user;
+    const { _id: userId, profileImage } = user;
+    const hasProfileImage = profileImage && profileImage !== '';
     const dropzoneIcon = <i className="image big icon" />;
     const dropzoneText = (
       <div>
@@ -64,6 +65,7 @@ class UserEditProfileImage extends Component {
         <button
           type="button"
           className="ui tiny negative button"
+          disabled={!hasProfileImage}
           onClick={() => deleteProfileImage(userId)}
         >
           <Trans>Delete current</Trans>
