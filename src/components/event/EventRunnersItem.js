@@ -41,7 +41,7 @@ const EventRunnersItem = ({
 
   const avatar = (
     <img
-      className="ui mini image left floated"
+      className="ui mini image left floated event-runners-item--profile-image"
       alt="avatar"
       src={(profileImage !== '') ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
     />

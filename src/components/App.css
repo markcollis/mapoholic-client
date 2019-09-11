@@ -370,6 +370,9 @@ select, optgroup {
 .event-runners-item__deleted { /* only admin users should ever see this */
   color: red !important;
 }
+.event-runners-item--profile-image {
+  height: 35px !important; /* set explicitly so Collapse gets height right on first render */
+}
 /* settings for EventThumbnails */
 .event-thumbnails {
   background-color: transparent;
