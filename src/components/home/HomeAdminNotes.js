@@ -15,24 +15,11 @@ const HomeAdminNotes = () => {
             &nbsp;(front end completed 4/9)
           </li>
           <li>
-            Refactor back end to better separate controller and service functions
-            (in progress)
-          </li>
-          <li>
-            Bug: runner list needs CSS fix (height:auto profile image size on first render)
-          </li>
-          <li>
             Bug: when creating a new event link it is not reflected in the event details
             (same with deleting)
           </li>
           <li>
-            Bug: recent activity does not include current session
-          </li>
-          <li>
-            <del>
-              Bug: spread non-iterable instance when deleting event link that includes current event
-            </del>
-            &nbsp;(fixed 11/9)
+            Enhancement: disable delete user profile image button when not present
           </li>
           <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
@@ -80,6 +67,30 @@ const HomeAdminNotes = () => {
           <li>
             <del>Bug: EventMapViewerCanvasRender crashes when pressing a key immediately</del>
             &nbsp;(fixed 10/9 - state.isKeyDown not initialised)
+          </li>
+          <li>
+            <del>
+              Bug: spread non-iterable instance when deleting event link that includes current event
+            </del>
+            &nbsp;(fixed 11/9)
+          </li>
+          <li>
+            <del>Refactor back end to better separate controller and service functions</del>
+            &nbsp;(completed 11/9)
+          </li>
+          <li>
+            <del>
+              Bug: runner list needs CSS fix (height:auto profile image size on first render)
+            </del>
+            &nbsp;(done 11/9)
+          </li>
+          <li>
+            <del>Bug: User profile image behaviour when deleting (server error)</del>
+            &nbsp;(fixed 11/9 - needed to getUserById first to get profileImage location)
+          </li>
+          <li>
+            <del>Bug: recent activity does not include current session</del>
+            &nbsp;(added sessionActivity 11/9, a few gaps in data where not detectable from payload)
           </li>
         </ol>
       </Collapse>

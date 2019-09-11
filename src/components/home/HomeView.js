@@ -54,6 +54,42 @@ class HomeView extends Component {
     refreshCollapseAdminActivity: 0,
   };
 
+  // helper to populate current session activity with full details
+  populateActivitySession = memoize((activitySession) => {
+    const { currentUser, eventList, userList } = this.props;
+    return activitySession.map((eachActivity) => {
+      const actionByToRender = { ...currentUser, active: true };
+      if (eachActivity.eventId && eachActivity.runnerId) {
+        const eventToRender = eventList.find((event) => {
+          const { _id: id } = event;
+          return (id === eachActivity.eventId);
+        });
+        const eventRunnerToRender = userList.find((user) => {
+          const { _id: userId } = user;
+          return (userId === eachActivity.runnerId);
+        });
+        return {
+          ...eachActivity,
+          actionBy: actionByToRender,
+          event: { ...eventToRender, active: true },
+          eventRunner: { ...eventRunnerToRender, active: true },
+        };
+      }
+      if (eachActivity.userId) {
+        const userToRender = userList.find((user) => {
+          const { _id: userId } = user;
+          return (userId === eachActivity.userId);
+        });
+        return {
+          ...eachActivity,
+          actionBy: actionByToRender,
+          user: { ...userToRender, active: true },
+        };
+      }
+      return { ...eachActivity, actionBy: actionByToRender };
+    });
+  });
+
   componentDidMount() {
     this.getActivityLists();
   }
@@ -198,17 +234,47 @@ class HomeView extends Component {
     const {
       activity,
       currentUser,
+      // eventList,
       language,
       userList,
     } = this.props;
-    const { activityOwn, activityAll } = activity;
+    const { activityOwn, activityAll, activitySession } = activity;
     if (!currentUser) return null;
     const { role } = currentUser;
+    const activitySessionToRender = this.populateActivitySession(activitySession);
+    // const activitySessionToRender = activitySession.map((eachActivity) => {
+    //   const actionByToRender = { ...currentUser, active: true };
+    //   if (eachActivity.eventId && eachActivity.runnerId) {
+    //     const eventToRender = eventList.find((event) => {
+    //       const { _id: id } = event;
+    //       return (id === eachActivity.eventId);
+    //     });
+    //     const eventRunnerToRender = userList.find((user) => {
+    //       const { _id: userId } = user;
+    //       return (userId === eachActivity.runnerId);
+    //     });
+    //     return {
+    //       ...eachActivity,
+    //       actionBy: actionByToRender,
+    //       event: eventToRender,
+    //       eventRunner: eventRunnerToRender,
+    //     };
+    //   }
+    //   return { ...eachActivity, actionBy: actionByToRender };
+    // });
+    const activityOwnToRender = (activityOwn)
+      ? activitySessionToRender.concat(activityOwn) : activitySessionToRender;
+    const activityAllToRender = (activityAll)
+      ? activitySessionToRender.concat(activityAll) : activitySessionToRender;
     if (role === 'guest') {
       return (
         <div className="sixteen wide column">
           <ErrorBoundary>
-            <HomeRecent activityList={activityAll} language={language} userList={userList} />
+            <HomeRecent
+              activityList={activityAllToRender}
+              language={language}
+              userList={userList}
+            />
           </ErrorBoundary>
         </div>
       );
@@ -218,7 +284,7 @@ class HomeView extends Component {
         <div className="eight wide column">
           <ErrorBoundary>
             <HomeRecent
-              activityList={activityOwn}
+              activityList={activityOwnToRender}
               language={language}
               isOwn
               userList={userList}
@@ -228,7 +294,7 @@ class HomeView extends Component {
         <div className="eight wide column">
           <ErrorBoundary>
             <HomeRecent
-              activityList={activityAll}
+              activityList={activityAllToRender}
               language={language}
               isAll
               userList={userList}
@@ -245,12 +311,21 @@ class HomeView extends Component {
     const { refreshCollapseAdminActivity } = this.state;
     const { role } = currentUser;
     if (role !== 'admin') return null;
-    const { activityAdmin } = activity;
+    const { activityAdmin, activitySession } = activity;
+    // console.log('activitySession', activitySession);
+    if (!activityAdmin) return null;
+    const activitySessionToRender = this.populateActivitySession(activitySession);
+    const activityListToRender = activitySessionToRender.concat(activityAdmin);
+    // const activityListToRender = activitySession.map((eachActivity) => {
+    //   const actionByToRender = { ...currentUser, active: true };
+    //   return { ...eachActivity, actionBy: actionByToRender };
+    // }).concat(activityAdmin);
+    // console.log('activityListToRender:', activityListToRender);
     return (
       <div className="sixteen wide column">
         <ErrorBoundary>
           <HomeAdminPanel
-            activityList={activityAdmin}
+            activityList={activityListToRender}
             language={language}
             refreshCollapse={refreshCollapseAdminActivity}
             requestRefreshCollapse={this.requestRefreshCollapseAdminActivity}

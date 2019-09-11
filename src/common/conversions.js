@@ -1,9 +1,14 @@
 // Utility functions related to date and time formats
 
+const isValidDate = (date) => {
+  return date && Object.prototype.toString.call(date) === '[object Date]' && !Number.isNaN(date);
+};
+
 // For event dates - does not need to take timezones into account as only the
 // date is stored (as a string). Do not use for timestamps (create/update).
 // convert JS Date to YYYY-MM-DD
 export const dateToDateString = (date) => {
+  if (!isValidDate(date)) return 'invalid date';
   // console.log('date:', date);
   const yyyy = date.getFullYear().toString();
   const month = (date.getMonth() + 1).toString(); // correct for zero-base
@@ -31,6 +36,7 @@ export const dateStringToDate = (dateString) => {
 // convert YYYY-MM-DDThh:mm:ss.xxxZ to DD/MM/YYYY
 // e.g. '2019-05-15T05:41:44.478Z' to '15/05/2019' (en-GB) or '15. 5. 2019' (cs)
 export const reformatTimestampDateOnly = (timestamp, locale = 'default') => {
+  if (!timestamp) return null;
   let localeToUse = locale;
   if (locale === 'en') localeToUse = 'en-GB';
   const newDate = new Date(timestamp);
@@ -57,6 +63,7 @@ export const reformatTimestampDateOnly = (timestamp, locale = 'default') => {
 // e.g. en-GB '2019-05-15T05:41:44.478Z' to '15/05/2019, 07:41'
 // e.g. cs '2019-05-15T05:41:44.478Z' to '15. 5. 2019 07:41'
 export const reformatTimestamp = (timestamp, locale = 'default') => {
+  if (!timestamp) return null;
   let localeToUse = locale;
   if (locale === 'en') localeToUse = 'en-GB';
   const newDate = new Date(timestamp);
