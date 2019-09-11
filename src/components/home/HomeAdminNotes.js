@@ -22,6 +22,19 @@ const HomeAdminNotes = () => {
             Bug: runner list needs CSS fix (height:auto profile image size on first render)
           </li>
           <li>
+            Bug: when creating a new event link it is not reflected in the event details
+            (same with deleting)
+          </li>
+          <li>
+            Bug: recent activity does not include current session
+          </li>
+          <li>
+            <del>
+              Bug: spread non-iterable instance when deleting event link that includes current event
+            </del>
+            &nbsp;(fixed 11/9)
+          </li>
+          <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>

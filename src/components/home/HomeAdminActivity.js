@@ -117,7 +117,7 @@ class HomeAdminActivity extends Component {
     );
   };
 
-  renderEventLink = (activity, language) => {
+  renderEventDetailsLink = (activity, language) => {
     const { event } = activity;
     if (!event) return '...';
     const {
@@ -176,7 +176,7 @@ class HomeAdminActivity extends Component {
       refreshCollapse,
       requestRefreshCollapse,
     } = this.props;
-    const tableHead = ['actionBy', 'actionType', 'club', 'event', 'eventRunner', 'linkedEvent', 'user', 'timestamp'];
+    const tableHead = ['actionBy', 'actionType', 'club', 'event', 'eventRunner', 'eventLink', 'user', 'timestamp'];
     const tableData = (activityList)
       ? (
         activityList.map((activity) => {
@@ -186,7 +186,7 @@ class HomeAdminActivity extends Component {
             club,
             event,
             eventRunner,
-            linkedEvent,
+            eventLink, // originally linkedEvent, may cause issues with old data
             user,
             timestamp,
           } = activity;
@@ -195,11 +195,11 @@ class HomeAdminActivity extends Component {
           const actionTypeText = actionType;
           const clubLink = (club) ? this.renderClubLink(activity) : '';
           const clubText = (club) ? club.shortName : '';
-          const eventLink = (event) ? this.renderEventLink(activity, language) : '';
-          const eventText = (event) ? `${event.name} (${event.date})` : '';
+          const eventDetailsLink = (event) ? this.renderEventDetailsLink(activity, language) : '';
+          const eventDetailsText = (event) ? `${event.name} (${event.date})` : '';
           const eventRunnerLink = (eventRunner) ? this.renderEventRunnerLink(activity) : '';
           const eventRunnerText = (eventRunner) ? eventRunner.displayName : '';
-          const linkedEventText = (linkedEvent) ? linkedEvent.displayName : '';
+          const eventLinkText = (eventLink) ? eventLink.displayName : '';
           const timestampText = reformatTimestamp(timestamp, language);
           const userLink = (user) ? this.renderUserLink(activity) : '';
           const userText = (user) ? user.displayName : '';
@@ -209,9 +209,9 @@ class HomeAdminActivity extends Component {
               { render: actionByLink, sort: actionByText },
               { render: actionTypeText },
               { render: clubLink, sort: clubText },
-              { render: eventLink, sort: eventText },
+              { render: eventDetailsLink, sort: eventDetailsText },
               { render: eventRunnerLink, sort: eventRunnerText },
-              { render: linkedEventText },
+              { render: eventLinkText },
               { render: userLink, sort: userText },
               { render: timestampText },
             ],

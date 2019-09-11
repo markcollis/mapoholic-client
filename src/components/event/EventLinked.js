@@ -19,14 +19,14 @@ const EventLinked = ({
 }) => {
   const { _id: eventId } = selectedEvent;
   if (!eventId) return null;
-  if (!linkData) {
+  const { _id: linkId, displayName, includes } = linkData;
+  if (!linkId) {
     return (
       <div className="ui warning message">
         <Trans>Event link details not found</Trans>
       </div>
     );
   }
-  const { _id: linkId, displayName, includes } = linkData;
   const sortedLinkedEventArray = [...includes].sort((a, b) => {
     if (a.date < b.date) return 1;
     if (a.date > b.date) return -1;

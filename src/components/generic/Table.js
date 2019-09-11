@@ -76,7 +76,9 @@ class Table extends Component {
     const filteredData = keyedData.filter((data) => {
       const { rowData } = data;
       const matching = rowData.filter((element) => {
-        const test = element.sort.toLowerCase();
+        const { sort } = element;
+        if (typeof sort !== 'string') return false;
+        const test = sort.toLowerCase();
         return (test.includes(target));
       });
       const matchFound = matching.length > 0;
