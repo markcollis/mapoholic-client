@@ -11,20 +11,10 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do before first release:">
         <ol>
           <li>
-            <del>Write README for front end</del>
-            &nbsp;(completed 4/9)
-          </li>
-          <li>
-            Write RELEASE_NOTES_1_0_0 for front end
-          </li>
-          <li>
             Write README for back end
           </li>
           <li>
             Write RELEASE_NOTES_1_0_0 for back end
-          </li>
-          <li>
-            Convert image paths to full URLs ON SERVER to support future hosting separate from API
           </li>
           <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
@@ -440,6 +430,10 @@ const HomeAdminNotes = () => {
             (done all except long paragraphs on Home page 29/6, Blanka reviewing, completed 4/9)
           </li>
           <li>
+            <del>Write README for front end</del>
+            &nbsp;(completed 4/9)
+          </li>
+          <li>
             <del>Find a better picture of me for the front page</del>
             &nbsp;(done 5/9)
           </li>
@@ -532,6 +526,16 @@ const HomeAdminNotes = () => {
               (same with deleting - updating seems to be OK)
             </del>
             &nbsp;(fixed 11/9)
+          </li>
+          <li>
+            <del>Write RELEASE_NOTES_1_0_0 for front end</del>
+            &nbsp;(done 12/9)
+          </li>
+          <li>
+            <del>
+              Convert image paths to full URLs ON SERVER to support future hosting separate from API
+            </del>
+            &nbsp;(done 12/9)
           </li>
         </ol>
       </Collapse>

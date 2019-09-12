@@ -6,14 +6,14 @@
 export const LOG_API_CALLS = true;
 
 // API
-// export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';
+export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';
 
 // crius on Wifi (Seven)
 // export const MAPOHOLIC_SERVER = 'https://192.168.0.15:3090';
 // export const MAPOHOLIC_SERVER = 'http://192.168.0.15:3090';
 
 // crius as localhost if no internet connection and using a local test DB
-export const MAPOHOLIC_SERVER = 'http://localhost:3090';
+// export const MAPOHOLIC_SERVER = 'http://localhost:3090';
 
 // Tile set and credit for Leaflet maps (OpenStreetMap)
 // (used in EventMap, EventLocationMap, EventEditLocationMap components)
