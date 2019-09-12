@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
 import FileDropzone from '../generic/FileDropzone';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The EventMapViewerEdit component renders fields for uploading course and route maps
 // for each named instance, and for editing the map title
@@ -199,7 +198,7 @@ class EventMapViewerEdit extends Component {
       ? `${course.slice(0, -4)}-thumb${course.slice(-4)}?${courseUpdated}`
       : null;
     const renderCourseThumbnail = (courseThumbnail)
-      ? <img src={`${MAPOHOLIC_SERVER}/${courseThumbnail}`} alt="course thumbnail" />
+      ? <img src={courseThumbnail} alt="course thumbnail" />
       : (
         <div>
           <i className="close icon" />
@@ -210,7 +209,7 @@ class EventMapViewerEdit extends Component {
       ? `${route.slice(0, -4)}-thumb${route.slice(-4)}?${routeUpdated}`
       : null;
     const renderRouteThumbnail = (routeThumbnail)
-      ? <img src={`${MAPOHOLIC_SERVER}/${routeThumbnail}`} alt="route thumbnail" />
+      ? <img src={routeThumbnail} alt="route thumbnail" />
       : (
         <div>
           <i className="close icon" />

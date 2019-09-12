@@ -153,6 +153,15 @@ If you want to customise the front end to explore alternative ways to exploit th
 
 If you want to host your own instance, whether locally or publicly, you will need to download and install the [back end](https://github.com/markcollis/mapoholic-server) first, then build a version of the front end linking to the appropriate API.
 
+## Release History
+
+Not yet formally released (1.0.0 expected late September 2019).
+
+<!-- |Version|Document                                             |Date     |Purpose               |
+|-------|-----------------------------------------------------|--------:|----------------------|
+|1.0.0  |[Release Notes](release_notes/RELEASE_NOTES_1_0_0.md)|xx/9/2019|Initial public release| -->
+
+
 ## Installation
 
 ```bash
@@ -160,7 +169,6 @@ git clone https//github.com/markcollis/mapoholic-client.git
 cd mapoholic-client
 yarn install
 ```
-
 ## Usage
 
 ```bash

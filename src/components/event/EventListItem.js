@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro';
 
 import { typesOptionsLocale } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The EventListItem component renders key information about an event as a selectable list item
 const EventListItem = ({
@@ -39,13 +38,10 @@ const EventListItem = ({
       }
     });
   }
-  const extractUrl = (mapExtractToDisplay)
-    ? `${MAPOHOLIC_SERVER}/${mapExtractToDisplay}`
-    : null;
   const cardStyle = (mapExtractToDisplay)
     ? (
       {
-        backgroundImage: `url(${extractUrl})`,
+        backgroundImage: `url(${mapExtractToDisplay})`,
         backgroundSize: 'cover',
       }
     )

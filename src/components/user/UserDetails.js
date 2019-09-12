@@ -5,7 +5,6 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import forest from '../../graphics/blueForest.jpg';
 import noAvatar from '../../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../../config';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
 // The UserDetails component renders full details about a user
@@ -83,7 +82,7 @@ const UserDetails = ({
         <img
           className="user-details__profile-image"
           alt="avatar"
-          src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+          src={profileImage || noAvatar}
         />
       </div>
       <div>

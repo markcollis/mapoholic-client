@@ -15,15 +15,12 @@ import {
   EVENT_RUNNER_ADDED,
   EVENT_RUNNER_UPDATED,
   EVENT_RUNNER_DELETED,
-
   EVENT_COMMENT_ADDED,
   EVENT_COMMENT_UPDATED,
   EVENT_COMMENT_DELETED,
-
   EVENT_LINK_CREATED,
   EVENT_LINK_UPDATED,
   EVENT_LINK_DELETED,
-
   USER_UPDATED,
   USER_CHANGED_PASSWORD,
   USER_POSTED_IMAGE,
@@ -80,7 +77,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     case CLUB_CREATED:
     case CLUB_UPDATED:
     case CLUB_DELETED: {
-      if (LOG_API_CALLS) console.log('CLUB_* payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('CLUB_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -101,7 +98,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     case EVENT_RUNNER_ADDED:
     case EVENT_RUNNER_UPDATED:
     case EVENT_RUNNER_DELETED: {
-      if (LOG_API_CALLS) console.log('EVENT_(RUNNER_)* payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('EVENT_(RUNNER_)* payload:', action.payload);
       const newActivity = { // eventRunner can not be identified from payload
         actionType: action.type,
         timestamp: new Date(),
@@ -119,7 +116,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     }
     case EVENT_MAP_UPLOADED:
     case EVENT_MAP_DELETED: {
-      if (LOG_API_CALLS) console.log('EVENT_MAP_* payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('EVENT_MAP_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -146,7 +143,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         EVENT_COMMENT_UPDATED: 'COMMENT_UPDATED',
         EVENT_COMMENT_DELETED: 'COMMENT_DELETED',
       };
-      if (LOG_API_CALLS) console.log('EVENT_COMMENT_* payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('EVENT_COMMENT_* payload:', action.payload);
       const newActivity = { // commentId can not be identified from payload
         actionType: commentActionTypes[action.type],
         timestamp: new Date(),
@@ -161,7 +158,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     case EVENT_LINK_CREATED:
     case EVENT_LINK_UPDATED:
     case EVENT_LINK_DELETED: {
-      if (LOG_API_CALLS) console.log('EVENT_LINK_* payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('EVENT_LINK_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -177,7 +174,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     }
     case USER_UPDATED:
     case USER_DELETED: {
-      if (LOG_API_CALLS) console.log('USER_* payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('USER_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -189,7 +186,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case USER_CHANGED_PASSWORD: {
-      if (LOG_API_CALLS) console.log('USER_CHANGED_PASSWORD payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('USER_CHANGED_PASSWORD payload:', action.payload);
       const newActivity = {
         actionType: 'USER_UPDATED',
         timestamp: new Date(),
@@ -201,7 +198,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case USER_POSTED_IMAGE: {
-      if (LOG_API_CALLS) console.log('USER_POSTED_IMAGE payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('USER_POSTED_IMAGE payload:', action.payload);
       const newActivity = {
         actionType: 'USER_UPDATED',
         timestamp: new Date(),
@@ -214,7 +211,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case USER_DELETED_IMAGE: {
-      if (LOG_API_CALLS) console.log('USER_DELETED_IMAGE payload:', action.payload);
+      // if (LOG_API_CALLS) console.log('USER_DELETED_IMAGE payload:', action.payload);
       const newActivity = {
         actionType: 'USER_UPDATED',
         timestamp: new Date(),

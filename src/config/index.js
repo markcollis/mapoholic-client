@@ -26,3 +26,8 @@ export const MAP_CREDIT = '&copy; <a href="https://www.openstreetmap.org/copyrig
 
 // Number of activities to show in HomeRecent
 export const DEFAULT_ACTIVITY_LENGTH = 10;
+
+// current version number (updated with every release)
+export const MAPOHOLIC_VERSION = '1.0.0';
+// year current version created (update as required)
+export const MAPOHOLIC_VERSION_YEAR = '2019';

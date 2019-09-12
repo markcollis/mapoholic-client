@@ -189,6 +189,22 @@ const getUpdatedListEventLink = (list, eventLink) => {
   return newList;
 };
 
+const getUpdatedListEventLinkDeleted = (list, eventLinkId) => {
+  // console.log('updating list:', list, eventLinkId);
+  if (!eventLinkId) return list;
+  const newList = list.map((eachEvent) => {
+    const { linkedTo } = eachEvent;
+    const nowLinked = linkedTo.some(link => link._id === eventLinkId);
+    if (nowLinked) { // remove from array
+      // console.log('removed from', eachEvent._id);
+      const newLinkedTo = linkedTo.filter(link => (link._id !== eventLinkId));
+      return { ...eachEvent, linkedTo: newLinkedTo };
+    }
+    return eachEvent; // otherwise do nothing
+  });
+  return newList;
+};
+
 const getUpdatedDetailsEventLink = (details, eventLink) => {
   // console.log('updating details:', details, eventLink);
   if (!eventLink) return details;
@@ -211,6 +227,25 @@ const getUpdatedDetailsEventLink = (details, eventLink) => {
       newDetails[eventId] = { ...details[eventId], linkedTo: newLinkedTo };
     } else if (nowLinked && !shouldBeLinked) { // remove from array
       const newLinkedTo = eventLinkedTo.filter(linkedEvent => (linkedEvent._id !== eventLinkId));
+      newDetails[eventId] = { ...details[eventId], linkedTo: newLinkedTo };
+    } else { // do nothing
+      newDetails[eventId] = details[eventId];
+    }
+  });
+  return newDetails;
+};
+
+const getUpdatedDetailsEventLinkDeleted = (details, eventLinkId) => {
+  // console.log('updating details:', details, eventLinkId);
+  if (!eventLinkId) return details;
+  const newDetails = {};
+  const eventIds = Object.keys(details);
+  eventIds.forEach((eventId) => {
+    const eventLinkedTo = details[eventId].linkedTo;
+    const nowLinked = eventLinkedTo.some(eventLink => eventLink._id === eventLinkId);
+    if (nowLinked) { // remove from array
+      // console.log('deleting from', eventId);
+      const newLinkedTo = eventLinkedTo.filter(eventLink => (eventLink._id !== eventLinkId));
       newDetails[eventId] = { ...details[eventId], linkedTo: newLinkedTo };
     } else { // do nothing
       newDetails[eventId] = details[eventId];
@@ -244,7 +279,6 @@ const INITIAL_STATE = {
   selectedRunner: '', // userId of runner to display maps for
   // API calls
   details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
-  // linkDetails: {}, // all link list records downloaded/updated REDUNDANT
   linkList: null, // replaced each time API is queried
   list: null, // replaced each time API is queried, also populates corresponding details
   orisList: null, // replaced each time API is queried, list specific to current user
@@ -508,32 +542,33 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       if (LOG_API_CALLS) console.log('EVENT_LINK_CREATED payload:', action.payload);
       return {
         ...state,
+        details: getUpdatedDetailsEventLink(state.details, action.payload),
         errorMessage: '',
         linkList: [...state.linkList, action.payload],
-        // linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
+        list: getUpdatedListEventLink(state.list, action.payload),
       };
       // *** need to add appropriate updates to details, list and linkedList *** //
     case EVENT_LINK_UPDATED: // replace entry in linkList, update list and details entries
       if (LOG_API_CALLS) console.log('EVENT_LINK_UPDATED payload:', action.payload);
       return {
         ...state,
+        details: getUpdatedDetailsEventLink(state.details, action.payload),
+        errorMessage: '',
         linkList: state.linkList.map((link) => {
           if (link._id === action.payload._id) return action.payload;
           return link;
         }),
         list: getUpdatedListEventLink(state.list, action.payload),
-        details: getUpdatedDetailsEventLink(state.details, action.payload),
-        // linkDetails: { ...state.linkDetails, [action.payload._id]: action.payload },
-        errorMessage: '',
       };
       // *** need to add appropriate updates to details, list and linkedList *** //
     case EVENT_LINK_DELETED: // remove entry from linkList,
       if (LOG_API_CALLS) console.log('EVENT_LINK_DELETED payload:', action.payload);
       return {
         ...state,
-        // linkDetails: { ...state.linkDetails, [action.payload._id]: null },
-        linkList: removeFromListById(state.linkList, action.payload._id),
+        details: getUpdatedDetailsEventLinkDeleted(state.details, action.payload._id),
         errorMessage: '',
+        linkList: removeFromListById(state.linkList, action.payload._id),
+        list: getUpdatedListEventLinkDeleted(state.list, action.payload._id),
         selectedEventLinkId: '',
       };
       // *** need to add appropriate updates to details, list and linkedList *** //

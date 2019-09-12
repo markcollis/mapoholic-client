@@ -13,7 +13,6 @@ import {
   setLanguageAction,
 } from '../actions';
 import noAvatar from '../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../config';
 
 // The Header component is always rendered at the top of every page
 class Header extends Component {
@@ -135,7 +134,7 @@ class Header extends Component {
           <img
             className="ui avatar image"
             alt="avatar"
-            src={(current && current.profileImage) ? `${MAPOHOLIC_SERVER}/${current.profileImage}` : noAvatar}
+            src={(current && current.profileImage) ? current.profileImage : noAvatar}
           />
           {`  ${current.displayName}`}
         </div>

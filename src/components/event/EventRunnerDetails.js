@@ -6,7 +6,6 @@ import { Trans } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import { visibilityOptionsLocale } from '../../common/formData';
 import noAvatar from '../../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The EventRunnerDetails component renders detailed information about a runner and
 // their particular run at a particular event
@@ -70,7 +69,7 @@ const EventRunnerDetails = ({
       onLoad={() => {
         requestRefreshCollapse();
       }}
-      src={(profileImage !== '') ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+      src={profileImage || noAvatar}
     />
   );
 

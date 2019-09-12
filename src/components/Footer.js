@@ -1,5 +1,7 @@
 import React from 'react';
+
 import forestBar from '../graphics/blueForestBarWide.jpg';
+import { MAPOHOLIC_VERSION, MAPOHOLIC_VERSION_YEAR } from '../config';
 
 // The Footer component is always rendered at the bottom of every page
 const Footer = () => {
@@ -13,9 +15,12 @@ const Footer = () => {
       >
       MapOholic
       </a>
+      &nbsp;v
+      {MAPOHOLIC_VERSION}
       &nbsp;&copy;&nbsp;
       <a href="mailto:mark@markcollis.dev">Mark Collis</a>
-      &nbsp;2019
+      &nbsp;
+      {MAPOHOLIC_VERSION_YEAR}
     </div>
   );
 };

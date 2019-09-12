@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import noAvatar from '../../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The EventRunnersItem component renders key information about a runner as a selectable list item
 const EventRunnersItem = ({
@@ -43,7 +42,7 @@ const EventRunnersItem = ({
     <img
       className="ui mini image left floated event-runners-item--profile-image"
       alt="avatar"
-      src={(profileImage !== '') ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+      src={profileImage || noAvatar}
     />
   );
 

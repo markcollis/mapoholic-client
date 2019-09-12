@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import { reformatTimestamp } from '../../common/conversions';
 import noAvatar from '../../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The EventCommentsItem component renders and individual comment
 class EventCommentsItem extends Component {
@@ -183,7 +182,7 @@ class EventCommentsItem extends Component {
       <img
         className="ui mini image left floated"
         alt="avatar"
-        src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+        src={profileImage || noAvatar}
       />
     );
     const header = (fullName === '')

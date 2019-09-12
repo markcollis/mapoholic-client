@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 import EventMapViewerCanvas from './EventMapViewerCanvas';
 import EventMapViewerDetails from './EventMapViewerDetails';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The EventMapViewer component is the top level container for all maps associated with
 // a particular runner at a particular event
@@ -114,9 +113,9 @@ class EventMapViewer extends Component {
           title,
           empty: false,
           preferType,
-          srcCourse: (hasCourseMap) ? `${MAPOHOLIC_SERVER}/${course}?${courseUpdated}` : null,
+          srcCourse: (hasCourseMap) ? `${course}?${courseUpdated}` : null,
           altCourse: (hasCourseMap) ? `${(title === '') ? 'map' : title}: course` : null,
-          srcRoute: (hasRouteMap) ? `${MAPOHOLIC_SERVER}/${route}?${routeUpdated}` : null,
+          srcRoute: (hasRouteMap) ? `${route}?${routeUpdated}` : null,
           altRoute: (hasRouteMap) ? `${(title === '') ? 'map' : title}: route` : null,
         };
       })
@@ -249,9 +248,8 @@ class EventMapViewer extends Component {
           displayName,
           courseTitle,
           mapTitle,
-          overlay: filename,
+          overlay: overlayPath,
         } = overlay;
-        const overlayPath = `${MAPOHOLIC_SERVER}/${filename}`;
         const overlayOrder = selectedOverlays.indexOf(overlayPath) + 1;
         const checked = (overlayOrder > 0);
         let routeName = displayName;
@@ -266,7 +264,7 @@ class EventMapViewer extends Component {
         }
         return (
           <li
-            key={filename}
+            key={overlayPath}
             className={`event-map-viewer-canvas-render__overlay-${overlayOrder}`}
           >
             <input

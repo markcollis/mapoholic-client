@@ -11,87 +11,28 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do before first release:">
         <ol>
           <li>
-            Write a proper README for each repository
-            &nbsp;(front end completed 4/9)
+            <del>Write README for front end</del>
+            &nbsp;(completed 4/9)
           </li>
           <li>
-            Bug: when creating a new event link it is not reflected in the event details
-            (same with deleting)
+            Write RELEASE_NOTES_1_0_0 for front end
+          </li>
+          <li>
+            Write README for back end
+          </li>
+          <li>
+            Write RELEASE_NOTES_1_0_0 for back end
+          </li>
+          <li>
+            Convert image paths to full URLs ON SERVER to support future hosting separate from API
           </li>
           <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>
-            When ready to release, replace this component with notes of more relevance
-            to the admin _user_, rather than developer. Development notes/issues should
-            move to Github.
-          </li>
-          <li>
-            <del>Bug: Club errors not cancellable</del>
-            &nbsp;(fixed 9/9)
-          </li>
-          <li>
-            <del>Display country name in place of abbreviation?</del>
-            &nbsp;(done for ClubDetails 9/9, left as abbreviation for events to save space)
-          </li>
-          <li>
-            <del>Bug: error in user event list if event.runners is undefined</del>
-            &nbsp;(fixed 9/9 as well as similar potential issue in EventRunners)
-          </li>
-          <li>
-            <del>Bug: user deleting themselves leads to an actions must be plain objects error</del>
-            &nbsp;(fixed 9/9)
-          </li>
-          <li>
-            <del>Bug: user list needs refreshCollapse triggered by picture loading</del>
-            &nbsp;(fixed 9/9 using CSS - issue was height:auto profile image size on first render)
-          </li>
-          <li>
-            <del>Bug: Matching linked event records not updated when creating event</del>
-            &nbsp;(fixed 10/9)
-          </li>
-          <li>
-            <del>Bug: clubs created alongside an event automatically are not shown</del>
-            &nbsp;(fixed 10/9 - refresh club list after createEventOris)
-          </li>
-          <li>
-            <del>
-              Bugs: unable to delete runner because EventRunnerDelete is hidden,
-              then redirect is broken due to component being unmounted
-            </del>
-            &nbsp;(fixed 10/9, runner.user._id not runner._id, removed redirect)
-          </li>
-          <li>
-            <del>Bug: EventMapViewerCanvasRender crashes when pressing a key immediately</del>
-            &nbsp;(fixed 10/9 - state.isKeyDown not initialised)
-          </li>
-          <li>
-            <del>
-              Bug: spread non-iterable instance when deleting event link that includes current event
-            </del>
-            &nbsp;(fixed 11/9)
-          </li>
-          <li>
-            <del>Refactor back end to better separate controller and service functions</del>
-            &nbsp;(completed 11/9)
-          </li>
-          <li>
-            <del>
-              Bug: runner list needs CSS fix (height:auto profile image size on first render)
-            </del>
-            &nbsp;(done 11/9)
-          </li>
-          <li>
-            <del>Bug: User profile image behaviour when deleting (server error)</del>
-            &nbsp;(fixed 11/9 - needed to getUserById first to get profileImage location)
-          </li>
-          <li>
-            <del>Bug: recent activity does not include current session</del>
-            &nbsp;(added sessionActivity 11/9, a few gaps in data where not detectable from payload)
-          </li>
-          <li>
-            <del>Enhancement: disable delete user profile image button when not present</del>
-            &nbsp;(done 11/9)
+            When ready to release, replace the content of this component with notes
+            of more relevance to the admin _user_, rather than developer.
+            Development notes/issues should move to Github post 1.0.0 release.
           </li>
         </ol>
       </Collapse>
@@ -517,6 +458,80 @@ const HomeAdminNotes = () => {
             (also comments component)
             </del>
             &nbsp;(fixed 5/9)
+          </li>
+          <li>
+            <del>Bug: Club errors not cancellable</del>
+            &nbsp;(fixed 9/9)
+          </li>
+          <li>
+            <del>Display country name in place of abbreviation?</del>
+            &nbsp;(done for ClubDetails 9/9, left as abbreviation for events to save space)
+          </li>
+          <li>
+            <del>Bug: error in user event list if event.runners is undefined</del>
+            &nbsp;(fixed 9/9 as well as similar potential issue in EventRunners)
+          </li>
+          <li>
+            <del>Bug: user deleting themselves leads to an actions must be plain objects error</del>
+            &nbsp;(fixed 9/9)
+          </li>
+          <li>
+            <del>Bug: user list needs refreshCollapse triggered by picture loading</del>
+            &nbsp;(fixed 9/9 using CSS - issue was height:auto profile image size on first render)
+          </li>
+          <li>
+            <del>Bug: Matching linked event records not updated when creating event</del>
+            &nbsp;(fixed 10/9)
+          </li>
+          <li>
+            <del>Bug: clubs created alongside an event automatically are not shown</del>
+            &nbsp;(fixed 10/9 - refresh club list after createEventOris)
+          </li>
+          <li>
+            <del>
+              Bugs: unable to delete runner because EventRunnerDelete is hidden,
+              then redirect is broken due to component being unmounted
+            </del>
+            &nbsp;(fixed 10/9, runner.user._id not runner._id, removed redirect)
+          </li>
+          <li>
+            <del>Bug: EventMapViewerCanvasRender crashes when pressing a key immediately</del>
+            &nbsp;(fixed 10/9 - state.isKeyDown not initialised)
+          </li>
+          <li>
+            <del>
+              Bug: spread non-iterable instance when deleting event link that includes current event
+            </del>
+            &nbsp;(fixed 11/9)
+          </li>
+          <li>
+            <del>Refactor back end to better separate controller and service functions</del>
+            &nbsp;(completed 11/9)
+          </li>
+          <li>
+            <del>
+              Bug: runner list needs CSS fix (height:auto profile image size on first render)
+            </del>
+            &nbsp;(done 11/9)
+          </li>
+          <li>
+            <del>Bug: User profile image behaviour when deleting (server error)</del>
+            &nbsp;(fixed 11/9 - needed to getUserById first to get profileImage location)
+          </li>
+          <li>
+            <del>Bug: recent activity does not include current session</del>
+            &nbsp;(added sessionActivity 11/9, a few gaps in data where not detectable from payload)
+          </li>
+          <li>
+            <del>Enhancement: disable delete user profile image button when not present</del>
+            &nbsp;(done 11/9)
+          </li>
+          <li>
+            <del>
+              Bug: when creating a new event link it is not reflected in the event details
+              (same with deleting - updating seems to be OK)
+            </del>
+            &nbsp;(fixed 11/9)
           </li>
         </ol>
       </Collapse>

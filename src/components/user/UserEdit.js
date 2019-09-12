@@ -7,7 +7,6 @@ import * as Yup from 'yup';
 import Select from 'react-select';
 import { roleOptionsLocale, visibilityOptionsLocale, validationErrorsLocale } from '../../common/formData';
 import noAvatar from '../../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../../config';
 import UserChangePassword from './UserChangePassword';
 import UserEditProfileImage from './UserEditProfileImage';
 
@@ -321,7 +320,7 @@ class UserEdit extends Component {
               </div>
               <img
                 alt="avatar"
-                src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+                src={profileImage || noAvatar}
               />
             </div>
           </div>

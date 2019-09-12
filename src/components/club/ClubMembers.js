@@ -5,7 +5,6 @@ import { Trans, Plural } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
 import noAvatar from '../../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The ClubMembers component renders a list of users that are members of
 // the selected club
@@ -71,7 +70,7 @@ const ClubMembers = ({
           <img
             className="right floated ui avatar image"
             alt="avatar"
-            src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+            src={profileImage || noAvatar}
           />
           <div className="header  ">
             {displayName}

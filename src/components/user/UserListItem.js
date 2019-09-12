@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { roleOptionsLocale } from '../../common/formData';
 import noAvatar from '../../graphics/noAvatar.jpg';
-import { MAPOHOLIC_SERVER } from '../../config';
 
 // The UserListItem component renders a summary of a user's details as a selectable list item
 const UserListItem = ({
@@ -47,7 +46,7 @@ const UserListItem = ({
         <img
           className="left floated ui tiny image user-list-item--profile-image"
           alt="avatar"
-          src={(profileImage) ? `${MAPOHOLIC_SERVER}/${profileImage}` : noAvatar}
+          src={profileImage || noAvatar}
         />
         <div className="header">
           {displayName}
