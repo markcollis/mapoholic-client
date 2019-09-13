@@ -1,7 +1,8 @@
 {
   "name": "mapoholic-client",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "ISC",
+  "description": "Front end for MapOholic orienteering map database",
   "dependencies": {
     "@lingui/macro": "^2.8.3",
     "@lingui/react": "^2.8.3",

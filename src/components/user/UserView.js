@@ -64,8 +64,12 @@ class UserView extends Component {
   getUserListArray = memoize((list, searchField) => {
     if (!list) return [];
     const filteredList = list.filter((eachUser) => {
-      return (eachUser.displayName.toLowerCase().includes(searchField.toLowerCase())
-        || eachUser.fullName.toLowerCase().includes(searchField.toLowerCase()));
+      const { displayName, fullName } = eachUser;
+      const matchDisplayName = displayName
+        && displayName.toLowerCase().includes(searchField.toLowerCase());
+      const matchFullName = fullName
+        && fullName.toLowerCase().includes(searchField.toLowerCase());
+      return matchDisplayName || matchFullName;
     });
     return filteredList;
   });

@@ -14,7 +14,8 @@ const HomeAdminNotes = () => {
             Write README for back end
           </li>
           <li>
-            Write RELEASE_NOTES_1_0_0 for back end
+            <del>Write RELEASE_NOTES_1_0_0 for back end</del>
+            &nbsp;(done 12/9)
           </li>
           <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update

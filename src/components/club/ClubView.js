@@ -77,9 +77,10 @@ class ClubView extends Component {
         shortName,
         country,
       } = eachClub;
-      const matchFullName = fullName.toLowerCase().includes(searchField.toLowerCase());
-      const matchShortName = shortName.toLowerCase().includes(searchField.toLowerCase());
-      const matchCountry = country.toLowerCase().includes(searchField.toLowerCase());
+      const matchFullName = fullName && fullName.toLowerCase().includes(searchField.toLowerCase());
+      const matchShortName = shortName
+        && shortName.toLowerCase().includes(searchField.toLowerCase());
+      const matchCountry = country && country.toLowerCase().includes(searchField.toLowerCase());
       return (matchFullName || matchShortName || matchCountry);
     });
   });
