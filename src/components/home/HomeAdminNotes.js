@@ -11,13 +11,6 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do before first release:">
         <ol>
           <li>
-            Write README for back end
-          </li>
-          <li>
-            <del>Write RELEASE_NOTES_1_0_0 for back end</del>
-            &nbsp;(done 12/9)
-          </li>
-          <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>
@@ -538,6 +531,26 @@ const HomeAdminNotes = () => {
             </del>
             &nbsp;(done 12/9)
           </li>
+          <li>
+            <del>Write RELEASE_NOTES_1_0_0 for back end</del>
+            &nbsp;(done 12/9)
+          </li>
+          <li>
+            <del>Relative paths not working in live environment</del>
+            &nbsp;(fixed 12/9 - needed .htaccess)
+          </li>
+          <li>
+            <del>Bug fix: not catching filesystem errors when deleting maps</del>
+            &nbsp;(fixed 14/9)
+          </li>
+          <li>
+            <del>Adjust logging to reduce volumes written to file and remove colour highlighting</del>
+            &nbsp;(done 14/9)
+          </li>
+          <li>
+            <del>Write README for back end</del>
+            &nbsp;(done 14/9)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -558,6 +571,8 @@ const HomeAdminNotes = () => {
             need to be able to save too... *react-canvas-draw*
             (course overlay is PNG with transparent background, park annotations for now)
           </li>
+          <strong>Additional data</strong>
+          <li>Consider storing and presenting split times where available?</li>
           <strong>Real-time updates:</strong>
           <li>Incorporate Socket.io notifications if other logged in users add/update things</li>
           <li>
