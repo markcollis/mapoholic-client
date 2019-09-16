@@ -135,6 +135,9 @@ class Header extends Component {
             className="ui avatar image"
             alt="avatar"
             src={(current && current.profileImage) ? current.profileImage : noAvatar}
+            onError={(e) => {
+              e.target.src = noAvatar; // if loading current.profileImage fails
+            }}
           />
           {`  ${current.displayName}`}
         </div>

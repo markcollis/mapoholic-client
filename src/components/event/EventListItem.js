@@ -4,6 +4,7 @@ import { Trans } from '@lingui/macro';
 
 import { typesOptionsLocale } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
+import missingMapExtract from '../../graphics/missingMapExtract.jpg';
 
 // The EventListItem component renders key information about an event as a selectable list item
 const EventListItem = ({
@@ -41,7 +42,7 @@ const EventListItem = ({
   const cardStyle = (mapExtractToDisplay)
     ? (
       {
-        backgroundImage: `url(${mapExtractToDisplay})`,
+        backgroundImage: `url(${mapExtractToDisplay}), url(${missingMapExtract})`,
         backgroundSize: 'cover',
       }
     )

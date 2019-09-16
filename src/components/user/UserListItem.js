@@ -47,6 +47,9 @@ const UserListItem = ({
           className="left floated ui tiny image user-list-item--profile-image"
           alt="avatar"
           src={profileImage || noAvatar}
+          onError={(e) => {
+            e.target.src = noAvatar; // if loading profileImage fails
+          }}
         />
         <div className="header">
           {displayName}

@@ -183,6 +183,9 @@ class EventCommentsItem extends Component {
         className="ui mini image left floated"
         alt="avatar"
         src={profileImage || noAvatar}
+        onError={(e) => {
+          e.target.src = noAvatar; // if loading profileImage fails
+        }}
       />
     );
     const header = (fullName === '')

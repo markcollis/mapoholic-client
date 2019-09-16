@@ -70,6 +70,9 @@ const EventRunnerDetails = ({
         requestRefreshCollapse();
       }}
       src={profileImage || noAvatar}
+      onError={(e) => {
+        e.target.src = noAvatar; // if loading profileImage fails
+      }}
     />
   );
 

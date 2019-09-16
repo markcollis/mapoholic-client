@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import missingMapThumbnail from '../../graphics/missingMapThumbnail.jpg';
+
 // The EventThumbnails component renders small thumbnail versions of uploaded
 // maps to show as part of the event details
 class EventThumbnails extends Component {
@@ -38,6 +40,9 @@ class EventThumbnails extends Component {
           alt={`${mapType} thumbnail`}
           onLoad={() => {
             requestRefreshCollapse();
+          }}
+          onError={(e) => {
+            e.target.src = missingMapThumbnail; // replace if loading fails
           }}
         />
       </button>

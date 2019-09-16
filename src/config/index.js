@@ -4,6 +4,7 @@
 
 // console.logs server response to every API call made
 export const LOG_API_CALLS = true;
+// moved to config reducer so that Administrators can activate logging online
 
 // API
 export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';

@@ -71,6 +71,9 @@ const ClubMembers = ({
             className="right floated ui avatar image"
             alt="avatar"
             src={profileImage || noAvatar}
+            onError={(e) => {
+              e.target.src = noAvatar; // if loading profileImage fails
+            }}
           />
           <div className="header  ">
             {displayName}

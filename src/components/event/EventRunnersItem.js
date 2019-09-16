@@ -43,6 +43,9 @@ const EventRunnersItem = ({
       className="ui mini image left floated event-runners-item--profile-image"
       alt="avatar"
       src={profileImage || noAvatar}
+      onError={(e) => {
+        e.target.src = noAvatar; // if loading profileImage fails
+      }}
     />
   );
 

@@ -83,6 +83,9 @@ const UserDetails = ({
           className="user-details__profile-image"
           alt="avatar"
           src={profileImage || noAvatar}
+          onError={(e) => {
+            e.target.src = noAvatar; // if loading profileImage fails
+          }}
         />
       </div>
       <div>

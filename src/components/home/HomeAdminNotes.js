@@ -11,6 +11,9 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do before first release:">
         <ol>
           <li>
+            Provide default images in case of failure to load
+          </li>
+          <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>
@@ -544,12 +547,18 @@ const HomeAdminNotes = () => {
             &nbsp;(fixed 14/9)
           </li>
           <li>
-            <del>Adjust logging to reduce volumes written to file and remove colour highlighting</del>
+            <del>
+              Adjust logging to reduce volumes written to file and remove colour highlighting
+            </del>
             &nbsp;(done 14/9)
           </li>
           <li>
             <del>Write README for back end</del>
             &nbsp;(done 14/9)
+          </li>
+          <li>
+            <del>Bug: Accidential writing of image prefix to event records</del>
+            &nbsp;(fixed 16/9)
           </li>
         </ol>
       </Collapse>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 
+import missingMap from '../../graphics/missingMap.jpg';
+
 import EventMapViewerCanvasRender from './EventMapViewerCanvasRender';
 /* eslint react/no-did-update-set-state: 0 */
 
@@ -34,7 +36,9 @@ class EventMapViewerCanvas extends Component {
     left: null,
     rotate: 0,
     scale: 1,
+    initialCentre: { x: 0, y: 0 },
     isLoading: false,
+    loadingError: { Course: false, Route: false },
     mouseDownZoomIn: false,
     mouseDownZoomOut: false,
     mouseDownRotateLeft: false,
@@ -144,20 +148,36 @@ class EventMapViewerCanvas extends Component {
       }, () => {
         img.onload = () => {
           this.loadImageSuccess(img.width, img.height, viewParameters);
+          const otherType = (activeType === 'Course') ? 'Route' : 'Course';
+          if (mapImage[`src${otherType}`]) {
+            const img2 = new Image();
+            img2.src = mapImage[`src${otherType}`]; // load alternative in background
+          }
         };
         img.onerror = () => {
+          const { loadingError: imgLoadingError } = this.state;
           this.setState({
             activeType,
             isLoading: false,
+            loadingError: { ...imgLoadingError, [activeType]: true },
           });
+          const otherType = (activeType === 'Course') ? 'Route' : 'Course';
+          if (mapImage[`src${otherType}`]) {
+            const img2 = new Image();
+            img2.onload = () => {
+              this.loadImageSuccess(img2.width, img2.height, viewParameters);
+            };
+            img2.onerror = () => {
+              const { loadingError: img2LoadingError } = this.state;
+              this.setState({
+                loadingError: { ...img2LoadingError, [otherType]: true },
+              });
+            };
+            img2.src = mapImage[`src${otherType}`]; // load alternative in background
+          }
         };
       });
       img.src = mapImage[`src${activeType}`];
-      const otherType = (activeType === 'Course') ? 'Route' : 'Course';
-      if (mapImage[`src${otherType}`]) {
-        const img2 = new Image();
-        img2.src = mapImage[`src${otherType}`]; // load alternative in background
-      }
     }
   }
 
@@ -341,6 +361,7 @@ class EventMapViewerCanvas extends Component {
       activeType,
       height,
       isLoading,
+      loadingError,
       left,
       rotate,
       scale,
@@ -436,6 +457,8 @@ class EventMapViewerCanvas extends Component {
       </div>
     );
 
+    const imageSrc = (loadingError[activeType]) ? missingMap : mapImage[`src${activeType}`];
+    const imageAlt = (loadingError[activeType]) ? 'Map could not be loaded' : mapImage[`alt${activeType}`];
     const mapsToDisplay = (mapImage && !mapImage.empty)
       ? (
         <div>
@@ -446,8 +469,8 @@ class EventMapViewerCanvas extends Component {
             top={top}
             rotate={rotate}
             scale={scale}
-            imageSrc={mapImage[`src${activeType}`]}
-            imageAlt={mapImage[`alt${activeType}`]}
+            imageSrc={imageSrc}
+            imageAlt={imageAlt}
             isLoading={isLoading}
             overlays={overlays}
             handlePanImage={this.handlePanImage}
