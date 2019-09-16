@@ -11,9 +11,6 @@ const HomeAdminNotes = () => {
       <Collapse title="Checklist of things still to do before first release:">
         <ol>
           <li>
-            Provide default images in case of failure to load
-          </li>
-          <li>
             React-select uses outdated componentWillReceiveProps - monitor for library update
           </li>
           <li>
@@ -559,6 +556,14 @@ const HomeAdminNotes = () => {
           <li>
             <del>Bug: Accidential writing of image prefix to event records</del>
             &nbsp;(fixed 16/9)
+          </li>
+          <li>
+            <del>Provide default images in case of failure to load</del>
+            &nbsp;(done 16/9)
+          </li>
+          <li>
+            <del>Move control of API logging to AdminPanel</del>
+            &nbsp;(done 16/9)
           </li>
         </ol>
       </Collapse>

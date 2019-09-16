@@ -3,7 +3,7 @@
 // in the config reducer ***
 
 // console.logs server response to every API call made
-export const LOG_API_CALLS = true;
+// export const LOG_API_CALLS = true;
 // moved to config reducer so that Administrators can activate logging online
 
 // API

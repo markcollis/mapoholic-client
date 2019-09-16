@@ -37,14 +37,11 @@ import {
   EVENT_SET_MAP_VIEW_PARAMETERS,
   EVENT_UPDATED,
 } from '../actions/types';
-import { LOG_API_CALLS } from '../config';
-/* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // Helper Functions
 // update event list as necessary for all actions that receive full details of an updated event
 const getUpdatedEventList = (list, payload) => {
-  // console.log('getUpdatedEventList list', list, payload);
   if (!list) return null;
   const newList = list.map((listedEvent) => {
     if (listedEvent._id === payload._id) {
@@ -114,7 +111,6 @@ const getUpdatedEventList = (list, payload) => {
     }
     return listedEvent;
   });
-  // console.log('newList:', newList);
   return newList;
 };
 
@@ -127,7 +123,6 @@ const removeFromListById = (list, id) => {
 
 const getUpdatedLinkListEvent = (linkList, oevent) => {
   if (!oevent) return linkList;
-  // console.log('updating linkList:', linkList, oevent);
   const {
     _id: eventId,
     date,
@@ -156,12 +151,10 @@ const getUpdatedLinkListEvent = (linkList, oevent) => {
     }
     return eachLink; // otherwise do nothing
   });
-  // console.log('updated version:', linkList);
   return newLinkList;
 };
 
 const getUpdatedListEventLink = (list, eventLink) => {
-  // console.log('updating list:', list, eventLink);
   if (!eventLink) return list;
   const { _id: eventLinkId, displayName, includes } = eventLink;
   const includedIds = includes.map((included => included._id));
@@ -190,13 +183,11 @@ const getUpdatedListEventLink = (list, eventLink) => {
 };
 
 const getUpdatedListEventLinkDeleted = (list, eventLinkId) => {
-  // console.log('updating list:', list, eventLinkId);
   if (!eventLinkId) return list;
   const newList = list.map((eachEvent) => {
     const { linkedTo } = eachEvent;
     const nowLinked = linkedTo.some(link => link._id === eventLinkId);
     if (nowLinked) { // remove from array
-      // console.log('removed from', eachEvent._id);
       const newLinkedTo = linkedTo.filter(link => (link._id !== eventLinkId));
       return { ...eachEvent, linkedTo: newLinkedTo };
     }
@@ -206,7 +197,6 @@ const getUpdatedListEventLinkDeleted = (list, eventLinkId) => {
 };
 
 const getUpdatedDetailsEventLink = (details, eventLink) => {
-  // console.log('updating details:', details, eventLink);
   if (!eventLink) return details;
   const { _id: eventLinkId, displayName, includes } = eventLink;
   const includedIds = includes.map((included => included._id));
@@ -236,7 +226,6 @@ const getUpdatedDetailsEventLink = (details, eventLink) => {
 };
 
 const getUpdatedDetailsEventLinkDeleted = (details, eventLinkId) => {
-  // console.log('updating details:', details, eventLinkId);
   if (!eventLinkId) return details;
   const newDetails = {};
   const eventIds = Object.keys(details);
@@ -244,7 +233,6 @@ const getUpdatedDetailsEventLinkDeleted = (details, eventLinkId) => {
     const eventLinkedTo = details[eventId].linkedTo;
     const nowLinked = eventLinkedTo.some(eventLink => eventLink._id === eventLinkId);
     if (nowLinked) { // remove from array
-      // console.log('deleting from', eventId);
       const newLinkedTo = eventLinkedTo.filter(eventLink => (eventLink._id !== eventLinkId));
       newDetails[eventId] = { ...details[eventId], linkedTo: newLinkedTo };
     } else { // do nothing
@@ -289,30 +277,25 @@ const eventReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     // Reset on login or logout
     case AUTH_USER:
-      // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE;
 
     // Inputs
     case EVENT_CHANGE_SEARCH_FIELD_EVENTS:
-      // console.log('EVENT_CHANGE_SEARCH_FIELD_EVENTS payload:', action.payload);
       return {
         ...state,
         searchFieldEvents: action.payload,
       };
     case EVENT_CHANGE_SEARCH_FIELD_MYMAPS:
-      // console.log('EVENT_CHANGE_SEARCH_FIELD_MYMAPS payload:', action.payload);
       return {
         ...state,
         searchFieldMyMaps: action.payload,
       };
     case EVENT_CHANGE_TAG_FILTER_EVENTS:
-      // console.log('EVENT_CHANGE_TAG_FILTER_EVENTS payload:', action.payload);
       return {
         ...state,
         tagFilterEvents: action.payload,
       };
     case EVENT_CHANGE_TAG_FILTER_MYMAPS:
-      // console.log('EVENT_CHANGE_TAG_FILTER_MYMAPS payload:', action.payload);
       return {
         ...state,
         tagFilterMyMaps: action.payload,
@@ -320,32 +303,27 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // Current view modes
     case EVENT_CHANGE_VIEW_EVENT_LINK: // view mode *and* id
-      // console.log('EVENT_CHANGE_VIEW_EVENT_LINK payload:', action.payload);
       return {
         ...state,
         eventLinkMode: action.payload.mode,
         selectedEventLinkId: action.payload.target,
       };
     case EVENT_CHANGE_VIEW_EVENT_EVENTS:
-      // console.log('EVENT_CHANGE_VIEW_EVENT_EVENTS payload:', action.payload);
       return {
         ...state,
         eventModeEvents: action.payload,
       };
     case EVENT_CHANGE_VIEW_EVENT_MYMAPS:
-      // console.log('EVENT_CHANGE_VIEW_EVENT_MYMAPS payload:', action.payload);
       return {
         ...state,
         eventModeMyMaps: action.payload,
       };
     case EVENT_CHANGE_VIEW_EVENT_MAPVIEW:
-      // console.log('EVENT_CHANGE_VIEW_EVENT_MAPVIEW payload:', action.payload);
       return {
         ...state,
         eventModeMapView: action.payload,
       };
     case EVENT_CHANGE_VIEW_RUNNER:
-      // console.log('EVENT_CHANGE_VIEW_RUNNER payload:', action.payload);
       return {
         ...state,
         runnerMode: action.payload,
@@ -353,19 +331,16 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // Current map view states
     case EVENT_MAP_SET_BOUNDS_EVENTS:
-      // console.log('EVENT_MAP_SET_BOUNDS_EVENTS:', action.payload);
       return {
         ...state,
         mapBoundsEvents: action.payload,
       };
     case EVENT_MAP_SET_BOUNDS_MYMAPS:
-      // console.log('EVENT_MAP_SET_BOUNDS_MYMAPS:', action.payload);
       return {
         ...state,
         mapBoundsMyMaps: action.payload,
       };
     case EVENT_SET_MAP_VIEW_PARAMETERS:
-      // console.log('EVENT_SET_MAP_VIEW_PARAMETERS:', action.payload);
       return {
         ...state,
         mapViewParameters: {
@@ -376,31 +351,26 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // Ids of items currently being viewed
     case EVENT_SELECT_EVENT_ID_EVENTS:
-      // console.log('EVENT_SELECT_EVENT_ID_EVENTS payload:', action.payload);
       return {
         ...state,
         selectedEventIdEvents: action.payload,
       };
     case EVENT_SELECT_EVENT_ID_MYMAPS:
-      // console.log('EVENT_SELECT_EVENT_ID_MYMAPS payload:', action.payload);
       return {
         ...state,
         selectedEventIdMyMaps: action.payload,
       };
     case EVENT_SELECT_EVENT_ID_MAPVIEW:
-      // console.log('EVENT_SELECT_EVENT_ID_MAPVIEW payload:', action.payload);
       return {
         ...state,
         selectedEventIdMapView: action.payload,
       };
     case EVENT_SELECT_RUNNER:
-      // console.log('EVENT_SELECT_RUNNER payload:', action.payload);
       return {
         ...state,
         selectedRunner: action.payload,
       };
     case EVENT_SELECT_MAP:
-      // console.log('EVENT_SELECT_MAP payload:', action.payload);
       return {
         ...state,
         selectedMap: action.payload,
@@ -410,14 +380,12 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       // list: null, // replaced each time API is queried
       // details: {}, // all event records viewed, key is eventId [includes runners/maps/comments]
     case EVENT_GOT_LIST: // populate list (overwrites any earlier version)
-      if (LOG_API_CALLS) console.log('EVENT_GOT_LIST payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
         list: action.payload,
       };
     case EVENT_GOT_BY_ID: // update entry in both details and list
-      if (LOG_API_CALLS) console.log('EVENT_GOT_BY_ID payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -425,7 +393,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         list: getUpdatedEventList(state.list, action.payload),
       };
     case EVENT_CREATED: // add to details and list, make currently selected event
-      if (LOG_API_CALLS) console.log('EVENT_CREATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -439,7 +406,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_RUNNER_ADDED: // same thing, runner addition returns whole event
     case EVENT_RUNNER_DELETED: // same thing, runner delete returns whole event minus runner
     case EVENT_RUNNER_UPDATED: // same thing, runner update returns whole event
-      if (LOG_API_CALLS) console.log('EVENT_UPDATED (or RUNNER_ADDED, DELETED, UPDATED) payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -449,7 +415,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     case EVENT_MAP_UPLOADED: // update list and details, including summary data
     case EVENT_MAP_DELETED: { // same actions required
-      if (LOG_API_CALLS) console.log('EVENT_MAP_UPLOADED/DELETED payload:', action.payload);
       const { parameters, updatedEvent } = action.payload;
       const {
         eventId,
@@ -473,7 +438,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         }
         return runner;
       });
-      // console.log('updatedEventDetails:', updatedEventDetails);
       return {
         ...state,
         details: {
@@ -488,7 +452,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     case EVENT_COMMENT_ADDED: // update details entry, list unaffected
     case EVENT_COMMENT_UPDATED:
     case EVENT_COMMENT_DELETED: { // API returns relevant comments array
-      if (LOG_API_CALLS) console.log('EVENT_COMMENT_ADDED/UPDATED/DELETED payload:', action.payload);
       const { eventId, userId, comments } = action.payload;
       const runnersInState = state.details[eventId].runners;
       const updatedRunners = runnersInState.map((runner) => {
@@ -511,7 +474,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
     }
     case EVENT_DELETED: // remove from details and list, clear any current views,
       // fix linkList if required
-      if (LOG_API_CALLS) console.log('EVENT_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
@@ -531,7 +493,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // linkList: null, // replaced each time API is queried
     case EVENT_GOT_EVENT_LINK_LIST: { // populate linkList
-      if (LOG_API_CALLS) console.log('EVENT_GOT_EVENT_LINK_LIST payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -539,7 +500,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case EVENT_LINK_CREATED: // add new entry to linkList, add to list and details entries
-      if (LOG_API_CALLS) console.log('EVENT_LINK_CREATED payload:', action.payload);
       return {
         ...state,
         details: getUpdatedDetailsEventLink(state.details, action.payload),
@@ -549,7 +509,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
       // *** need to add appropriate updates to details, list and linkedList *** //
     case EVENT_LINK_UPDATED: // replace entry in linkList, update list and details entries
-      if (LOG_API_CALLS) console.log('EVENT_LINK_UPDATED payload:', action.payload);
       return {
         ...state,
         details: getUpdatedDetailsEventLink(state.details, action.payload),
@@ -562,7 +521,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       };
       // *** need to add appropriate updates to details, list and linkedList *** //
     case EVENT_LINK_DELETED: // remove entry from linkList,
-      if (LOG_API_CALLS) console.log('EVENT_LINK_DELETED payload:', action.payload);
       return {
         ...state,
         details: getUpdatedDetailsEventLinkDeleted(state.details, action.payload._id),
@@ -575,7 +533,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // orisList: null, // replaced each time API is queried, list specific to current user
     case EVENT_GOT_ORIS_LIST:
-      if (LOG_API_CALLS) console.log('EVENT_GOT_ORIS_LIST payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -584,7 +541,6 @@ const eventReducer = (state = INITIAL_STATE, action) => {
 
     // errorMessage: '', // empty unless an error occurs
     case EVENT_ERROR:
-      if (LOG_API_CALLS) console.log('EVENT_ERROR payload:', action.payload);
       return {
         ...state,
         errorMessage: action.payload,

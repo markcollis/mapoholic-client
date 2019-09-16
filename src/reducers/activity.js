@@ -27,8 +27,6 @@ import {
   USER_DELETED_IMAGE,
   USER_DELETED,
 } from '../actions/types';
-import { LOG_API_CALLS } from '../config';
-/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 
 const INITIAL_STATE = {
@@ -42,10 +40,8 @@ const INITIAL_STATE = {
 const activityReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_USER:
-      // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case ACTIVITY_GOT_ADMIN:
-      if (LOG_API_CALLS) console.log('ACTIVITY_GOT_ADMIN payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -53,7 +49,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         activitySession: [], // clear to avoid duplicates
       };
     case ACTIVITY_GOT_ALL:
-      if (LOG_API_CALLS) console.log('ACTIVITY_GOT_ALL payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -61,7 +56,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         activitySession: [], // clear to avoid duplicates
       };
     case ACTIVITY_GOT_OWN:
-      if (LOG_API_CALLS) console.log('ACTIVITY_GOT_OWN payload:', action.payload);
       return {
         ...state,
         errorMessage: '',
@@ -69,7 +63,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         activitySession: [], // clear to avoid duplicates
       };
     case ACTIVITY_ERROR:
-      if (LOG_API_CALLS) console.log('ACTIVITY_ERROR payload:', action.payload);
       return {
         ...state,
         errorMessage: action.payload,
@@ -77,7 +70,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     case CLUB_CREATED:
     case CLUB_UPDATED:
     case CLUB_DELETED: {
-      // if (LOG_API_CALLS) console.log('CLUB_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -98,7 +90,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     case EVENT_RUNNER_ADDED:
     case EVENT_RUNNER_UPDATED:
     case EVENT_RUNNER_DELETED: {
-      // if (LOG_API_CALLS) console.log('EVENT_(RUNNER_)* payload:', action.payload);
       const newActivity = { // eventRunner can not be identified from payload
         actionType: action.type,
         timestamp: new Date(),
@@ -116,7 +107,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     }
     case EVENT_MAP_UPLOADED:
     case EVENT_MAP_DELETED: {
-      // if (LOG_API_CALLS) console.log('EVENT_MAP_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -143,7 +133,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
         EVENT_COMMENT_UPDATED: 'COMMENT_UPDATED',
         EVENT_COMMENT_DELETED: 'COMMENT_DELETED',
       };
-      // if (LOG_API_CALLS) console.log('EVENT_COMMENT_* payload:', action.payload);
       const newActivity = { // commentId can not be identified from payload
         actionType: commentActionTypes[action.type],
         timestamp: new Date(),
@@ -158,7 +147,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     case EVENT_LINK_CREATED:
     case EVENT_LINK_UPDATED:
     case EVENT_LINK_DELETED: {
-      // if (LOG_API_CALLS) console.log('EVENT_LINK_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -174,7 +162,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
     }
     case USER_UPDATED:
     case USER_DELETED: {
-      // if (LOG_API_CALLS) console.log('USER_* payload:', action.payload);
       const newActivity = {
         actionType: action.type,
         timestamp: new Date(),
@@ -186,7 +173,6 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case USER_CHANGED_PASSWORD: {
-      // if (LOG_API_CALLS) console.log('USER_CHANGED_PASSWORD payload:', action.payload);
       const newActivity = {
         actionType: 'USER_UPDATED',
         timestamp: new Date(),
@@ -198,12 +184,10 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case USER_POSTED_IMAGE: {
-      // if (LOG_API_CALLS) console.log('USER_POSTED_IMAGE payload:', action.payload);
       const newActivity = {
         actionType: 'USER_UPDATED',
         timestamp: new Date(),
         userId: action.payload.userId,
-        // user: { ...action.payload, active: true },
       };
       return {
         ...state,
@@ -211,12 +195,10 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case USER_DELETED_IMAGE: {
-      // if (LOG_API_CALLS) console.log('USER_DELETED_IMAGE payload:', action.payload);
       const newActivity = {
         actionType: 'USER_UPDATED',
         timestamp: new Date(),
         userId: action.payload,
-        // user: { ...action.payload, active: true },
       };
       return {
         ...state,

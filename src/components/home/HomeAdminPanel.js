@@ -4,6 +4,7 @@ import { Trans } from '@lingui/macro';
 
 import HomeAdminActivity from './HomeAdminActivity';
 import HomeAdminNotes from './HomeAdminNotes';
+import HomeAdminLogging from './HomeAdminLogging';
 
 // The HomeAdminPanel component renders additional information for administrative users
 const HomeAdminPanel = ({
@@ -15,6 +16,8 @@ const HomeAdminPanel = ({
   return (
     <div className="ui segment">
       <h3><Trans>Additional information for administrators</Trans></h3>
+      <hr className="home-admin-panel__divider" />
+      <HomeAdminLogging />
       <hr className="home-admin-panel__divider" />
       <HomeAdminActivity
         activityList={activityList}

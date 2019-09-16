@@ -389,6 +389,10 @@ select, optgroup {
   border-color: blue;
   margin-bottom: 1.5em;
 }
+/* settings for HomeAdminLogging */
+.home-admin-logging p {
+  margin: 0 2em 1em 0 !important;
+}
 /* settings for HomeRecent */
 .home-recent ul {
   padding: 0 20px;

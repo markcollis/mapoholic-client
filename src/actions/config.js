@@ -1,7 +1,7 @@
 import {
   CONFIG_SET_LANGUAGE,
+  CONFIG_SET_API_LOGGING,
 } from './types';
-/* eslint-disable import/prefer-default-export */
 
 // change language
 export const setLanguageAction = (language) => {
@@ -10,6 +10,16 @@ export const setLanguageAction = (language) => {
     return ({
       type: CONFIG_SET_LANGUAGE,
       payload: language,
+    });
+  }
+  return null;
+};
+
+export const setApiLoggingAction = (loggingEnabled) => {
+  if (typeof loggingEnabled === 'boolean') {
+    return ({
+      type: CONFIG_SET_API_LOGGING,
+      payload: loggingEnabled,
     });
   }
   return null;

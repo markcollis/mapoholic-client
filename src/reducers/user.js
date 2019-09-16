@@ -3,7 +3,6 @@ import {
   USER_GOT_LIST,
   USER_GOT_CURRENT,
   USER_GOT_BY_ID,
-  // USER_GOT_EVENTS,
   USER_UPDATED,
   USER_POSTED_IMAGE,
   USER_CHANGED_PASSWORD,
@@ -15,8 +14,6 @@ import {
   USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
 } from '../actions/types';
-import { LOG_API_CALLS } from '../config';
-/* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // update user list as necessary for all actions that receive full details of an updated user
@@ -46,7 +43,6 @@ const getUpdatedUserList = (list, payload) => {
     }
     return listedUser;
   });
-  // console.log('newList:', newList);
   return newList;
 };
 
@@ -71,17 +67,14 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_USER:
-      // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case USER_GOT_LIST:
-      if (LOG_API_CALLS) console.log('USER_GOT_LIST payload:', action.payload);
       return {
         ...state,
         list: action.payload,
         errorMessage: '',
       };
     case USER_GOT_CURRENT:
-      if (LOG_API_CALLS) console.log('USER_GOT_CURRENT payload:', action.payload);
       return {
         ...state,
         current: action.payload,
@@ -89,7 +82,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_GOT_BY_ID:
-      if (LOG_API_CALLS) console.log('USER_GOT_BY_ID payload:', action.payload);
       return {
         ...state,
         current: (state.current._id === action.payload._id) ? action.payload : { ...state.current },
@@ -97,7 +89,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_UPDATED:
-      if (LOG_API_CALLS) console.log('USER_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -105,7 +96,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         list: getUpdatedUserList(state.list, action.payload),
       };
     case USER_POSTED_IMAGE:
-      if (LOG_API_CALLS) console.log('USER_POSTED_IMAGE payload:', action.payload);
       return {
         ...state,
         list: (state.list)
@@ -128,10 +118,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_CHANGED_PASSWORD:
-      if (LOG_API_CALLS) console.log('USER_CHANGED_PASSWORD payload:', action.payload);
       return state;
     case USER_DELETED:
-      if (LOG_API_CALLS) console.log('USER_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
@@ -140,7 +128,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_DELETED_IMAGE:
-      if (LOG_API_CALLS) console.log('USER_DELETED_IMAGE payload:', action.payload);
       return {
         ...state,
         list: (state.list)
@@ -163,19 +150,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case USER_ERROR:
-      if (LOG_API_CALLS) console.log('USER_ERROR payload:', action.payload);
       return { ...state, errorMessage: action.payload };
     case USER_CHANGE_SEARCH_FIELD:
-      // console.log('USER_CHANGE_SEARCH_FIELD payload:', action.payload);
       return { ...state, searchField: action.payload };
     case USER_CHANGE_VIEW_MODE:
-      // console.log('USER_CHANGE_VIEW_MODE payload:', action.payload);
       return { ...state, viewMode: action.payload };
     case USER_CHANGE_VIEW_MODE_SELF:
-      // console.log('USER_CHANGE_VIEW_MODE_SELF payload:', action.payload);
       return { ...state, viewModeSelf: action.payload };
     case USER_SELECT_USER:
-      // console.log('USER_SELECT_USER payload:', action.payload);
       return { ...state, selectedUserId: action.payload };
     default:
       return state;

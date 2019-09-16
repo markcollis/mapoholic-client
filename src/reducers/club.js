@@ -11,8 +11,6 @@ import {
   CLUB_SELECT_CLUB_MEMBER,
   CLUB_SELECT_CLUB_EVENT,
 } from '../actions/types';
-import { LOG_API_CALLS } from '../config';
-/* eslint-disable no-console */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // update club list as necessary for all actions that receive details of an updated club
@@ -24,7 +22,6 @@ const getUpdatedClubList = (list, payload) => {
     }
     return listedClub;
   });
-  // console.log('newList:', newList);
   return newList;
 };
 
@@ -49,18 +46,14 @@ const INITIAL_STATE = {
 const clubReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_USER:
-      // console.log('AUTH_USER payload:', action.payload);
       return INITIAL_STATE; // clear on login or logout
     case CLUB_GOT_LIST: {
-      if (LOG_API_CALLS) console.log('CLUB_GOT_LIST payload:', action.payload);
-      // console.log('details:', state.details);
       const newDetails = { ...state.details };
       if (action.payload.length > 0) {
         action.payload.forEach((club) => {
           newDetails[club._id] = club;
         });
       }
-      // console.log('newDetails:', newDetails);
       return {
         ...state,
         details: newDetails,
@@ -69,7 +62,6 @@ const clubReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case CLUB_CREATED:
-      if (LOG_API_CALLS) console.log('CLUB_CREATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -78,7 +70,6 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         selectedClubId: action.payload._id,
       };
     case CLUB_UPDATED:
-      if (LOG_API_CALLS) console.log('CLUB_UPDATED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: action.payload },
@@ -86,7 +77,6 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         errorMessage: '',
       };
     case CLUB_DELETED:
-      if (LOG_API_CALLS) console.log('CLUB_DELETED payload:', action.payload);
       return {
         ...state,
         details: { ...state.details, [action.payload._id]: null },
@@ -95,25 +85,21 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         selectedClubId: '',
       };
     case CLUB_ERROR:
-      if (LOG_API_CALLS) console.log('CLUB_ERROR payload:', action.payload);
       return {
         ...state,
         errorMessage: action.payload,
       };
     case CLUB_CHANGE_SEARCH_FIELD:
-      // console.log('CLUB_CHANGE_SEARCH_FIELD payload:', action.payload);
       return {
         ...state,
         searchField: action.payload,
       };
     case CLUB_CHANGE_VIEW_MODE:
-      // console.log('CLUB_CHANGE_VIEW_MODE payload:', action.payload);
       return {
         ...state,
         viewMode: action.payload,
       };
     case CLUB_SELECT_CLUB:
-      // console.log('CLUB_SELECT_CLUB payload:', action.payload);
       if (state.selectedClubId === action.payload) {
         return { ...state };
       }
@@ -124,13 +110,11 @@ const clubReducer = (state = INITIAL_STATE, action) => {
         selectedEvent: '', // member and event are not also linked to new selection
       };
     case CLUB_SELECT_CLUB_MEMBER:
-      // console.log('CLUB_SELECT_CLUB_MEMBER payload:', action.payload);
       return {
         ...state,
         selectedMember: action.payload,
       };
     case CLUB_SELECT_CLUB_EVENT:
-      // console.log('CLUB_SELECT_CLUB_EVENT payload:', action.payload);
       return {
         ...state,
         selectedEvent: action.payload,
