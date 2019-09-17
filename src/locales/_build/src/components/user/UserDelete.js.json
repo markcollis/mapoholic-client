@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/user/UserDelete.js",
-        61
+        59
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/user/UserDelete.js",
-        68
+        66
       ]
     ]
   }

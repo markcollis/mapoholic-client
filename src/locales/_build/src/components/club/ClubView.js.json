@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/club/ClubView.js",
-        160
+        163
       ]
     ]
   },
@@ -11,15 +11,7 @@
     "origin": [
       [
         "src/components/club/ClubView.js",
-        251
-      ]
-    ]
-  },
-  "Error (get user): {userErrorMessage}": {
-    "origin": [
-      [
-        "src/components/club/ClubView.js",
-        254
+        262
       ]
     ]
   }

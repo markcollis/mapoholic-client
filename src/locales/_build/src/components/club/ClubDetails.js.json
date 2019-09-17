@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        22
+        23
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        41
+        47
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        43
+        49
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        46
+        52
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        51
+        57
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        57
+        63
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        60
+        66
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        91
+        97
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/club/ClubDetails.js",
-        100
+        106
       ]
     ]
   }

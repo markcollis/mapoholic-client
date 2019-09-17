@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/user/UserEditProfileImage.js",
-        40
+        41
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/user/UserEditProfileImage.js",
-        48
+        49
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/user/UserEditProfileImage.js",
-        62
+        63
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/user/UserEditProfileImage.js",
-        69
+        71
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/user/UserEditProfileImage.js",
-        76
+        78
       ]
     ]
   }
