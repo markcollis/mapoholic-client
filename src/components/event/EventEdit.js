@@ -794,16 +794,16 @@ const formikEventEdit = withFormik({
         locCountry: countryOptionsLocale[language].find((el) => {
           return el.value === locCountry;
         }) || null,
-        locLat: roundTo3dp(locLat) || '',
-        locLong: roundTo3dp(locLong) || '',
-        locCornerNWLat: roundTo3dp(locCornerNW[0]) || '',
-        locCornerNWLong: roundTo3dp(locCornerNW[1]) || '',
-        locCornerNELat: roundTo3dp(locCornerNE[0]) || '',
-        locCornerNELong: roundTo3dp(locCornerNE[1]) || '',
-        locCornerSWLat: roundTo3dp(locCornerSW[0]) || '',
-        locCornerSWLong: roundTo3dp(locCornerSW[1]) || '',
-        locCornerSELat: roundTo3dp(locCornerSE[0]) || '',
-        locCornerSELong: roundTo3dp(locCornerSE[1]) || '',
+        locLat: (locLat) ? roundTo3dp(locLat) : '',
+        locLong: (locLong) ? roundTo3dp(locLong) : '',
+        locCornerNWLat: (locCornerNW && locCornerNW[0]) ? roundTo3dp(locCornerNW[0]) : '',
+        locCornerNWLong: (locCornerNW && locCornerNW[1]) ? roundTo3dp(locCornerNW[1]) : '',
+        locCornerNELat: (locCornerNE && locCornerNE[0]) ? roundTo3dp(locCornerNE[0]) : '',
+        locCornerNELong: (locCornerNE && locCornerNE[1]) ? roundTo3dp(locCornerNE[1]) : '',
+        locCornerSWLat: (locCornerSW && locCornerSW[0]) ? roundTo3dp(locCornerSW[0]) : '',
+        locCornerSWLong: (locCornerSW && locCornerSW[1]) ? roundTo3dp(locCornerSW[1]) : '',
+        locCornerSELat: (locCornerSE && locCornerSE[0]) ? roundTo3dp(locCornerSE[0]) : '',
+        locCornerSELong: (locCornerSE && locCornerSE[1]) ? roundTo3dp(locCornerSE[1]) : '',
         types: types.map((type) => {
           return typesOptionsLocale[language].find(el => el.value === type);
         }) || [],

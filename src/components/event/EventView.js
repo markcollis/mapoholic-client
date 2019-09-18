@@ -152,16 +152,19 @@ class EventView extends Component {
         const reformattedDate = reformatTimestampDateOnly(date, language);
         const matchName = name && name.toLowerCase().includes(searchField.toLowerCase());
         const matchMapName = mapName && mapName.toLowerCase().includes(searchField.toLowerCase());
-        const matchDate = (date.includes(searchField) || reformattedDate.includes(searchField));
+        const matchDate = date
+          && (date.includes(searchField) || reformattedDate.includes(searchField));
         const matchPlace = locPlace && locPlace.toLowerCase().includes(searchField.toLowerCase());
         const matchCountry = locCountry && locCountry.includes(searchField.toUpperCase());
-        const matchOrganisedBy = organisedBy.length > 0 && organisedBy.some((club) => {
-          return club.shortName && club.shortName.toLowerCase().includes(searchField.toLowerCase());
-        });
-        const matchTypes = types.length > 0 && types.some((type) => {
+        const matchOrganisedBy = organisedBy && organisedBy.length > 0
+          && organisedBy.some((club) => {
+            const { shortName } = club;
+            return shortName && shortName.toLowerCase().includes(searchField.toLowerCase());
+          });
+        const matchTypes = types && types.length > 0 && types.some((type) => {
           return type && type.toLowerCase().includes(searchField.toLowerCase());
         });
-        const matchTags = tags.length > 0 && tags.some((tag) => {
+        const matchTags = tags && tags.length > 0 && tags.some((tag) => {
           return tag && tag.toLowerCase().includes(searchField.toLowerCase());
         });
         const runnerSelf = (runners) ? runners.find(runner => runner.user === currentUserId) : null;

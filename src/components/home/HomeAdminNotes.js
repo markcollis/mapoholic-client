@@ -565,6 +565,22 @@ const HomeAdminNotes = () => {
             <del>Move control of API logging to AdminPanel</del>
             &nbsp;(done 16/9)
           </li>
+          <li>
+            <del>Bug fix: create event *still* returning mongoose object</del>
+            &nbsp;(fixed 17/9)
+          </li>
+          <li>
+            <del>Add placeholder for splitTimes</del>
+            &nbsp;(done 17/9)
+          </li>
+          <li>
+            <del>Bug fix: event reducer issues with event links that have just been deleted</del>
+            &nbsp;(fixed 17/9)
+          </li>
+          <li>
+            <del>Bug fix: intolerance to missing coordinates in EventEdit (old data)</del>
+            &nbsp;(done 18/9)
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />
@@ -572,6 +588,7 @@ const HomeAdminNotes = () => {
         <ol>
           <strong>Presentation:</strong>
           <li>EN and CZ specific screenshots in HomeView?</li>
+          <li>Filter by country on events and clubs?</li>
           <strong>Map handling:</strong>
           <li>
             Consider how to better handle events at which someone ran TWO courses

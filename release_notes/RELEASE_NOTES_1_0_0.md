@@ -10,4 +10,4 @@ All of the features described in the User Stories section of the [README]('../RE
 
 ## Bug Fixes
 
-All *known* bugs have been fixed. There are almost certainly more hiding.
+All *known* bugs have been fixed. When those that are still unknown are found they will be fixed as soon as possible.

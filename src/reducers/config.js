@@ -45,7 +45,7 @@ import {
 
 const INITIAL_STATE = {
   language: (navigator.language === 'cs') ? 'cs' : 'en',
-  logApiCalls: false,
+  logApiCalls: true,
 };
 
 const configReducer = (state = INITIAL_STATE, action) => {
