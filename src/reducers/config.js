@@ -45,7 +45,7 @@ import {
 
 const INITIAL_STATE = {
   language: (navigator.language === 'cs') ? 'cs' : 'en',
-  logApiCalls: true,
+  logApiCalls: false,
 };
 
 const configReducer = (state = INITIAL_STATE, action) => {
@@ -54,6 +54,10 @@ const configReducer = (state = INITIAL_STATE, action) => {
       return { ...state, language: action.payload };
     case CONFIG_SET_API_LOGGING:
       return { ...state, logApiCalls: action.payload };
+    case USER_GOT_CURRENT:
+      if (state.logApiCalls) console.log(`${action.type} payload:`, action.payload);
+      // enable API logging if an admin user logs in
+      return { ...state, logApiCalls: (action.payload.role === 'admin') };
     // logging for all API calls
     case ACTIVITY_ERROR:
     case ACTIVITY_GOT_ADMIN:
@@ -90,7 +94,6 @@ const configReducer = (state = INITIAL_STATE, action) => {
     case USER_DELETED:
     case USER_ERROR:
     case USER_GOT_BY_ID:
-    case USER_GOT_CURRENT:
     case USER_GOT_LIST:
     case USER_POSTED_IMAGE:
     case USER_UPDATED:

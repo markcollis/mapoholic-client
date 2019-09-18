@@ -155,12 +155,9 @@ If you want to host your own instance, whether locally or publicly, you will nee
 
 ## Release History
 
-Not yet formally released (1.0.0 expected late September 2019).
-
-<!-- |Version|Document                                             |Date     |Purpose               |
+|Version|Document                                             |Date     |Purpose               |
 |-------|-----------------------------------------------------|--------:|----------------------|
-|1.0.0  |[Release Notes](release_notes/RELEASE_NOTES_1_0_0.md)|xx/9/2019|Initial public release| -->
-
+|1.0.0  |[Release Notes](release_notes/RELEASE_NOTES_1_0_0.md)|18/9/2019|Initial public release|
 
 ## Installation
 

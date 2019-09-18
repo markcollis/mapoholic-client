@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
-import logo from '../../graphics/mapoholicLogo.jpg';
-import mark from '../../graphics/markRunning.jpg';
-import screenshotCourseMap from '../../graphics/screenshotCourseMapSmall.jpg';
-import screenshotEventList from '../../graphics/screenshotEventListSmall.jpg';
-import screenshotEventMap from '../../graphics/screenshotEventMapSmall.jpg';
 
 import ErrorBoundary from '../generic/ErrorBoundary';
 import HomeAboutAuthor from './HomeAboutAuthor';
@@ -16,11 +11,18 @@ import HomeHowToUse from './HomeHowToUse';
 import HomeRecent from './HomeRecent';
 import HomeWelcome from './HomeWelcome';
 import HomeWhatIsIt from './HomeWhatIsIt';
+
+import logo from '../../graphics/mapoholicLogo.jpg';
+import mark from '../../graphics/markRunning.jpg';
+import screenshotCourseMap from '../../graphics/screenshotCourseMapSmall.jpg';
+import screenshotEventList from '../../graphics/screenshotEventListSmall.jpg';
+import screenshotEventMap from '../../graphics/screenshotEventMapSmall.jpg';
+
 import {
+  cancelActivityErrorAction,
   getActivityLogAdminAction,
   getActivityLogAllAction,
   getActivityLogOwnAction,
-  cancelActivityErrorAction,
 } from '../../actions';
 import { DEFAULT_ACTIVITY_LENGTH } from '../../config';
 
@@ -91,10 +93,6 @@ class HomeView extends Component {
   });
 
   componentDidMount() {
-    this.getActivityLists();
-  }
-
-  componentDidUpdate() {
     this.getActivityLists();
   }
 
@@ -242,26 +240,6 @@ class HomeView extends Component {
     if (!currentUser) return null;
     const { role } = currentUser;
     const activitySessionToRender = this.populateActivitySession(activitySession);
-    // const activitySessionToRender = activitySession.map((eachActivity) => {
-    //   const actionByToRender = { ...currentUser, active: true };
-    //   if (eachActivity.eventId && eachActivity.runnerId) {
-    //     const eventToRender = eventList.find((event) => {
-    //       const { _id: id } = event;
-    //       return (id === eachActivity.eventId);
-    //     });
-    //     const eventRunnerToRender = userList.find((user) => {
-    //       const { _id: userId } = user;
-    //       return (userId === eachActivity.runnerId);
-    //     });
-    //     return {
-    //       ...eachActivity,
-    //       actionBy: actionByToRender,
-    //       event: eventToRender,
-    //       eventRunner: eventRunnerToRender,
-    //     };
-    //   }
-    //   return { ...eachActivity, actionBy: actionByToRender };
-    // });
     const activityOwnToRender = (activityOwn)
       ? activitySessionToRender.concat(activityOwn) : activitySessionToRender;
     const activityAllToRender = (activityAll)
@@ -312,15 +290,9 @@ class HomeView extends Component {
     const { role } = currentUser;
     if (role !== 'admin') return null;
     const { activityAdmin, activitySession } = activity;
-    // console.log('activitySession', activitySession);
     if (!activityAdmin) return null;
     const activitySessionToRender = this.populateActivitySession(activitySession);
     const activityListToRender = activitySessionToRender.concat(activityAdmin);
-    // const activityListToRender = activitySession.map((eachActivity) => {
-    //   const actionByToRender = { ...currentUser, active: true };
-    //   return { ...eachActivity, actionBy: actionByToRender };
-    // }).concat(activityAdmin);
-    // console.log('activityListToRender:', activityListToRender);
     return (
       <div className="sixteen wide column">
         <ErrorBoundary>
