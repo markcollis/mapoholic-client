@@ -1,4 +1,4 @@
-// Utility functions related to date and time formats
+// Utility functions related to converting data (mostly date and time formats)
 
 const isValidDate = (date) => {
   return date && Object.prototype.toString.call(date) === '[object Date]' && !Number.isNaN(date);
@@ -76,4 +76,25 @@ export const reformatTimestamp = (timestamp, locale = 'default') => {
   // console.log('time, date', time, date);
   const reformattedTimestamp = date.concat(' ').concat(time);
   return reformattedTimestamp;
+};
+
+// simplify a string for more effective filtering (eliminate upper case and diacritics)
+export const simplifyString = (string) => {
+  let newString = string.toLowerCase();
+  // covers Czech, French, German, Norwegian, Swedish, Welsh for now
+  newString = newString.replace(new RegExp('[áàäåâ]', 'g'), 'a');
+  newString = newString.replace(new RegExp('[čç]', 'g'), 'c');
+  newString = newString.replace(new RegExp('ď', 'g'), 'd');
+  newString = newString.replace(new RegExp('[éěèêë]', 'g'), 'e');
+  newString = newString.replace(new RegExp('[íìîï]', 'g'), 'i');
+  newString = newString.replace(new RegExp('ň', 'g'), 'n');
+  newString = newString.replace(new RegExp('[óöøòô]', 'g'), 'o');
+  newString = newString.replace(new RegExp('ř', 'g'), 'r');
+  newString = newString.replace(new RegExp('š', 'g'), 's');
+  newString = newString.replace(new RegExp('ť', 'g'), 't');
+  newString = newString.replace(new RegExp('[úůùüû]', 'g'), 'u');
+  newString = newString.replace(new RegExp('[ŵẃẁẅ]', 'g'), 'w');
+  newString = newString.replace(new RegExp('[ýŷỳÿ]', 'g'), 'y');
+  newString = newString.replace(new RegExp('ž', 'g'), 'z');
+  return newString;
 };

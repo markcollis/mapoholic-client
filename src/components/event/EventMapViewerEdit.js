@@ -60,6 +60,7 @@ class EventMapViewerEdit extends Component {
     const {
       courseMapToUpload,
       dropZoneKeyCourse,
+      isNewMap,
       mapTitleToUpload,
     } = this.state;
     if (courseMapToUpload) {
@@ -77,6 +78,9 @@ class EventMapViewerEdit extends Component {
             dropZoneKeyCourse: dropZoneKeyCourse + 1,
             isUploading: false,
           });
+          if (isNewMap) {
+            this.setState({ mapTitleToUpload: '' });
+          }
           // console.log('course map upload successful');
         } else {
           this.setState({ isUploading: false });
@@ -110,6 +114,7 @@ class EventMapViewerEdit extends Component {
     } = this.props;
     const {
       dropZoneKeyRoute,
+      isNewMap,
       mapTitleToUpload,
       routeMapToUpload,
     } = this.state;
@@ -124,10 +129,13 @@ class EventMapViewerEdit extends Component {
       postMap(parameters, routeMapToUpload, (successful) => {
         if (successful) {
           this.setState({
-            routeMapToUpload: null,
             dropZoneKeyRoute: dropZoneKeyRoute + 1,
             isUploading: false,
+            routeMapToUpload: null,
           });
+          if (isNewMap) {
+            this.setState({ mapTitleToUpload: '' });
+          }
           // console.log('route map upload successful');
         } else {
           this.setState({ isUploading: false });

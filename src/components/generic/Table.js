@@ -15,6 +15,8 @@ import TableHeader from './TableHeader';
 import TablePagination from './TablePagination';
 import TableRow from './TableRow';
 
+import { simplifyString } from '../../common/conversions';
+
 /* eslint react/destructuring-assignment: 0 */
 class Table extends Component {
   state = {
@@ -72,13 +74,13 @@ class Table extends Component {
 
   getFilteredData = memoize((keyedData, filter) => {
     // console.log('getting filtered data');
-    const target = filter.toLowerCase();
+    const target = simplifyString(filter);
     const filteredData = keyedData.filter((data) => {
       const { rowData } = data;
       const matching = rowData.filter((element) => {
         const { sort } = element;
         if (typeof sort !== 'string') return false;
-        const test = sort.toLowerCase();
+        const test = simplifyString(sort);
         return (test.includes(target));
       });
       const matchFound = matching.length > 0;

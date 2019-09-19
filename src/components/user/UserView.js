@@ -27,6 +27,7 @@ import {
   setUserViewModeSelfAction,
   updateUserAction,
 } from '../../actions';
+import { simplifyString } from '../../common/conversions';
 
 // The UserView component is the top level component for selecting users and viewing details
 class UserView extends Component {
@@ -63,12 +64,12 @@ class UserView extends Component {
   // helper to create filtered user list if relevant props change
   getUserListArray = memoize((list, searchField) => {
     if (!list) return [];
+    const simpleSearchField = simplifyString(searchField);
     const filteredList = list.filter((eachUser) => {
       const { displayName, fullName } = eachUser;
       const matchDisplayName = displayName
-        && displayName.toLowerCase().includes(searchField.toLowerCase());
-      const matchFullName = fullName
-        && fullName.toLowerCase().includes(searchField.toLowerCase());
+        && simplifyString(displayName).includes(simpleSearchField);
+      const matchFullName = fullName && simplifyString(fullName).includes(simpleSearchField);
       return matchDisplayName || matchFullName;
     });
     return filteredList;

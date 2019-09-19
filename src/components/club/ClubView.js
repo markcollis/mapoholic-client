@@ -26,6 +26,7 @@ import {
   setUserViewModeAction,
   updateClubAction,
 } from '../../actions';
+import { simplifyString } from '../../common/conversions';
 
 // The ClubView component is the parent for all components associated with
 // viewing and editing club details.
@@ -71,16 +72,16 @@ class ClubView extends Component {
   // helper to return filtered list of clubs based on search criteria
   getClubList = memoize((list, searchField) => {
     if (!list) return [];
+    const simpleSearchField = simplifyString(searchField);
     return list.filter((eachClub) => {
       const {
         fullName,
         shortName,
         country,
       } = eachClub;
-      const matchFullName = fullName && fullName.toLowerCase().includes(searchField.toLowerCase());
-      const matchShortName = shortName
-        && shortName.toLowerCase().includes(searchField.toLowerCase());
-      const matchCountry = country && country.toLowerCase().includes(searchField.toLowerCase());
+      const matchFullName = fullName && simplifyString(fullName).includes(simpleSearchField);
+      const matchShortName = shortName && simplifyString(shortName).includes(simpleSearchField);
+      const matchCountry = country && country.includes(simpleSearchField.toUpperCase());
       return (matchFullName || matchShortName || matchCountry);
     });
   });

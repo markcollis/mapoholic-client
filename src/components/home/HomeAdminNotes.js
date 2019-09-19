@@ -21,6 +21,11 @@ const HomeAdminNotes = () => {
             image path will succeed). Front end updated to send the appropriate request, but
             it would be good for this to be checked again before writing to the DB).
           </li>
+          <li>
+            Need to give more thought to what should happen if a map name is used, deleted,
+            then re-created again (currently a file already exists error). Overwrite, rename
+            existing? Back end issue. Workaround = change title then delete?
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />

@@ -15,7 +15,10 @@ import EventLinkedManage from './EventLinkedManage';
 import EventList from './EventList';
 import EventMap from './EventMap';
 import EventRunners from './EventRunners';
-import { reformatTimestampDateOnly } from '../../common/conversions';
+import {
+  reformatTimestampDateOnly,
+  simplifyString,
+} from '../../common/conversions';
 import {
   addEventRunnerAction,
   addEventRunnerOrisAction,
@@ -150,27 +153,28 @@ class EventView extends Component {
           types,
         } = eachEvent;
         const reformattedDate = reformatTimestampDateOnly(date, language);
-        const matchName = name && name.toLowerCase().includes(searchField.toLowerCase());
-        const matchMapName = mapName && mapName.toLowerCase().includes(searchField.toLowerCase());
+        const simpleSearchField = simplifyString(searchField);
+        const matchName = name && simplifyString(name).includes(simpleSearchField);
+        const matchMapName = mapName && simplifyString(mapName).includes(simpleSearchField);
         const matchDate = date
           && (date.includes(searchField) || reformattedDate.includes(searchField));
-        const matchPlace = locPlace && locPlace.toLowerCase().includes(searchField.toLowerCase());
+        const matchPlace = locPlace && simplifyString(locPlace).includes(simpleSearchField);
         const matchCountry = locCountry && locCountry.includes(searchField.toUpperCase());
         const matchOrganisedBy = organisedBy && organisedBy.length > 0
           && organisedBy.some((club) => {
             const { shortName } = club;
-            return shortName && shortName.toLowerCase().includes(searchField.toLowerCase());
+            return shortName && simplifyString(shortName).includes(simpleSearchField);
           });
         const matchTypes = types && types.length > 0 && types.some((type) => {
-          return type && type.toLowerCase().includes(searchField.toLowerCase());
+          return type && simplifyString(type).includes(simpleSearchField);
         });
         const matchTags = tags && tags.length > 0 && tags.some((tag) => {
-          return tag && tag.toLowerCase().includes(searchField.toLowerCase());
+          return tag && simplifyString(tag).includes(simpleSearchField);
         });
         const runnerSelf = (runners) ? runners.find(runner => runner.user === currentUserId) : null;
         const matchOwnTags = (runnerSelf && runnerSelf.tags.length > 0
           && runnerSelf.tags.some((tag) => {
-            return tag && tag.toLowerCase().includes(searchField.toLowerCase());
+            return tag && simplifyString(tag).includes(simpleSearchField);
           }));
         return (matchName || matchMapName || matchDate || matchPlace || matchCountry
           || matchOrganisedBy || matchTypes || matchTags || matchOwnTags);
