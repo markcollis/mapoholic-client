@@ -474,7 +474,34 @@ export const updateEventRunnerAction = (
     const state = getState();
     const { auth } = state;
     const token = auth.authenticated;
-    const response = await axios.patch(`${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}`, formValues, {
+    const updatedFormValues = (formValues.maps && formValues.maps.length > 0)
+      ? {
+        ...formValues,
+        maps: formValues.maps.map((eachMap) => {
+          const { course, route, overlay } = eachMap;
+          const coursePathStarts = course.indexOf('images/maps');
+          const updatedCourse = (coursePathStarts > 0)
+            ? course.slice(coursePathStarts)
+            : course;
+          const routePathStarts = route.indexOf('images/maps');
+          const updatedRoute = (routePathStarts > 0)
+            ? route.slice(routePathStarts)
+            : route;
+          const overlayPathStarts = route.indexOf('images/maps');
+          const updatedOverlay = (overlayPathStarts > 0)
+            ? overlay.slice(overlayPathStarts)
+            : overlay;
+          const updatedMap = {
+            ...eachMap,
+            course: updatedCourse,
+            route: updatedRoute,
+            overlay: updatedOverlay,
+          };
+          return updatedMap;
+        }),
+      }
+      : formValues;
+    const response = await axios.patch(`${MAPOHOLIC_SERVER}/events/${eventId}/maps/${userId}`, updatedFormValues, {
       headers: { Authorization: `bearer ${token}` },
     });
     dispatch({ type: EVENT_RUNNER_UPDATED, payload: response.data });

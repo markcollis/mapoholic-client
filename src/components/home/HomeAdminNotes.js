@@ -15,6 +15,12 @@ const HomeAdminNotes = () => {
             This has been patched in advance of the next release (issue #3720). Need to monitor
             and update dependency accordingly.
           </li>
+          <li>
+            Need to improve robustness of back end (specific example: updateEventRunner will
+            overwrite maps array without checking its contents, so writing a full URL as an
+            image path will succeed). Front end updated to send the appropriate request, but
+            it would be good for this to be checked again before writing to the DB).
+          </li>
         </ol>
       </Collapse>
       <hr className="divider" />

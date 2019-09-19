@@ -50,11 +50,13 @@ const EventRunners = ({
     }
   });
   const courseTitles = Object.keys(runnersByCourse);
+  // want to display '[unknown course]' only if other runners have a defined course
+  const missingCourseTitle = (courseTitles.length > 1) ? <Trans>[unknown course]</Trans> : '';
   const runnersToDisplay = courseTitles.map((courseTitle) => {
     const courseTitleToDisplay = (courseTitle === 'none')
-      ? <Trans>[unknown course]</Trans>
+      ? missingCourseTitle
       : courseTitle;
-    return ( // can't use <> shorthand with key
+    return ( // can't use <> shorthand for Fragment with key
       <Fragment key={courseTitle}>
         <h3 className="event-runners__class-title">{courseTitleToDisplay}</h3>
         {runnersByCourse[courseTitle].map(el => el)}

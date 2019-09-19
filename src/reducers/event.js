@@ -373,6 +373,8 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         selectedEventIdMapView: action.payload,
+        eventModeMapView: 'view',
+        runnerMode: 'view',
       };
     case EVENT_SELECT_RUNNER:
       return {
