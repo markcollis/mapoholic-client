@@ -9,10 +9,13 @@ class EventCourseMapCanvasRender extends Component {
     isKeyDown: {},
     isMouseDown: false,
     isMouseOver: false,
+    isTouchZoomingIn: false,
+    isTouchZoomingOut: false,
     maxPanStep: 10, // pixels
     mouseX: 0,
     mouseY: 0,
     panTimeInterval: 20, // milliseconds
+    touchZoomReferenceDistance: 0, // needed to determine whether zooming in or out
   };
 
   static propTypes = {
@@ -54,7 +57,7 @@ class EventCourseMapCanvasRender extends Component {
     document.addEventListener('keydown', this.handleKeyDown, false);
     document.addEventListener('keyup', this.handleKeyUp, false);
     document.addEventListener('click', this.handleMouseUp, false);
-    document.addEventListener('touchend', this.handleMouseUp, false);
+    document.addEventListener('touchend', this.handleTouchEnd, false);
     document.addEventListener('mousemove', this.handleMouseMove, false);
   }
 
@@ -62,35 +65,87 @@ class EventCourseMapCanvasRender extends Component {
     document.removeEventListener('keydown', this.handleKeyDown, false);
     document.removeEventListener('keyup', this.handleKeyUp, false);
     document.removeEventListener('click', this.handleMouseUp, false);
-    document.removeEventListener('touchend', this.handleMouseUp, false);
+    document.removeEventListener('touchend', this.handleTouchEnd, false);
     document.removeEventListener('mousemove', this.handleMouseMove, false);
   }
 
   handleTouchStart = (e) => {
-    const touchPoint = e.touches[0];
-    this.setState({
-      isMouseDown: true,
-      mouseX: touchPoint.clientX,
-      mouseY: touchPoint.clientY,
-    });
-  }
-
-  handleTouchMove = (e) => {
-    const touchPoint = e.touches[0];
-    const {
-      handlePanImage,
-      top,
-      left,
-    } = this.props;
-    const { isMouseDown, mouseX, mouseY } = this.state;
-    if (isMouseDown) {
-      const dX = touchPoint.clientX - mouseX;
-      const dY = touchPoint.clientY - mouseY;
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.touches.length === 2) { // zoom
+      const touchDistance = Math.hypot(
+        e.touches[0].pageX - e.touches[1].pageX,
+        e.touches[0].pageY - e.touches[1].pageY,
+      );
       this.setState({
+        isMouseDown: false, // cancel pan
+        touchZoomReferenceDistance: touchDistance,
+      });
+    } else { // pan, handle like mouse click and drag
+      const touchPoint = e.touches[0];
+      this.setState({
+        isMouseDown: true,
         mouseX: touchPoint.clientX,
         mouseY: touchPoint.clientY,
       });
-      handlePanImage(top + dY, left + dX);
+    }
+  }
+
+  handleTouchMove = (e) => {
+    const {
+      isMouseDown,
+      isTouchZoomingIn,
+      isTouchZoomingOut,
+      mouseX,
+      mouseY,
+      touchZoomReferenceDistance,
+    } = this.state;
+    const {
+      handlePanImage,
+      startZoomIn,
+      endZoomIn,
+      startZoomOut,
+      endZoomOut,
+      top,
+      left,
+    } = this.props;
+    if (e.touches.length === 2) { // zoom
+      const touchDistance = Math.hypot(
+        e.touches[0].pageX - e.touches[1].pageX,
+        e.touches[0].pageY - e.touches[1].pageY,
+      );
+      const distanceMoved = touchDistance - touchZoomReferenceDistance;
+      const TOUCH_ZOOM_TOLERANCE = 5; // need to investigate senstivity to this on different phones
+      // if distance moved is below TOUCH_ZOOM_TOLERANCE do nothing so zoom isn't too fast
+      if (distanceMoved > TOUCH_ZOOM_TOLERANCE) { // zoom in
+        startZoomIn();
+        if (isTouchZoomingOut) endZoomOut();
+        this.setState({
+          isTouchZoomingIn: true,
+          isTouchZoomingOut: false,
+          touchZoomReferenceDistance: touchDistance,
+        });
+      }
+      if (distanceMoved < -TOUCH_ZOOM_TOLERANCE) { // zoom out
+        startZoomOut();
+        if (isTouchZoomingIn) endZoomIn();
+        this.setState({
+          isTouchZoomingIn: false,
+          isTouchZoomingOut: true,
+          touchZoomReferenceDistance: touchDistance,
+        });
+      }
+    } else { // pan
+      const touchPoint = e.touches[0];
+      if (isMouseDown) {
+        const dX = touchPoint.clientX - mouseX;
+        const dY = touchPoint.clientY - mouseY;
+        this.setState({
+          mouseX: touchPoint.clientX,
+          mouseY: touchPoint.clientY,
+        });
+        handlePanImage(top + dY, left + dX);
+      }
     }
   }
 
@@ -110,17 +165,38 @@ class EventCourseMapCanvasRender extends Component {
       top,
       left,
     } = this.props;
-    const { isMouseDown, mouseX, mouseY } = this.state;
+    const {
+      isMouseDown,
+      mouseX,
+      mouseY,
+    } = this.state;
     if (isMouseDown) {
       const dX = e.clientX - mouseX;
       const dY = e.clientY - mouseY;
-      this.setState({ mouseX: e.clientX, mouseY: e.clientY });
+      this.setState({
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+      });
       handlePanImage(top + dY, left + dX);
     }
   }
 
   handleMouseUp = () => {
-    this.setState({ isMouseDown: false });
+    this.setState({
+      isMouseDown: false,
+    });
+  }
+
+  handleTouchEnd = () => {
+    const {
+      endZoomIn,
+      endZoomOut,
+    } = this.props;
+    endZoomIn();
+    endZoomOut();
+    this.setState({
+      isMouseDown: false,
+    });
   }
 
   handleDoubleClick = () => {
@@ -143,11 +219,17 @@ class EventCourseMapCanvasRender extends Component {
       startRotateLeft,
       startRotateRight,
     } = this.props;
-    const { isKeyDown, isMouseOver, maxPanStep } = this.state;
+    const {
+      isKeyDown,
+      isMouseOver,
+      maxPanStep,
+    } = this.state;
     if (isMouseOver) {
       const keyCode = e.code;
       if (!isKeyDown[keyCode]) {
-        this.setState({ isKeyDown: { ...isKeyDown, [keyCode]: true } });
+        this.setState({
+          isKeyDown: { ...isKeyDown, [keyCode]: true },
+        });
       }
       switch (keyCode) {
         case 'ArrowLeft':
@@ -200,9 +282,13 @@ class EventCourseMapCanvasRender extends Component {
       endRotateLeft,
       endRotateRight,
     } = this.props;
-    const { isKeyDown } = this.state;
+    const {
+      isKeyDown,
+    } = this.state;
     const keyCode = e.code;
-    this.setState({ isKeyDown: { ...isKeyDown, [keyCode]: false } });
+    this.setState({
+      isKeyDown: { ...isKeyDown, [keyCode]: false },
+    });
     switch (keyCode) {
       case 'ArrowLeft':
       case 'ArrowRight':
@@ -234,8 +320,15 @@ class EventCourseMapCanvasRender extends Component {
   }
 
   panKeyboard = (arrowKey, step, maxStep) => {
-    const { handlePanImage, left, top } = this.props;
-    const { isKeyDown, panTimeInterval } = this.state;
+    const {
+      handlePanImage,
+      left,
+      top,
+    } = this.props;
+    const {
+      isKeyDown,
+      panTimeInterval,
+    } = this.state;
     if (isKeyDown[arrowKey]) {
       let newTop = top;
       let newLeft = left;
