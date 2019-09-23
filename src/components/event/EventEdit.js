@@ -122,7 +122,9 @@ class EventEdit extends Component {
         .filter(orisEvent => !orisEvent.includedEvents) // remove multi-day
         .filter(orisEvent => orisEvent.date < dateToDateString(new Date())) // remove future
         .sort((a, b) => { // sort so most recent are listed first
-          return (a.date < b.date) ? 0 : -1;
+          if (a.date < b.date) return 1;
+          if (a.date > b.date) return -1;
+          return 0;
         })
         .map((orisEvent) => {
           const { orisEventId, name, date } = orisEvent;

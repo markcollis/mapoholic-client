@@ -91,6 +91,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case USER_UPDATED:
       return {
         ...state,
+        current: (state.current._id === action.payload._id) ? action.payload : { ...state.current },
         details: { ...state.details, [action.payload._id]: action.payload },
         errorMessage: '',
         list: getUpdatedUserList(state.list, action.payload),
