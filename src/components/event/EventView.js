@@ -126,8 +126,17 @@ class EventView extends Component {
   getEventListArray = memoize((list, searchField, tagFilter, current, mineOnly, language) => {
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
-    const filteredListMineOnly = list.filter((eachEvent) => {
-      // if mineOnly, select only those with current user as runner
+    // filter to remove events with no runners (if anonymous or guest)
+    const filteredListRunners = list.filter((eachEvent) => {
+      const { runners } = eachEvent;
+      const hasRunners = (runners && runners.length > 0);
+      const isAnonymous = !currentUserId;
+      const isGuest = (current.role === 'guest');
+      const showEventsWithoutRunners = !isAnonymous && !isGuest;
+      return (hasRunners || showEventsWithoutRunners);
+    });
+    // filter to select only the current user's events if mineOnly is true
+    const filteredListMineOnly = filteredListRunners.filter((eachEvent) => {
       const { runners } = eachEvent;
       const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
       return !mineOnly || runnerIds.includes(currentUserId);

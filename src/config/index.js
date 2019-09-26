@@ -2,19 +2,8 @@
 // *** configuration that can be changed by users (e.g. language) is managed
 // in the config reducer ***
 
-// console.logs server response to every API call made
-// export const LOG_API_CALLS = true;
-// moved to config reducer so that Administrators can activate logging online
-
 // API
 export const MAPOHOLIC_SERVER = 'https://mapoholic-api.markcollis.dev';
-
-// crius on Wifi (Seven)
-// export const MAPOHOLIC_SERVER = 'https://192.168.0.15:3090';
-// export const MAPOHOLIC_SERVER = 'http://192.168.0.15:3090';
-
-// crius as localhost if no internet connection and using a local test DB
-// export const MAPOHOLIC_SERVER = 'http://localhost:3090';
 
 // Tile set and credit for Leaflet maps (OpenStreetMap)
 // (used in EventMap, EventLocationMap, EventEditLocationMap components)
@@ -28,7 +17,7 @@ export const MAP_CREDIT = '&copy; <a href="https://www.openstreetmap.org/copyrig
 // Number of activities to show in HomeRecent
 export const DEFAULT_ACTIVITY_LENGTH = 10;
 
-// current version number (updated with every release)
+// current version number (update with every release)
 export const MAPOHOLIC_VERSION = '1.0.0';
 // year current version created (update as required)
 export const MAPOHOLIC_VERSION_YEAR = '2019';
