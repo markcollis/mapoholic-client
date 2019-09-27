@@ -155,9 +155,10 @@ If you want to host your own instance, whether locally or publicly, you will nee
 
 ## Release History
 
-|Version|Document                                             |Date     |Purpose               |
-|-------|-----------------------------------------------------|--------:|----------------------|
-|1.0.0  |[Release Notes](release_notes/RELEASE_NOTES_1_0_0.md)|19/9/2019|Initial public release|
+|Version|Document                                             |Date     |Purpose                       |
+|-------|-----------------------------------------------------|--------:|------------------------------|
+|1.0.0  |[Release Notes](release_notes/RELEASE_NOTES_1_0_0.md)|19/9/2019|Initial public release        |
+|1.0.1  |[Release Notes](release_notes/RELEASE_NOTES_1_0_1.md)|27/9/2019|Bug fix and a few enhancements|
 
 ## Installation
 
