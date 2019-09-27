@@ -34,7 +34,7 @@ class UserEditProfileImage extends Component {
       deleteProfileImage,
     } = this.props;
     const { _id: userId, profileImage } = user;
-    const hasProfileImage = profileImage && profileImage !== '';
+    const hasProfileImage = Boolean(profileImage && profileImage !== '');
     const dropzoneIcon = <i className="image big icon" />;
     const dropzoneText = (
       <div>

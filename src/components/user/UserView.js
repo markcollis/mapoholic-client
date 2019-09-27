@@ -67,16 +67,17 @@ class UserView extends Component {
     const simpleSearchField = simplifyString(searchField);
     const filteredList = list.filter((eachUser) => {
       const { displayName, fullName } = eachUser;
-      const matchDisplayName = displayName
-        && simplifyString(displayName).includes(simpleSearchField);
-      const matchFullName = fullName && simplifyString(fullName).includes(simpleSearchField);
-      return matchDisplayName || matchFullName;
+      const matchesDisplayName = Boolean(displayName
+        && simplifyString(displayName).includes(simpleSearchField));
+      const matchesFullName = Boolean(fullName
+        && simplifyString(fullName).includes(simpleSearchField));
+      return matchesDisplayName || matchesFullName;
     });
     return filteredList;
   });
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => (current && current.role === 'admin'));
+  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
 
   // helper to return current user's id for own profile page irrespective of selectedUserId prop
   getUserId = memoize((current, ownProfile, selectedUserId) => {
@@ -115,7 +116,7 @@ class UserView extends Component {
     if (!eventList) return [];
     const eventsList = eventList.filter((eachEvent) => {
       const { runners } = eachEvent;
-      const isRunner = runners && runners.some(runner => runner.user === selectedUserId);
+      const isRunner = Boolean(runners && runners.some(runner => runner.user === selectedUserId));
       return isRunner;
     });
     return eventsList;

@@ -85,7 +85,7 @@ class EventMapViewer extends Component {
         return (runnerId === selectedRunner);
       })
       : null;
-    const hasMaps = runnerData && runnerData.maps.length > 0;
+    const hasMaps = Boolean(runnerData && runnerData.maps.length > 0);
     const mapImages = (hasMaps)
       ? runnerData.maps.map((map) => {
         const {
@@ -97,8 +97,8 @@ class EventMapViewer extends Component {
           routeUpdated,
         } = map;
         const defaultPreferType = 'Course'; // consider making this a per-user config option later
-        const hasCourseMap = (course && course !== '');
-        const hasRouteMap = (route && route !== '');
+        const hasCourseMap = Boolean(course && course !== '');
+        const hasRouteMap = Boolean(route && route !== '');
         if (!hasCourseMap && !hasRouteMap) {
           return {
             mapId,

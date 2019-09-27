@@ -25,8 +25,8 @@ const EventComments = ({
       return runnerId === selectedRunner;
     })
     : null;
-  const isAdmin = (currentUser && currentUser.role === 'admin');
-  const isStandard = (currentUser && currentUser.role === 'standard');
+  const isAdmin = Boolean(currentUser && currentUser.role === 'admin');
+  const isStandard = Boolean(currentUser && currentUser.role === 'standard');
   const canPostComments = isAdmin || isStandard;
   let currentUserId = null;
   if (currentUser) {

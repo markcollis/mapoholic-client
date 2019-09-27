@@ -50,6 +50,10 @@ const INITIAL_STATE = {
 
 const configReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case AUTH_USER:
+      if (state.logApiCalls) console.log(`${action.type} payload:`, action.payload);
+      // return state; // enables API logging to be persistent for debugging
+      return INITIAL_STATE; // clear on login or logout
     case CONFIG_SET_LANGUAGE:
       return { ...state, language: action.payload };
     case CONFIG_SET_API_LOGGING:
@@ -64,7 +68,6 @@ const configReducer = (state = INITIAL_STATE, action) => {
     case ACTIVITY_GOT_ALL:
     case ACTIVITY_GOT_OWN:
     case AUTH_ERROR:
-    case AUTH_USER:
     case CLUB_CREATED:
     case CLUB_DELETED:
     case CLUB_ERROR:

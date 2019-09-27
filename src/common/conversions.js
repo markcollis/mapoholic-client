@@ -1,7 +1,7 @@
 // Utility functions related to converting data (mostly date and time formats)
 
 const isValidDate = (date) => {
-  return date && Object.prototype.toString.call(date) === '[object Date]' && !Number.isNaN(date);
+  return Boolean(date && Object.prototype.toString.call(date) === '[object Date]' && !Number.isNaN(date));
 };
 
 // For event dates - does not need to take timezones into account as only the

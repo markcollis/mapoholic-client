@@ -126,8 +126,17 @@ class EventView extends Component {
   getEventListArray = memoize((list, searchField, tagFilter, current, mineOnly, language) => {
     const currentUserId = (current) ? current._id : '';
     if (!list) return [];
-    const filteredListMineOnly = list.filter((eachEvent) => {
-      // if mineOnly, select only those with current user as runner
+    // filter to remove events with no runners (if anonymous or guest)
+    const filteredListRunners = list.filter((eachEvent) => {
+      const { runners } = eachEvent;
+      const hasRunners = Boolean(runners && runners.length > 0);
+      const isAnonymous = !currentUserId;
+      const isGuest = Boolean(current && current.role === 'guest');
+      const showEventsWithoutRunners = !isAnonymous && !isGuest;
+      return (hasRunners || showEventsWithoutRunners);
+    });
+    // filter to select only the current user's events if mineOnly is true
+    const filteredListMineOnly = filteredListRunners.filter((eachEvent) => {
       const { runners } = eachEvent;
       const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
       return !mineOnly || runnerIds.includes(currentUserId);
@@ -154,30 +163,34 @@ class EventView extends Component {
         } = eachEvent;
         const reformattedDate = reformatTimestampDateOnly(date, language);
         const simpleSearchField = simplifyString(searchField);
-        const matchName = name && simplifyString(name).includes(simpleSearchField);
-        const matchMapName = mapName && simplifyString(mapName).includes(simpleSearchField);
-        const matchDate = date
-          && (date.includes(searchField) || reformattedDate.includes(searchField));
-        const matchPlace = locPlace && simplifyString(locPlace).includes(simpleSearchField);
-        const matchCountry = locCountry && locCountry.includes(searchField.toUpperCase());
-        const matchOrganisedBy = organisedBy && organisedBy.length > 0
-          && organisedBy.some((club) => {
-            const { shortName } = club;
-            return shortName && simplifyString(shortName).includes(simpleSearchField);
-          });
-        const matchTypes = types && types.length > 0 && types.some((type) => {
+        const matchesName = Boolean(name
+          && simplifyString(name).includes(simpleSearchField));
+        const matchesMapName = Boolean(mapName
+          && simplifyString(mapName).includes(simpleSearchField));
+        const matchesDate = Boolean(date
+          && (date.includes(searchField) || reformattedDate.includes(searchField)));
+        const matchesPlace = Boolean(locPlace
+          && simplifyString(locPlace).includes(simpleSearchField));
+        const matchesCountry = Boolean(locCountry
+          && locCountry.includes(searchField.toUpperCase()));
+        const matchesOrganisedBy = Boolean(organisedBy
+          && organisedBy.length > 0 && organisedBy.some((club) => {
+          const { shortName } = club;
+          return shortName && simplifyString(shortName).includes(simpleSearchField);
+        }));
+        const matchesTypes = Boolean(types && types.length > 0 && types.some((type) => {
           return type && simplifyString(type).includes(simpleSearchField);
-        });
-        const matchTags = tags && tags.length > 0 && tags.some((tag) => {
+        }));
+        const matchesTags = Boolean(tags && tags.length > 0 && tags.some((tag) => {
           return tag && simplifyString(tag).includes(simpleSearchField);
-        });
+        }));
         const runnerSelf = (runners) ? runners.find(runner => runner.user === currentUserId) : null;
-        const matchOwnTags = (runnerSelf && runnerSelf.tags.length > 0
+        const matchesOwnTags = Boolean(runnerSelf && runnerSelf.tags.length > 0
           && runnerSelf.tags.some((tag) => {
             return tag && simplifyString(tag).includes(simpleSearchField);
           }));
-        return (matchName || matchMapName || matchDate || matchPlace || matchCountry
-          || matchOrganisedBy || matchTypes || matchTags || matchOwnTags);
+        return (matchesName || matchesMapName || matchesDate || matchesPlace || matchesCountry
+          || matchesOrganisedBy || matchesTypes || matchesTags || matchesOwnTags);
       });
     return filteredList;
   });
@@ -199,14 +212,14 @@ class EventView extends Component {
   getCurrentUserOrisId = memoize(current => ((current) ? current.orisId : null));
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => (current && current.role === 'admin'));
+  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
 
   // helper to determine if current user can edit event if input props have changed
   getCanEditEvent = memoize((current, selectedEvent) => {
     if (!current || !selectedEvent) return false;
-    const isAdmin = (current.role === 'admin');
+    const isAdmin = this.getIsAdmin(current);
     if (isAdmin) return true;
-    const isOwner = (current._id && selectedEvent.owner
+    const isOwner = Boolean(current._id && selectedEvent.owner
       && current._id === selectedEvent.owner._id);
     if (isOwner) return true;
     const runnerList = (selectedEvent.runners)
@@ -227,10 +240,10 @@ class EventView extends Component {
   // helper to get list of events from ORIS if input props have changed
   getOrisList = memoize((current, orisList, eventMode) => {
     const { getEventListOris } = this.props;
-    const currentHasOrisList = current && current.orisId && current.orisId !== '' && current.role !== 'guest';
+    const currentHasOrisList = Boolean(current && current.orisId
+      && current.orisId !== '' && current.role !== 'guest');
     // populate ORIS event list when adding event with a current user for the first time
     if (currentHasOrisList && eventMode === 'add' && !orisList) {
-      // console.log('getting list of events from ORIS');
       getEventListOris();
       return [];
     }

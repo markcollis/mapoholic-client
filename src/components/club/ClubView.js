@@ -55,7 +55,7 @@ class ClubView extends Component {
   };
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => (current && current.role === 'admin'));
+  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
 
   // helper to determine if current user can edit club details if input props have changed
   getCanEditClub = memoize((current, selectedClub) => {
@@ -79,10 +79,13 @@ class ClubView extends Component {
         shortName,
         country,
       } = eachClub;
-      const matchFullName = fullName && simplifyString(fullName).includes(simpleSearchField);
-      const matchShortName = shortName && simplifyString(shortName).includes(simpleSearchField);
-      const matchCountry = country && country.includes(simpleSearchField.toUpperCase());
-      return (matchFullName || matchShortName || matchCountry);
+      const matchesFullName = Boolean(fullName
+        && simplifyString(fullName).includes(simpleSearchField));
+      const matchesShortName = Boolean(shortName
+        && simplifyString(shortName).includes(simpleSearchField));
+      const matchesCountry = Boolean(country
+        && country.includes(simpleSearchField.toUpperCase()));
+      return (matchesFullName || matchesShortName || matchesCountry);
     });
   });
 
