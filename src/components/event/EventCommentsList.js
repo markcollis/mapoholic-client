@@ -17,7 +17,7 @@ const EventCommentsList = ({
 
   const { user } = runnerData;
   const { _id: runnerId } = user;
-  const hasComments = runnerData && runnerData.comments.length > 0;
+  const hasComments = Boolean(runnerData && runnerData.comments.length > 0);
   const sortedComments = (hasComments)
     ? [...runnerData.comments]
       .sort((a, b) => parseInt(a.postedAt, 10) - parseInt(b.postedAt, 10))

@@ -108,23 +108,23 @@ class MapView extends Component {
   getCurrentUserOrisId = memoize(current => ((current) ? current.orisId : null));
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => (current && current.role === 'admin'));
+  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
 
   // helper to determine if current user can edit event if input props have changed
   getCanEditEvent = memoize((current, selectedEvent) => {
-    const isAdmin = (current && current.role === 'admin');
+    const isAdmin = this.getIsAdmin(current);
     if (isAdmin) return true;
     const runnerList = (selectedEvent.runners)
       ? selectedEvent.runners.map(runner => runner.user._id)
       : [];
-    const isRunner = (current && selectedEvent && runnerList.includes(current._id));
+    const isRunner = Boolean(current && selectedEvent && runnerList.includes(current._id));
     return isRunner;
   });
 
   // helper to determine if current user can edit runner if input props have changed
   getCanEditRunner = memoize((current, selectedRunner) => {
-    const isAdmin = (current && current.role === 'admin');
-    const isSelectedRunner = (current && current._id === selectedRunner);
+    const isAdmin = this.getIsAdmin(current);
+    const isSelectedRunner = Boolean(current && current._id === selectedRunner);
     return isAdmin || isSelectedRunner;
   });
 

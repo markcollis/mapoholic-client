@@ -21,10 +21,10 @@ const EventRunners = ({
   const { _id: selectedEventId } = selectedEvent;
   if (!selectedEventId) return null;
   const { runners, orisId } = selectedEvent;
-  const isCurrentRunner = runners && runners.some(({ user }) => {
+  const isCurrentRunner = Boolean(runners && runners.some(({ user }) => {
     const { _id: runnerId } = user;
     return runnerId === currentUserId;
-  });
+  }));
   const runnersByCourse = {};
   const runnersArray = [...runners]
     .sort((a, b) => {
@@ -64,7 +64,7 @@ const EventRunners = ({
     );
   });
 
-  const useOrisToAdd = orisId && orisId !== '' && currentUserOrisId && currentUserOrisId !== '';
+  const useOrisToAdd = Boolean(orisId && orisId !== '' && currentUserOrisId && currentUserOrisId !== '');
   const renderEventRunnerAdd = (isCurrentRunner || !currentUserId)
     ? null
     : (
