@@ -1,4 +1,4 @@
-# Release Notes: MapOholic Client v1.0.0
+# Release Notes: MapOholic Client v1.0.1
 
 ## Summary
 
