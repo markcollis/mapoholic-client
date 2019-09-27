@@ -65,7 +65,7 @@ class Authenticate extends Component {
                   type="email"
                   name="email"
                   placeholder={i18n._(t`Enter email address`)}
-                  autoComplete="off"
+                  autoComplete="email"
                 />
               )}
             </I18n>
@@ -82,7 +82,6 @@ class Authenticate extends Component {
                   type="password"
                   name="password"
                   placeholder={i18n._(t`Enter password`)}
-                  autoComplete="off"
                 />
               )}
             </I18n>
