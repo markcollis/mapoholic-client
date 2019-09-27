@@ -18,6 +18,6 @@ export const MAP_CREDIT = '&copy; <a href="https://www.openstreetmap.org/copyrig
 export const DEFAULT_ACTIVITY_LENGTH = 10;
 
 // current version number (update with every release)
-export const MAPOHOLIC_VERSION = '1.0.0';
+export const MAPOHOLIC_VERSION = '1.0.1';
 // year current version created (update as required)
 export const MAPOHOLIC_VERSION_YEAR = '2019';
