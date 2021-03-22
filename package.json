@@ -10,16 +10,17 @@
     "date-fns": "^2.2.1",
     "focus-visible": "^5.0.1",
     "formik": "^1.5.0",
+    "latest": "^0.2.0",
     "leaflet": "^1.4.0",
     "memoize-one": "^5.0.4",
     "prop-types": "^15.6.2",
-    "react": "^16.8.1",
+    "react": "^17.0.1",
     "react-datepicker": "^2.9.6",
-    "react-dom": "^16.8.1",
+    "react-dom": "^17.0.1",
     "react-leaflet": "^2.2.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "^3.1.1",
+    "react-scripts": "^4.0.3",
     "react-select": "^3.0.3",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
@@ -50,6 +51,8 @@
     "@babel/core": "^7.4.3",
     "@lingui/cli": "^2.7.4",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-plugin-macros": "^2.6.1"
+    "babel-plugin-macros": "^2.6.1",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1"
   }
 }
