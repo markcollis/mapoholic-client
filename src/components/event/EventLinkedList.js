@@ -17,7 +17,7 @@ const EventLinkedList = ({
       const { includes } = link;
       const eventCount = includes.length;
       const eventDates = (eventCount > 0)
-        ? includes.map(includedEvent => includedEvent.date).sort()
+        ? includes.map((includedEvent) => includedEvent.date).sort()
         : null;
       const dateRange = (eventDates)
         ? ` (${reformatTimestampDateOnly(eventDates[0], language)} - ${reformatTimestampDateOnly(eventDates[eventCount - 1], language)})`

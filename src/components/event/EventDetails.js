@@ -114,7 +114,7 @@ const EventDetails = ({
     ? (
       <span>
         {types.map((type) => {
-          const matchingType = typesOptions.find(el => el.value === type);
+          const matchingType = typesOptions.find((el) => el.value === type);
           return <div key={type} className="ui blue label">{matchingType.label}</div>;
         })}
       </span>
@@ -174,8 +174,7 @@ const EventDetails = ({
                       {`${place || ''}${(place && country) ? ', ' : ''}${country || ''}`}
                     </a>
                   )
-                  : `${place || ''}${(place && country) ? ', ' : ''}${country || ''}`
-                }
+                  : `${place || ''}${(place && country) ? ', ' : ''}${country || ''}`}
               </div>
             </div>
           )

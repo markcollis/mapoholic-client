@@ -178,7 +178,7 @@ const EventRunnerDetails = ({
       </div>
     )
     : null;
-  const visibilityText = visibilityOptions.find(el => el.value === visibility).label;
+  const visibilityText = visibilityOptions.find((el) => el.value === visibility).label;
   const renderEditButtons = (canEdit)
     ? (
       <div>

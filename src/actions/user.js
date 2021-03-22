@@ -41,12 +41,12 @@ export const setUserViewModeSelfAction = (mode) => {
   return null;
 };
 // track changes to the user search field
-export const setUserSearchFieldAction = text => ({
+export const setUserSearchFieldAction = (text) => ({
   type: USER_CHANGE_SEARCH_FIELD,
   payload: text,
 });
 // select a user to show further information
-export const selectUserToDisplayAction = userId => ({
+export const selectUserToDisplayAction = (userId) => ({
   type: USER_SELECT_USER,
   payload: userId,
 });
@@ -60,7 +60,7 @@ export const cancelUserErrorAction = () => ({
 
 // *** Helper functions ***
 // handle errors consistently, for all routes except login
-const handleError = errorType => (err, dispatch) => {
+const handleError = (errorType) => (err, dispatch) => {
   if (err.response) { // received response with an error status code
     if (err.response.data.error) { // expected error message from API
       dispatch({ type: errorType, payload: err.response.data.error });
@@ -160,7 +160,7 @@ export const getUserListAction = (searchCriteria, callback) => async (dispatch, 
 
 // retrieve full details for the currently logged in user
 // app.get('/users/me', requireAuth, Users.getLoggedInUser);
-export const getCurrentUserAction = callback => async (dispatch, getState) => {
+export const getCurrentUserAction = (callback) => async (dispatch, getState) => {
   const state = getState();
   const { auth } = state;
   try {

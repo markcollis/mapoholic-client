@@ -25,7 +25,7 @@ class ErrorBoundary extends Component {
         return 'App';
       }
       return null;
-    }).filter(name => name).join(', or ');
+    }).filter((name) => name).join(', or ');
     if (childComponents !== '') {
       // console.log('childComponents:', childComponents);
     }

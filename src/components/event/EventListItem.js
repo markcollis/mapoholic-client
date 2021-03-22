@@ -90,7 +90,7 @@ const EventListItem = ({
     ? (
       <span>
         {types.map((type) => {
-          const matchingType = typesOptions.find(el => el.value === type);
+          const matchingType = typesOptions.find((el) => el.value === type);
           return <div key={type} className="ui blue label">{matchingType.label}</div>;
         })}
       </span>

@@ -44,12 +44,12 @@ class EventResults extends Component {
     const headerArray = [];
     // header first
     const fields = Object.keys(resultsArray[0]);
-    fields.forEach(field => headerArray.push(`"${field}"`));
+    fields.forEach((field) => headerArray.push(`"${field}"`));
     const header = headerArray.join().concat('\r\n');
     // then data for each runner
     const runnerArray = resultsArray.map((line) => {
       const lineArray = [];
-      fields.forEach(field => lineArray.push(`"${line[field].replace(/"/g, '""')}"`));
+      fields.forEach((field) => lineArray.push(`"${line[field].replace(/"/g, '""')}"`));
       const lineOutput = lineArray.join();
       return lineOutput;
     });
@@ -70,11 +70,11 @@ class EventResults extends Component {
     const contents = e.target.result;
     const uploadedResults = [];
     const lines = contents.split('\n');
-    const header = lines[0].split(',').map(field => field.replace(/"/g, '').trim());
+    const header = lines[0].split(',').map((field) => field.replace(/"/g, '').trim());
     const numberFields = header.length;
     for (let i = 1; i < lines.length; i += 1) {
       const result = {};
-      const line = lines[i].split(',').map(field => field.replace(/"/g, '').trim());
+      const line = lines[i].split(',').map((field) => field.replace(/"/g, '').trim());
       if (line.length === numberFields) { // ignore incomplete lines
         for (let j = 0; j < header.length; j += 1) {
           result[header[j]] = line[j];
@@ -117,7 +117,7 @@ class EventResults extends Component {
       });
     } else if (rawUploadedResults.Method === 'getEventResults') { // process ORIS data
       const { Data: orisData } = rawUploadedResults;
-      const classResultsData = Object.keys(orisData).map(resultKey => orisData[resultKey]);
+      const classResultsData = Object.keys(orisData).map((resultKey) => orisData[resultKey]);
       classResultsData.forEach((result) => {
         const {
           Place: place,
@@ -164,7 +164,7 @@ class EventResults extends Component {
       const runnerData = this.getRunnerData(selectedEvent, selectedRunner);
       const { user } = runnerData;
       const { regNumber } = user;
-      const ownResult = uploadedResults.find(result => result.regNumber === regNumber);
+      const ownResult = uploadedResults.find((result) => result.regNumber === regNumber);
       const fieldSize = uploadedResults.length - 1;
 
       const valuesToSubmit = { fieldSize, fullResults: uploadedResults };
@@ -232,7 +232,7 @@ class EventResults extends Component {
         download={`${downloadName}.json`}
         href={downloadUrlJSON}
       >
-      JSON
+        JSON
       </a>
     );
     const downloadBlobCSV = new Blob([this.convertToCSV(existingResults || TEMPLATE)],
@@ -243,7 +243,7 @@ class EventResults extends Component {
         download={`${downloadName}.csv`}
         href={downloadUrlCSV}
       >
-      CSV
+        CSV
       </a>
     );
     const downloadDescription = (existingResults)
@@ -306,7 +306,7 @@ class EventResults extends Component {
           <div className="column ten wide">
             <FileDropzone
               fileType="results"
-              onFileAdded={file => this.handleFileAdded(file)}
+              onFileAdded={(file) => this.handleFileAdded(file)}
               icon={dropzoneIcon}
               text={dropzoneText}
             />

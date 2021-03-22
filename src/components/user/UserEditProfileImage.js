@@ -49,7 +49,7 @@ class UserEditProfileImage extends Component {
         <h3 className="header"><Trans>Add or change user profile image</Trans></h3>
         <div>
           <FileDropzone
-            onFileAdded={file => this.setState({ fileToUpload: file })}
+            onFileAdded={(file) => this.setState({ fileToUpload: file })}
             icon={dropzoneIcon}
             text={dropzoneText}
           />

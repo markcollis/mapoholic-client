@@ -32,6 +32,7 @@ class Authenticate extends Component {
         <i
           role="button"
           className="close icon"
+          label="close"
           onClick={() => cancelAuthError()}
           onKeyPress={() => cancelAuthError()}
           tabIndex="0"
@@ -107,8 +108,7 @@ class Authenticate extends Component {
               </label>
             </div>
           )
-          : null
-        }
+          : null}
         <button type="submit" className="ui button primary" disabled={isSubmitting}>{buttonText}</button>
       </Form>
     );

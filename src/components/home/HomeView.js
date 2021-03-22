@@ -151,7 +151,7 @@ class HomeView extends Component {
     const { _id: currentUserId } = currentUser;
     const ownEventList = eventList.filter((eachEvent) => {
       const { runners } = eachEvent;
-      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      const runnerIds = (runners) ? runners.map((runner) => runner.user) : [];
       return runnerIds.includes(currentUserId);
     });
     return ownEventList;
@@ -178,6 +178,7 @@ class HomeView extends Component {
         <div className="ui error message">
           <i
             role="button"
+            label="close"
             className="close icon"
             onClick={() => cancelActivityError()}
             onKeyPress={() => cancelActivityError()}

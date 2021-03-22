@@ -52,7 +52,7 @@ export const reformatTimestampDateOnly = (timestamp, locale = 'default') => {
     // console.log('reformattedTimestamp', reformattedTimestamp);
     const parts = reformattedTimestamp.split('/');
     // console.log('parts', parts);
-    const newParts = parts.map(part => part.replace(/^0+/, ''));
+    const newParts = parts.map((part) => part.replace(/^0+/, ''));
     // console.log('newParts', newParts);
     reformattedTimestamp = newParts.join('/');
   }

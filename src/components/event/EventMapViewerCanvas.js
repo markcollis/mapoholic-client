@@ -198,9 +198,9 @@ class EventMapViewerCanvas extends Component {
     this.setState({ activeType: newActiveType });
   }
 
-  sinDeg = angle => Math.sin(angle * Math.PI / 180);
+  sinDeg = (angle) => Math.sin((angle * Math.PI) / 180);
 
-  cosDeg = angle => Math.cos(angle * Math.PI / 180);
+  cosDeg = (angle) => Math.cos((angle * Math.PI) / 180);
 
   rotate = () => {
     const {

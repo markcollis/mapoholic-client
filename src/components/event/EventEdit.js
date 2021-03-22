@@ -90,8 +90,8 @@ class EventEdit extends Component {
     // console.log('mounted with tagsOptions;', tagsOptions);
     if (orisList && orisList.length > 0) {
       const populatedOrisOptions = orisList
-        .filter(orisEvent => !orisEvent.includedEvents) // remove multi-day
-        .filter(orisEvent => orisEvent.date < dateToDateString(new Date())) // remove future
+        .filter((orisEvent) => !orisEvent.includedEvents) // remove multi-day
+        .filter((orisEvent) => orisEvent.date < dateToDateString(new Date())) // remove future
         .sort((a, b) => { // sort so most recent are listed first
           return (a.date < b.date) ? 0 : -1;
         })
@@ -119,8 +119,8 @@ class EventEdit extends Component {
     // state update can be used because it is conditional on prop change
     if (prevProps.orisList !== orisList) {
       const populatedOrisOptions = orisList
-        .filter(orisEvent => !orisEvent.includedEvents) // remove multi-day
-        .filter(orisEvent => orisEvent.date < dateToDateString(new Date())) // remove future
+        .filter((orisEvent) => !orisEvent.includedEvents) // remove multi-day
+        .filter((orisEvent) => orisEvent.date < dateToDateString(new Date())) // remove future
         .sort((a, b) => { // sort so most recent are listed first
           if (a.date < b.date) return 1;
           if (a.date > b.date) return -1;
@@ -167,7 +167,7 @@ class EventEdit extends Component {
     const ownerOptions = userList
       .map((user) => {
         const { _id: userId, displayName } = user;
-        const roleOption = roleOptions.find((el => el.value === user.role));
+        const roleOption = roleOptions.find(((el) => el.value === user.role));
         const role = roleOption.label;
         const label = `${displayName} (${role})`;
         return { value: userId, label };
@@ -248,14 +248,12 @@ class EventEdit extends Component {
                         />
                       )}
                     </I18n>
-                  )
-                }
+                  )}
                 { touched.orisId && errors.orisId && <div className="ui warning message">{errors.orisId}</div> }
               </label>
             </div>
           )
-          : null
-        }
+          : null}
         { (values.orisId)
           ? null
           : (
@@ -269,7 +267,7 @@ class EventEdit extends Component {
                       locale={language}
                       name="date"
                       selected={values.date}
-                      onChange={value => setFieldValue('date', value || new Date())}
+                      onChange={(value) => setFieldValue('date', value || new Date())}
                       onBlur={() => setFieldTouched('date', true)}
                     />
                   </div>
@@ -340,7 +338,7 @@ class EventEdit extends Component {
                         }}
                         onBlur={() => setFieldTouched('locCountry', true)}
                         value={(values.locCountry)
-                          ? countryOptions.find(el => el.value === values.locCountry.value)
+                          ? countryOptions.find((el) => el.value === values.locCountry.value)
                           : null}
                       />
                     )}
@@ -359,7 +357,7 @@ class EventEdit extends Component {
                         options={regionOptions}
                         isClearable
                         isMulti
-                        onChange={value => setFieldValue('locRegions', value)}
+                        onChange={(value) => setFieldValue('locRegions', value)}
                         onBlur={() => setFieldTouched('locRegions', true)}
                         value={values.locRegions}
                       />
@@ -593,11 +591,11 @@ class EventEdit extends Component {
                         placeholder={i18n._(t`Type of event`)}
                         options={typesOptionsLocale[language]}
                         isMulti
-                        onChange={value => setFieldValue('types', value)}
+                        onChange={(value) => setFieldValue('types', value)}
                         onBlur={() => setFieldTouched('types', true)}
                         value={(values.types)
                           ? values.types.map((type) => {
-                            return typesOptions.find(el => el.value === type.value);
+                            return typesOptions.find((el) => el.value === type.value);
                           })
                           : null}
                       />
@@ -616,7 +614,7 @@ class EventEdit extends Component {
                         placeholder={i18n._(t`Tags for event`)}
                         options={tagsOptions}
                         isMulti
-                        onChange={value => setFieldValue('tags', value)}
+                        onChange={(value) => setFieldValue('tags', value)}
                         onBlur={() => setFieldTouched('tags', true)}
                         value={values.tags}
                       />
@@ -667,7 +665,7 @@ class EventEdit extends Component {
                         placeholder={i18n._(t`Clubs that event is organised by`)}
                         options={organisedByOptions}
                         isMulti
-                        onChange={value => setFieldValue('organisedBy', value)}
+                        onChange={(value) => setFieldValue('organisedBy', value)}
                         onBlur={() => setFieldTouched('organisedBy', true)}
                         value={values.organisedBy}
                       />
@@ -686,7 +684,7 @@ class EventEdit extends Component {
                         placeholder={i18n._(t`Groups of other events that this event is linked to`)}
                         options={linkedToOptions}
                         isMulti
-                        onChange={value => setFieldValue('linkedTo', value)}
+                        onChange={(value) => setFieldValue('linkedTo', value)}
                         onBlur={() => setFieldTouched('linkedTo', true)}
                         value={values.linkedTo}
                       />
@@ -708,7 +706,7 @@ class EventEdit extends Component {
                       id="owner"
                       placeholder={i18n._(t`Owner of event record in this database`)}
                       options={ownerOptions}
-                      onChange={value => setFieldValue('owner', value)}
+                      onChange={(value) => setFieldValue('owner', value)}
                       onBlur={() => setFieldTouched('owner', true)}
                       value={values.owner}
                     />
@@ -718,8 +716,7 @@ class EventEdit extends Component {
               </label>
             </div>
           )
-          : null
-        }
+          : null}
         <button type="submit" className="ui button tiny primary" disabled={isSubmitting}>{buttonText}</button>
         <button
           type="button"
@@ -790,7 +787,7 @@ const formikEventEdit = withFormik({
         locRegions: locRegions.map((region) => {
           if (!locCountry) return null;
           const regionOptions = regionOptionSets[locCountry];
-          const selectedRegion = regionOptions.filter(el => el.value === region)[0];
+          const selectedRegion = regionOptions.filter((el) => el.value === region)[0];
           return selectedRegion;
         }) || [],
         locCountry: countryOptionsLocale[language].find((el) => {
@@ -807,7 +804,7 @@ const formikEventEdit = withFormik({
         locCornerSELat: (locCornerSE && locCornerSE[0]) ? roundTo3dp(locCornerSE[0]) : '',
         locCornerSELong: (locCornerSE && locCornerSE[1]) ? roundTo3dp(locCornerSE[1]) : '',
         types: types.map((type) => {
-          return typesOptionsLocale[language].find(el => el.value === type);
+          return typesOptionsLocale[language].find((el) => el.value === type);
         }) || [],
         tags: tags.map((tag) => {
           return { value: tag, label: tag };
@@ -888,7 +885,7 @@ const formikEventEdit = withFormik({
     };
     valuesToSubmit.locCountry = (values.locCountry) ? values.locCountry.value : '';
     valuesToSubmit.locRegions = (values.locRegions && values.locRegions.length > 0)
-      ? values.locRegions.map(el => el.value)
+      ? values.locRegions.map((el) => el.value)
       : [];
     if (typeof values.locCornerNWLat === 'number' && typeof values.locCornerNWLong === 'number') {
       valuesToSubmit.locCornerNW = [values.locCornerNWLat, values.locCornerNWLong];
@@ -903,16 +900,16 @@ const formikEventEdit = withFormik({
       valuesToSubmit.locCornerSE = [values.locCornerSELat, values.locCornerSELong];
     }
     valuesToSubmit.types = (values.types && values.types.length > 0)
-      ? values.types.map(el => el.value)
+      ? values.types.map((el) => el.value)
       : [];
     valuesToSubmit.tags = (values.tags && values.tags.length > 0)
-      ? values.tags.map(el => el.value)
+      ? values.tags.map((el) => el.value)
       : [];
     valuesToSubmit.organisedBy = (values.organisedBy && values.organisedBy.length > 0)
-      ? values.organisedBy.map(el => el.value)
+      ? values.organisedBy.map((el) => el.value)
       : [];
     valuesToSubmit.linkedTo = (values.linkedTo && values.linkedTo.length > 0)
-      ? values.linkedTo.map(el => el.value)
+      ? values.linkedTo.map((el) => el.value)
       : [];
     if (values.owner) valuesToSubmit.owner = values.owner.value;
     // console.log('valuesToSubmit:', valuesToSubmit);

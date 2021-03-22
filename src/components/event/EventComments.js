@@ -61,8 +61,7 @@ const EventComments = ({
               />
             </div>
           )
-          : null
-        }
+          : null}
       </Collapse>
     </div>
   );

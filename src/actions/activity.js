@@ -17,7 +17,7 @@ export const cancelActivityErrorAction = () => ({
 
 // *** Helper functions ***
 // handle errors consistently, for all routes except login
-const handleError = errorType => (err, dispatch) => {
+const handleError = (errorType) => (err, dispatch) => {
   if (err.response) { // received response with an error status code
     if (err.response.data.error) { // expected error message from API
       dispatch({ type: errorType, payload: err.response.data.error });

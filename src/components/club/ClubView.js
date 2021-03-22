@@ -55,7 +55,7 @@ class ClubView extends Component {
   };
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
+  getIsAdmin = memoize((current) => Boolean(current && current.role === 'admin'));
 
   // helper to determine if current user can edit club details if input props have changed
   getCanEditClub = memoize((current, selectedClub) => {
@@ -259,6 +259,7 @@ class ClubView extends Component {
               <i
                 role="button"
                 className="close icon"
+                label="close"
                 onClick={() => cancelClubError()}
                 onKeyPress={() => cancelClubError()}
                 tabIndex="0"
@@ -350,7 +351,7 @@ const mapDispatchToProps = {
   selectClubToDisplay: selectClubToDisplayAction,
   selectEventId: selectEventIdEventsAction, // forwards to Events view
   selectUserToDisplay: selectUserToDisplayAction,
-  setClubSearchField: event => setClubSearchFieldAction(event.target.value),
+  setClubSearchField: (event) => setClubSearchFieldAction(event.target.value),
   setClubViewMode: setClubViewModeAction,
   setEventViewModeEvent: setEventViewModeEventEventsAction, // forwards to Events view
   setUserViewMode: setUserViewModeAction,

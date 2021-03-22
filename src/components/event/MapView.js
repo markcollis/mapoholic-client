@@ -102,20 +102,20 @@ class MapView extends Component {
   });
 
   // helper to return current user's id if input prop has changed
-  getCurrentUserId = memoize(current => ((current) ? current._id.toString() : null));
+  getCurrentUserId = memoize((current) => ((current) ? current._id.toString() : null));
 
   // helper to return current user's ORIS id if input prop has changed
-  getCurrentUserOrisId = memoize(current => ((current) ? current.orisId : null));
+  getCurrentUserOrisId = memoize((current) => ((current) ? current.orisId : null));
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
+  getIsAdmin = memoize((current) => Boolean(current && current.role === 'admin'));
 
   // helper to determine if current user can edit event if input props have changed
   getCanEditEvent = memoize((current, selectedEvent) => {
     const isAdmin = this.getIsAdmin(current);
     if (isAdmin) return true;
     const runnerList = (selectedEvent.runners)
-      ? selectedEvent.runners.map(runner => runner.user._id)
+      ? selectedEvent.runners.map((runner) => runner.user._id)
       : [];
     const isRunner = Boolean(current && selectedEvent && runnerList.includes(current._id));
     return isRunner;
@@ -132,7 +132,7 @@ class MapView extends Component {
   getIsRunnerPresent = memoize((selectedEvent, selectedRunner) => {
     if (!selectedEvent || !selectedRunner || selectedRunner === '') return false;
     const runnerList = (selectedEvent.runners)
-      ? selectedEvent.runners.map(runner => runner.user._id)
+      ? selectedEvent.runners.map((runner) => runner.user._id)
       : [];
     const isRunnerPresent = runnerList.includes(selectedRunner);
     return isRunnerPresent;
@@ -141,7 +141,7 @@ class MapView extends Component {
   // helper to get details of organising clubs if input props have changed
   getOrganisingClubs = memoize((selectedEvent, clubDetails) => {
     const organisingClubs = (selectedEvent.organisedBy)
-      ? selectedEvent.organisedBy.map(organisingClub => clubDetails[organisingClub._id])
+      ? selectedEvent.organisedBy.map((organisingClub) => clubDetails[organisingClub._id])
       : [];
     return organisingClubs;
   });
@@ -170,11 +170,11 @@ class MapView extends Component {
     const filteredList = list.filter((eachEvent) => {
       // select only those with current user as runner
       const { runners } = eachEvent;
-      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      const runnerIds = (runners) ? runners.map((runner) => runner.user) : [];
       return runnerIds.includes(selectedRunner);
     });
     const tagList = filteredList.reduce((acc, val) => {
-      const selectedRunnerDetails = val.runners.find(runner => runner.user === selectedRunner);
+      const selectedRunnerDetails = val.runners.find((runner) => runner.user === selectedRunner);
       const tagsFromRunner = selectedRunnerDetails.tags;
       tagsFromRunner.forEach((tag) => {
         if (acc.indexOf(tag) === -1) {
@@ -449,7 +449,7 @@ class MapView extends Component {
           : (
             selectedEvent.linkedTo.map((link) => {
               const { _id: linkId } = link;
-              const linkData = linkList.find(eachLink => eachLink._id === linkId);
+              const linkData = linkList.find((eachLink) => eachLink._id === linkId);
               return (
                 <EventLinked
                   key={linkId} // derived (selectedEvent)
@@ -597,6 +597,7 @@ class MapView extends Component {
         <div className="ui error message">
           <i
             role="button"
+            label="close"
             className="close icon"
             onClick={() => cancelEventError()}
             onKeyPress={() => cancelEventError()}
@@ -634,8 +635,7 @@ class MapView extends Component {
                 </ErrorBoundary>
               </div>
             )
-            : null
-          }
+            : null}
           <div className="eight wide column">
             <ErrorBoundary>
               {this.renderEventRunners()}
@@ -661,8 +661,7 @@ class MapView extends Component {
                 </ErrorBoundary>
               </div>
             )
-            : null
-          }
+            : null}
         </div>
       </ErrorBoundary>
     );

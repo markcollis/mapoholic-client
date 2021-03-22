@@ -62,7 +62,7 @@ class ClubEdit extends Component {
     const ownerOptions = userList
       .map((user) => {
         const { _id: userId, role, displayName } = user;
-        const roleOption = roleOptions.find((el => el.value === role));
+        const roleOption = roleOptions.find(((el) => el.value === role));
         const roleLabel = roleOption.label;
         const label = `${displayName} (${roleLabel})`;
         return { value: userId, label };
@@ -120,10 +120,10 @@ class ClubEdit extends Component {
                   placeholder={i18n._(t`Country in which club is based`)}
                   isClearable
                   options={countryOptions}
-                  onChange={value => setFieldValue('country', value)}
+                  onChange={(value) => setFieldValue('country', value)}
                   onBlur={() => setFieldTouched('country', true)}
                   value={(values.country)
-                    ? countryOptions.find(el => el.value === values.country.value)
+                    ? countryOptions.find((el) => el.value === values.country.value)
                     : null}
                 />
               )}
@@ -158,7 +158,7 @@ class ClubEdit extends Component {
                       id="owner"
                       placeholder={i18n._(t`Owner of club record in this database`)}
                       options={ownerOptions}
-                      onChange={value => setFieldValue('owner', value)}
+                      onChange={(value) => setFieldValue('owner', value)}
                       onBlur={() => setFieldTouched('owner', true)}
                       value={values.owner}
                     />
@@ -168,8 +168,7 @@ class ClubEdit extends Component {
               </label>
             </div>
           )
-          : null
-        }
+          : null}
         <button type="submit" className="ui button primary" disabled={isSubmitting}>
           {buttonText}
         </button>

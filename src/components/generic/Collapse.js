@@ -89,8 +89,8 @@ class Collapse extends Component {
       <div className="collapse">
         <div
           role="button"
-          onClick={e => this.swapVisibility(e)}
-          onKeyPress={e => this.swapVisibility(e)}
+          onClick={(e) => this.swapVisibility(e)}
+          onKeyPress={(e) => this.swapVisibility(e)}
           tabIndex="0"
         >
           <span className="ui header">{title}</span>

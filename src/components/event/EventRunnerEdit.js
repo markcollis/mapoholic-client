@@ -195,7 +195,7 @@ class EventRunnerEdit extends Component {
                   placeholder={i18n._(t`Personal tags for event`)}
                   options={tagsOptions}
                   isMulti
-                  onChange={value => setFieldValue('tags', value)}
+                  onChange={(value) => setFieldValue('tags', value)}
                   onBlur={() => setFieldTouched('tags', true)}
                   value={values.tags}
                 />
@@ -214,7 +214,7 @@ class EventRunnerEdit extends Component {
                   id="visibility"
                   placeholder={i18n._(t`Visibility of your maps from this event to others`)}
                   options={visibilityOptions}
-                  onChange={value => setFieldValue('visibility', value)}
+                  onChange={(value) => setFieldValue('visibility', value)}
                   onBlur={() => setFieldTouched('visibility', true)}
                   value={values.visibility}
                 />
@@ -262,7 +262,7 @@ const formikEventRunnerEdit = withFormik({
     return {
       // user: not allowed to change this
       visibility: visibilityOptionsLocale[language]
-        .find(el => el.value === selectedRunnerDetails.visibility),
+        .find((el) => el.value === selectedRunnerDetails.visibility),
       courseTitle: selectedRunnerDetails.courseTitle || '',
       courseLength: selectedRunnerDetails.courseLength || '',
       courseClimb: selectedRunnerDetails.courseClimb || '',
@@ -299,7 +299,7 @@ const formikEventRunnerEdit = withFormik({
     const { _id: selectedEventId } = selectedEvent;
     const valuesToSubmit = { ...values, visibility: values.visibility.value };
     valuesToSubmit.tags = (values.tags && values.tags.length > 0)
-      ? values.tags.map(el => el.value)
+      ? values.tags.map((el) => el.value)
       : [];
     // console.log('valuesToSubmit:', valuesToSubmit);
     updateEventRunner(selectedEventId, selectedRunner, valuesToSubmit, (didSucceed) => {

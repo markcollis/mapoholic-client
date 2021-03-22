@@ -39,6 +39,7 @@ const EventFilter = ({
           </I18n>
           <i
             role="button"
+            label="close"
             className="close icon link"
             onClick={clearEventSearchField}
             onKeyPress={clearEventSearchField}
@@ -75,6 +76,7 @@ const EventFilter = ({
             <div className="ui basic label">
               <i
                 role="button"
+                label="close"
                 className="close icon link"
                 onClick={clearEventTagFilter}
                 onKeyPress={clearEventTagFilter}

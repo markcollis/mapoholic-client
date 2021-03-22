@@ -203,7 +203,7 @@ class EventMapViewerEdit extends Component {
       mapTitleToUpload,
       routeMapToUpload,
     } = this.state;
-    const mapTitlesInUse = selectedRunnerMaps.map(eachMap => eachMap.title);
+    const mapTitlesInUse = selectedRunnerMaps.map((eachMap) => eachMap.title);
     const mapTitleIsDuplicate = (isMapTitleEditable && (mapTitleToUpload !== title)
       && mapTitlesInUse.includes(mapTitleToUpload));
     const courseThumbnail = (course)
@@ -258,7 +258,7 @@ class EventMapViewerEdit extends Component {
                     placeholder={i18n._(t`Title for map (e.g. "Part 1")`)}
                     autoComplete="off"
                     value={mapTitleToUpload}
-                    onChange={e => this.setState({ mapTitleToUpload: e.target.value })}
+                    onChange={(e) => this.setState({ mapTitleToUpload: e.target.value })}
                   />
                 )}
               </I18n>
@@ -342,7 +342,7 @@ class EventMapViewerEdit extends Component {
             <div className="column seven wide">
               <FileDropzone
                 key={dropZoneKeyCourse}
-                onFileAdded={file => this.setState({ courseMapToUpload: file })}
+                onFileAdded={(file) => this.setState({ courseMapToUpload: file })}
                 icon={dropzoneIcon}
                 text={dropzoneTextCourse}
                 showAddBorder
@@ -374,7 +374,7 @@ class EventMapViewerEdit extends Component {
             <div className="column seven wide">
               <FileDropzone
                 key={dropZoneKeyRoute}
-                onFileAdded={file => this.setState({ routeMapToUpload: file })}
+                onFileAdded={(file) => this.setState({ routeMapToUpload: file })}
                 icon={dropzoneIcon}
                 text={dropzoneTextRoute}
               />

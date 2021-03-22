@@ -91,7 +91,7 @@ class EventLinkedEdit extends Component {
                   isClearable
                   isMulti
                   options={includesOptions}
-                  onChange={value => setFieldValue('includes', value)}
+                  onChange={(value) => setFieldValue('includes', value)}
                   onBlur={() => setFieldTouched('includes', true)}
                   value={values.includes}
                 />
@@ -166,7 +166,7 @@ const formikEventLinkedEdit = withFormik({
     } = props;
     const valuesToSubmit = { displayName: values.displayName };
     valuesToSubmit.includes = (values.includes.length > 0)
-      ? values.includes.map(el => el.value)
+      ? values.includes.map((el) => el.value)
       : [];
     // console.log('valuesToSubmit:', valuesToSubmit);
     if (eventLinkMode === 'add') {

@@ -22,8 +22,8 @@ const UserListItem = ({
     role,
   } = user;
   const roleOptions = roleOptionsLocale[language];
-  const roleAdminName = roleOptions.find(el => el.value === 'admin').label;
-  const roleGuestName = roleOptions.find(el => el.value === 'guest').label;
+  const roleAdminName = roleOptions.find((el) => el.value === 'admin').label;
+  const roleGuestName = roleOptions.find((el) => el.value === 'guest').label;
   let cardClass = 'ui fluid centered card';
   if (currentUserId === userId) cardClass = cardClass.concat(' card-list--item-current-user');
   if (selectedUserId === userId) cardClass = cardClass.concat(' card-list--item-selected');
