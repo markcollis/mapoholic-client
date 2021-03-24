@@ -6,6 +6,10 @@
   "dependencies": {
     "@lingui/macro": "^2.8.3",
     "@lingui/react": "^2.8.3",
+    "@types/jest": "^26.0.21",
+    "@types/node": "^14.14.35",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "axios": "^0.21.1",
     "date-fns": "^2.2.1",
     "focus-visible": "^5.0.1",
@@ -24,6 +28,7 @@
     "react-select": "^3.0.3",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "typescript": "^4.2.3",
     "yup": "^0.27.0"
   },
   "scripts": {
