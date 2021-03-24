@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { FunctionComponent } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+
+import { AuthState } from '../types/auth';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -13,9 +14,13 @@ import MapView from './event/MapView';
 import UserView from './user/UserView';
 import ClubView from './club/ClubView';
 
+const mapStateToProps = (state: AuthState) => ({ auth: state.authenticated });
+const connector = connect(mapStateToProps);
+type Props = ConnectedProps<typeof connector>;
+
 // The RouteHandler component renders the appropriate view for a given path
 // (access to some of them depends on whether the the user is logged in)
-const RouteHandler = ({ auth }) => {
+const RouteHandler: FunctionComponent<Props> = ({ auth }: Props) => {
   if (auth) {
     return ( // available views for currently logged in users
       <div>
@@ -60,14 +65,4 @@ const RouteHandler = ({ auth }) => {
   );
 };
 
-RouteHandler.propTypes = {
-  auth: PropTypes.string,
-};
-RouteHandler.defaultProps = {
-  auth: null,
-};
-
-const mapStateToProps = ({ auth }) => {
-  return { auth: auth.authenticated };
-};
-export default connect(mapStateToProps)(RouteHandler);
+export default connector(RouteHandler);
