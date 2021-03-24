@@ -45,6 +45,20 @@ class EventMapViewer extends Component {
     window.addEventListener('resize', this.handleResize, false);
   }
 
+  componentDidUpdate() {
+    const {
+      selectedEvent,
+      selectedMap,
+      selectedRunner,
+    } = this.props;
+    const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
+    const hasMaps = (mapImageArray.length > 0);
+    const selectedMapImage = mapImageArray.find((mapImage) => mapImage.mapId === selectedMap);
+    if (hasMaps && !selectedMapImage) {
+      this.handleSelectMapImage(mapImageArray[0].mapId);
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize, false);
   }
@@ -107,7 +121,7 @@ class EventMapViewer extends Component {
           };
         }
         const preferType = ((defaultPreferType === 'Course' && hasCourseMap)
-          || (defaultPreferType === 'Route' && !hasRouteMap)) ? 'Course' : 'Route';
+          || !hasRouteMap) ? 'Course' : 'Route';
         return {
           mapId,
           title,
@@ -170,10 +184,10 @@ class EventMapViewer extends Component {
     } = this.props;
     const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
     const hasMaps = (mapImageArray.length > 0);
-    const selectedMapImage = mapImageArray.find((mapImage) => mapImage.mapId === selectedMap);
-    if (hasMaps && !selectedMapImage) {
-      this.handleSelectMapImage(mapImageArray[0].mapId);
-    }
+    // const selectedMapImage = mapImageArray.find((mapImage) => mapImage.mapId === selectedMap);
+    // if (hasMaps && !selectedMapImage) {
+    //   this.handleSelectMapImage(mapImageArray[0].mapId);
+    // }
     const overlays = this.getOverlays(selectedEvent);
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>
