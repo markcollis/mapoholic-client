@@ -312,7 +312,7 @@ class UserEdit extends Component {
               className={(showUpdateProfileImage) ? 'ui small image disabled' : 'ui small image'}
               onClick={() => this.setState({ showUpdateProfileImage: true })}
               onKeyPress={() => this.setState({ showUpdateProfileImage: true })}
-              tabIndex="0"
+              tabIndex={0}
             >
               <div className="ui right corner label blue">
                 <i className="sync icon" />

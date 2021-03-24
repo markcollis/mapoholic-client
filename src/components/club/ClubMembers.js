@@ -64,7 +64,7 @@ const ClubMembers = ({
         role="button"
         onClick={() => handleSelectUser(userId)}
         onKeyPress={() => handleSelectUser(userId)}
-        tabIndex="0"
+        tabIndex={0}
       >
         <div className="content">
           <img

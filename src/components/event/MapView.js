@@ -597,11 +597,11 @@ class MapView extends Component {
         <div className="ui error message">
           <i
             role="button"
-            label="close"
+            aria-label="close"
             className="close icon"
             onClick={() => cancelEventError()}
             onKeyPress={() => cancelEventError()}
-            tabIndex="0"
+            tabIndex={0}
           />
           <Trans>{`Error: ${errorMessage}`}</Trans>
         </div>

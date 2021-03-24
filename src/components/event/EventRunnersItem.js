@@ -55,7 +55,7 @@ const EventRunnersItem = ({
       role="button"
       onClick={() => handleSelectEventRunner(eventId, userId)}
       onKeyPress={() => handleSelectEventRunner(eventId, userId)}
-      tabIndex="0"
+      tabIndex={0}
     >
       <div className="content">
         {avatar}

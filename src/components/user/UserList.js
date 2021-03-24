@@ -59,7 +59,7 @@ const UserList = ({
               setUserViewMode('none');
             }
           }}
-          tabIndex="0"
+          tabIndex={0}
         >
           {usersArray}
         </div>

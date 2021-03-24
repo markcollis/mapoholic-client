@@ -185,7 +185,7 @@ class EventMapViewer extends Component {
           className={(showMapViewerDetails) ? 'ui tiny button' : 'ui tiny button primary'}
           onClick={() => this.setState({ showMapViewerDetails: !showMapViewerDetails })}
           onKeyPress={() => this.setState({ showMapViewerDetails: !showMapViewerDetails })}
-          tabIndex="0"
+          tabIndex={0}
         >
           {addDeleteTitle}
         </button>
@@ -202,7 +202,7 @@ class EventMapViewer extends Component {
             className={(visible) ? 'active item' : 'item'}
             onClick={() => this.handleSelectMapImage(mapId)}
             onKeyPress={() => this.handleSelectMapImage(mapId)}
-            tabIndex="0"
+            tabIndex={0}
           >
             {(title === '') ? <Trans>untitled</Trans> : title}
           </div>

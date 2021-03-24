@@ -40,7 +40,7 @@ const UserListItem = ({
         selectUserToDisplay(userId);
         setUserViewMode('view');
       }}
-      tabIndex="0"
+      tabIndex={0}
     >
       <div className="content">
         <img
