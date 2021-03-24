@@ -165,7 +165,7 @@ class Header extends Component {
           label="English"
           onClick={() => setLanguage('en')}
           onKeyPress={() => setLanguage('en')}
-          tabIndex="0"
+          tabIndex={0}
         />
         <i
           className="cz flag"
@@ -173,7 +173,7 @@ class Header extends Component {
           label="česky"
           onClick={() => setLanguage('cs')}
           onKeyPress={() => setLanguage('cs')}
-          tabIndex="0"
+          tabIndex={0}
         />
       </div>
     );

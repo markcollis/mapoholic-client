@@ -32,7 +32,7 @@ const ClubListItem = ({
         selectClubToDisplay(clubId);
         setClubViewMode('view');
       }}
-      tabIndex="0"
+      tabIndex={0}
     >
       <div className="content">
         <i className={flagClass} />

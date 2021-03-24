@@ -39,11 +39,11 @@ const EventFilter = ({
           </I18n>
           <i
             role="button"
-            label="close"
+            aria-label="close"
             className="close icon link"
             onClick={clearEventSearchField}
             onKeyPress={clearEventSearchField}
-            tabIndex="0"
+            tabIndex={0}
           />
         </div>
       </div>
@@ -76,11 +76,11 @@ const EventFilter = ({
             <div className="ui basic label">
               <i
                 role="button"
-                label="close"
+                aria-label="close"
                 className="close icon link"
                 onClick={clearEventTagFilter}
                 onKeyPress={clearEventTagFilter}
-                tabIndex="0"
+                tabIndex={0}
               />
             </div>
           </div>

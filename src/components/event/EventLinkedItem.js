@@ -37,7 +37,7 @@ const EventLinkedItem = ({
         setEventViewModeEvent('view');
         setEventViewModeEventLink('view');
       }}
-      tabIndex="0"
+      tabIndex={0}
     >
       <div className="content">
         <div className="header">{`${reformatTimestampDateOnly(date, language)} - ${name}`}</div>

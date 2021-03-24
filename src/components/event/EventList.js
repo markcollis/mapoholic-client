@@ -56,7 +56,7 @@ const EventList = ({
               handleSelectEvent('');
             }
           }}
-          tabIndex="0"
+          tabIndex={0}
         >
           {eventsArray}
         </div>
