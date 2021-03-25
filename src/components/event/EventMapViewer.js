@@ -184,10 +184,6 @@ class EventMapViewer extends Component {
     } = this.props;
     const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
     const hasMaps = (mapImageArray.length > 0);
-    // const selectedMapImage = mapImageArray.find((mapImage) => mapImage.mapId === selectedMap);
-    // if (hasMaps && !selectedMapImage) {
-    //   this.handleSelectMapImage(mapImageArray[0].mapId);
-    // }
     const overlays = this.getOverlays(selectedEvent);
     const addDeleteTitle = (showMapViewerDetails)
       ? <Trans>Return to map view</Trans>
