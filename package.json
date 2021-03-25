@@ -16,6 +16,7 @@
     "react": "^17.0.1",
     "react-datepicker": "^2.9.6",
     "react-dom": "^17.0.1",
+    "react-git-info": "^2.0.0",
     "react-leaflet": "^2.2.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
