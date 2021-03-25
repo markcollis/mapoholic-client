@@ -95,10 +95,9 @@ const UserDetails = ({
           : null}
         {(memberOf.length > 0)
           ? (
-            <div>{`(${memberOf.map(club => club.shortName).join(', ')})`}</div>
+            <div>{`(${memberOf.map((club) => club.shortName).join(', ')})`}</div>
           )
-          : null
-        }
+          : null}
       </div>
       <div>
         <div className="ui list">
@@ -112,8 +111,7 @@ const UserDetails = ({
                 </div>
               </div>
             )
-            : null
-          }
+            : null}
           <div className="item">
             <i className="mail icon" />
             <div className="content">
@@ -129,8 +127,7 @@ const UserDetails = ({
                 </div>
               </div>
             )
-            : null
-          }
+            : null}
           <div className="item"><Trans>{`Joined: ${reformatTimestampDateOnly(createdAt, language)}`}</Trans></div>
           {optionalItems}
         </div>

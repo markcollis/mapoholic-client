@@ -96,62 +96,62 @@ export const setEventViewModeRunnerAction = (mode) => {
   return null;
 };
 // track changes to the event search field (Events view)
-export const setEventSearchFieldEventsAction = text => ({
+export const setEventSearchFieldEventsAction = (text) => ({
   type: EVENT_CHANGE_SEARCH_FIELD_EVENTS,
   payload: text,
 });
 // track changes to the event search field (MyMaps view)
-export const setEventSearchFieldMyMapsAction = text => ({
+export const setEventSearchFieldMyMapsAction = (text) => ({
   type: EVENT_CHANGE_SEARCH_FIELD_MYMAPS,
   payload: text,
 });
 // track changes to the event tag filter (Events view)
-export const setEventTagFilterEventsAction = text => ({
+export const setEventTagFilterEventsAction = (text) => ({
   type: EVENT_CHANGE_TAG_FILTER_EVENTS,
   payload: text,
 });
 // track changes to the event tag filter (Events view)
-export const setEventTagFilterMyMapsAction = text => ({
+export const setEventTagFilterMyMapsAction = (text) => ({
   type: EVENT_CHANGE_TAG_FILTER_MYMAPS,
   payload: text,
 });
 // select an event to show additional details (Events view)
-export const selectEventIdEventsAction = eventId => ({
+export const selectEventIdEventsAction = (eventId) => ({
   type: EVENT_SELECT_EVENT_ID_EVENTS,
   payload: eventId,
 });
 // select an event to show additional details (MyMaps view)
-export const selectEventIdMyMapsAction = eventId => ({
+export const selectEventIdMyMapsAction = (eventId) => ({
   type: EVENT_SELECT_EVENT_ID_MYMAPS,
   payload: eventId,
 });
 // select an event to display maps (Map view)
-export const selectEventIdMapViewAction = eventId => ({
+export const selectEventIdMapViewAction = (eventId) => ({
   type: EVENT_SELECT_EVENT_ID_MAPVIEW,
   payload: eventId,
 });
 // select a runner at an event to display maps for
-export const selectRunnerToDisplayAction = userId => ({
+export const selectRunnerToDisplayAction = (userId) => ({
   type: EVENT_SELECT_RUNNER,
   payload: userId,
 });
 // select a runner's map to show it
-export const selectMapToDisplayAction = mapId => ({
+export const selectMapToDisplayAction = (mapId) => ({
   type: EVENT_SELECT_MAP,
   payload: mapId,
 });
 // set lat/long bounds for overview map (Events view)
-export const setMapBoundsEventsAction = bounds => ({
+export const setMapBoundsEventsAction = (bounds) => ({
   type: EVENT_MAP_SET_BOUNDS_EVENTS,
   payload: bounds,
 });
 // set lat/long bounds for overview map (MyMaps view)
-export const setMapBoundsMyMapsAction = bounds => ({
+export const setMapBoundsMyMapsAction = (bounds) => ({
   type: EVENT_MAP_SET_BOUNDS_MYMAPS,
   payload: bounds,
 });
 // set view parameters for displaying a selected map
-export const setMapViewParametersAction = viewParameters => ({
+export const setMapViewParametersAction = (viewParameters) => ({
   type: EVENT_SET_MAP_VIEW_PARAMETERS,
   payload: viewParameters, // object, will include mapId
 });
@@ -165,7 +165,7 @@ export const cancelEventErrorAction = () => ({
 
 // *** Helper functions ***
 // handle errors consistently, for all routes except login
-const handleError = errorType => (err, dispatch) => {
+const handleError = (errorType) => (err, dispatch) => {
   if (err.response) { // received response with an error status code
     if (err.response.data.error) { // expected error message from API
       dispatch({ type: errorType, payload: err.response.data.error });
@@ -402,7 +402,7 @@ export const getEventLinkListAction = (searchCriteria, callback) => async (dispa
 // assumption is that front end will use this to provide a list to select from
 // before calling POST /events/oris/:oriseventid
 // app.get('/events/oris', requireAuth, Events.orisGetUserEvents);
-export const getEventListOrisAction = callback => async (dispatch, getState) => {
+export const getEventListOrisAction = (callback) => async (dispatch, getState) => {
   try {
     const state = getState();
     const { auth } = state;

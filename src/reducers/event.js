@@ -117,7 +117,7 @@ const getUpdatedEventList = (list, payload) => {
 // remove a specific item (e.g. event/event link) from list after deletion
 const removeFromListById = (list, id) => {
   if (!list) return null;
-  const newList = list.filter(listItem => listItem._id !== id);
+  const newList = list.filter((listItem) => listItem._id !== id);
   return newList;
 };
 
@@ -130,10 +130,10 @@ const getUpdatedLinkListEvent = (linkList, oevent) => {
     linkedTo,
   } = oevent;
   if (!linkedTo) return linkList;
-  const linkedToIds = linkedTo.map((link => link._id));
+  const linkedToIds = linkedTo.map(((link) => link._id));
   const newLinkList = linkList.map((eachLink) => {
     const { _id: eventLinkId, includes } = eachLink;
-    const nowLinked = includes.some(linkedEvent => linkedEvent._id === eventId);
+    const nowLinked = includes.some((linkedEvent) => linkedEvent._id === eventId);
     const shouldBeLinked = linkedToIds.includes(eventLinkId);
     if (nowLinked && shouldBeLinked) { // replace in case name or date have changed
       const newIncludes = includes.map((linkedEvent) => {
@@ -147,7 +147,7 @@ const getUpdatedLinkListEvent = (linkList, oevent) => {
       return { ...eachLink, includes: newIncludes };
     }
     if (nowLinked && !shouldBeLinked) { // remove from array
-      const newIncludes = includes.filter(linkedEvent => (linkedEvent._id !== eventId));
+      const newIncludes = includes.filter((linkedEvent) => (linkedEvent._id !== eventId));
       return { ...eachLink, includes: newIncludes };
     }
     return eachLink; // otherwise do nothing
@@ -159,11 +159,11 @@ const getUpdatedListEventLink = (list, eventLink) => {
   if (!eventLink) return list;
   const { _id: eventLinkId, displayName, includes } = eventLink;
   if (!includes) return list;
-  const includedIds = includes.map((included => included._id));
+  const includedIds = includes.map(((included) => included._id));
   const newList = list.map((eachEvent) => {
     const { _id: eventId, linkedTo } = eachEvent;
     if (!linkedTo) return eachEvent;
-    const nowLinked = linkedTo.some(link => link._id === eventLinkId);
+    const nowLinked = linkedTo.some((link) => link._id === eventLinkId);
     const shouldBeLinked = includedIds.includes(eventId);
     if (nowLinked && shouldBeLinked) { // replace in case displayName has changed
       const newLinkedTo = linkedTo.map((link) => {
@@ -177,7 +177,7 @@ const getUpdatedListEventLink = (list, eventLink) => {
       return { ...eachEvent, linkedTo: newLinkedTo };
     }
     if (nowLinked && !shouldBeLinked) { // remove from array
-      const newLinkedTo = linkedTo.filter(link => (link._id !== eventLinkId));
+      const newLinkedTo = linkedTo.filter((link) => (link._id !== eventLinkId));
       return { ...eachEvent, linkedTo: newLinkedTo };
     }
     return eachEvent; // otherwise do nothing
@@ -190,9 +190,9 @@ const getUpdatedListEventLinkDeleted = (list, eventLinkId) => {
   const newList = list.map((eachEvent) => {
     const { linkedTo } = eachEvent;
     if (!linkedTo) return eachEvent;
-    const nowLinked = linkedTo.some(link => link._id === eventLinkId);
+    const nowLinked = linkedTo.some((link) => link._id === eventLinkId);
     if (nowLinked) { // remove from array
-      const newLinkedTo = linkedTo.filter(link => (link._id !== eventLinkId));
+      const newLinkedTo = linkedTo.filter((link) => (link._id !== eventLinkId));
       return { ...eachEvent, linkedTo: newLinkedTo };
     }
     return eachEvent; // otherwise do nothing
@@ -204,14 +204,14 @@ const getUpdatedDetailsEventLink = (details, eventLink) => {
   if (!eventLink) return details;
   const { _id: eventLinkId, displayName, includes } = eventLink;
   if (!includes) return details;
-  const includedIds = includes.map((included => included._id));
+  const includedIds = includes.map(((included) => included._id));
   const newDetails = {};
   const eventIds = Object.keys(details);
   eventIds.forEach((eventId) => {
     const eventDetails = details[eventId];
     const { linkedTo: eventLinkedTo } = eventDetails;
     const nowLinked = eventLinkedTo
-      && eventLinkedTo.some(linkedEvent => linkedEvent._id === eventLinkId);
+      && eventLinkedTo.some((linkedEvent) => linkedEvent._id === eventLinkId);
     const shouldBeLinked = includedIds.includes(eventId);
     if (nowLinked && shouldBeLinked) { // replace in case displayName has changed
       const newLinkedTo = eventLinkedTo.map((linkedEvent) => {
@@ -223,7 +223,7 @@ const getUpdatedDetailsEventLink = (details, eventLink) => {
       const newLinkedTo = [...eventLinkedTo, { _id: eventLinkId, displayName }];
       newDetails[eventId] = { ...details[eventId], linkedTo: newLinkedTo };
     } else if (nowLinked && !shouldBeLinked) { // remove from array
-      const newLinkedTo = eventLinkedTo.filter(linkedEvent => (linkedEvent._id !== eventLinkId));
+      const newLinkedTo = eventLinkedTo.filter((linkedEvent) => (linkedEvent._id !== eventLinkId));
       newDetails[eventId] = { ...details[eventId], linkedTo: newLinkedTo };
     } else { // do nothing
       newDetails[eventId] = details[eventId];
@@ -240,9 +240,9 @@ const getUpdatedDetailsEventLinkDeleted = (details, eventLinkId) => {
     const eventDetails = details[eventId];
     const { linkedTo: eventLinkedTo } = eventDetails;
     const nowLinked = eventLinkedTo
-      && eventLinkedTo.some(eventLink => eventLink._id === eventLinkId);
+      && eventLinkedTo.some((eventLink) => eventLink._id === eventLinkId);
     if (nowLinked) { // remove from array
-      const newLinkedTo = eventLinkedTo.filter(eventLink => (eventLink._id !== eventLinkId));
+      const newLinkedTo = eventLinkedTo.filter((eventLink) => (eventLink._id !== eventLinkId));
       newDetails[eventId] = { ...details[eventId], linkedTo: newLinkedTo };
     } else { // do nothing
       newDetails[eventId] = details[eventId];
@@ -439,9 +439,9 @@ const eventReducer = (state = INITIAL_STATE, action) => {
       updatedEventDetails.locCornerSE = updatedEvent.locCornerSE;
       updatedEventDetails.locLat = updatedEvent.locLat;
       updatedEventDetails.locLong = updatedEvent.locLong;
-      const runnerToUpdate = updatedEvent.runners.find(runner => runner.user._id === userId);
+      const runnerToUpdate = updatedEvent.runners.find((runner) => runner.user._id === userId);
       const updatedMaps = runnerToUpdate.maps;
-      const updatedMap = updatedMaps.find(map => map.title === mapTitle);
+      const updatedMap = updatedMaps.find((map) => map.title === mapTitle);
       const updatedMapId = (updatedMap) ? updatedMap._id : '';
       updatedEventDetails.runners = state.details[eventId].runners.map((runner) => {
         if (runner.user._id === userId) {
@@ -469,7 +469,7 @@ const eventReducer = (state = INITIAL_STATE, action) => {
         return { ...runner };
       }); // copy each runner object
       const runnerToUpdate = updatedRunners
-        .find(runner => runner.user._id === userId);
+        .find((runner) => runner.user._id === userId);
       runnerToUpdate.comments = comments;
       return {
         ...state,

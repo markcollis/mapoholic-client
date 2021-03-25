@@ -20,7 +20,7 @@ const HomeWelcome = ({ auth, currentUser, ownEvents }) => {
   const isStandardOrAdmin = (currentRole === 'standard' || currentRole === 'admin');
 
   const uploadedMaps = ownEvents.reduce((acc, val) => {
-    const runnerSelf = val.runners.find(runner => runner.user === currentUserId);
+    const runnerSelf = val.runners.find((runner) => runner.user === currentUserId);
     return acc + runnerSelf.numberMaps;
   }, 0);
   const hasMaps = (uploadedMaps > 0);

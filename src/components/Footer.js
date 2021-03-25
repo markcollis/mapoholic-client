@@ -13,7 +13,7 @@ const Footer = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-      MapOholic
+        MapOholic
       </a>
       &nbsp;v
       {MAPOHOLIC_VERSION}

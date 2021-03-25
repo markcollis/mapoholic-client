@@ -30,7 +30,7 @@ class EventMap extends Component {
       this.setState({ mapBounds });
     } else if (events) {
       const eventBounds = events
-        .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
+        .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong)
         .map((eventDetails) => {
           const {
             locLat,
@@ -61,7 +61,7 @@ class EventMap extends Component {
     if (events !== prevProps.events) {
       // console.log('Event Map updated - events:', events);
       const eventBounds = events
-        .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
+        .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong)
         .map((eventDetails) => {
           const {
             locLat,
@@ -109,7 +109,7 @@ class EventMap extends Component {
     const { currentUserId, handleSelectEvent, language } = this.props;
     return (
       events
-        .filter(eventDetails => eventDetails.locLat && eventDetails.locLong)
+        .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong)
         .map((eventDetails) => {
           const {
             _id: eventId,

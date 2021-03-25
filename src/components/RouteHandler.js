@@ -26,13 +26,13 @@ const RouteHandler = ({ auth }) => {
           <Route path="/login" component={Authenticate} />
           <Route path="/logout" component={Logout} />
           <Route path="/events" component={EventView} />
-          <Route path="/eventsmap" render={props => <EventView {...props} showMap />} />
-          <Route path="/mymaps" render={props => <EventView {...props} mineOnly />} />
-          <Route path="/mymapsmap" render={props => <EventView {...props} showMap mineOnly />} />
+          <Route path="/eventsmap" render={(props) => <EventView {...props} showMap />} />
+          <Route path="/mymaps" render={(props) => <EventView {...props} mineOnly />} />
+          <Route path="/mymapsmap" render={(props) => <EventView {...props} showMap mineOnly />} />
           <Route path="/mapview" component={MapView} />
           <Route path="/users" component={UserView} />
           <Route path="/clubs" component={ClubView} />
-          <Route path="/me" render={props => <UserView {...props} ownProfile />} />
+          <Route path="/me" render={(props) => <UserView {...props} ownProfile />} />
           <Route component={HomeView} />
         </Switch>
         <Route path="/" component={Footer} />
@@ -51,7 +51,7 @@ const RouteHandler = ({ auth }) => {
         <Route path="/login" component={Authenticate} />
         <Route path="/logout" component={Logout} />
         <Route path="/events" component={EventView} />
-        <Route path="/eventsmap" render={props => <EventView {...props} showMap />} />
+        <Route path="/eventsmap" render={(props) => <EventView {...props} showMap />} />
         <Route path="/mapview" component={MapView} />
         <Route component={HomeView} />
       </Switch>

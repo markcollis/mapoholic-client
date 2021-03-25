@@ -77,7 +77,7 @@ class UserView extends Component {
   });
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
+  getIsAdmin = memoize((current) => Boolean(current && current.role === 'admin'));
 
   // helper to return current user's id for own profile page irrespective of selectedUserId prop
   getUserId = memoize((current, ownProfile, selectedUserId) => {
@@ -116,7 +116,7 @@ class UserView extends Component {
     if (!eventList) return [];
     const eventsList = eventList.filter((eachEvent) => {
       const { runners } = eachEvent;
-      const isRunner = Boolean(runners && runners.some(runner => runner.user === selectedUserId));
+      const isRunner = Boolean(runners && runners.some((runner) => runner.user === selectedUserId));
       return isRunner;
     });
     return eventsList;
@@ -143,6 +143,7 @@ class UserView extends Component {
         <div className="ui error message">
           <i
             role="button"
+            label="close"
             className="close icon"
             onClick={() => cancelUserError()}
             onKeyPress={() => cancelUserError()}
@@ -449,7 +450,7 @@ const mapDispatchToProps = {
   selectEventIdMapView: selectEventIdMapViewAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
   selectUserToDisplay: selectUserToDisplayAction,
-  setUserSearchField: event => setUserSearchFieldAction(event.target.value),
+  setUserSearchField: (event) => setUserSearchFieldAction(event.target.value),
   setUserViewMode: setUserViewModeAction,
   setUserViewModeSelf: setUserViewModeSelfAction,
   updateUser: updateUserAction,

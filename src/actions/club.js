@@ -26,22 +26,22 @@ export const setClubViewModeAction = (mode) => {
   return null;
 };
 // track changes to the club search field
-export const setClubSearchFieldAction = text => ({
+export const setClubSearchFieldAction = (text) => ({
   type: CLUB_CHANGE_SEARCH_FIELD,
   payload: text,
 });
 // select a club to show further information
-export const selectClubToDisplayAction = clubId => ({
+export const selectClubToDisplayAction = (clubId) => ({
   type: CLUB_SELECT_CLUB,
   payload: clubId,
 });
 // select a club member to show further information (user profile + maps)
-export const selectClubMemberAction = userId => ({
+export const selectClubMemberAction = (userId) => ({
   type: CLUB_SELECT_CLUB_MEMBER,
   payload: userId,
 });
 // select a club's event to show further information (event details + maps)
-export const selectClubEventAction = eventId => ({
+export const selectClubEventAction = (eventId) => ({
   type: CLUB_SELECT_CLUB_EVENT,
   payload: eventId,
 });
@@ -55,7 +55,7 @@ export const cancelClubErrorAction = () => ({
 
 // *** Helper functions ***
 // handle errors consistently, for all routes except login
-const handleError = errorType => (err, dispatch) => {
+const handleError = (errorType) => (err, dispatch) => {
   if (err.response) { // received response with an error status code
     if (err.response.data.error) { // expected error message from API
       dispatch({ type: errorType, payload: err.response.data.error });

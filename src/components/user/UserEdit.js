@@ -168,7 +168,7 @@ class UserEdit extends Component {
                   placeholder={i18n._(t`Clubs that user is a member of`)}
                   options={memberOfOptions}
                   isMulti
-                  onChange={value => setFieldValue('memberOf', value)}
+                  onChange={(value) => setFieldValue('memberOf', value)}
                   onBlur={() => setFieldTouched('memberOf', true)}
                   value={values.memberOf}
                 />
@@ -236,7 +236,7 @@ class UserEdit extends Component {
               <Select
                 id="visibility"
                 options={visibilityOptions}
-                onChange={value => setFieldValue('visibility', value)}
+                onChange={(value) => setFieldValue('visibility', value)}
                 onBlur={() => setFieldTouched('visibility', true)}
                 value={values.visibility}
               />
@@ -252,7 +252,7 @@ class UserEdit extends Component {
                   <Select
                     id="role"
                     options={roleOptions}
-                    onChange={value => setFieldValue('role', value)}
+                    onChange={(value) => setFieldValue('role', value)}
                     onBlur={() => setFieldTouched('role', true)}
                     value={values.role}
                   />
@@ -261,8 +261,7 @@ class UserEdit extends Component {
                 </label>
               </div>
             )
-            : null
-          }
+            : null}
         </div>
         <button
           type="submit"
@@ -357,9 +356,9 @@ const formikUserEdit = withFormik({
       about: selectedUser.about || '',
       location: selectedUser.location || '',
       regNumber: selectedUser.regNumber || '',
-      role: roleOptionsLocale[language].filter(el => el.value === selectedUser.role),
+      role: roleOptionsLocale[language].filter((el) => el.value === selectedUser.role),
       visibility: visibilityOptionsLocale[language]
-        .filter(el => el.value === selectedUser.visibility),
+        .filter((el) => el.value === selectedUser.visibility),
     };
   },
   validationSchema: Yup.object().shape({
@@ -387,7 +386,7 @@ const formikUserEdit = withFormik({
       ? { ...values, role: values.role.value }
       : { ...values };
     valuesToSubmit.visibility = values.visibility.value;
-    valuesToSubmit.memberOf = values.memberOf.map(el => el.value);
+    valuesToSubmit.memberOf = values.memberOf.map((el) => el.value);
     updateUser(selectedUserId, valuesToSubmit, (didSucceed) => {
       if (didSucceed) setUserViewMode('view');
       else setSubmitting(false);

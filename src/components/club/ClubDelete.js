@@ -15,8 +15,8 @@ const ClubDelete = ({
       <h3><Trans>Delete Club</Trans></h3>
       <p>
         <Trans>
-        This will delete all records relating to this club, including
-        connections with users (as members) and events (as organisers).
+          This will delete all records relating to this club, including
+          connections with users (as members) and events (as organisers).
         </Trans>
       </p>
       <button

@@ -19,9 +19,9 @@ const EventDelete = ({
       <h3><Trans>{`Delete Event: ${name} (${date})`}</Trans></h3>
       <p>
         <Trans>
-        Note: Deletion is only permitted by standard users if there are no runners
-        at the event, or you are the only runner. Deleting an event
-        also removes all references to it in linked events.
+          Note: Deletion is only permitted by standard users if there are no runners
+          at the event, or you are the only runner. Deleting an event
+          also removes all references to it in linked events.
         </Trans>
       </p>
       <button

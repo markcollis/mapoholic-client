@@ -10,7 +10,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    Mark Collis
+      Mark Collis
     </a>
   );
   const linkDKP = (
@@ -19,7 +19,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    OOB Kotlářka
+      OOB Kotlářka
     </a>
   );
   const linkDRONGO = (
@@ -28,7 +28,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    DrongO
+      DrongO
     </a>
   );
   const linkORIS = (
@@ -37,7 +37,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    ORIS
+      ORIS
     </a>
   );
   const linkReact = (
@@ -46,7 +46,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    React
+      React
     </a>
   );
   const linkRedux = (
@@ -55,7 +55,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    Redux
+      Redux
     </a>
   );
   const linkNode = (
@@ -64,7 +64,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    Node.js
+      Node.js
     </a>
   );
   const linkExpress = (
@@ -73,7 +73,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    Express
+      Express
     </a>
   );
   const linkMongo = (
@@ -82,7 +82,7 @@ const HomeAboutAuthor = ({ language }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-    MongoDB
+      MongoDB
     </a>
   );
   const linkGithubClient = (

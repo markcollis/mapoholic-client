@@ -145,7 +145,7 @@ class EventMapViewer extends Component {
       const newSelectedOverlays = [...selectedOverlays, filename];
       this.setState({ selectedOverlays: newSelectedOverlays });
     } else { // remove from array
-      const newSelectedOverlays = selectedOverlays.filter(el => el !== filename);
+      const newSelectedOverlays = selectedOverlays.filter((el) => el !== filename);
       this.setState({ selectedOverlays: newSelectedOverlays });
     }
   }
@@ -170,7 +170,7 @@ class EventMapViewer extends Component {
     } = this.props;
     const mapImageArray = this.getMapImageArray(selectedEvent, selectedRunner);
     const hasMaps = (mapImageArray.length > 0);
-    const selectedMapImage = mapImageArray.find(mapImage => mapImage.mapId === selectedMap);
+    const selectedMapImage = mapImageArray.find((mapImage) => mapImage.mapId === selectedMap);
     if (hasMaps && !selectedMapImage) {
       this.handleSelectMapImage(mapImageArray[0].mapId);
     }
@@ -287,8 +287,8 @@ class EventMapViewer extends Component {
           </ul>
           <p>
             <Trans>
-            Note: The overlays will only be perfectly aligned if they were drawn on the
-            same course map.
+              Note: The overlays will only be perfectly aligned if they were drawn on the
+              same course map.
             </Trans>
           </p>
         </div>

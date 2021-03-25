@@ -154,8 +154,8 @@ class FileDropzone extends Component {
     } = this.state;
     const accept = FILETYPE_ACCEPT[fileType];
     const FILETYPE_PREVIEW = {
-      image: file => <img src={URL.createObjectURL(file)} alt="preview" />,
-      results: file => <p>{file.name}</p>,
+      image: (file) => <img src={URL.createObjectURL(file)} alt="preview" />,
+      results: (file) => <p>{file.name}</p>,
     };
     const preview = FILETYPE_PREVIEW[fileType];
 
@@ -184,8 +184,7 @@ class FileDropzone extends Component {
                 {icon}
                 {text}
               </div>
-            )
-          }
+            )}
         </div>
         {(showAddBorder && currentFile && !borderAdded)
           ? (

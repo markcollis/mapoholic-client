@@ -28,7 +28,7 @@ const getUpdatedClubList = (list, payload) => {
 // remove a specific item from a list after deletion
 const removeFromListById = (list, id) => {
   if (!list) return null;
-  const newList = list.filter(listItem => listItem._id !== id);
+  const newList = list.filter((listItem) => listItem._id !== id);
   return newList;
 };
 

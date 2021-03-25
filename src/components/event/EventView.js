@@ -115,7 +115,7 @@ class EventView extends Component {
     const { _id: currentUserId } = current;
     const myEvents = list.filter((eachEvent) => {
       const { runners } = eachEvent;
-      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      const runnerIds = (runners) ? runners.map((runner) => runner.user) : [];
       return runnerIds.includes(currentUserId);
     });
     if (myEvents.length === 0) return true;
@@ -138,14 +138,14 @@ class EventView extends Component {
     // filter to select only the current user's events if mineOnly is true
     const filteredListMineOnly = filteredListRunners.filter((eachEvent) => {
       const { runners } = eachEvent;
-      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      const runnerIds = (runners) ? runners.map((runner) => runner.user) : [];
       return !mineOnly || runnerIds.includes(currentUserId);
     });
     const filteredList = filteredListMineOnly
       .filter((eachEvent) => { // use tag filter if set
         if (tagFilter === '') return true;
         const { runners, tags } = eachEvent;
-        const runnerSelf = runners.find(runner => runner.user === currentUserId);
+        const runnerSelf = runners.find((runner) => runner.user === currentUserId);
         const tagsToCheck = (runnerSelf) ? tags.concat(runnerSelf.tags) : tags;
         return (tagsToCheck.includes(tagFilter));
       })
@@ -184,7 +184,7 @@ class EventView extends Component {
         const matchesTags = Boolean(tags && tags.length > 0 && tags.some((tag) => {
           return tag && simplifyString(tag).includes(simpleSearchField);
         }));
-        const runnerSelf = (runners) ? runners.find(runner => runner.user === currentUserId) : null;
+        const runnerSelf = runners ? runners.find((runner) => runner.user === currentUserId) : null;
         const matchesOwnTags = Boolean(runnerSelf && runnerSelf.tags.length > 0
           && runnerSelf.tags.some((tag) => {
             return tag && simplifyString(tag).includes(simpleSearchField);
@@ -206,13 +206,13 @@ class EventView extends Component {
   });
 
   // helper to return current user's id if input prop has changed
-  getCurrentUserId = memoize(current => ((current) ? current._id : null));
+  getCurrentUserId = memoize((current) => ((current) ? current._id : null));
 
   // helper to return current user's ORIS id if input prop has changed
-  getCurrentUserOrisId = memoize(current => ((current) ? current.orisId : null));
+  getCurrentUserOrisId = memoize((current) => ((current) ? current.orisId : null));
 
   // helper to check if current user is administrator if input prop has changed
-  getIsAdmin = memoize(current => Boolean(current && current.role === 'admin'));
+  getIsAdmin = memoize((current) => Boolean(current && current.role === 'admin'));
 
   // helper to determine if current user can edit event if input props have changed
   getCanEditEvent = memoize((current, selectedEvent) => {
@@ -223,7 +223,7 @@ class EventView extends Component {
       && current._id === selectedEvent.owner._id);
     if (isOwner) return true;
     const runnerList = (selectedEvent.runners)
-      ? selectedEvent.runners.map(runner => runner.user._id)
+      ? selectedEvent.runners.map((runner) => runner.user._id)
       : [];
     const isRunner = runnerList.includes(current._id);
     return isRunner;
@@ -232,7 +232,7 @@ class EventView extends Component {
   // helper to get details of organising clubs if input props have changed
   getOrganisingClubs = memoize((selectedEvent, clubDetails) => {
     const organisingClubs = (selectedEvent.organisedBy)
-      ? selectedEvent.organisedBy.map(organisingClub => clubDetails[organisingClub._id])
+      ? selectedEvent.organisedBy.map((organisingClub) => clubDetails[organisingClub._id])
       : [];
     return organisingClubs;
   });
@@ -259,7 +259,7 @@ class EventView extends Component {
     const filteredList = list.filter((eachEvent) => {
       // if mineOnly, select only those with current user as runner
       const { runners } = eachEvent;
-      const runnerIds = (runners) ? runners.map(runner => runner.user) : [];
+      const runnerIds = (runners) ? runners.map((runner) => runner.user) : [];
       return !mineOnly || runnerIds.includes(currentUserId);
     });
     const tagLists = filteredList.reduce((acc, val) => {
@@ -272,7 +272,7 @@ class EventView extends Component {
         }
       });
       if (val.runners) {
-        const runnerSelf = val.runners.find(runner => runner.user === currentUserId);
+        const runnerSelf = val.runners.find((runner) => runner.user === currentUserId);
         if (runnerSelf) {
           const tagsFromRunner = runnerSelf.tags;
           tagsFromRunner.forEach((tag) => {
@@ -513,7 +513,7 @@ class EventView extends Component {
           : (
             selectedEvent.linkedTo.map((link) => {
               const { _id: linkId } = link;
-              const linkData = linkList.find(eachLink => eachLink._id === linkId);
+              const linkData = linkList.find((eachLink) => eachLink._id === linkId);
               return (
                 <EventLinked
                   key={linkId} // derived (selectedEvent)
@@ -600,6 +600,7 @@ class EventView extends Component {
         <div className="ui error message">
           <i
             role="button"
+            label="close"
             className="close icon"
             onClick={() => cancelEventError()}
             onKeyPress={() => cancelEventError()}
@@ -896,10 +897,10 @@ const mapDispatchToProps = {
   selectEventIdMyMaps: selectEventIdMyMapsAction,
   selectEventIdMapView: selectEventIdMapViewAction,
   selectRunnerToDisplay: selectRunnerToDisplayAction,
-  setEventSearchFieldEvents: event => setEventSearchFieldEventsAction(event.target.value),
-  setEventSearchFieldMyMaps: event => setEventSearchFieldMyMapsAction(event.target.value),
-  setEventTagFilterEvents: event => setEventTagFilterEventsAction(event.target.value),
-  setEventTagFilterMyMaps: event => setEventTagFilterMyMapsAction(event.target.value),
+  setEventSearchFieldEvents: (event) => setEventSearchFieldEventsAction(event.target.value),
+  setEventSearchFieldMyMaps: (event) => setEventSearchFieldMyMapsAction(event.target.value),
+  setEventTagFilterEvents: (event) => setEventTagFilterEventsAction(event.target.value),
+  setEventTagFilterMyMaps: (event) => setEventTagFilterMyMapsAction(event.target.value),
   setEventViewModeEventEvents: setEventViewModeEventEventsAction,
   setEventViewModeEventMapView: setEventViewModeEventMapViewAction,
   setEventViewModeEventMyMaps: setEventViewModeEventMyMapsAction,

@@ -59,7 +59,7 @@ const EventRunners = ({
     return ( // can't use <> shorthand for Fragment with key
       <Fragment key={courseTitle}>
         <h3 className="event-runners__class-title">{courseTitleToDisplay}</h3>
-        {runnersByCourse[courseTitle].map(el => el)}
+        {runnersByCourse[courseTitle].map((el) => el)}
       </Fragment>
     );
   });

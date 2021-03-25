@@ -44,8 +44,8 @@ class UserDelete extends Component {
           </Trans>
         </p>
         <div className="ui negative message">
-        If you are deleting your own user account you will be immediately logged out
-        and will have to create a new account if you wish to rejoin in future.
+          If you are deleting your own user account you will be immediately logged out
+          and will have to create a new account if you wish to rejoin in future.
         </div>
         <button
           type="button"
