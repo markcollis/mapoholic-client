@@ -32,7 +32,7 @@ export const dateStringToDate = (dateString: string): Date => {
 // convert YYYY-MM-DDThh:mm:ss.xxxZ to DD/MM/YYYY
 // e.g. '2019-05-15T05:41:44.478Z' to '15/05/2019' (en-GB) or '15. 5. 2019' (cs)
 export const reformatTimestampDateOnly = (timestamp: string, locale = 'default'): string => {
-  if (!timestamp) return null;
+  if (!timestamp) return '';
   let localeToUse = locale;
   if (locale === 'en') localeToUse = 'en-GB';
   const newDate = new Date(timestamp);
@@ -55,7 +55,7 @@ export const reformatTimestampDateOnly = (timestamp: string, locale = 'default')
 // e.g. en-GB '2019-05-15T05:41:44.478Z' to '15/05/2019, 07:41'
 // e.g. cs '2019-05-15T05:41:44.478Z' to '15. 5. 2019 07:41'
 export const reformatTimestamp = (timestamp: string, locale = 'default'): string => {
-  if (!timestamp) return null;
+  if (!timestamp) return '';
   let localeToUse = locale;
   if (locale === 'en') localeToUse = 'en-GB';
   const newDate = new Date(timestamp);
