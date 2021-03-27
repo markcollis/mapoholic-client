@@ -295,9 +295,18 @@ select, optgroup {
   height: 400px;
   width: 100%;
 }
-.event-map__tooltip {
+.event-map__popup {
   width: 350px;
   white-space: normal;
+}
+.event-map__tooltip ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.event-map__tooltip p {
+  text-align: center;
+  font-size: 90%;
+  font-style: italic;
 }
 /* settings for EventMapViewerCanvas */
 .event-map-viewer__container {
