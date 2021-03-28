@@ -1,11 +1,12 @@
 import { AUTH_USER, AUTH_ERROR } from '../actions/types';
+import { AuthState, AuthAction } from '../types/auth';
 
-const INITIAL_STATE = {
+const INITIAL_STATE: AuthState = {
   authenticated: localStorage.getItem('mapoholic-auth-token'), // null if not logged in, JWT token if logged in
   errorMessage: '', // empty unless an error occurs
 };
 
-const authReducer = (state = INITIAL_STATE, action) => {
+const authReducer = (state: AuthState = INITIAL_STATE, action: AuthAction): AuthState => {
   switch (action.type) {
     case AUTH_USER:
       return { ...state, authenticated: action.payload, errorMessage: '' };

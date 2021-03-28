@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
+import { Redirect } from 'react-router-dom';
 
 import ErrorBoundary from '../generic/ErrorBoundary';
 import ClubDelete from './ClubDelete';
@@ -32,6 +33,7 @@ import { simplifyString } from '../../common/conversions';
 // viewing and editing club details.
 class ClubView extends Component {
   static propTypes = {
+    auth: PropTypes.objectOf(PropTypes.any).isRequired,
     club: PropTypes.objectOf(PropTypes.any).isRequired,
     config: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -307,6 +309,9 @@ class ClubView extends Component {
   }
 
   render() {
+    const { auth: { authenticated } } = this.props;
+    if (!authenticated) return <Redirect to="/login" />;
+
     return (
       <ErrorBoundary>
         <div className="ui vertically padded stackable grid">
@@ -331,12 +336,14 @@ class ClubView extends Component {
 }
 
 const mapStateToProps = ({
+  auth,
   club,
   config,
   oevent,
   user,
 }) => {
   return {
+    auth,
     club,
     config,
     oevent,

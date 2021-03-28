@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
+import { Redirect } from 'react-router-dom';
 
 import ErrorBoundary from '../generic/ErrorBoundary';
 import UserDelete from './UserDelete';
@@ -32,6 +33,7 @@ import { simplifyString } from '../../common/conversions';
 // The UserView component is the top level component for selecting users and viewing details
 class UserView extends Component {
   static propTypes = {
+    auth: PropTypes.objectOf(PropTypes.any).isRequired,
     club: PropTypes.objectOf(PropTypes.any).isRequired,
     config: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -364,6 +366,7 @@ class UserView extends Component {
 
   render() {
     const {
+      auth: { authenticated },
       ownProfile,
       user,
     } = this.props;
@@ -371,6 +374,7 @@ class UserView extends Component {
       viewMode,
       viewModeSelf,
     } = user;
+    if (!authenticated) return <Redirect to="/login" />;
 
     if (ownProfile) {
       return (
@@ -427,12 +431,14 @@ class UserView extends Component {
 }
 
 const mapStateToProps = ({
+  auth,
   club,
   config,
   oevent,
   user,
 }) => {
   return {
+    auth,
     club,
     config,
     oevent,

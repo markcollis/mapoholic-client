@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { createAction } from 'typesafe-actions';
+import { Dispatch } from 'redux';
+
 import {
   AUTH_USER,
   AUTH_ERROR,
@@ -7,19 +10,16 @@ import { MAPOHOLIC_SERVER } from '../config';
 
 // Local Actions
 // log out current user
-export const logoutAction = () => {
+export const logoutAction = createAction(AUTH_USER, () => {
   localStorage.removeItem('mapoholic-auth-token');
-  return { type: AUTH_USER, payload: null };
-};
-// cancel a displayed error message
-export const cancelAuthErrorAction = () => ({
-  type: AUTH_ERROR,
-  payload: '',
+  return null;
 });
+// cancel a displayed error message
+export const cancelAuthErrorAction = createAction(AUTH_ERROR, () => '');
 
 // *** Helper functions ***
 // handle errors consistently, for all routes except login
-const handleError = (errorType) => (err, dispatch) => {
+const handleError = (errorType: string) => (err: any, dispatch: Dispatch) => {
   if (err.response) { // received response with an error status code
     if (err.response.data.error) { // expected error message from API
       dispatch({ type: errorType, payload: err.response.data.error });
@@ -35,7 +35,7 @@ const handleError = (errorType) => (err, dispatch) => {
 
 // create a user account, receive a token in return
 // app.post('/users', publicRoute, Authentication.signup);
-export const signupAction = (formValues, callback) => async (dispatch) => {
+export const signupAction = (formValues: any, callback: Function) => async (dispatch: Dispatch) => {
   try {
     const response = await axios.post(`${MAPOHOLIC_SERVER}/users`, formValues);
     dispatch({ type: AUTH_USER, payload: response.data.token });
@@ -49,7 +49,7 @@ export const signupAction = (formValues, callback) => async (dispatch) => {
 
 // log in to an existing user account, getting a token in return
 // app.post('/users/login', requireLogin, Authentication.login);
-export const loginAction = (formValues, callback) => async (dispatch) => {
+export const loginAction = (formValues: any, callback: Function) => async (dispatch: Dispatch) => {
   try {
     const response = await axios.post(`${MAPOHOLIC_SERVER}/users/login`, formValues);
     dispatch({ type: AUTH_USER, payload: response.data.token });

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import forestBar from '../graphics/blueForestBarWide.jpg';
 import { MAPOHOLIC_VERSION, MAPOHOLIC_VERSION_YEAR } from '../config';
 
 // The Footer component is always rendered at the bottom of every page
-const Footer = () => {
+const Footer: FunctionComponent = () => {
   return (
     <div className="footer">
       <img src={forestBar} alt="separator" />
