@@ -60,6 +60,7 @@ class EventView extends Component {
     history: PropTypes.objectOf(PropTypes.any).isRequired,
     mineOnly: PropTypes.bool,
     showMap: PropTypes.bool,
+    auth: PropTypes.objectOf(PropTypes.any).isRequired,
     club: PropTypes.objectOf(PropTypes.any).isRequired,
     config: PropTypes.objectOf(PropTypes.any).isRequired,
     oevent: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -783,6 +784,7 @@ class EventView extends Component {
 
   render() {
     const {
+      auth: { authenticated },
       mineOnly,
       oevent,
       showMap,
@@ -790,6 +792,8 @@ class EventView extends Component {
     } = this.props;
     const { list } = oevent;
     const { current } = user;
+    if (!authenticated && mineOnly) return <Redirect to="/login" />;
+
     const redirectToEvents = this.redirectToEvents(list, current, mineOnly);
     if (showMap) {
       return (
@@ -864,12 +868,14 @@ class EventView extends Component {
 }
 
 const mapStateToProps = ({
+  auth,
   club,
   config,
   user,
   oevent,
 }) => {
   return {
+    auth,
     club,
     config,
     user,

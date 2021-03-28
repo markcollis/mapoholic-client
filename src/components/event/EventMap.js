@@ -112,7 +112,7 @@ class EventMap extends Component {
     const { currentUserId, handleSelectEvent, language } = this.props;
     const eventsWithLocation = events
       .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong);
-    console.log('eventsWithLocation', eventsWithLocation);
+    // console.log('eventsWithLocation', eventsWithLocation);
     const eventsGroupedByLocation = {};
     eventsWithLocation.forEach((eventDetails) => {
       const locKey = `${eventDetails.locLat.toFixed(3)}:${eventDetails.locLong.toFixed(3)}`;
@@ -122,12 +122,13 @@ class EventMap extends Component {
         eventsGroupedByLocation[locKey] = [eventDetails];
       }
     });
-    console.log('eventsGroupedByLocation', eventsGroupedByLocation);
+    // console.log('eventsGroupedByLocation', eventsGroupedByLocation);
     const leafletGroupedMapLocations = Object.keys(eventsGroupedByLocation).map((locKey) => {
       const eventDetailsArray = eventsGroupedByLocation[locKey];
       const [locLat, locLong] = locKey.split(':');
       const eventListItemArray = eventDetailsArray.map((eventDetails) => (
         <EventListItem
+          key={eventDetails._id}
           currentUserId={currentUserId}
           handleSelectEvent={handleSelectEvent}
           language={language}

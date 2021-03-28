@@ -6,6 +6,7 @@ import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
+import { withRouter } from 'react-router-dom';
 
 import { loginAction, signupAction, cancelAuthErrorAction } from '../../actions';
 import { validationErrorsLocale } from '../../common/formData';
@@ -20,8 +21,12 @@ class Authenticate extends Component {
     errorMessage: PropTypes.string.isRequired, // error returned from server
     errors: PropTypes.objectOf(PropTypes.any).isRequired, // input validation
     isSubmitting: PropTypes.bool.isRequired,
-    location: PropTypes.objectOf(PropTypes.any).isRequired,
     touched: PropTypes.objectOf(PropTypes.any).isRequired,
+    isSignUp: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    isSignUp: false,
   }
 
   renderError = () => {
@@ -47,14 +52,11 @@ class Authenticate extends Component {
       errors,
       isSubmitting,
       language,
-      location,
       touched,
+      isSignUp,
     } = this.props;
-    const route = location.pathname.slice(1);
     const validationErrors = validationErrorsLocale[language];
-    const buttonText = (route === 'signup')
-      ? <Trans>Sign up</Trans>
-      : <Trans>Log in</Trans>;
+    const buttonText = isSignUp ? <Trans>Sign up</Trans> : <Trans>Log in</Trans>;
     return (
       <Form className="ui warning form" noValidate>
         <div className="field">
@@ -90,34 +92,31 @@ class Authenticate extends Component {
               && <div className="ui warning message">{validationErrors[errors.password] || '!'}</div> }
           </label>
         </div>
-        {(route === 'signup')
-          ? (
-            <div className="field">
-              <label htmlFor="displayName">
-                <Trans>User name</Trans>
-                <I18n>
-                  {({ i18n }) => (
-                    <Field
-                      name="displayName"
-                      placeholder={i18n._(t`Enter user name (your email address will be used if left blank)`)}
-                      autoComplete="off"
-                    />
-                  )}
-                </I18n>
-                { touched.displayName && errors.displayName && <div className="ui warning message">{errors.displayName}</div> }
-              </label>
-            </div>
-          )
-          : null}
+        {isSignUp && (
+          <div className="field">
+            <label htmlFor="displayName">
+              <Trans>User name</Trans>
+              <I18n>
+                {({ i18n }) => (
+                  <Field
+                    name="displayName"
+                    placeholder={i18n._(t`Enter user name (your email address will be used if left blank)`)}
+                    autoComplete="off"
+                  />
+                )}
+              </I18n>
+              { touched.displayName && errors.displayName && <div className="ui warning message">{errors.displayName}</div> }
+            </label>
+          </div>
+        )}
         <button type="submit" className="ui button primary" disabled={isSubmitting}>{buttonText}</button>
       </Form>
     );
   }
 
   render() {
-    const { location } = this.props;
-    const route = location.pathname.slice(1);
-    const headerText = (route === 'signup')
+    const { isSignUp } = this.props;
+    const headerText = isSignUp
       ? <Trans>Sign up for MapOholic</Trans>
       : <Trans>Log in to MapOholic</Trans>;
     return (
@@ -151,13 +150,12 @@ const formikAuthenticate = withFormik({
   }),
   handleSubmit(values, { props, setSubmitting }) {
     const {
+      isSignUp,
       signup,
       login,
       history,
-      location,
     } = props;
-    const route = location.pathname.slice(1);
-    if (route === 'signup') {
+    if (isSignUp) {
       signup(values, (didSucceed) => {
         if (didSucceed) {
           history.push('/me');
@@ -187,5 +185,6 @@ export default compose(
     login: loginAction,
     signup: signupAction,
   }),
+  withRouter,
   formikAuthenticate,
 )(Authenticate);
