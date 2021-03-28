@@ -1,6 +1,6 @@
 {
   "name": "mapoholic-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "ISC",
   "description": "Front end for MapOholic orienteering map database",
   "dependencies": {
