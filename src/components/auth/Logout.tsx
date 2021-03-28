@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { connect, ConnectedProps } from 'react-redux';
 import { Trans } from '@lingui/macro';
 import { logoutAction } from '../../actions';
 
-// When rendered, the Logout component logs the current user out and displays an appropriate message
-class Logout extends Component {
-  static propTypes = {
-    logout: PropTypes.func.isRequired,
-  }
+const dispatchProps = { logout: logoutAction };
+const connector = connect(null, dispatchProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+interface Props extends PropsFromRedux {}
 
+// When rendered, the Logout component logs the current user out and displays an appropriate message
+class Logout extends Component<Props> {
   componentDidMount() {
     const { logout } = this.props;
     logout();
@@ -25,4 +25,4 @@ class Logout extends Component {
   }
 }
 
-export default connect(null, { logout: logoutAction })(Logout);
+export default connector(Logout);
