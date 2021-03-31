@@ -11,6 +11,7 @@ import {
 import iconFlag from '../../common/iconFlag';
 import EventListItem from './EventListItem';
 import getPolygonBounds from './getPolygonBounds';
+import TrackWaypoints from './TrackWaypoints';
 import { MAP_TILES, MAP_CREDIT } from '../../config';
 
 class EventMap extends Component {
@@ -109,7 +110,13 @@ class EventMap extends Component {
   /* eslint-disable no-underscore-dangle */
   renderMapLocations = (events) => {
     const { mapZoomLevel } = this.state;
-    const { currentUserId, handleSelectEvent, language } = this.props;
+    const {
+      currentUserId,
+      handleSelectEvent,
+      language,
+      eventDetails: eventDetailsByEventId,
+    } = this.props;
+    console.log('events before filtering for location', events);
     const eventsWithLocation = events
       .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong);
     // console.log('eventsWithLocation', eventsWithLocation);
@@ -137,7 +144,7 @@ class EventMap extends Component {
         />
       ));
       const eventBasicDetailsArray = eventDetailsArray.map((eventDetails) => {
-        return <li>{`${eventDetails.date} - ${eventDetails.name}`}</li>;
+        return <li key={eventDetails._id}>{`${eventDetails.date} - ${eventDetails.name}`}</li>;
       });
       const popup = <Popup className="event-map__popup">{eventListItemArray}</Popup>;
       const tooltip = (
@@ -153,8 +160,33 @@ class EventMap extends Component {
         </Tooltip>
       );
       const flagMarkerPos = [locLat, locLong]; // fallback
-      const polygonBounds = getPolygonBounds(eventDetailsArray[0]); // assumption, probably untrue
-      if (!mapZoomLevel || mapZoomLevel < 11 || polygonBounds.length < 3) {
+      const polygonBoundsArray = eventDetailsArray.map(getPolygonBounds)
+        .filter((polygonBounds) => polygonBounds.length > 3);
+      const trackWaypointsArrayArray = eventDetailsArray.map((eventDetails) => {
+        const fullDetails = eventDetailsByEventId[eventDetails._id];
+        if (!fullDetails) return null;
+        const currentUserRunner = fullDetails.runners
+          .find(({ user: { _id: userId } }) => userId === currentUserId);
+        const currentUserMapsGeocoded = currentUserRunner && currentUserRunner.maps
+          && currentUserRunner.maps.filter((map) => map.isGeocoded);
+        const trackWaypointsArray = currentUserMapsGeocoded && currentUserMapsGeocoded
+          .map((mapData) => <TrackWaypoints key={mapData.title} mapData={mapData} />);
+        return trackWaypointsArray;
+      });
+      const polygons = polygonBoundsArray.map((polygonBounds, index) => (
+        <Polygon
+          key={polygonBounds[0][0]}
+          positions={polygonBounds}
+          color="blue"
+        >
+          {trackWaypointsArrayArray && trackWaypointsArrayArray[index]
+            ? trackWaypointsArrayArray[index]
+            : null}
+          {popup}
+          {tooltip}
+        </Polygon>
+      ));
+      if (!mapZoomLevel || mapZoomLevel < 11 || polygons.length === 0) {
         return (
           <Marker
             key={eventDetailsArray[0]._id}
@@ -168,15 +200,7 @@ class EventMap extends Component {
         );
       }
       return (
-        <div key={eventDetailsArray[0]._id}>
-          <Polygon
-            positions={polygonBounds}
-            color="blue"
-          >
-            {popup}
-            {tooltip}
-          </Polygon>
-        </div>
+        <div key={eventDetailsArray[0]._id}>{polygons}</div>
       );
     });
     return leafletGroupedMapLocations;
@@ -200,9 +224,11 @@ class EventMap extends Component {
   }
 }
 
+/* eslint-disable react/forbid-prop-types */
 EventMap.propTypes = {
   currentUserId: PropTypes.string,
   events: PropTypes.arrayOf(PropTypes.any),
+  eventDetails: PropTypes.object.isRequired,
   handleSelectEvent: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   mapBounds: PropTypes.arrayOf(PropTypes.array),
