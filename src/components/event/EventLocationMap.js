@@ -8,6 +8,7 @@ import {
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
 import getPolygonBounds from './getPolygonBounds';
+import TrackWaypoints from './TrackWaypoints';
 import { MAP_TILES, MAP_CREDIT } from '../../config';
 
 // simple map to show the location of a single event
@@ -25,7 +26,8 @@ class EventLocationMap extends Component {
     this.setState({ mapZoomLevel: leafletMap.getZoom() });
   }
 
-  renderLocation = (selectedEvent) => {
+  renderLocation = () => {
+    const { currentUserId, selectedEvent } = this.props;
     const { mapZoomLevel } = this.state;
     const {
       locLat,
@@ -33,6 +35,12 @@ class EventLocationMap extends Component {
     } = selectedEvent;
     const flagMarkerPos = [locLat, locLong];
     const polygonBounds = getPolygonBounds(selectedEvent);
+    const currentUserRunner = selectedEvent.runners
+      .find(({ user: { _id: runnerId } }) => runnerId === currentUserId);
+    const currentUserMapsGeocoded = currentUserRunner && currentUserRunner.maps
+      .filter((map) => map.isGeocoded);
+    const trackWaypointsArray = currentUserMapsGeocoded && currentUserMapsGeocoded
+      .map((mapData) => <TrackWaypoints key={mapData.title} mapData={mapData} />);
     if (mapZoomLevel < 11 || polygonBounds.length < 3) {
       return (
         <Marker
@@ -43,10 +51,13 @@ class EventLocationMap extends Component {
       );
     }
     return (
-      <Polygon
-        positions={polygonBounds}
-        color="blue"
-      />
+      <>
+        <Polygon
+          positions={polygonBounds}
+          color="blue"
+        />
+        {trackWaypointsArray}
+      </>
     );
   }
 
@@ -63,7 +74,7 @@ class EventLocationMap extends Component {
         onZoomEnd={this.handleZoomEnd}
       >
         <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-        {this.renderLocation(selectedEvent)}
+        {this.renderLocation()}
       </Map>
     );
   }
@@ -71,6 +82,7 @@ class EventLocationMap extends Component {
 
 EventLocationMap.propTypes = {
   selectedEvent: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentUserId: PropTypes.string.isRequired,
 };
 
 export default EventLocationMap;
