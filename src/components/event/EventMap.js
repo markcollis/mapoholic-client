@@ -114,9 +114,7 @@ class EventMap extends Component {
       currentUserId,
       handleSelectEvent,
       language,
-      eventDetails: eventDetailsByEventId,
     } = this.props;
-    console.log('events before filtering for location', events);
     const eventsWithLocation = events
       .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong);
     // console.log('eventsWithLocation', eventsWithLocation);
@@ -163,14 +161,13 @@ class EventMap extends Component {
       const polygonBoundsArray = eventDetailsArray.map(getPolygonBounds)
         .filter((polygonBounds) => polygonBounds.length > 3);
       const trackWaypointsArrayArray = eventDetailsArray.map((eventDetails) => {
-        const fullDetails = eventDetailsByEventId[eventDetails._id];
-        if (!fullDetails) return null;
-        const currentUserRunner = fullDetails.runners
-          .find(({ user: { _id: userId } }) => userId === currentUserId);
-        const currentUserMapsGeocoded = currentUserRunner && currentUserRunner.maps
-          && currentUserRunner.maps.filter((map) => map.isGeocoded);
-        const trackWaypointsArray = currentUserMapsGeocoded && currentUserMapsGeocoded
-          .map((mapData) => <TrackWaypoints key={mapData.title} mapData={mapData} />);
+        const currentUserRunner = eventDetails.runners
+          .find(({ user }) => user === currentUserId);
+        // console.log('currentUserRunner', currentUserRunner);
+        if (!currentUserRunner) return null;
+        /* eslint-disable react/no-array-index-key */
+        const trackWaypointsArray = currentUserRunner.ownTracks && currentUserRunner.ownTracks
+          .map((track, index) => <TrackWaypoints key={index} mapData={{ geo: { track } }} />);
         return trackWaypointsArray;
       });
       const polygons = polygonBoundsArray.map((polygonBounds, index) => (
@@ -178,6 +175,12 @@ class EventMap extends Component {
           key={polygonBounds[0][0]}
           positions={polygonBounds}
           color="blue"
+          onmouseover={(e) => {
+            e.target.setStyle({ color: 'darkblue' });
+          }}
+          onmouseout={(e) => {
+            e.target.setStyle({ color: 'blue' });
+          }}
         >
           {trackWaypointsArrayArray && trackWaypointsArrayArray[index]
             ? trackWaypointsArrayArray[index]
@@ -224,11 +227,9 @@ class EventMap extends Component {
   }
 }
 
-/* eslint-disable react/forbid-prop-types */
 EventMap.propTypes = {
   currentUserId: PropTypes.string,
   events: PropTypes.arrayOf(PropTypes.any),
-  eventDetails: PropTypes.object.isRequired,
   handleSelectEvent: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   mapBounds: PropTypes.arrayOf(PropTypes.array),

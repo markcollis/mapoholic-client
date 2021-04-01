@@ -743,7 +743,6 @@ class EventView extends Component {
       list,
       tagFilterEvents,
       tagFilterMyMaps,
-      details,
     } = oevent;
     const { language } = config;
     const { current } = user;
@@ -760,7 +759,6 @@ class EventView extends Component {
       <EventMap
         key={mineOnly} // to force remounting when switching between Events and MyMaps views
         currentUserId={currentUserId} // derived
-        eventDetails={details} // prop (oevent)
         events={eventListArray} // derived
         handleSelectEvent={this.handleSelectEvent} // derived
         language={language} // prop (config)
