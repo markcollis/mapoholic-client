@@ -8,7 +8,7 @@ import {
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
 import getPolygonBounds from './getPolygonBounds';
-import TrackWaypoints from './TrackWaypoints';
+import TrackWaypoints from './leaflet/TrackWaypoints';
 import { MAP_TILES, MAP_CREDIT } from '../../config';
 
 // simple map to show the location of a single event
@@ -40,7 +40,7 @@ class EventLocationMap extends Component {
     const currentUserMapsGeocoded = currentUserRunner && currentUserRunner.maps
       .filter((map) => map.isGeocoded);
     const trackWaypointsArray = currentUserMapsGeocoded && currentUserMapsGeocoded
-      .map((mapData) => <TrackWaypoints key={mapData.title} mapData={mapData} />);
+      .map((mapData) => <TrackWaypoints key={mapData.title} track={mapData.geo.track} />);
     if (mapZoomLevel < 11 || polygonBounds.length < 3) {
       return (
         <Marker

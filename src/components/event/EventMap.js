@@ -11,7 +11,7 @@ import {
 import iconFlag from '../../common/iconFlag';
 import EventListItem from './EventListItem';
 import getPolygonBounds from './getPolygonBounds';
-import TrackWaypoints from './TrackWaypoints';
+import TrackWaypoints from './leaflet/TrackWaypoints';
 import { MAP_TILES, MAP_CREDIT } from '../../config';
 
 class EventMap extends Component {
@@ -167,7 +167,7 @@ class EventMap extends Component {
         if (!currentUserRunner) return null;
         /* eslint-disable react/no-array-index-key */
         const trackWaypointsArray = currentUserRunner.ownTracks && currentUserRunner.ownTracks
-          .map((track, index) => <TrackWaypoints key={index} mapData={{ geo: { track } }} />);
+          .map((track, index) => <TrackWaypoints key={index} track={track} />);
         return trackWaypointsArray;
       });
       const polygons = polygonBoundsArray.map((polygonBounds, index) => (

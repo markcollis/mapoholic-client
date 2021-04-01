@@ -84,7 +84,7 @@ export interface OEventWaypoint extends OEventCoordinates {
 
 type FixedTwoArray<T> = [T, T];
 
-export type OEventLatLongTuple = FixedTwoArray<number>;
+export type OEventPosition = FixedTwoArray<number>; // specifically lat, long
 
 export interface OEventCorners {
   ne: OEventCoordinates;
@@ -100,12 +100,17 @@ export interface OEventLocationSize {
   height: number;
 }
 
+export type OEventTrackDetailed = OEventWaypoint[];
+export type OEventTrackPositions = OEventPosition[];
+export type OEventTrack = OEventTrackDetailed | OEventTrackPositions;
+// newly imported tracks will have full details in mongo, older ones may have positions only
+
 export interface OEventMapGeoData {
   mapCentre: OEventCoordinates;
   mapCorners: OEventCorners;
   imageCorners: OEventCorners;
   locationSizePixels: OEventLocationSize;
-  track: OEventWaypoint[] | OEventLatLongTuple[];
+  track: OEventTrack;
   distanceRun: string;
 }
 
