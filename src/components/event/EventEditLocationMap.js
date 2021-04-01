@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Map,
+  MapContainer,
   Marker,
   Polygon,
   TileLayer,
@@ -57,9 +57,9 @@ class EventEditLocationMap extends Component {
     const { locLat, locLong } = this.props;
     if (!locLat || !locLong) return null;
     return (
-      <Map
+      <MapContainer
         className="event-edit-location-map"
-        ref={this.mapRef}
+        whenCreated={(mapInstance) => { this.mapRef.current = mapInstance; }}
         center={[locLat, locLong]}
         zoom={mapZoomLevel}
         onZoomEnd={this.handleZoomEnd}
@@ -67,7 +67,7 @@ class EventEditLocationMap extends Component {
         <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
         {this.renderLocation()}
         {this.renderMapCorners()}
-      </Map>
+      </MapContainer>
     );
   }
 }

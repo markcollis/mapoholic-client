@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Map,
+  MapContainer,
   Marker,
   Polygon,
   TileLayer,
@@ -14,54 +14,56 @@ import getPolygonBounds from './getPolygonBounds';
 import TrackWaypoints from './leaflet/TrackWaypoints';
 import { MAP_TILES, MAP_CREDIT } from '../../config';
 
+const DEFAULT_MAP_BOUNDS = [[50, 14], [50.2, 14.2]];
+
 class EventMap extends Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
     this.state = {
-      mapBounds: [[50, 14], [50.2, 14.2]],
+      // mapBounds: [[50, 14], [50.2, 14.2]],
       mapZoomLevel: undefined,
     };
   }
 
-  componentDidMount() {
-    const { events, mapBounds } = this.props;
-    // console.log('Event Map mounted - events:', events);
-    // console.log('mapBounds:', mapBounds);
-    if (mapBounds) {
-      this.setState({ mapBounds });
-    } else if (events) {
-      const eventBounds = events
-        .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong)
-        .map((eventDetails) => {
-          const {
-            locLat,
-            locLong,
-          } = eventDetails;
-          return [locLat, locLong];
-        });
-      if (eventBounds.length > 0) {
-        const mapBoundsToSet = eventBounds.reduce((acc, val) => {
-          const low = [
-            (val[0] < acc[0][0]) ? val[0] : acc[0][0],
-            (val[1] < acc[0][1]) ? val[1] : acc[0][1],
-          ];
-          const high = [
-            (val[0] > acc[1][0]) ? val[0] : acc[1][0],
-            (val[1] > acc[1][1]) ? val[1] : acc[1][1],
-          ];
-          return [low, high];
-        }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
-          [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
-        this.setState({ mapBounds: mapBoundsToSet });
-      }
-    }
-  }
+  // componentDidMount() {
+  //   const { events, mapBounds } = this.props;
+  //   // console.log('Event Map mounted - events:', events);
+  //   // console.log('mapBounds:', mapBounds);
+  //   if (mapBounds) {
+  //     this.setState({ mapBounds });
+  //   } else if (events) {
+  //     const eventBounds = events
+  //       .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong)
+  //       .map((eventDetails) => {
+  //         const {
+  //           locLat,
+  //           locLong,
+  //         } = eventDetails;
+  //         return [locLat, locLong];
+  //       });
+  //     if (eventBounds.length > 0) {
+  //       // const mapBoundsToSet = eventBounds.reduce((acc, val) => {
+  //         const low = [
+  //           (val[0] < acc[0][0]) ? val[0] : acc[0][0],
+  //           (val[1] < acc[0][1]) ? val[1] : acc[0][1],
+  //         ];
+  //         const high = [
+  //           (val[0] > acc[1][0]) ? val[0] : acc[1][0],
+  //           (val[1] > acc[1][1]) ? val[1] : acc[1][1],
+  //         ];
+  //         return [low, high];
+  //       }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
+  //         [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
+  //       // this.setState({ mapBounds: mapBoundsToSet });
+  //     }
+  //   }
+  // }
 
   componentDidUpdate(prevProps) {
     const { events } = this.props;
     if (events !== prevProps.events) {
-      // console.log('Event Map updated - events:', events);
+      console.log('Event Map updated - events:', events);
       const eventBounds = events
         .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong)
         .map((eventDetails) => {
@@ -85,7 +87,11 @@ class EventMap extends Component {
         }, [[eventBounds[0][0] - 0.01, eventBounds[0][1] - 0.01],
           [eventBounds[0][0] + 0.01, eventBounds[0][1] + 0.01]]);
         /* eslint react/no-did-update-set-state: 0 */
-        this.setState({ mapBounds }); // safe to use due to prevProps check
+        // this.setState({ mapBounds }); // safe to use due to prevProps check
+        if (this.mapRef) {
+          console.log('setting map bounds', mapBounds);
+          this.mapRef.current.fitBounds(mapBounds);
+        }
       }
     }
   }
@@ -93,7 +99,7 @@ class EventMap extends Component {
   componentWillUnmount() {
     const { setMapBounds } = this.props;
     if (this.mapRef.current) {
-      const leafletMap = this.mapRef.current.leafletElement;
+      const leafletMap = this.mapRef.current;
       const currentBounds = leafletMap.getBounds();
       const { _southWest: sw, _northEast: ne } = currentBounds;
       const currentBoundsAsArray = [[sw.lat, sw.lng], [ne.lat, ne.lng]];
@@ -102,7 +108,8 @@ class EventMap extends Component {
   }
 
   handleZoomEnd = () => {
-    const leafletMap = this.mapRef.current.leafletElement;
+    console.log('handleZoomEnd triggered');
+    const leafletMap = this.mapRef.current;
     this.setState({ mapZoomLevel: leafletMap.getZoom() });
   }
 
@@ -210,18 +217,18 @@ class EventMap extends Component {
   }
 
   render() {
-    const { events } = this.props;
-    const { mapBounds } = this.state;
+    const { events, mapBounds } = this.props;
+    // const { mapBounds } = this.state;
     return (
       <div className="ui segment">
-        <Map
-          ref={this.mapRef}
-          bounds={mapBounds}
+        <MapContainer
+          whenCreated={(mapInstance) => { this.mapRef.current = mapInstance; }}
+          bounds={mapBounds || DEFAULT_MAP_BOUNDS}
           onZoomEnd={this.handleZoomEnd}
         >
           <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
           {this.renderMapLocations(events)}
-        </Map>
+        </MapContainer>
       </div>
     );
   }

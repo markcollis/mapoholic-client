@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Map,
+  MapContainer,
   Marker,
   Polygon,
   TileLayer,
@@ -67,15 +67,15 @@ class EventLocationMap extends Component {
     if (!locLat || !locLong) return null;
     const mapBounds = [[locLat - 0.03, locLong - 0.03], [locLat + 0.03, locLong + 0.03]];
     return (
-      <Map
+      <MapContainer
         className="event-location-map"
-        ref={this.mapRef}
+        whenCreated={(mapInstance) => { this.mapRef.current = mapInstance; }}
         bounds={mapBounds}
         onZoomEnd={this.handleZoomEnd}
       >
         <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
         {this.renderLocation()}
-      </Map>
+      </MapContainer>
     );
   }
 }
