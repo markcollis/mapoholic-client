@@ -16,11 +16,10 @@ interface Props {
 }
 
 const DEFAULT_PATH_OPTIONS = {
-  color: 'ff2222',
+  color: 'red',
 };
 
 const TrackWaypoints: FunctionComponent<Props> = ({ track, pathOptions }) => {
-  console.log('pathOptions', pathOptions);
   if (!track.length) return null;
   const positions: OEventTrackPositions = track
     .map((waypoint: OEventWaypoint | OEventPosition) => {
@@ -30,7 +29,7 @@ const TrackWaypoints: FunctionComponent<Props> = ({ track, pathOptions }) => {
       }
       return waypoint;
     });
-  return <Polyline positions={positions} pathOptions={DEFAULT_PATH_OPTIONS} />;
+  return <Polyline positions={positions} pathOptions={pathOptions || DEFAULT_PATH_OPTIONS} />;
 };
 
 export default TrackWaypoints;

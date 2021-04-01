@@ -141,6 +141,12 @@ export interface OEventRunner {
 
 export interface OEvent {
   _id: string;
+  locLat: number;
+  locLong: number;
+  locCornerNE: OEventPosition;
+  locCornerNW: OEventPosition;
+  locCornerSE: OEventPosition;
+  locCornerSW: OEventPosition;
   runners: OEventRunner[];
   // other stuff to add
 }
