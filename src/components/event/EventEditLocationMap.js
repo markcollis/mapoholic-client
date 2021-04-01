@@ -7,7 +7,7 @@ import {
   TileLayer,
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
-import getPolygonBounds from './getPolygonBounds';
+import getPolygonBounds from './leaflet/getPolygonBounds';
 import { MAP_TILES, MAP_CREDIT } from '../../config';
 
 // The EventEditLocationMap component renders a simple map to show the location

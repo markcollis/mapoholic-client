@@ -10,7 +10,7 @@ import {
 } from 'react-leaflet';
 import iconFlag from '../../common/iconFlag';
 import EventListItem from './EventListItem';
-import getPolygonBounds from './getPolygonBounds';
+import getPolygonBounds from './leaflet/getPolygonBounds';
 import TrackWaypoints from './leaflet/TrackWaypoints';
 import { MAP_TILES, MAP_CREDIT } from '../../config';
 
