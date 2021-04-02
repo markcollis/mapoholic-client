@@ -6,6 +6,7 @@ import {
   useMap,
   useMapEvent,
 } from 'react-leaflet';
+import { LeafletEventHandlerFnMap } from 'leaflet';
 import iconFlag from '../../../common/iconFlag';
 import getPolygonBounds from './getPolygonBounds';
 import TrackWaypoints from './TrackWaypoints';
@@ -31,6 +32,7 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
   children,
 }) => {
   const [zoomLevel, setZoomLevel] = useState<number>();
+  const [active, setActive] = useState(false);
   const mapInstance = useMap();
   useMapEvent('zoomend', () => {
     const newZoomLevel = mapInstance.getZoom();
@@ -69,9 +71,19 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
     <TrackWaypoints
       key={index}
       track={track}
-      pathOptions={{ color: 'blue' }}
+      pathOptions={{ color: active ? 'red' : 'blue' }}
     />
   ));
+  const eventHandlers: LeafletEventHandlerFnMap = {
+    mouseover: () => {
+      console.log('mouseover');
+      setActive(true);
+    },
+    mouseout: () => {
+      console.log('mouseout');
+      setActive(false);
+    },
+  };
   if (!zoomLevel || zoomLevel < 11 || polygonBounds.length < 3) {
     return flagMarkerPos && (
       <Marker
@@ -87,8 +99,9 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
     <>
       {trackWaypointsArray}
       <Polygon
+        eventHandlers={eventHandlers}
         positions={polygonBounds}
-        color="blue"
+        pathOptions={{ color: active ? 'indianred' : 'blue' }}
       >
         {children}
       </Polygon>
