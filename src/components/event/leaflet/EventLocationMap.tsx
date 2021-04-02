@@ -2,10 +2,10 @@
 import React, { FunctionComponent } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
-import ResetMapBounds, { getInitialMapBounds } from './leaflet/ResetMapBounds';
-import EventLocation from './leaflet/EventLocation';
-import { MAP_TILES, MAP_CREDIT } from '../../config';
-import { OEvent } from '../../types/event';
+import ResetMapBounds, { getInitialMapBounds } from './ResetMapBounds';
+import EventLocation from './EventLocation';
+import { MAP_TILES, MAP_CREDIT } from '../../../config';
+import { OEvent } from '../../../types/event';
 
 interface EventLocationMapProps {
   currentUserId: string;

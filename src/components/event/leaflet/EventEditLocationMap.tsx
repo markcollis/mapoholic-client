@@ -6,11 +6,11 @@ import {
   Polygon,
   TileLayer,
 } from 'react-leaflet';
-import iconFlag from '../../common/iconFlag';
-import getPolygonBounds from './leaflet/getPolygonBounds';
-import ResetMapCentre from './leaflet/ResetMapCentre';
-import { MAP_TILES, MAP_CREDIT } from '../../config';
-import { OEventPosition } from '../../types/event';
+import iconFlag from '../../../common/iconFlag';
+import getPolygonBounds from './getPolygonBounds';
+import ResetMapCentre from './ResetMapCentre';
+import { MAP_TILES, MAP_CREDIT } from '../../../config';
+import { OEventPosition } from '../../../types/event';
 
 interface EventEditLocationMapProps {
   locLat: number | null;

@@ -141,12 +141,55 @@ export interface OEventRunner {
 
 export interface OEvent {
   _id: string;
-  locLat: number;
-  locLong: number;
+  locLat: number | null;
+  locLong: number | null;
   locCornerNE: OEventPosition;
   locCornerNW: OEventPosition;
   locCornerSE: OEventPosition;
   locCornerSW: OEventPosition;
   runners: OEventRunner[];
+  name: string;
+  owner: { // user
+    _id: string;
+    displayName: string;
+  }
   // other stuff to add
+}
+
+export interface OEventSummaryRunner {
+  user: string;
+  displayName: string;
+  mapExtract: string;
+  numberMaps: number;
+  tags: string[];
+  ownTracks: OEventTrack[];
+}
+
+// GET /events returns a reduced summary of each event
+// (might want to replace track with positions to reduce size)
+export interface OEventSummary {
+  _id: string;
+  date: string;
+  locLat: number | null;
+  locLong: number | null;
+  locCornerNE: OEventPosition;
+  locCornerNW: OEventPosition;
+  locCornerSE: OEventPosition;
+  locCornerSW: OEventPosition;
+  locCountry: string;
+  locPlace: string;
+  name: string;
+  mapName: string;
+  orisId: string;
+  runners: OEventSummaryRunner[];
+  tags: string[];
+  types: string[];
+  organisedBy: Array<{ // club
+    _id: string;
+    shortName: string;
+  }>;
+  linkedTo: Array<{ // event
+    _id: string;
+    displayName: string;
+  }>;
 }

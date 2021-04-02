@@ -13,7 +13,7 @@ import EventHeader from './EventHeader';
 import EventLinked from './EventLinked';
 import EventLinkedManage from './EventLinkedManage';
 import EventList from './EventList';
-import EventMap from './EventMap';
+import EventMap from './leaflet/EventMap';
 import EventRunners from './EventRunners';
 import {
   reformatTimestampDateOnly,

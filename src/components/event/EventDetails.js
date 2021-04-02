@@ -5,7 +5,7 @@ import { typesOptionsLocale } from '../../common/formData';
 import { reformatTimestampDateOnly } from '../../common/conversions';
 
 import EventThumbnails from './EventThumbnails';
-import EventLocationMap from './EventLocationMap';
+import EventLocationMap from './leaflet/EventLocationMap';
 import Collapse from '../generic/Collapse';
 
 // The EventDetails component renders detailed information about a particular event
