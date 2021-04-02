@@ -32,10 +32,10 @@ class Authenticate extends Component {
         <i
           role="button"
           className="close icon"
-          label="close"
+          aria-label="close"
           onClick={() => cancelAuthError()}
           onKeyPress={() => cancelAuthError()}
-          tabIndex="0"
+          tabIndex={0}
         />
         <Trans>{`Error: ${errorMessage} Please try again.`}</Trans>
       </div>

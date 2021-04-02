@@ -162,18 +162,18 @@ class Header extends Component {
         <i
           className="uk flag"
           role="button"
-          label="English"
+          aria-label="English"
           onClick={() => setLanguage('en')}
           onKeyPress={() => setLanguage('en')}
-          tabIndex="0"
+          tabIndex={0}
         />
         <i
           className="cz flag"
           role="button"
-          label="česky"
+          aria-label="česky"
           onClick={() => setLanguage('cs')}
           onKeyPress={() => setLanguage('cs')}
-          tabIndex="0"
+          tabIndex={0}
         />
       </div>
     );

@@ -57,7 +57,7 @@ const ClubList = ({
               setClubViewMode('none');
             }
           }}
-          tabIndex="0"
+          tabIndex={0}
         >
           {clubsArray}
         </div>

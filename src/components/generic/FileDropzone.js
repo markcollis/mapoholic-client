@@ -168,7 +168,7 @@ class FileDropzone extends Component {
           onDragLeave={this.onDragLeave}
           onDrop={this.onDrop}
           onKeyPress={this.openFileDialogue}
-          tabIndex="0"
+          tabIndex={0}
           style={{ cursor: (disabled) ? 'default' : 'pointer' }}
         >
           <input

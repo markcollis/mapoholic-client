@@ -259,10 +259,10 @@ class ClubView extends Component {
               <i
                 role="button"
                 className="close icon"
-                label="close"
+                aria-label="close"
                 onClick={() => cancelClubError()}
                 onKeyPress={() => cancelClubError()}
-                tabIndex="0"
+                tabIndex={0}
               />
               <Trans>{`Error: ${errorMessage}`}</Trans>
             </div>

@@ -132,7 +132,7 @@ const EventListItem = ({
       style={cardStyle}
       onClick={() => handleSelectEvent(eventId)}
       onKeyPress={() => handleSelectEvent(eventId)}
-      tabIndex="0"
+      tabIndex={0}
     >
       <div className={contentClass}>
         <div className="header">

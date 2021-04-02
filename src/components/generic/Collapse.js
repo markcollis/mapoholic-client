@@ -91,7 +91,7 @@ class Collapse extends Component {
           role="button"
           onClick={(e) => this.swapVisibility(e)}
           onKeyPress={(e) => this.swapVisibility(e)}
-          tabIndex="0"
+          tabIndex={0}
         >
           <span className="ui header">{title}</span>
           {(hideContent)
