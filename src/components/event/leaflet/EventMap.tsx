@@ -1,28 +1,29 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import {
   MapContainer,
   TileLayer,
   Tooltip,
   Popup,
 } from 'react-leaflet';
+import { Map, LatLngBounds } from 'leaflet';
 import EventListItem from '../EventListItem';
 import ResetMapBoundsGroup from './ResetMapBoundsGroup';
 import EventLocation from './EventLocation';
 import { MAP_TILES, MAP_CREDIT } from '../../../config';
 import { OEventPosition, OEventSummary } from '../../../types/event';
 
-const DEFAULT_MAP_BOUNDS: OEventPosition[] = [[50, 14], [50.2, 14.2]];
+const DEFAULT_MAP_BOUNDS: OEventPosition[] = [[49.5, 14], [50.5, 15]];
+// sensible default for Prague, should probably be user-configurable
 
 interface EventMapProps {
   currentUserId?: string;
   events?: OEventSummary[];
   handleSelectEvent: (eventId: string) => void;
   language: string;
-  mapBounds?: OEventPosition[];
-  setMapBounds: (mapBounds: OEventPosition[]) => void;
+  mapBounds?: LatLngBounds;
+  setMapBounds: (mapBounds: LatLngBounds) => void;
 }
 
 const EventMap: FunctionComponent<EventMapProps> = ({
@@ -31,8 +32,15 @@ const EventMap: FunctionComponent<EventMapProps> = ({
   handleSelectEvent,
   language,
   mapBounds,
-  // setMapBounds,
+  setMapBounds,
 }) => {
+  const mapRef = useRef<Map>();
+  useEffect(() => {
+    return () => {
+      const finalMapBounds = mapRef.current?.getBounds();
+      if (finalMapBounds) setMapBounds(finalMapBounds);
+    };
+  }, []);
   const eventsWithLocation = events
     .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong);
   // console.log('eventsWithLocation', eventsWithLocation);
@@ -76,6 +84,7 @@ const EventMap: FunctionComponent<EventMapProps> = ({
     );
     return eventDetailsArray.map((eventDetails) => (
       <EventLocation
+        key={eventDetails._id}
         currentUserId={currentUserId || ''}
         selectedEvent={eventDetails}
       >
@@ -88,6 +97,7 @@ const EventMap: FunctionComponent<EventMapProps> = ({
   return (
     <div className="ui segment">
       <MapContainer
+        whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
         bounds={mapBounds || DEFAULT_MAP_BOUNDS}
       >
         <ResetMapBoundsGroup events={events} />
@@ -99,14 +109,3 @@ const EventMap: FunctionComponent<EventMapProps> = ({
 };
 
 export default EventMap;
-
-// componentWillUnmount() {
-//   const { setMapBounds } = this.props;
-//   if (this.mapRef.current) {
-//     const leafletMap = this.mapRef.current;
-//     const currentBounds = leafletMap.getBounds();
-//     const { _southWest: sw, _northEast: ne } = currentBounds;
-//     const currentBoundsAsArray = [[sw.lat, sw.lng], [ne.lat, ne.lng]];
-//     setMapBounds(currentBoundsAsArray);
-//   }
-// }

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { OEvent, OEventPosition, OEventSummary } from '../../../types/event';
 
@@ -13,7 +13,7 @@ const getEventGroupBounds = (events: OEventSummary[] | OEvent[]): OEventPosition
     const position: OEventPosition = [event.locLat, event.locLong];
     return position;
   }).filter(isPosition);
-
+  if (eventCentres.length === 0) return undefined;
   const mapBounds: OEventPosition[] = eventCentres.reduce((acc, val) => {
     const low = [
       (val[0] < acc[0][0]) ? val[0] : acc[0][0],
@@ -28,7 +28,6 @@ const getEventGroupBounds = (events: OEventSummary[] | OEvent[]): OEventPosition
     [eventCentres[0][0] - 0.01, eventCentres[0][1] - 0.01],
     [eventCentres[0][0] + 0.01, eventCentres[0][1] + 0.01],
   ]);
-
   return mapBounds;
 };
 
@@ -39,10 +38,17 @@ interface ResetMapBoundsGroupProps {
 // empty child component that uses useMap hook to reset map bounds if the selected event changes
 const ResetMapBoundsGroup: FunctionComponent<ResetMapBoundsGroupProps> = ({ events }) => {
   const mapInstance = useMap();
-  const newMapBounds = getEventGroupBounds(events);
-  if (newMapBounds) {
-    mapInstance.fitBounds(newMapBounds);
-  }
+  const [initialRender, setInitialRender] = useState(true);
+  useEffect(() => {
+    if (initialRender) {
+      setInitialRender(false);
+    } else {
+      const newMapBounds = getEventGroupBounds(events);
+      if (newMapBounds) {
+        mapInstance.fitBounds(newMapBounds);
+      }
+    }
+  }, [events]);
   return null;
 };
 
