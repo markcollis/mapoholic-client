@@ -241,7 +241,7 @@ const EventDetails = ({
           {renderTypes}
           {renderTags}
         </div>
-        <EventLocationMap selectedEvent={selectedEvent} />
+        <EventLocationMap selectedEvent={selectedEvent} currentUserId={currentUserId} />
         {showEdit}
       </div>
     </div>
