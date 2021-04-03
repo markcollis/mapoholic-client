@@ -24,11 +24,13 @@ function isOEvent(test: OEvent | OEventSummary): test is OEvent {
 interface EventLocationProps {
   currentUserId: string;
   selectedEvent: OEvent | OEventSummary;
+  highlightOnHover?: boolean;
 }
 
 const EventLocation: FunctionComponent<EventLocationProps> = ({
   currentUserId,
   selectedEvent,
+  highlightOnHover,
   children,
 }) => {
   const [zoomLevel, setZoomLevel] = useState<number>();
@@ -74,16 +76,15 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
       pathOptions={{ color: active ? 'red' : 'blue' }}
     />
   ));
-  const eventHandlers: LeafletEventHandlerFnMap = {
-    mouseover: () => {
-      console.log('mouseover');
-      setActive(true);
-    },
-    mouseout: () => {
-      console.log('mouseout');
-      setActive(false);
-    },
-  };
+  const eventHandlers: LeafletEventHandlerFnMap = highlightOnHover
+    ? {
+      mouseover: () => {
+        setActive(true);
+      },
+      mouseout: () => {
+        setActive(false);
+      },
+    } : {};
   if (!zoomLevel || zoomLevel < 11 || polygonBounds.length < 3) {
     return flagMarkerPos && (
       <Marker

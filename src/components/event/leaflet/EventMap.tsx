@@ -71,11 +71,7 @@ const EventMap: FunctionComponent<EventMapProps> = ({
       return <li key={eventDetails._id}>{`${eventDetails.date} - ${eventDetails.name}`}</li>;
     });
     const tooltip = (
-      <Tooltip
-        direction="right"
-        offset={[20, 0]}
-        className="event-map__tooltip"
-      >
+      <Tooltip className="event-map__tooltip">
         <ul>
           {eventBasicDetailsArray}
         </ul>
@@ -87,6 +83,7 @@ const EventMap: FunctionComponent<EventMapProps> = ({
         key={eventDetails._id}
         currentUserId={currentUserId || ''}
         selectedEvent={eventDetails}
+        highlightOnHover
       >
         {popup}
         {tooltip}
