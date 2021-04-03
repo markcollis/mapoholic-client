@@ -1,7 +1,12 @@
 module.exports = {
   extends: 'airbnb',
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   rules: {
+    'no-use-before-define': [0],
+    '@typescript-eslint/no-use-before-define': ['error'],
+    'no-unused-vars': [0],
+    '@typescript-eslint/no-unused-vars': ['error'],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/static-property-placement': [0],
     'react/state-in-constructor': [0],

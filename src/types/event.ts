@@ -84,7 +84,7 @@ export interface OEventWaypoint extends OEventCoordinates {
 
 type FixedTwoArray<T> = [T, T];
 
-export type OEventLatLongTuple = FixedTwoArray<number>;
+export type OEventPosition = FixedTwoArray<number>; // specifically lat, long
 
 export interface OEventCorners {
   ne: OEventCoordinates;
@@ -100,12 +100,17 @@ export interface OEventLocationSize {
   height: number;
 }
 
+export type OEventTrackDetailed = OEventWaypoint[];
+export type OEventTrackPositions = OEventPosition[];
+export type OEventTrack = OEventTrackDetailed | OEventTrackPositions;
+// newly imported tracks will have full details in mongo, older ones may have positions only
+
 export interface OEventMapGeoData {
   mapCentre: OEventCoordinates;
   mapCorners: OEventCorners;
   imageCorners: OEventCorners;
   locationSizePixels: OEventLocationSize;
-  track: OEventWaypoint[] | OEventLatLongTuple[];
+  track: OEventTrack;
   distanceRun: string;
 }
 
@@ -136,6 +141,55 @@ export interface OEventRunner {
 
 export interface OEvent {
   _id: string;
+  locLat: number | null;
+  locLong: number | null;
+  locCornerNE: OEventPosition;
+  locCornerNW: OEventPosition;
+  locCornerSE: OEventPosition;
+  locCornerSW: OEventPosition;
   runners: OEventRunner[];
+  name: string;
+  owner: { // user
+    _id: string;
+    displayName: string;
+  }
   // other stuff to add
+}
+
+export interface OEventSummaryRunner {
+  user: string;
+  displayName: string;
+  mapExtract: string;
+  numberMaps: number;
+  tags: string[];
+  ownTracks: OEventTrack[];
+}
+
+// GET /events returns a reduced summary of each event
+// (might want to replace track with positions to reduce size)
+export interface OEventSummary {
+  _id: string;
+  date: string;
+  locLat: number | null;
+  locLong: number | null;
+  locCornerNE: OEventPosition;
+  locCornerNW: OEventPosition;
+  locCornerSE: OEventPosition;
+  locCornerSW: OEventPosition;
+  locCountry: string;
+  locPlace: string;
+  name: string;
+  mapName: string;
+  orisId: string;
+  runners: OEventSummaryRunner[];
+  tags: string[];
+  types: string[];
+  organisedBy: Array<{ // club
+    _id: string;
+    shortName: string;
+  }>;
+  linkedTo: Array<{ // event
+    _id: string;
+    displayName: string;
+  }>;
 }

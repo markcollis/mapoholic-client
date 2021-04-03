@@ -130,7 +130,7 @@ const EventRunnerDetails = ({
               {courseLengthToDisplay}
               {courseClimbToDisplay}
               {courseControlsToDisplay}
-              {')'}
+              {') '}
             </span>
           )
           : ''}
@@ -159,7 +159,7 @@ const EventRunnerDetails = ({
               {place || ''}
               {(resultFieldSizeToDisplay !== '') ? ' ' : ''}
               {resultFieldSizeToDisplay}
-              {')'}
+              {') '}
             </span>
           )
           : ''}

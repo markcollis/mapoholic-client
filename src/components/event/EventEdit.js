@@ -21,7 +21,7 @@ import {
 } from '../../common/formData';
 import { dateToDateString, dateStringToDate } from '../../common/conversions';
 import mapCorners from '../../graphics/mapCorners.png';
-import EventEditLocationMap from './EventEditLocationMap';
+import EventEditLocationMap from './leaflet/EventEditLocationMap';
 
 // DatePicker localisation
 registerLocale('cs', cs);
