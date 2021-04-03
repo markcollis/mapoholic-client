@@ -73,7 +73,7 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
         setActive(false);
       },
     } : {};
-  const markersOnlyZoom = zoomLevel && zoomLevel < 10;
+  const markersOnlyZoom = zoomLevel && zoomLevel < 11;
   if (markersOnlyZoom || polygonBounds.length < 3) {
     return flagMarkerPos && (
       <Marker
