@@ -30,7 +30,6 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
   zoomLevel,
   children,
 }) => {
-  console.log('zoomlevel in EvLoc', zoomLevel);
   const [active, setActive] = useState(false);
   const {
     locLat,
@@ -62,6 +61,7 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
       key={index}
       track={track}
       pathOptions={{ color: active ? 'red' : 'blue' }}
+      hotline={{ disable: !active }}
     />
   ));
   const eventHandlers: LeafletEventHandlerFnMap = highlightOnHover

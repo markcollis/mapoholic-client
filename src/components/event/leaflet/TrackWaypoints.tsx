@@ -24,6 +24,7 @@ interface TrackWaypointProps {
   hotline?: {
     hotlineDataType?: string;
     hotlineOptions?: HotlineOptions;
+    disable?: boolean;
   };
 }
 
@@ -88,6 +89,10 @@ const TrackWaypoints: FunctionComponent<TrackWaypointProps> = ({
 }) => {
   if (!track.length) return null;
   if (isDetailedTrack(track)) {
+    if (hotline?.disable) {
+      const positions: OEventPosition[] = track.map((waypoint) => [waypoint.lat, waypoint.long]);
+      return <Polyline positions={positions} pathOptions={pathOptions || DEFAULT_PATH_OPTIONS} />;
+    }
     let data: HotlineDataPoint[] = [];
     const options: HotlineOptions = hotline?.hotlineOptions || {};
     const dataType = hotline?.hotlineDataType || 'speed';
