@@ -13,6 +13,7 @@ import ResetMapBoundsGroup from './ResetMapBoundsGroup';
 import EventLocation from './EventLocation';
 import { MAP_TILES, MAP_CREDIT } from '../../../config';
 import { OEventPosition, OEventSummary } from '../../../types/event';
+import ZoomLevelDetection from './ZoomLevelDetection';
 
 const DEFAULT_MAP_BOUNDS: OEventPosition[] = [[49.5, 14], [50.5, 15]];
 // sensible default for Prague, should probably be user-configurable
@@ -97,9 +98,12 @@ const EventMap: FunctionComponent<EventMapProps> = ({
         whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
         bounds={mapBounds || DEFAULT_MAP_BOUNDS}
       >
-        <ResetMapBoundsGroup events={events} />
-        <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-        {leafletGroupedMapLocations}
+        <ResetMapBoundsGroup events={events}>
+          <ZoomLevelDetection>
+            <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
+            {leafletGroupedMapLocations}
+          </ZoomLevelDetection>
+        </ResetMapBoundsGroup>
       </MapContainer>
     </div>
   );

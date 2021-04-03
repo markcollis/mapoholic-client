@@ -58,7 +58,9 @@ const createLeafletElement = (props: IHotlineProps, context: LeafletContextInter
   if (!options.weight) {
     options.weight = 3;
   }
+  /* eslint-disable no-console */
   console.log('hotline options', options);
+  console.log('hotline data', data.slice(0, 3));
   // @ts-ignore
   const instance = new L.Hotline(data, options);
   if (context.map.options.preferCanvas) {
@@ -77,7 +79,7 @@ const updateLeafletElement = (
   props: IHotlineProps,
   prevProps: IHotlineProps,
 ) => {
-  console.log('updateLeafletElement triggered', props, instance);
+  // console.log('updateLeafletElement triggered', props, instance);
   // @ts-ignore
   updateOnCanvas(instance._map);
 };

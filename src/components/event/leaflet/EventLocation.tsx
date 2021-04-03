@@ -1,11 +1,6 @@
 /* eslint-disable react/prop-types */
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import {
-  Marker,
-  Polygon,
-  useMap,
-  useMapEvent,
-} from 'react-leaflet';
+import React, { FunctionComponent, useState } from 'react';
+import { Marker, Polygon } from 'react-leaflet';
 import { LeafletEventHandlerFnMap } from 'leaflet';
 import iconFlag from '../../../common/iconFlag';
 import getPolygonBounds from './getPolygonBounds';
@@ -25,25 +20,18 @@ interface EventLocationProps {
   currentUserId: string;
   selectedEvent: OEvent | OEventSummary;
   highlightOnHover?: boolean;
+  zoomLevel?: number;
 }
 
 const EventLocation: FunctionComponent<EventLocationProps> = ({
   currentUserId,
   selectedEvent,
   highlightOnHover,
+  zoomLevel,
   children,
 }) => {
-  const [zoomLevel, setZoomLevel] = useState<number>();
+  console.log('zoomlevel in EvLoc', zoomLevel);
   const [active, setActive] = useState(false);
-  const mapInstance = useMap();
-  useMapEvent('zoomend', () => {
-    const newZoomLevel = mapInstance.getZoom();
-    setZoomLevel(newZoomLevel);
-  });
-  useEffect(() => {
-    const initialZoomLevel = mapInstance.getZoom();
-    setZoomLevel(initialZoomLevel);
-  }, []);
   const {
     locLat,
     locLong,
@@ -85,7 +73,8 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
         setActive(false);
       },
     } : {};
-  if (!zoomLevel || zoomLevel < 11 || polygonBounds.length < 3) {
+  const markersOnlyZoom = zoomLevel && zoomLevel < 10;
+  if (markersOnlyZoom || polygonBounds.length < 3) {
     return flagMarkerPos && (
       <Marker
         position={flagMarkerPos}
