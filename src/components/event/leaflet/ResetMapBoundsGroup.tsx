@@ -39,6 +39,7 @@ interface ResetMapBoundsGroupProps {
 const ResetMapBoundsGroup: FunctionComponent<ResetMapBoundsGroupProps> = ({ events, children }) => {
   const mapInstance = useMap();
   const [initialRender, setInitialRender] = useState(true);
+  const eventIds = events.map(({ _id: eventId }: { _id: string}) => eventId).join(':');
   useEffect(() => {
     if (initialRender) {
       setInitialRender(false);
@@ -48,7 +49,7 @@ const ResetMapBoundsGroup: FunctionComponent<ResetMapBoundsGroupProps> = ({ even
         mapInstance.fitBounds(newMapBounds);
       }
     }
-  }, [events]);
+  }, [eventIds]);
   return <>{children}</>;
 };
 
