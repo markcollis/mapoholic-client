@@ -86,12 +86,20 @@ const getUpdatedEventList = (list, payload) => {
       };
       const newRunners = runners.map((runner) => {
         const mapFiles = [];
+        const ownTracks = [];
+        const ownMapCorners = [];
         runner.maps.forEach((map) => {
-          const { course, route } = map;
+          const { course, route, geo } = map;
           if (course && course !== '') {
             mapFiles.push(course);
           } else if (route && route !== '') {
             mapFiles.push(route);
+          }
+          if (geo && geo.track && geo.track.length) {
+            ownTracks.push(geo.track);
+          }
+          if (geo && geo.mapCorners) {
+            ownMapCorners.push(geo.mapCorners);
           }
         });
         const extractName = (mapFiles.length > 0)
@@ -104,6 +112,8 @@ const getUpdatedEventList = (list, payload) => {
           numberMaps: runner.maps.length,
           mapExtract: extractName,
           tags: runner.tags,
+          ownTracks,
+          ownMapCorners,
         };
       });
       eventDetails.runners = newRunners;

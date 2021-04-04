@@ -8,7 +8,7 @@ import {
 } from '../../../types/event';
 
 function isOEvent(test: OEvent | OEventSummary): test is OEvent {
-  return 'owner' in test;
+  return 'createdAt' in test;
 }
 
 export const derivePolygonBoundsFromCorners = ({

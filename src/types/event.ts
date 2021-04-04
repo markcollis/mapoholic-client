@@ -152,7 +152,7 @@ export interface OEvent {
   owner: { // user
     _id: string;
     displayName: string;
-  }
+  },
   // other stuff to add
 }
 

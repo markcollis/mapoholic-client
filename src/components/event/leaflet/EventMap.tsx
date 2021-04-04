@@ -96,6 +96,7 @@ const EventMap: FunctionComponent<EventMapProps> = ({
   return (
     <div className="ui segment">
       <MapContainer
+        id="EventMap"
         whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
         bounds={mapBounds || DEFAULT_MAP_BOUNDS}
       >

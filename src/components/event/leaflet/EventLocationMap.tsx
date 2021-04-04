@@ -21,6 +21,7 @@ const EventLocationMap: FunctionComponent<EventLocationMapProps> = ({
   const initialMapBounds = getInitialMapBounds(selectedEvent);
   return (
     <MapContainer
+      id="EventLocationMap"
       className="event-location-map"
       bounds={initialMapBounds} // this prop will not reset map if selected event changes
     >

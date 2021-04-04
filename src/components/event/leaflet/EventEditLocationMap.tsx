@@ -54,6 +54,7 @@ const EventEditLocationMap: FunctionComponent<EventEditLocationMapProps> = ({
   if (!locLat || !locLong) return null;
   return (
     <MapContainer
+      id="EventEditLocationMap"
       className="event-edit-location-map"
       center={[locLat, locLong]}
       zoom={12}
