@@ -163,6 +163,7 @@ export interface OEventSummaryRunner {
   numberMaps: number;
   tags: string[];
   ownTracks: OEventTrack[];
+  ownMapCorners: OEventCorners[];
 }
 
 // GET /events returns a reduced summary of each event

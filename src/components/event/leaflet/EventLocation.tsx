@@ -36,7 +36,7 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
     locLong,
   } = selectedEvent;
   const flagMarkerPos: OEventPosition | null = (locLat && locLong) ? [locLat, locLong] : null;
-  const polygonBounds = derivePolygonBoundsFromEvent(selectedEvent);
+  const polygonBounds = derivePolygonBoundsFromEvent(selectedEvent, currentUserId);
 
   const getTrackData = (event: OEvent | OEventSummary, runnerId: string): OEventTrack[] => {
     if (isOEvent(event)) {
