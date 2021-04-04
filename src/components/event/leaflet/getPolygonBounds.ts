@@ -1,10 +1,16 @@
-// Return appropriate polygon bounds for location maps
-const getPolygonBounds = ({
-  locCornerSW, // not always present, revert to marker
-  locCornerNW, // * may be missing in some older records *
-  locCornerNE, // not always present, revert to marker
-  locCornerSE, // * may be missing in some older records *
-}) => {
+import { OEvent, OEventSummary, OEventPosition } from '../../../types/event';
+
+export const derivePolygonBoundsFromCorners = ({
+  locCornerNE,
+  locCornerNW,
+  locCornerSE,
+  locCornerSW,
+} : {
+  locCornerNE: OEventPosition | [null, null];
+  locCornerNW: OEventPosition | [null, null];
+  locCornerSE: OEventPosition | [null, null];
+  locCornerSW: OEventPosition | [null, null];
+}): OEventPosition[] => {
   const polygonBounds = [];
   // add SW corner if it exists
   if (locCornerSW && locCornerSW[0] && locCornerSW[1]) {
@@ -26,7 +32,12 @@ const getPolygonBounds = ({
   } else if (locCornerSW && locCornerSW[0] && locCornerNE && locCornerNE[1]) {
     polygonBounds.push([locCornerSW[0], locCornerNE[1]]);
   }
-  return polygonBounds;
+  return polygonBounds as OEventPosition[];
 };
 
-export default getPolygonBounds;
+// Return appropriate polygon bounds for location maps
+export const derivePolygonBoundsFromEvent = (event: OEvent | OEventSummary): OEventPosition[] => {
+  const polygonBounds = derivePolygonBoundsFromCorners(event);
+  // to do: extend bounds for multiple maps, but needs backend changes
+  return polygonBounds as OEventPosition[];
+};

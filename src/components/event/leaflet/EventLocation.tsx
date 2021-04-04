@@ -3,7 +3,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { Marker, Polygon } from 'react-leaflet';
 import { LeafletEventHandlerFnMap } from 'leaflet';
 import iconFlag from '../../../common/iconFlag';
-import getPolygonBounds from './getPolygonBounds';
+import { derivePolygonBoundsFromEvent } from './getPolygonBounds';
 import TrackWaypoints from './TrackWaypoints';
 import {
   OEvent,
@@ -36,7 +36,7 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
     locLong,
   } = selectedEvent;
   const flagMarkerPos: OEventPosition | null = (locLat && locLong) ? [locLat, locLong] : null;
-  const polygonBounds = getPolygonBounds(selectedEvent);
+  const polygonBounds = derivePolygonBoundsFromEvent(selectedEvent);
 
   const getTrackData = (event: OEvent | OEventSummary, runnerId: string): OEventTrack[] => {
     if (isOEvent(event)) {
