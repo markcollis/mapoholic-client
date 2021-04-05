@@ -97,11 +97,12 @@ const EventMap: FunctionComponent<EventMapProps> = ({
         whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
         bounds={mapBounds || DEFAULT_MAP_BOUNDS}
       >
-        <ZoomLevelDetection>
-          <ResetMapBoundsGroup events={events} />
-          <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-          {mapLocations}
-        </ZoomLevelDetection>
+        <ResetMapBoundsGroup events={events}>
+          <ZoomLevelDetection>
+            <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
+            {mapLocations}
+          </ZoomLevelDetection>
+        </ResetMapBoundsGroup>
       </MapContainer>
     </div>
   );
