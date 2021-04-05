@@ -49,7 +49,6 @@ import {
   updateEventAction,
   updateEventLinkAction,
 } from '../../actions';
-/* eslint no-underscore-dangle: 0 */
 
 // The EventView component is the top level component for browsing events.
 // The same component covers both rendering a list of events and showing them

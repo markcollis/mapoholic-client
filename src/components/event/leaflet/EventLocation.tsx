@@ -41,7 +41,7 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
   const getTrackData = (event: OEvent | OEventSummary, runnerId: string): OEventTrack[] => {
     if (isOEvent(event)) {
       const matchingRunner = event.runners
-        .find(({ user: { _id: userId } }) => userId === runnerId);
+        .find(({ user: { _id } }) => _id === runnerId);
       if (matchingRunner && matchingRunner.maps) {
         const tracks = matchingRunner.maps.map((map) => {
           return map.geo && map.geo.track ? map.geo.track : [];
@@ -60,7 +60,6 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
     if (track.length === 0) return null;
     return (
       <TrackWaypoints
-        /* eslint-disable no-underscore-dangle */
         key={index}
         track={track}
         pathOptions={{ color: active ? 'red' : 'blue' }}

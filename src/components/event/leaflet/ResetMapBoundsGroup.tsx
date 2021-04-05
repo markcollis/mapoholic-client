@@ -39,7 +39,7 @@ interface ResetMapBoundsGroupProps {
 const ResetMapBoundsGroup: FunctionComponent<ResetMapBoundsGroupProps> = ({ events, children }) => {
   const mapInstance = useMap();
   const [initialRender, setInitialRender] = useState(true);
-  const eventIds = events.map(({ _id: eventId }: { _id: string}) => eventId).join(':');
+  const eventIds = events.map(({ _id }: { _id: string}) => _id).join(':');
   useEffect(() => {
     if (initialRender) {
       setInitialRender(false);

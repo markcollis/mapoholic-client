@@ -11,7 +11,6 @@ import {
   CLUB_SELECT_CLUB_MEMBER,
   CLUB_SELECT_CLUB_EVENT,
 } from '../actions/types';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // update club list as necessary for all actions that receive details of an updated club
 const getUpdatedClubList = (list, payload) => {

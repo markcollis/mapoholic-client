@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-underscore-dangle */
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import {
   MapContainer,
@@ -44,7 +43,6 @@ const EventMap: FunctionComponent<EventMapProps> = ({
   }, []);
   const eventsWithLocation = events
     .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong);
-  // console.log('eventsWithLocation', eventsWithLocation);
   const eventsGroupedByLocation: { [key: string]: OEventSummary[] } = {};
   eventsWithLocation.forEach((event) => {
     const locKey = `${event.locLat && event.locLat.toFixed(3)}:${event.locLong && event.locLong.toFixed(3)}`;
@@ -54,7 +52,6 @@ const EventMap: FunctionComponent<EventMapProps> = ({
       eventsGroupedByLocation[locKey] = [event];
     }
   });
-  // console.log('eventsGroupedByLocation', eventsGroupedByLocation);
   const mapLocations = eventsWithLocation.map((event) => {
     const locKey = `${event.locLat && event.locLat.toFixed(3)}:${event.locLong && event.locLong.toFixed(3)}`;
     const eventDetailsArray = eventsGroupedByLocation[locKey];
@@ -100,52 +97,14 @@ const EventMap: FunctionComponent<EventMapProps> = ({
         whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
         bounds={mapBounds || DEFAULT_MAP_BOUNDS}
       >
-        <ResetMapBoundsGroup events={events}>
-          <ZoomLevelDetection>
-            <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-            {mapLocations}
-          </ZoomLevelDetection>
-        </ResetMapBoundsGroup>
+        <ZoomLevelDetection>
+          <ResetMapBoundsGroup events={events} />
+          <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
+          {mapLocations}
+        </ZoomLevelDetection>
       </MapContainer>
     </div>
   );
 };
 
 export default EventMap;
-
-// const leafletGroupedMapLocations = Object.keys(eventsGroupedByLocation).map((locKey) => {
-//   const eventDetailsArray = eventsGroupedByLocation[locKey];
-//   const eventListItemArray = eventDetailsArray.map((eventDetails) => (
-//     <EventListItem
-//       key={eventDetails._id}
-//       currentUserId={currentUserId}
-//       handleSelectEvent={handleSelectEvent}
-//       language={language}
-//       oevent={eventDetails}
-//       selectedEventId={eventDetails._id}
-//     />
-//   ));
-//   const popup = <Popup className="event-map__popup">{eventListItemArray}</Popup>;
-//   const eventBasicDetailsArray = eventDetailsArray.map((eventDetails) => {
-//     return <li key={eventDetails._id}>{`${eventDetails.date} - ${eventDetails.name}`}</li>;
-//   });
-//   const tooltip = (
-//     <Tooltip className="event-map__tooltip">
-//       <ul>
-//         {eventBasicDetailsArray}
-//       </ul>
-//       <p>click for more details and to select</p>
-//     </Tooltip>
-//   );
-//   return eventDetailsArray.map((eventDetails) => (
-//     <EventLocation
-//       key={eventDetails._id}
-//       currentUserId={currentUserId || ''}
-//       selectedEvent={eventDetails}
-//       highlightOnHover
-//     >
-//       {popup}
-//       {tooltip}
-//     </EventLocation>
-//   ));
-// });

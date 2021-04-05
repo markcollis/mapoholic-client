@@ -37,7 +37,6 @@ import {
   EVENT_SET_MAP_VIEW_PARAMETERS,
   EVENT_UPDATED,
 } from '../actions/types';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // Helper Functions
 // update event list as necessary for all actions that receive full details of an updated event

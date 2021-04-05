@@ -49,7 +49,7 @@ export const derivePolygonBoundsFromCorners = ({
 export const getMapCorners = (event: OEvent | OEventSummary, runnerId: string) => {
   if (isOEvent(event)) {
     const matchingRunner = event.runners
-      .find(({ user: { _id: userId } }) => userId === runnerId);
+      .find(({ user: { _id } }) => _id === runnerId);
     if (matchingRunner && matchingRunner.maps) {
       const mapCorners = matchingRunner.maps.map((map) => {
         return map.geo && map.geo.mapCorners ? map.geo.mapCorners : null;
