@@ -69,7 +69,7 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
       key={track.length}
       track={track}
       pathOptions={{ color: active ? 'red' : 'blue' }}
-      hotline={{ disable: highlightOnHover && !active }}
+      hotline={{ disable: !active }}
     />
   ));
   const eventHandlers: LeafletEventHandlerFnMap = highlightOnHover

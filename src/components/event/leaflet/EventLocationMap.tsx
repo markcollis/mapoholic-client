@@ -28,7 +28,10 @@ const EventLocationMap: FunctionComponent<EventLocationMapProps> = ({
       <ResetMapBounds selectedEvent={selectedEvent}>
         <ZoomLevelDetection>
           <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-          <EventLocation currentUserId={currentUserId} selectedEvent={selectedEvent} />
+          <EventLocation
+            currentUserId={currentUserId}
+            selectedEvent={selectedEvent}
+          />
         </ZoomLevelDetection>
       </ResetMapBounds>
     </MapContainer>

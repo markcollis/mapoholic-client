@@ -115,7 +115,7 @@ const TrackWaypoints: FunctionComponent<TrackWaypointProps> = ({
         };
       }
     }
-    return <Hotline key={data.length} data={data} options={options} />;
+    return <Hotline data={data} options={options} />;
   }
   return <Polyline positions={track} pathOptions={pathOptions || DEFAULT_PATH_OPTIONS} />;
 };
