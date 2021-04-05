@@ -34,50 +34,48 @@ const EventLocation: FunctionComponent<EventLocationProps> = ({
   const {
     locLat,
     locLong,
-    _id: id,
   } = selectedEvent;
-  const logit = id === '606836dedac9c515600dc400';
   const flagMarkerPos: OEventPosition | null = (locLat && locLong) ? [locLat, locLong] : null;
   const polygonBounds = derivePolygonBoundsFromEvent(selectedEvent, currentUserId);
-  if (logit) console.log('polygonbounds', polygonBounds);
 
   const getTrackData = (event: OEvent | OEventSummary, runnerId: string): OEventTrack[] => {
     if (isOEvent(event)) {
-      if (logit) console.log('event is OEvent', event);
       const matchingRunner = event.runners
         .find(({ user: { _id: userId } }) => userId === runnerId);
       if (matchingRunner && matchingRunner.maps) {
-        if (logit) console.log('matchingRunner.maps', matchingRunner.maps);
         const tracks = matchingRunner.maps.map((map) => {
           return map.geo && map.geo.track ? map.geo.track : [];
         });
-        if (logit) console.log('resulting tracks', tracks);
         return tracks.filter((track) => track.length > 0);
       }
       return [];
     }
-    if (logit) console.log('event is not OEvent', event);
     const matchingRunner = event.runners
       .find(({ user }) => user === runnerId);
     return matchingRunner && matchingRunner.ownTracks ? matchingRunner.ownTracks : [];
   };
   const trackData = getTrackData(selectedEvent, currentUserId);
-  if (logit) console.log('trackData', trackData);
   /* eslint-disable react/no-array-index-key */
-  const trackWaypointsArray = trackData.map((track) => (
-    <TrackWaypoints
-      key={track.length}
-      track={track}
-      pathOptions={{ color: active ? 'red' : 'blue' }}
-      hotline={{ disable: !active }}
-    />
-  ));
+  const trackWaypointsArray = trackData.map((track, index) => {
+    if (track.length === 0) return null;
+    return (
+      <TrackWaypoints
+        /* eslint-disable no-underscore-dangle */
+        key={index}
+        track={track}
+        pathOptions={{ color: active ? 'red' : 'blue' }}
+        hotline={{ disable: !active }}
+      />
+    );
+  });
   const eventHandlers: LeafletEventHandlerFnMap = highlightOnHover
     ? {
       mouseover: () => {
+        // console.log('mouseover', selectedEvent.name);
         setActive(true);
       },
       mouseout: () => {
+        // console.log('mouseout', selectedEvent.name);
         setActive(false);
       },
     } : {};

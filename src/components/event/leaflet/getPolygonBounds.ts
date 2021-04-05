@@ -80,7 +80,7 @@ export const derivePolygonBoundsFromEvent = (
     [corners.sw.lat, corners.sw.long],
   ]);
   const union = polygon.union(...mapCornerPositions);
-  console.log('union', union);
+  // console.log('union', union);
   return union[0];
   // if they don't overlap union will have multiple elements
   // deal with this later...
