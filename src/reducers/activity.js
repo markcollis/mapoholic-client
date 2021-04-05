@@ -27,7 +27,6 @@ import {
   USER_DELETED_IMAGE,
   USER_DELETED,
 } from '../actions/types';
-/* eslint-disable no-underscore-dangle */
 
 const INITIAL_STATE = {
   activityAdmin: null, // replaced each time API is queried

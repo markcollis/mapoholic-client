@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { OEvent, OEventPosition, OEventSummary } from '../../../types/event';
 
@@ -35,10 +35,11 @@ interface ResetMapBoundsGroupProps {
   events: OEventSummary[] | OEvent[];
 }
 
-// empty child component that uses useMap hook to reset map bounds if the selected event changes
-const ResetMapBoundsGroup: FunctionComponent<ResetMapBoundsGroupProps> = ({ events }) => {
+// Uses useMap hook to reset map bounds if the selected events change
+const ResetMapBoundsGroup: FunctionComponent<ResetMapBoundsGroupProps> = ({ events, children }) => {
   const mapInstance = useMap();
   const [initialRender, setInitialRender] = useState(true);
+  const eventIds = events.map(({ _id }: { _id: string}) => _id).join(':');
   useEffect(() => {
     if (initialRender) {
       setInitialRender(false);
@@ -48,8 +49,8 @@ const ResetMapBoundsGroup: FunctionComponent<ResetMapBoundsGroupProps> = ({ even
         mapInstance.fitBounds(newMapBounds);
       }
     }
-  }, [events]);
-  return null;
+  }, [eventIds]);
+  return <>{children}</>;
 };
 
 export default ResetMapBoundsGroup;

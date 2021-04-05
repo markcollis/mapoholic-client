@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-underscore-dangle */
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import {
   MapContainer,
@@ -13,6 +12,7 @@ import ResetMapBoundsGroup from './ResetMapBoundsGroup';
 import EventLocation from './EventLocation';
 import { MAP_TILES, MAP_CREDIT } from '../../../config';
 import { OEventPosition, OEventSummary } from '../../../types/event';
+import ZoomLevelDetection from './ZoomLevelDetection';
 
 const DEFAULT_MAP_BOUNDS: OEventPosition[] = [[49.5, 14], [50.5, 15]];
 // sensible default for Prague, should probably be user-configurable
@@ -43,7 +43,6 @@ const EventMap: FunctionComponent<EventMapProps> = ({
   }, []);
   const eventsWithLocation = events
     .filter((eventDetails) => eventDetails.locLat && eventDetails.locLong);
-  // console.log('eventsWithLocation', eventsWithLocation);
   const eventsGroupedByLocation: { [key: string]: OEventSummary[] } = {};
   eventsWithLocation.forEach((event) => {
     const locKey = `${event.locLat && event.locLat.toFixed(3)}:${event.locLong && event.locLong.toFixed(3)}`;
@@ -53,8 +52,8 @@ const EventMap: FunctionComponent<EventMapProps> = ({
       eventsGroupedByLocation[locKey] = [event];
     }
   });
-  // console.log('eventsGroupedByLocation', eventsGroupedByLocation);
-  const leafletGroupedMapLocations = Object.keys(eventsGroupedByLocation).map((locKey) => {
+  const mapLocations = eventsWithLocation.map((event) => {
+    const locKey = `${event.locLat && event.locLat.toFixed(3)}:${event.locLong && event.locLong.toFixed(3)}`;
     const eventDetailsArray = eventsGroupedByLocation[locKey];
     const eventListItemArray = eventDetailsArray.map((eventDetails) => (
       <EventListItem
@@ -78,28 +77,32 @@ const EventMap: FunctionComponent<EventMapProps> = ({
         <p>click for more details and to select</p>
       </Tooltip>
     );
-    return eventDetailsArray.map((eventDetails) => (
+    return (
       <EventLocation
-        key={eventDetails._id}
+        key={event._id}
         currentUserId={currentUserId || ''}
-        selectedEvent={eventDetails}
+        selectedEvent={event}
         highlightOnHover
       >
         {popup}
         {tooltip}
       </EventLocation>
-    ));
+    );
   });
 
   return (
     <div className="ui segment">
       <MapContainer
+        id="EventMap"
         whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
         bounds={mapBounds || DEFAULT_MAP_BOUNDS}
       >
-        <ResetMapBoundsGroup events={events} />
-        <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-        {leafletGroupedMapLocations}
+        <ResetMapBoundsGroup events={events}>
+          <ZoomLevelDetection>
+            <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
+            {mapLocations}
+          </ZoomLevelDetection>
+        </ResetMapBoundsGroup>
       </MapContainer>
     </div>
   );

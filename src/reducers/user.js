@@ -14,7 +14,6 @@ import {
   USER_CHANGE_VIEW_MODE_SELF,
   USER_SELECT_USER,
 } from '../actions/types';
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id"]}] */
 
 // update user list as necessary for all actions that receive full details of an updated user
 const getUpdatedUserList = (list, payload) => {

@@ -7585,6 +7585,11 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
+leaflet-hotline@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/leaflet-hotline/-/leaflet-hotline-0.4.0.tgz#e01069836a9d2e2c78b1fa1db2013bd03c8ff8d9"
+  integrity sha1-4BBpg2qdLix4sfodsgE70DyP+Nk=
+
 leaflet@^1.4.0:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.7.1.tgz#10d684916edfe1bf41d688a3b97127c0322a2a19"
@@ -7610,6 +7615,11 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+libtess@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/libtess/-/libtess-1.2.2.tgz#173eb52a1a57a0238fe48f05d12245074497f898"
+  integrity sha1-Fz61KhpXoCOP5I8F0SJFB0SX+Jg=
 
 lines-and-columns@^1.1.6:
   version "1.1.6"
@@ -8892,6 +8902,13 @@ pofile@^1.0.11:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/pofile/-/pofile-1.1.1.tgz#a581df04a6fae4941eebd7c1211dbd43700c5541"
   integrity sha512-RVAzFGo1Mx9+YukVKSgTLut6r4ZVBW8IVrqGHAPfEsVJN93WSp5HRD6+qNa7av1q/joPKDNJd55m5AJl9GBQGA==
+
+polygon-tools@^0.4.8:
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/polygon-tools/-/polygon-tools-0.4.8.tgz#07ea8f2c6dd09ebe707b9746dd7b7d9adb78b24a"
+  integrity sha512-eqrIDFkUfBaz7E3DGDp6z/D3D+n5pMBORuFeHmfJJ3sW0Ivvhi+gDCTYwy+1ANtEXNw3Fko0k1Ozjiv0MsSpAg==
+  dependencies:
+    libtess "^1.2.2"
 
 popper.js@^1.14.4:
   version "1.16.1"

@@ -7,7 +7,7 @@ import {
   TileLayer,
 } from 'react-leaflet';
 import iconFlag from '../../../common/iconFlag';
-import getPolygonBounds from './getPolygonBounds';
+import { derivePolygonBoundsFromCorners } from './getPolygonBounds';
 import ResetMapCentre from './ResetMapCentre';
 import { MAP_TILES, MAP_CREDIT } from '../../../config';
 import { OEventPosition } from '../../../types/event';
@@ -38,7 +38,7 @@ const EventEditLocationMap: FunctionComponent<EventEditLocationMapProps> = ({
       icon={iconFlag}
     />
   );
-  const polygonBounds = getPolygonBounds({
+  const polygonBounds = derivePolygonBoundsFromCorners({
     locCornerNE,
     locCornerNW,
     locCornerSE,
@@ -54,6 +54,7 @@ const EventEditLocationMap: FunctionComponent<EventEditLocationMapProps> = ({
   if (!locLat || !locLong) return null;
   return (
     <MapContainer
+      id="EventEditLocationMap"
       className="event-edit-location-map"
       center={[locLat, locLong]}
       zoom={12}

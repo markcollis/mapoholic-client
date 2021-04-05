@@ -16,6 +16,7 @@ module.exports = {
     'jsx-a11y/label-has-for': [0],
     'jsx-a11y/label-has-associated-control': [0],
     'import/extensions': [0],
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
   env: {
     browser: true,

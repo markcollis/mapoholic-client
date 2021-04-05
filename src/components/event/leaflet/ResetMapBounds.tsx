@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { useMap } from 'react-leaflet';
 import { OEvent, OEventPosition } from '../../../types/event';
 
@@ -17,14 +17,14 @@ interface ResetMapBoundsProps {
   selectedEvent: OEvent;
 }
 
-// empty child component that uses useMap hook to reset map bounds if the selected event changes
-const ResetMapBounds: FunctionComponent<ResetMapBoundsProps> = ({ selectedEvent }) => {
+// Uses useMap hook to reset map bounds if the selected event changes
+const ResetMapBounds: FunctionComponent<ResetMapBoundsProps> = ({ selectedEvent, children }) => {
   const mapInstance = useMap();
   const newMapBounds = getInitialMapBounds(selectedEvent);
   if (newMapBounds) {
     mapInstance.fitBounds(newMapBounds);
   }
-  return null;
+  return <>{children}</>;
 };
 
 export default ResetMapBounds;

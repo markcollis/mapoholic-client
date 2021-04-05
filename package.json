@@ -6,6 +6,7 @@
   "dependencies": {
     "@lingui/macro": "^2.8.3",
     "@lingui/react": "^2.8.3",
+    "@react-leaflet/core": "^1.0.2",
     "@types/jest": "^26.0.21",
     "@types/leaflet": "^1.7.0",
     "@types/lingui__macro": "^2.7.4",
@@ -18,7 +19,9 @@
     "focus-visible": "^5.0.1",
     "formik": "^1.5.0",
     "leaflet": "^1.4.0",
+    "leaflet-hotline": "^0.4.0",
     "memoize-one": "^5.0.4",
+    "polygon-tools": "^0.4.8",
     "prop-types": "^15.6.2",
     "react": "^17.0.1",
     "react-datepicker": "^2.9.6",
