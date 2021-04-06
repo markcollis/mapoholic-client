@@ -1,9 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { Trans } from '@lingui/macro';
 
+import { IClubDetails, ClubViewMode } from '../../types/club';
+
+interface ClubDeleteProps {
+  deleteClub: (clubId: string, callback: (didSucceed: boolean) => void) => void;
+  selectedClub: IClubDetails | null;
+  setClubViewMode: (viewMode: ClubViewMode) => void;
+}
+
 // The ClubDelete component provides a confirmatory prompt before deleting a club record
-const ClubDelete = ({
+const ClubDelete: FunctionComponent<ClubDeleteProps> = ({
   deleteClub,
   selectedClub,
   setClubViewMode,
@@ -24,7 +31,7 @@ const ClubDelete = ({
         className="ui tiny red button"
         onClick={() => {
           deleteClub(clubId, (didSucceed) => {
-            if (didSucceed) setClubViewMode('none');
+            if (didSucceed) setClubViewMode(ClubViewMode.None);
           });
         }}
       >
@@ -33,21 +40,12 @@ const ClubDelete = ({
       <button
         type="button"
         className="ui tiny button right floated"
-        onClick={() => setClubViewMode('view')}
+        onClick={() => setClubViewMode(ClubViewMode.View)}
       >
         <Trans>Cancel</Trans>
       </button>
     </div>
   );
-};
-
-ClubDelete.propTypes = {
-  deleteClub: PropTypes.func.isRequired,
-  selectedClub: PropTypes.objectOf(PropTypes.any),
-  setClubViewMode: PropTypes.func.isRequired,
-};
-ClubDelete.defaultProps = {
-  selectedClub: null,
 };
 
 export default ClubDelete;

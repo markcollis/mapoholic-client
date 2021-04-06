@@ -92,7 +92,7 @@ class ClubView extends Component {
   });
 
   // helper to return selected club details when selected club or details change
-  getSelectedClub = memoize((details, selectedClubId) => details[selectedClubId] || {});
+  getSelectedClub = memoize((details, selectedClubId) => details[selectedClubId] || null);
 
   // helper to return list of members of this club when selected club or user list change
   getClubMembersList = memoize((selectedClubId, userList) => {
