@@ -1,10 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { countryCodesConversion } from '../../common/formData';
+
+import { IClubDetails, ClubViewMode } from '../../types/club';
+
+interface ClubListItemProps {
+  club: IClubDetails;
+  selectClubToDisplay: (clubId: string) => void;
+  selectedClubId: string;
+  setClubViewMode: (viewMode: ClubViewMode) => void;
+}
 
 // The ClubListItem component renders the basic details for an individual
 // club and can be selected to trigger the display of full details.
-const ClubListItem = ({
+const ClubListItem: FunctionComponent<ClubListItemProps> = ({
   club,
   selectClubToDisplay,
   selectedClubId,
@@ -20,18 +28,16 @@ const ClubListItem = ({
   const cardClass = (selectedClubId === clubId)
     ? 'ui fluid centered card card-list--item-selected'
     : 'ui fluid centered card';
+  const handleSelect = (): void => {
+    selectClubToDisplay(clubId);
+    setClubViewMode(ClubViewMode.View);
+  };
   return (
     <div
       className={cardClass}
       role="button"
-      onClick={() => {
-        selectClubToDisplay(clubId);
-        setClubViewMode('view');
-      }}
-      onKeyPress={() => {
-        selectClubToDisplay(clubId);
-        setClubViewMode('view');
-      }}
+      onClick={handleSelect}
+      onKeyPress={handleSelect}
       tabIndex={0}
     >
       <div className="content">
@@ -45,13 +51,6 @@ const ClubListItem = ({
       </div>
     </div>
   );
-};
-
-ClubListItem.propTypes = {
-  club: PropTypes.objectOf(PropTypes.any).isRequired,
-  selectClubToDisplay: PropTypes.func.isRequired,
-  selectedClubId: PropTypes.string.isRequired,
-  setClubViewMode: PropTypes.func.isRequired,
 };
 
 export default ClubListItem;

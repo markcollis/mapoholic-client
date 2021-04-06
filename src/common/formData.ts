@@ -8,7 +8,7 @@ type LocaleOptions = {
   [key: string]: Option[];
 };
 
-export const countryCodesConversion = { // for flag icons
+export const countryCodesConversion: { [key: string]: string } = { // for flag icons
   AUS: 'au',
   AUT: 'at',
   BEL: 'be',
