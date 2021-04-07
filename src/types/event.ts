@@ -133,6 +133,7 @@ export interface OEventRunner {
   _id: string;
   maps: OEventMap[];
   user: User;
+  courseTitle: string;
   // other stuff to add
 }
 
