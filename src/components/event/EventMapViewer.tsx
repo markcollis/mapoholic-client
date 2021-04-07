@@ -3,6 +3,8 @@ import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
 import EventMapViewerCanvas from './EventMapViewerCanvas';
 import EventMapViewerDetails from './EventMapViewerDetails';
+import EventMapViewerGeo from './EventMapViewerGeo';
+import EventMapViewerTracks from './EventMapViewerTracks';
 
 import { OEvent, OEventMap } from '../../types/event';
 
@@ -97,7 +99,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
       : [];
     const hasMaps = (mapImageArray.length > 0);
     const selectedMapImage = mapImageArray.find((mapImage) => mapImage.mapId === selectedMap);
-    if (hasMaps && !selectedMapImage) {
+    if (hasMaps && !['tracks', 'geo'].includes(selectedMap || '') && !selectedMapImage) {
       this.handleSelectMapImage(mapImageArray[0].mapId);
     }
   }
@@ -245,8 +247,32 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
         </button>
       )
       : null;
-    const renderTabs = (mapImageArray.length > 1)
-      ? mapImageArray.map((mapImage) => {
+    const geoTab = (
+      <div
+        key="geo"
+        role="button"
+        className={(selectedMap === 'geo') ? 'active item' : 'item'}
+        onClick={() => this.handleSelectMapImage('geo')}
+        onKeyPress={() => this.handleSelectMapImage('geo')}
+        tabIndex={0}
+      >
+        <Trans>Geo (beta)</Trans>
+      </div>
+    );
+    const tracksTab = (
+      <div
+        key="tracks"
+        role="button"
+        className={(selectedMap === 'tracks') ? 'active item' : 'item'}
+        onClick={() => this.handleSelectMapImage('tracks')}
+        onKeyPress={() => this.handleSelectMapImage('tracks')}
+        tabIndex={0}
+      >
+        <Trans>Tracks (beta)</Trans>
+      </div>
+    );
+    const renderTabs = [
+      ...mapImageArray.map((mapImage) => {
         const { mapId, title } = mapImage;
         const visible = (selectedMap === mapId);
         return (
@@ -261,11 +287,30 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
             {(title === '') ? <Trans>untitled</Trans> : title}
           </div>
         );
-      })
-      : null;
+      }),
+      tracksTab,
+      geoTab,
+    ];
     const renderTabsOrNoMaps = (hasMaps)
       ? renderTabs
       : <div className="item"><Trans>no maps found</Trans></div>;
+    const renderGeo = selectedEvent && selectedRunner && selectedMap === 'geo'
+      ? (
+        <EventMapViewerGeo
+          selectedEvent={selectedEvent}
+          selectedRunner={selectedRunner}
+        />
+      )
+      : null;
+    const renderTracks = selectedEvent && selectedRunner && selectedMap === 'tracks'
+      ? (
+        <EventMapViewerTracks
+          selectedEvent={selectedEvent}
+          selectedRunner={selectedRunner}
+          updateEventRunner={updateEventRunner}
+        />
+      )
+      : null;
     const renderMaps = (hasMaps)
       ? mapImageArray.map((mapImage) => {
         const { mapId } = mapImage;
@@ -331,7 +376,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
         );
       })
       : null;
-    const renderOverlaySelector = (overlays.length > 0 && hasMaps)
+    const renderOverlaySelector = (overlays.length > 0 && hasMaps && selectedMap && !['tracks', 'geo'].includes(selectedMap))
       ? (
         <div className="event-map-viewer__overlay-selector">
           <hr className="divider" />
@@ -368,6 +413,8 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
           style={(showMapContainer) ? { display: 'none' } : {}}
         >
           {renderMaps}
+          {renderGeo}
+          {renderTracks}
         </div>
         {renderMapViewerDetails}
         {renderOverlaySelector}

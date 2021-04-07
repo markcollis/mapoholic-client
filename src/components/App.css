@@ -363,6 +363,14 @@ select, optgroup {
 .event-map-viewer-canvas-render__overlay-5 {
   filter: drop-shadow(0 0 1px #00bbbb); /* light blue */
 }
+/* settings for EventMapViewerGeo */
+.event-map-viewer-geo {
+  padding: 10px;
+}
+/* settings for EventMapViewerTracks */
+.event-map-viewer-tracks {
+  padding: 10px;
+}
 /* settings for EventRunnerDetails */
 .event-runner-details--highlight {
   font-weight: bold;
