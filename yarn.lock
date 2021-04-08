@@ -5337,6 +5337,11 @@ execa@^4.0.0:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
+exif-js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/exif-js/-/exif-js-2.3.0.tgz#9d10819bf571f873813e7640241255ab9ce1a814"
+  integrity sha1-nRCBm/Vx+HOBPnZAJBJVq5zhqBQ=
+
 exit@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -5881,6 +5886,11 @@ getpass@^0.1.1:
   integrity sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
   dependencies:
     assert-plus "^1.0.0"
+
+glfx@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/glfx/-/glfx-0.0.4.tgz#1b776dc748c081994624b0af3b5638403de78f4d"
+  integrity sha1-G3dtx0jAgZlGJLCvO1Y4QD3nj00=
 
 glob-parent@^3.1.0:
   version "3.1.0"
@@ -7643,10 +7653,25 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
+leaflet-distortableimage@^0.21.7:
+  version "0.21.7"
+  resolved "https://registry.yarnpkg.com/leaflet-distortableimage/-/leaflet-distortableimage-0.21.7.tgz#3b78227d51615bff17b0e5269e7b9563c067ca7e"
+  integrity sha512-hy6MGbbJTic/iDjTvmn/hAVrZ9wkJ6Vs1yXOxk066YxC4675kswkTfmMKGllO8wYxEadoSCD+Xqgqwq0Xyce7A==
+  dependencies:
+    exif-js "^2.3.0"
+    glfx "0.0.4"
+    leaflet-toolbar "0.4.0-alpha.2"
+    webgl-distort "0.0.2"
+
 leaflet-hotline@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/leaflet-hotline/-/leaflet-hotline-0.4.0.tgz#e01069836a9d2e2c78b1fa1db2013bd03c8ff8d9"
   integrity sha1-4BBpg2qdLix4sfodsgE70DyP+Nk=
+
+leaflet-toolbar@0.4.0-alpha.2:
+  version "0.4.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/leaflet-toolbar/-/leaflet-toolbar-0.4.0-alpha.2.tgz#ab58092d65b3dd158fb874c3f7e36b7ebdb994f8"
+  integrity sha512-g1KeU3DYGUOwXTS0vKIgJ8KgY0h/2B0qENNQUSYMFtSY2yzwaHWMbDyhDbk+aO8LgJ1iOX4fUt2bh1sYZbpmmQ==
 
 leaflet@^1.4.0:
   version "1.7.1"
@@ -10025,6 +10050,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-leaflet-distortable-imageoverlay@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-leaflet-distortable-imageoverlay/-/react-leaflet-distortable-imageoverlay-1.0.4.tgz#10436b51e62fc37767b4833325f923b0b397d5f6"
+  integrity sha512-INJcyJ3rIXAlEa2Td/nqCw16vBLx47zue3lp4pf+kxkdvztH3IBkXEsBwhZSol0hlfXmhpnMYL4WLuKf9bMp1Q==
+
 react-leaflet@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-3.1.0.tgz#42deb5e454518016eff8bc85511ae58812f910f5"
@@ -12211,6 +12241,11 @@ wcwidth@^1.0.1:
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
   dependencies:
     defaults "^1.0.3"
+
+webgl-distort@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/webgl-distort/-/webgl-distort-0.0.2.tgz#80d2f61efc4aece28e7a1ff1375e14aac6d06f36"
+  integrity sha1-gNL2HvxK7OKOeh/xN14UqsbQbzY=
 
 webidl-conversions@^5.0.0:
   version "5.0.0"

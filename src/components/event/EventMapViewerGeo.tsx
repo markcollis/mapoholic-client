@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { FunctionComponent } from 'react';
 
+import EventViewerGeoMap from './leaflet/EventViewerGeoMap';
 import { OEvent } from '../../types/event';
 
 interface EventMapViewerGeoProps {
@@ -16,6 +17,10 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
     <div className="event-map-viewer-geo">
       <h3>{selectedEvent.name}</h3>
       <p>{selectedRunner}</p>
+      <EventViewerGeoMap
+        selectedEvent={selectedEvent}
+        runnerId={selectedRunner}
+      />
       <p>Features to add</p>
       <ul>
         <li>Overlay all scanned maps on Leaflet/OSM</li>
