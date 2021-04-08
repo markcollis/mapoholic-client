@@ -1,41 +1,60 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
-import { withFormik, Form, Field } from 'formik';
+import {
+  withFormik,
+  Form,
+  Field,
+  FormikProps,
+} from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
+
 import {
   countryOptionsLocale,
   roleOptionsLocale,
   validationErrorsLocale,
+  Option,
 } from '../../common/formData';
+import { ClubViewMode, IClubDetails } from '../../types/club';
+import { User } from '../../types/user';
+
+interface FormValues {
+  shortName: string;
+  fullName: string;
+  country: Option | null;
+  website: string;
+  owner?: Option;
+}
+
+interface SubmitValues {
+  shortName: string;
+  fullName: string;
+  country: string;
+  website: string;
+  owner?: string;
+}
+
+interface ClubEditBaseProps {
+  isAdmin: boolean;
+  language: string;
+  setClubViewMode: (viewMode: ClubViewMode) => void;
+  userList: User[];
+  viewMode: ClubViewMode;
+  selectedClub: IClubDetails;
+  createClub: (clubDetails: Partial<SubmitValues>, callback: (didSucceed: boolean) => void) => void;
+  updateClub: (
+    clubId: string,
+    clubDetails: Partial<SubmitValues>,
+    callback: (didSucceed: boolean) => void,
+  ) => void;
+}
+
+type ClubEditProps = ClubEditBaseProps & FormikProps<FormValues>
 
 // The ClubEdit component renders a form to enable club properties to be added or edited
-class ClubEdit extends Component {
-  static propTypes = {
-    errors: PropTypes.objectOf(PropTypes.any).isRequired, // input validation
-    isSubmitting: PropTypes.bool.isRequired,
-    resetForm: PropTypes.func.isRequired,
-    setFieldTouched: PropTypes.func.isRequired,
-    setFieldValue: PropTypes.func.isRequired,
-    touched: PropTypes.objectOf(PropTypes.any).isRequired,
-    values: PropTypes.objectOf(PropTypes.any).isRequired,
-    isAdmin: PropTypes.bool,
-    language: PropTypes.string,
-    setClubViewMode: PropTypes.func.isRequired,
-    userList: PropTypes.arrayOf(PropTypes.object),
-    viewMode: PropTypes.string.isRequired,
-    selectedClub: PropTypes.objectOf(PropTypes.any).isRequired,
-  };
-
-  static defaultProps = {
-    isAdmin: false,
-    language: 'en',
-    userList: [],
-  };
-
-  componentDidUpdate(prevProps) {
+class ClubEdit extends Component<ClubEditProps> {
+  componentDidUpdate(prevProps: ClubEditProps) {
     const { viewMode, resetForm } = this.props;
     if (prevProps.viewMode === 'edit' && viewMode === 'add') {
       resetForm();
@@ -63,7 +82,7 @@ class ClubEdit extends Component {
       .map((user) => {
         const { _id: userId, role, displayName } = user;
         const roleOption = roleOptions.find(((el) => el.value === role));
-        const roleLabel = roleOption.label;
+        const roleLabel = roleOption?.label || 'unknown';
         const label = `${displayName} (${roleLabel})`;
         return { value: userId, label };
       })
@@ -73,7 +92,7 @@ class ClubEdit extends Component {
         return 0;
       });
     const countryOptions = countryOptionsLocale[language];
-    const validationErrors = validationErrorsLocale[language];
+    const validationErrors = validationErrorsLocale[language] as { [key: string]: string};
     const { _id: currentClubId } = selectedClub;
 
     return (
@@ -123,7 +142,8 @@ class ClubEdit extends Component {
                   onChange={(value) => setFieldValue('country', value)}
                   onBlur={() => setFieldTouched('country', true)}
                   value={(values.country)
-                    ? countryOptions.find((el) => el.value === values.country.value)
+                    ? countryOptions
+                      .find((el) => el.value === (values.country && values.country.value))
                     : null}
                 />
               )}
@@ -175,7 +195,7 @@ class ClubEdit extends Component {
         <button
           type="button"
           className="ui button right floated"
-          onClick={() => setClubViewMode((currentClubId) ? 'view' : 'none')}
+          onClick={() => setClubViewMode((currentClubId) ? ClubViewMode.View : ClubViewMode.None)}
         >
           <Trans>Cancel</Trans>
         </button>
@@ -197,8 +217,8 @@ class ClubEdit extends Component {
   }
 }
 
-const formikClubEdit = withFormik({
-  mapPropsToValues({ language = 'en', selectedClub, viewMode }) {
+const formikClubEdit = withFormik<ClubEditBaseProps, FormValues>({
+  mapPropsToValues({ language = 'en', selectedClub, viewMode }: ClubEditBaseProps) {
     if (viewMode === 'edit' && selectedClub) {
       const {
         shortName,
@@ -239,18 +259,28 @@ const formikClubEdit = withFormik({
       selectedClub,
     } = props;
     const { _id: clubId } = selectedClub;
-    const valuesToSubmit = (values.country)
-      ? { ...values, country: values.country.value }
-      : { ...values, country: '' };
+    const valuesToSubmit: SubmitValues = (values.country)
+      ? {
+        shortName: values.shortName,
+        fullName: values.fullName,
+        country: values.country.value,
+        website: values.website,
+      }
+      : {
+        shortName: values.shortName,
+        fullName: values.fullName,
+        country: '',
+        website: values.website,
+      };
     if (values.owner) valuesToSubmit.owner = values.owner.value;
     if (viewMode === 'add') {
       createClub(valuesToSubmit, (didSucceed) => {
-        if (didSucceed) setClubViewMode('view');
+        if (didSucceed) setClubViewMode(ClubViewMode.View);
         else setSubmitting(false);
       });
     } else {
       updateClub(clubId, valuesToSubmit, (didSucceed) => {
-        if (didSucceed) setClubViewMode('view');
+        if (didSucceed) setClubViewMode(ClubViewMode.View);
         else setSubmitting(false);
       });
     }

@@ -6,7 +6,8 @@ import { Trans, Plural } from '@lingui/macro';
 import Collapse from '../generic/Collapse';
 import noAvatar from '../../graphics/noAvatar.jpg';
 
-import { OEventSummary, User } from '../../types/event';
+import { OEventSummary } from '../../types/event';
+import { User } from '../../types/user';
 
 interface ClubMembersProps extends RouteComponentProps {
   history: History;

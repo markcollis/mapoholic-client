@@ -1,10 +1,10 @@
 // Single source for constants used to prompt/validate form input
 
-type Option = {
+export type Option = {
   value: string;
   label: string;
 };
-type LocaleOptions = {
+export type LocaleOptions = {
   [key: string]: Option[];
 };
 
@@ -265,8 +265,25 @@ export const typesOptionsLocale: LocaleOptions = {
   ],
 };
 
+type ValidationErrorMessages = {
+  invalidEmail: string;
+  emailRequired: string;
+  passwordLength: string;
+  passwordCurrentRequired: string;
+  passwordRequired: string;
+  eventNameRequired: string;
+  clubShortNameRequired: string;
+  clubFullNameRequired: string;
+  invalidLatLow: string;
+  invalidLatHigh: string;
+  invalidLongLow: string;
+  invalidLongHigh: string;
+  invalidUrl: string;
+  eventLinkNameRequired: string;
+};
+
 // Localisation of Yup validation errors in components with Formik forms
-export const validationErrorsLocale = {
+export const validationErrorsLocale: { [key: string]: ValidationErrorMessages } = {
   en: {
     invalidEmail: 'You must provide a valid email address.', // Authenticate
     emailRequired: 'You must provide an email address.', // Authenticate
@@ -287,6 +304,7 @@ export const validationErrorsLocale = {
     invalidEmail: 'Musíte zadat platnou emailovou adresu.',
     emailRequired: 'Musíte zadat emailovou adresu.',
     passwordLength: 'Vaše heslo musí mít minimálně 8 znaků.',
+    passwordCurrentRequired: '*** TODO You must confirm your current password ***',
     eventNameRequired: 'Musíte zadat název závodu.',
     passwordRequired: 'Heslo je povinné.',
     clubShortNameRequired: 'Musíte zadat zkratku klubu.',
