@@ -1,14 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React, { FunctionComponent } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { History } from 'history';
 import { Trans, Plural } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
 import noAvatar from '../../graphics/noAvatar.jpg';
 
+import { OEventSummary, User } from '../../types/event';
+
+interface ClubMembersProps extends RouteComponentProps {
+  history: History;
+  eventList: OEventSummary[];
+  membersList: User[];
+  selectUserToDisplay: (userId: string) => void;
+  setUserViewMode: (userViewMode: string) => void;
+}
+
 // The ClubMembers component renders a list of users that are members of
 // the selected club
-const ClubMembers = ({
+const ClubMembers: FunctionComponent<ClubMembersProps> = ({
   history,
   eventList,
   membersList,
@@ -18,7 +28,7 @@ const ClubMembers = ({
   if (membersList.length === 0) {
     return null;
   }
-  const mapCountByUserId = {};
+  const mapCountByUserId: { [key: string]: number} = {};
   if (eventList) {
     eventList.forEach((eventSummary) => {
       const { runners } = eventSummary;
@@ -35,12 +45,13 @@ const ClubMembers = ({
     });
   }
 
-  const handleSelectUser = (userId) => {
+  const handleSelectUser = (userId: string): void => {
     selectUserToDisplay(userId);
     setUserViewMode('view');
     history.push('/users');
     window.scrollTo(0, 0);
   };
+
   const clubMembersArray = membersList.map((member) => {
     const {
       _id: userId,
@@ -72,7 +83,8 @@ const ClubMembers = ({
             alt="avatar"
             src={profileImage || noAvatar}
             onError={(e) => {
-              e.target.src = noAvatar; // if loading profileImage fails
+              const targetImage = e.target as HTMLImageElement;
+              targetImage.src = noAvatar; // if loading profileImage fails
             }}
           />
           <div className="header  ">
@@ -97,14 +109,6 @@ const ClubMembers = ({
       </Collapse>
     </div>
   );
-};
-
-ClubMembers.propTypes = {
-  eventList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  membersList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectUserToDisplay: PropTypes.func.isRequired,
-  setUserViewMode: PropTypes.func.isRequired,
 };
 
 export default withRouter(ClubMembers);

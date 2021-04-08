@@ -129,6 +129,9 @@ export interface OEventMap {
 
 export interface User {
   _id: string;
+  displayName: string;
+  fullName: string;
+  profileImage: string;
   // other stuff to add
 }
 
