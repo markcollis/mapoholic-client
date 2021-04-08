@@ -1,6 +1,14 @@
 // Single source for constants used to prompt/validate form input
 
-export const countryCodesConversion = { // for flag icons
+export type Option = {
+  value: string;
+  label: string;
+};
+export type LocaleOptions = {
+  [key: string]: Option[];
+};
+
+export const countryCodesConversion: { [key: string]: string } = { // for flag icons
   AUS: 'au',
   AUT: 'at',
   BEL: 'be',
@@ -37,7 +45,7 @@ export const countryCodesConversion = { // for flag icons
   USA: 'us',
 };
 
-export const countryOptions = [ // limited set of IOF member countries for now
+export const countryOptions: Option[] = [ // limited set of IOF member countries for now
   { value: 'AUS', label: 'AUS: Australia' },
   { value: 'AUT', label: 'AUT: Austria' },
   { value: 'BEL', label: 'BEL: Belgium' },
@@ -73,7 +81,7 @@ export const countryOptions = [ // limited set of IOF member countries for now
   { value: 'UKR', label: 'UKR: Ukraine' },
   { value: 'USA', label: 'USA: United States of America' },
 ];
-export const countryOptionsLocale = {
+export const countryOptionsLocale: LocaleOptions = {
   en: countryOptions,
   cs: [
     { value: 'AUS', label: 'AUS: Austrálie' },
@@ -190,12 +198,12 @@ export const regionOptionSets = { // keys to match countryOptions
 };
 // no localisation necessary, region names are already in local language
 
-export const roleOptions = [
+export const roleOptions: Option[] = [
   { value: 'admin', label: 'Administrator' },
   { value: 'guest', label: 'Guest' },
   { value: 'standard', label: 'Standard' },
 ];
-export const roleOptionsLocale = {
+export const roleOptionsLocale: LocaleOptions = {
   en: roleOptions,
   cs: [
     { value: 'admin', label: 'Správce' },
@@ -204,13 +212,13 @@ export const roleOptionsLocale = {
   ],
 };
 
-export const visibilityOptions = [
+export const visibilityOptions: Option[] = [
   { value: 'public', label: 'public' },
   { value: 'all', label: 'all registered users' },
   { value: 'club', label: 'club members only' },
   { value: 'private', label: 'private' },
 ];
-export const visibilityOptionsLocale = {
+export const visibilityOptionsLocale: LocaleOptions = {
   en: visibilityOptions,
   cs: [
     { value: 'public', label: 'veřejnost' },
@@ -220,7 +228,7 @@ export const visibilityOptionsLocale = {
   ],
 };
 
-export const typesOptions = [
+export const typesOptions: Option[] = [
   { value: 'Sprint', label: 'Sprint' }, // ORIS SP Sprint Sprint
   { value: 'Middle', label: 'Middle' }, // ORIS KT Middle Krátká trať
   { value: 'Long', label: 'Long' }, // ORIS KL Long Klasická trať
@@ -237,7 +245,7 @@ export const typesOptions = [
   { value: 'non-standard', label: 'non-standard' },
   // i.e. either training or an event with an unusual format (e.g. some EPOs)
 ];
-export const typesOptionsLocale = {
+export const typesOptionsLocale: LocaleOptions = {
   en: typesOptions,
   cs: [
     { value: 'Sprint', label: 'Sprint' }, // ORIS SP Sprint Sprint
@@ -257,8 +265,25 @@ export const typesOptionsLocale = {
   ],
 };
 
+type ValidationErrorMessages = {
+  invalidEmail: string;
+  emailRequired: string;
+  passwordLength: string;
+  passwordCurrentRequired: string;
+  passwordRequired: string;
+  eventNameRequired: string;
+  clubShortNameRequired: string;
+  clubFullNameRequired: string;
+  invalidLatLow: string;
+  invalidLatHigh: string;
+  invalidLongLow: string;
+  invalidLongHigh: string;
+  invalidUrl: string;
+  eventLinkNameRequired: string;
+};
+
 // Localisation of Yup validation errors in components with Formik forms
-export const validationErrorsLocale = {
+export const validationErrorsLocale: { [key: string]: ValidationErrorMessages } = {
   en: {
     invalidEmail: 'You must provide a valid email address.', // Authenticate
     emailRequired: 'You must provide an email address.', // Authenticate
@@ -279,6 +304,7 @@ export const validationErrorsLocale = {
     invalidEmail: 'Musíte zadat platnou emailovou adresu.',
     emailRequired: 'Musíte zadat emailovou adresu.',
     passwordLength: 'Vaše heslo musí mít minimálně 8 znaků.',
+    passwordCurrentRequired: '*** TODO You must confirm your current password ***',
     eventNameRequired: 'Musíte zadat název závodu.',
     passwordRequired: 'Heslo je povinné.',
     clubShortNameRequired: 'Musíte zadat zkratku klubu.',

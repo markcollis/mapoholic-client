@@ -1,22 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { Trans } from '@lingui/macro';
 
 import { reformatTimestampDateOnly } from '../../common/conversions';
 import Collapse from '../generic/Collapse';
 import forest from '../../graphics/blueForest.jpg';
 import { countryOptionsLocale } from '../../common/formData';
+import { IClubDetails, ClubViewMode } from '../../types/club';
+
+interface ClubDetailsProps {
+  canEdit?: boolean;
+  language: string;
+  requestRefreshCollapse: () => void;
+  selectedClub?: IClubDetails;
+  setClubViewMode: (viewMode: ClubViewMode) => void;
+}
 
 // The ClubDetails component renders information about the selected club
-const ClubDetails = ({
+const ClubDetails: FunctionComponent<ClubDetailsProps> = ({
   canEdit,
   language,
   requestRefreshCollapse,
   selectedClub,
   setClubViewMode,
 }) => {
-  const { _id: selectedClubId } = selectedClub;
-  if (!selectedClubId) {
+  if (!selectedClub) {
     return (
       <div className="ui segment">
         <div className="ui active inline centered text loader">
@@ -59,10 +66,10 @@ const ClubDetails = ({
           </Trans>
         </div>
         <hr className="divider" />
-        <button type="button" className="ui red tiny button right floated" onClick={() => setClubViewMode('delete')}>
+        <button type="button" className="ui red tiny button right floated" onClick={() => setClubViewMode(ClubViewMode.Delete)}>
           <Trans>Delete club</Trans>
         </button>
-        <button type="button" className="ui primary tiny button" onClick={() => setClubViewMode('edit')}>
+        <button type="button" className="ui primary tiny button" onClick={() => setClubViewMode(ClubViewMode.Edit)}>
           <Trans>Edit club details</Trans>
         </button>
       </div>
@@ -111,18 +118,6 @@ const ClubDetails = ({
       </Collapse>
     </div>
   );
-};
-
-ClubDetails.propTypes = {
-  canEdit: PropTypes.bool,
-  language: PropTypes.string.isRequired,
-  requestRefreshCollapse: PropTypes.func.isRequired,
-  selectedClub: PropTypes.objectOf(PropTypes.any),
-  setClubViewMode: PropTypes.func.isRequired,
-};
-ClubDetails.defaultProps = {
-  selectedClub: {},
-  canEdit: false,
 };
 
 export default ClubDetails;

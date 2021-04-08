@@ -7,6 +7,8 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error'],
     'no-unused-vars': [0],
     '@typescript-eslint/no-unused-vars': ['error'],
+    'no-shadow': [0],
+    '@typescript-eslint/no-shadow': ['error'],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/static-property-placement': [0],
     'react/state-in-constructor': [0],
@@ -31,4 +33,12 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': [0],
+      },
+    },
+  ],
 };

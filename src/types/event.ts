@@ -71,6 +71,8 @@
 //   "__v":0
 // }
 
+import { User } from './user';
+
 export interface OEventCoordinates {
   lat: number;
   long: number;
@@ -125,11 +127,6 @@ export interface OEventMap {
   courseUpdated: string;
   overlay: string;
   overlayUpdated: string;
-}
-
-export interface User {
-  _id: string;
-  // other stuff to add
 }
 
 export interface OEventRunner {

@@ -1,11 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ChangeEventHandler } from 'react';
 import { I18n } from '@lingui/react';
 import { Trans, t } from '@lingui/macro';
+import { ClubViewMode } from '../../types/club';
+
+interface ClubHeaderProps {
+  getClubList: () => void;
+  searchField: string;
+  setClubSearchField: ChangeEventHandler;
+  setClubViewMode: (viewMode: ClubViewMode) => void;
+  viewMode: ClubViewMode;
+}
 
 // The ClubHeader component renders the search bar and other controls at
 // the top of the club view
-const ClubHeader = ({
+const ClubHeader: FunctionComponent<ClubHeaderProps> = ({
   getClubList,
   searchField,
   setClubSearchField,
@@ -35,7 +43,7 @@ const ClubHeader = ({
           type="button"
           className="ui tiny button primary right floated"
           onClick={() => {
-            setClubViewMode('add');
+            setClubViewMode(ClubViewMode.Add);
           }}
         >
           <Trans>Add club</Trans>
@@ -50,14 +58,6 @@ const ClubHeader = ({
       </div>
     </div>
   );
-};
-
-ClubHeader.propTypes = {
-  getClubList: PropTypes.func.isRequired,
-  searchField: PropTypes.string.isRequired,
-  setClubSearchField: PropTypes.func.isRequired,
-  setClubViewMode: PropTypes.func.isRequired,
-  viewMode: PropTypes.string.isRequired,
 };
 
 export default ClubHeader;

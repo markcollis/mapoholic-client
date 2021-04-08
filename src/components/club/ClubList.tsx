@@ -1,13 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, EventHandler, SyntheticEvent } from 'react';
 import { Trans } from '@lingui/macro';
 
 import ClubListItem from './ClubListItem';
 import Collapse from '../generic/Collapse';
 
+import { IClubDetails, ClubViewMode } from '../../types/club';
+
+interface ClubListProps {
+  clubList: IClubDetails[];
+  selectClubToDisplay: (clubId: string) => void;
+  selectedClubId: string;
+  setClubViewMode: (viewMode: ClubViewMode) => void;
+}
+
 // The ClubList component renders a list of clubs with basic details that
 // can be selected to show further details
-const ClubList = ({
+const ClubList: FunctionComponent<ClubListProps> = ({
   clubList,
   selectClubToDisplay,
   selectedClubId,
@@ -39,24 +47,21 @@ const ClubList = ({
       );
     });
   const title = <Trans>Club list</Trans>;
+  const handleSelect: EventHandler<SyntheticEvent> = (e) => {
+    const element = e.target as HTMLDivElement;
+    if (element.classList.contains('cards')) {
+      selectClubToDisplay('');
+      setClubViewMode(ClubViewMode.None);
+    }
+  };
   return (
     <div className="ui segment">
       <Collapse title={title}>
         <div
           className="ui link cards card-list"
           role="button"
-          onClick={(e) => {
-            if (e.target.classList.contains('cards')) {
-              selectClubToDisplay('');
-              setClubViewMode('none');
-            }
-          }}
-          onKeyPress={(e) => {
-            if (e.target.classList.contains('cards')) {
-              selectClubToDisplay('');
-              setClubViewMode('none');
-            }
-          }}
+          onClick={handleSelect}
+          onKeyPress={handleSelect}
           tabIndex={0}
         >
           {clubsArray}
@@ -64,16 +69,6 @@ const ClubList = ({
       </Collapse>
     </div>
   );
-};
-
-ClubList.propTypes = {
-  clubList: PropTypes.arrayOf(PropTypes.object),
-  selectClubToDisplay: PropTypes.func.isRequired,
-  selectedClubId: PropTypes.string.isRequired,
-  setClubViewMode: PropTypes.func.isRequired,
-};
-ClubList.defaultProps = {
-  clubList: [],
 };
 
 export default ClubList;

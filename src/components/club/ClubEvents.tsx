@@ -1,13 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React, { FunctionComponent } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { History } from 'history';
 import { Trans } from '@lingui/macro';
 
 import Collapse from '../generic/Collapse';
 import EventListItem from '../event/EventListItem';
 
+import { OEventSummary } from '../../types/event';
+
+interface ClubEventsProps extends RouteComponentProps {
+  eventsList: OEventSummary[];
+  history: History;
+  language: string;
+  selectEventId: (eventId: string) => void;
+  setEventViewModeEvent: (viewMode: string) => void;
+}
+
 // The ClubEvents component renders a list of events organised by a club
-const ClubEvents = ({
+const ClubEvents: FunctionComponent<ClubEventsProps> = ({
   eventsList,
   history,
   language,
@@ -17,7 +27,7 @@ const ClubEvents = ({
   if (eventsList.length === 0) {
     return null;
   }
-  const handleSelectEvent = (eventId) => {
+  const handleSelectEvent = (eventId: string): void => {
     selectEventId(eventId);
     setEventViewModeEvent('view');
     history.push('/events');
@@ -50,17 +60,6 @@ const ClubEvents = ({
       </Collapse>
     </div>
   );
-};
-
-ClubEvents.propTypes = {
-  eventsList: PropTypes.arrayOf(PropTypes.object),
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  language: PropTypes.string.isRequired,
-  selectEventId: PropTypes.func.isRequired,
-  setEventViewModeEvent: PropTypes.func.isRequired,
-};
-ClubEvents.defaultProps = {
-  eventsList: [],
 };
 
 export default withRouter(ClubEvents);
