@@ -4,22 +4,23 @@ import {
   MapContainer,
   TileLayer,
   Polygon,
-  ImageOverlay,
+  // ImageOverlay,
 } from 'react-leaflet';
-// import DistortableImageOverlay from 'react-leaflet-distortable-imageoverlay';
+import { LatLng } from 'leaflet';
+import Distortable from './Distortable';
 
-import ZoomLevelDetection from './ZoomLevelDetection';
 import TrackWaypoints from './TrackWaypoints';
 
 import { MAP_TILES, MAP_CREDIT } from '../../../config';
 import { OEvent, OEventPosition, OEventCorners } from '../../../types/event';
 import { derivePolygonBoundsFromEvent } from './getPolygonBounds';
 
-const positionsFromCorners = (corners: OEventCorners): OEventPosition[] => ([
-  [corners.nw.lat, corners.nw.long],
-  [corners.ne.lat, corners.ne.long],
-  [corners.se.lat, corners.se.long],
-  [corners.sw.lat, corners.sw.long],
+// array of L.latLng objects in NW, NE, SW, SE order (in a "Z" shape)
+const getDistortableCorners = (corners: OEventCorners): LatLng[] => ([
+  new LatLng(corners.nw.lat, corners.nw.long),
+  new LatLng(corners.ne.lat, corners.ne.long),
+  new LatLng(corners.sw.lat, corners.sw.long),
+  new LatLng(corners.se.lat, corners.se.long),
 ]);
 
 interface EventViewerGeoMapProps {
@@ -68,12 +69,19 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
   });
 
   console.log('matchingMaps', matchingMaps);
-  const mapImage = matchingMaps.length && matchingMaps[0].geo ? (
-    <ImageOverlay
-      url={matchingMaps[0].course}
-      bounds={positionsFromCorners(matchingMaps[0].geo.mapCorners)}
-    />
-  ) : null;
+  const mapsWithImages = matchingMaps.filter((map) => map.course); // want course not route
+  const mapImages = mapsWithImages.map((map) => {
+    if (map.geo && map.geo.imageCorners) {
+      return (
+        <Distortable
+          key={map.course}
+          url={map.course}
+          corners={getDistortableCorners(map.geo.imageCorners)}
+        />
+      );
+    }
+    return <Distortable url={map.course} />;
+  });
 
   return (
     <MapContainer
@@ -81,12 +89,10 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
       className="event-viewer-geo-map"
       bounds={initialMapBounds} // this prop will not reset map if selected event changes
     >
-      <ZoomLevelDetection>
-        <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-        {polygon}
-        {route}
-        {mapImage}
-      </ZoomLevelDetection>
+      <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
+      {polygon}
+      {route}
+      {mapImages}
     </MapContainer>
   );
 };

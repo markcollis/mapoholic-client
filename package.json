@@ -25,6 +25,7 @@
     "leaflet": "^1.4.0",
     "leaflet-distortableimage": "^0.21.7",
     "leaflet-hotline": "^0.4.0",
+    "leaflet-toolbar": "^0.4.0-alpha.2",
     "memoize-one": "^5.0.4",
     "polygon-tools": "^0.4.8",
     "prop-types": "^15.6.2",
