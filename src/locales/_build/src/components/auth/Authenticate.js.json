@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        39
+        45
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        55
+        59
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        56
+        59
       ]
     ]
   },
@@ -27,7 +27,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        61
+        64
       ]
     ]
   },
@@ -35,7 +35,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        67
+        70
       ]
     ]
   },
@@ -43,7 +43,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        78
+        81
       ]
     ]
   },
@@ -51,7 +51,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        84
+        87
       ]
     ]
   },
@@ -59,7 +59,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        97
+        98
       ]
     ]
   },
@@ -67,7 +67,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        102
+        103
       ]
     ]
   },
@@ -75,7 +75,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        122
+        120
       ]
     ]
   },
@@ -83,7 +83,7 @@
     "origin": [
       [
         "src/components/auth/Authenticate.js",
-        123
+        121
       ]
     ]
   }

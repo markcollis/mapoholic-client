@@ -284,7 +284,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
             onKeyPress={() => this.handleSelectMapImage(mapId)}
             tabIndex={0}
           >
-            {(title === '') ? <Trans>untitled</Trans> : title}
+            {(title === '') ? <Trans>Map</Trans> : title}
           </div>
         );
       }),

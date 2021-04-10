@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/generic/FileDropzone.js:200
+#: src/components/generic/FileDropzone.js:199
 msgid "(to match QuickRoute output)"
 msgstr "(odpovídající výstupu QuickRoute)"
 
@@ -25,13 +25,13 @@ msgstr "Vzhledem k tomu, že čteš anglickou verzi stránek, tak možná neví�
 msgid "<0>* QuickRoute is an excellent tool for processing GPS tracks. The JPG images of routes exported from it include track data and MapOholic can use this to determine the location of a map without needing to enter it manually. When you don't have a GPS track available, any graphics editor can be used to draw a route on a scanned map.</0>"
 msgstr "QuickRoute je výborný nástroj ke zpracovávání GPS stop. Obrázky tratí ve formátu JPG, které QuickRoute exportuje, obsahují informaci o stopě a MapOholic ji může využít k určení polohy mapy, aniž by ji člověk musel zadávat ručně. Pokud GPS stopu nemáte, stačí využít jakýkoliv grafický editor k nakreslení postupů do naskenované mapy."
 
-#: src/components/Header.js:186
-#: src/components/Header.js:206
+#: src/components/Header.js:188
+#: src/components/Header.js:208
 msgid "> List"
 msgstr "> Seznam"
 
-#: src/components/Header.js:189
-#: src/components/Header.js:209
+#: src/components/Header.js:191
+#: src/components/Header.js:211
 msgid "> Map"
 msgstr "> Mapa"
 
@@ -63,7 +63,7 @@ msgstr "Protokolování rozhraní API je aktuální zakázáno."
 msgid "API logging is currently enabled."
 msgstr "Protokolování rozhraní API je aktuální povoleno."
 
-#: src/components/club/ClubEdit.js:83
+#: src/components/club/ClubEdit.tsx:42
 msgid "Abbreviation"
 msgstr "Zkratka"
 
@@ -87,15 +87,15 @@ msgstr "Přidat komentář"
 msgid "Add a new link"
 msgstr "Přidat nový odkaz"
 
-#: src/components/generic/FileDropzone.js:198
+#: src/components/generic/FileDropzone.js:197
 msgid "Add border"
 msgstr "Přidat ohraničení"
 
-#: src/components/club/ClubHeader.js:41
+#: src/components/club/ClubHeader.tsx:21
 msgid "Add club"
 msgstr "Přidat oddíl"
 
-#: src/components/event/EventHeader.js:99
+#: src/components/event/EventHeader.js:101
 msgid "Add event"
 msgstr "Přidat závod"
 
@@ -103,7 +103,7 @@ msgstr "Přidat závod"
 msgid "Add new event link"
 msgstr "Přidat nový odkaz na závod"
 
-#: src/components/event/EventMapViewer.js:180
+#: src/components/event/EventMapViewer.tsx:142
 msgid "Add or Delete maps"
 msgstr "Přidat nebo Smazat mapy"
 
@@ -115,11 +115,11 @@ msgstr "Přidat nebo změnit mapy"
 msgid "Add or change user profile image"
 msgstr "Přidat nebo změnit obrázek uživatele"
 
-#: src/components/event/EventMapViewerEdit.js:264
+#: src/components/event/EventMapViewerEdit.js:274
 msgid "Add title"
 msgstr "Přidat název"
 
-#: src/components/event/EventRunners.js:94
+#: src/components/event/EventRunners.js:96
 msgid "Add yourself as a runner"
 msgstr "Přidat sebe jako běžce"
 
@@ -127,7 +127,7 @@ msgstr "Přidat sebe jako běžce"
 msgid "Additional information for administrators"
 msgstr "Další informace pro Správce"
 
-#: src/components/club/ClubEdit.js:141
+#: src/components/club/ClubEdit.tsx:76
 msgid "Address of club website"
 msgstr "Webová stránka oddílu"
 
@@ -167,27 +167,27 @@ msgstr "Časová ztráta"
 msgid "But there is much more to it than that. The maps can be linked to detailed information about the event and your performance, and you can quickly see how other users did at the same race. For Czech events registered on ORIS, event details, course details and results can be added automatically. You can also tag your maps in any way you like and add comments to both your own and other users' maps. The search filter matches event and map names, dates, places and the different types of tags so that your maps are easy to find."
 msgstr "Ale je tu toho ještě mnohem víc. Mapy můžou být propojeny s podrobnými detaily o závodě a o tvém výkonu a rychle zjistíš jak na stejném závodě beželi ostatní uživatelé. U českých závodů registrovaných na ORISu je možné informace o závodě, o tratích a výsledcích mohou stáhnout automaticky. Můžeš libovolně označovat své mapy a přidávat komentáře ke svým mapám i k mapám ostatních uživatelů. Vyhledávat můžeš podle jména závodu nebo mapy, podle data závodu, podle lokality i podle dalších označení a tudíž jsou mapy jednoduše dohledatelné"
 
-#: src/components/club/ClubDelete.js:38
-#: src/components/club/ClubEdit.js:181
+#: src/components/club/ClubDelete.tsx:26
+#: src/components/club/ClubEdit.tsx:97
 #: src/components/event/EventCommentsAdd.js:95
 #: src/components/event/EventCommentsItem.js:163
 #: src/components/event/EventCommentsItem.js:176
 #: src/components/event/EventDelete.js:45
-#: src/components/event/EventEdit.js:733
+#: src/components/event/EventEdit.js:732
 #: src/components/event/EventLinkedDelete.js:43
 #: src/components/event/EventLinkedEdit.js:116
-#: src/components/event/EventMapViewerEdit.js:284
+#: src/components/event/EventMapViewerEdit.js:295
 #: src/components/event/EventResults.js:331
 #: src/components/event/EventRunnerDelete.js:69
 #: src/components/event/EventRunnerEdit.js:239
 #: src/components/user/UserChangePassword.js:64
 #: src/components/user/UserDelete.js:66
-#: src/components/user/UserEdit.js:279
+#: src/components/user/UserEdit.js:278
 #: src/components/user/UserEditProfileImage.js:78
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/components/user/UserEdit.js:307
+#: src/components/user/UserEdit.js:306
 msgid "Change Password"
 msgstr "Změnit Heslo"
 
@@ -195,7 +195,7 @@ msgstr "Změnit Heslo"
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: src/components/event/EventMapViewerEdit.js:263
+#: src/components/event/EventMapViewerEdit.js:273
 msgid "Change title"
 msgstr "Změnit název"
 
@@ -207,19 +207,19 @@ msgstr "Převýšení na trati (m)"
 msgid "Club"
 msgstr "Oddíl"
 
-#: src/components/club/ClubDetails.js:106
+#: src/components/club/ClubDetails.tsx:77
 msgid "Club details"
 msgstr "Detaily oddílu"
 
-#: src/components/club/ClubList.js:41
+#: src/components/club/ClubList.tsx:24
 msgid "Club list"
 msgstr "Seznam oddílů"
 
-#: src/components/club/ClubHeader.js:23
+#: src/components/club/ClubHeader.tsx:12
 msgid "Club search filter"
 msgstr "Filtr vyhledávání oddílů"
 
-#: src/components/Header.js:244
+#: src/components/Header.js:246
 msgid "Clubs"
 msgstr "Oddíly"
 
@@ -235,20 +235,20 @@ msgstr "Oddíly, kde je uživatel členem"
 msgid "Comments"
 msgstr "Komentáře"
 
-#: src/components/event/EventMapViewerEdit.js:265
+#: src/components/event/EventMapViewerEdit.js:275
 msgid "Confirm change"
 msgstr "Potvrdit změnu"
 
-#: src/components/club/ClubEdit.js:115
+#: src/components/club/ClubEdit.tsx:62
 #: src/components/event/EventEdit.js:325
 msgid "Country"
 msgstr "Země"
 
-#: src/components/club/ClubEdit.js:120
+#: src/components/club/ClubEdit.tsx:64
 msgid "Country in which club is based"
 msgstr "Země ve které je oddíl"
 
-#: src/components/event/EventMapViewerEdit.js:322
+#: src/components/event/EventMapViewerEdit.js:338
 msgid "Course"
 msgstr "Trať"
 
@@ -268,26 +268,26 @@ msgstr "Název tratě"
 msgid "Course: <0>{courseTitle}</0>"
 msgstr "Trať: <0>{courseTitle}</0>"
 
-#: src/components/club/ClubEdit.js:60
-#: src/components/event/EventEdit.js:160
+#: src/components/club/ClubEdit.tsx:19
+#: src/components/event/EventEdit.js:162
 #: src/components/event/EventLinkedEdit.js:52
 msgid "Create"
 msgstr "Vytvořit"
 
-#: src/components/event/EventEdit.js:742
+#: src/components/event/EventEdit.js:741
 msgid "Create Event"
 msgstr "Vytvořit Závod"
 
-#: src/components/event/EventEdit.js:212
+#: src/components/event/EventEdit.js:214
 msgid "Create event using ORIS data"
 msgstr "Vytvořit závod (data z ORISu)"
 
-#: src/components/club/ClubDetails.js:52
+#: src/components/club/ClubDetails.tsx:31
 #: src/components/event/EventDetails.js:93
 msgid "Created: {0}"
 msgstr "Vytvořený: {0}"
 
-#: src/components/Header.js:229
+#: src/components/Header.js:231
 msgid "Current Map"
 msgstr "Aktuální Mapa"
 
@@ -309,7 +309,7 @@ msgstr "Pro ty, kteří ví, že nikdy nemohou mít příliš mnoho {linkOMaps}"
 msgid "Delete"
 msgstr "Smazat"
 
-#: src/components/club/ClubDelete.js:15
+#: src/components/club/ClubDelete.tsx:10
 msgid "Delete Club"
 msgstr "Smazat Oddíl"
 
@@ -329,7 +329,7 @@ msgstr "Smazat Běžce"
 msgid "Delete User"
 msgstr "Smazat Uživatele"
 
-#: src/components/club/ClubDetails.js:63
+#: src/components/club/ClubDetails.tsx:42
 msgid "Delete club"
 msgstr "Smazat oddíl"
 
@@ -337,8 +337,8 @@ msgstr "Smazat oddíl"
 msgid "Delete comment"
 msgstr "Smazat komentář"
 
-#: src/components/event/EventMapViewerEdit.js:349
-#: src/components/event/EventMapViewerEdit.js:380
+#: src/components/event/EventMapViewerEdit.js:365
+#: src/components/event/EventMapViewerEdit.js:396
 #: src/components/user/UserEditProfileImage.js:71
 msgid "Delete current"
 msgstr "Smazat aktuální"
@@ -371,7 +371,7 @@ msgstr "Smazat {displayName}?"
 msgid "Delete {runnerName}?"
 msgstr "Smazat {runnerName}?"
 
-#: src/components/club/ClubDelete.js:31
+#: src/components/club/ClubDelete.tsx:23
 msgid "Delete {shortName}?"
 msgstr "Smazat {shortName}?"
 
@@ -395,7 +395,7 @@ msgstr "Stáhnout aktuální výsledky"
 msgid "Download results template: {downloadCSV} {downloadJSON}"
 msgstr "Stáhnout výsledkovou šablonu"
 
-#: src/components/event/EventMapViewerEdit.js:257
+#: src/components/event/EventMapViewerEdit.js:267
 msgid "Duplicate map title"
 msgstr "Duplikuj název mapy"
 
@@ -404,7 +404,7 @@ msgstr "Duplikuj název mapy"
 msgid "Edit"
 msgstr "Upravit"
 
-#: src/components/event/EventEdit.js:743
+#: src/components/event/EventEdit.js:742
 msgid "Edit Event Details"
 msgstr "Upravit Detaily Závodu"
 
@@ -416,11 +416,11 @@ msgstr "Upravit Detaily Běžce"
 msgid "Edit Results"
 msgstr "Upravit výsledky"
 
-#: src/components/user/UserEdit.js:296
+#: src/components/user/UserEdit.js:295
 msgid "Edit User Details"
 msgstr "Upravit Detaily Uživatele"
 
-#: src/components/club/ClubDetails.js:66
+#: src/components/club/ClubDetails.tsx:45
 msgid "Edit club details"
 msgstr "Upravit detaily oddílu"
 
@@ -444,7 +444,7 @@ msgstr "Upravit detaily běžce"
 msgid "Edit user details"
 msgstr "Upravit detaily uživatele"
 
-#: src/components/auth/Authenticate.js:61
+#: src/components/auth/Authenticate.js:64
 msgid "Email"
 msgstr "Emailová adresa"
 
@@ -456,11 +456,11 @@ msgstr "Emailová adresa"
 msgid "Enable logging"
 msgstr "Povolit protokolování"
 
-#: src/components/event/EventEdit.js:220
+#: src/components/event/EventEdit.js:222
 msgid "Enter ORIS event ID (list of recent events loading or unavailable)"
 msgstr "Zadej ORISové ID závodu (seznam posledních závodů se načítá nebo je nedostupný)"
 
-#: src/components/event/EventEdit.js:238
+#: src/components/event/EventEdit.js:240
 msgid "Enter ORIS event ID or select from your recent events"
 msgstr "Zadej ORISové ID závodu nebo vyberte ze seznamu"
 
@@ -468,7 +468,7 @@ msgstr "Zadej ORISové ID závodu nebo vyberte ze seznamu"
 msgid "Enter current password"
 msgstr "Zadej aktuální heslo"
 
-#: src/components/auth/Authenticate.js:67
+#: src/components/auth/Authenticate.js:70
 msgid "Enter email address"
 msgstr "Zadej emailovou adresu"
 
@@ -476,11 +476,11 @@ msgstr "Zadej emailovou adresu"
 msgid "Enter new password"
 msgstr "Zadej nové heslo"
 
-#: src/components/auth/Authenticate.js:84
+#: src/components/auth/Authenticate.js:87
 msgid "Enter password"
 msgstr "Zadej heslo"
 
-#: src/components/auth/Authenticate.js:102
+#: src/components/auth/Authenticate.js:103
 msgid "Enter user name (your email address will be used if left blank)"
 msgstr "Zadej uživatelské jméno (výchozí uživatelské jméno je tvoje emailová adresa)"
 
@@ -488,19 +488,19 @@ msgstr "Zadej uživatelské jméno (výchozí uživatelské jméno je tvoje emai
 #~ msgid "Error (get user): {userErrorMessage}"
 #~ msgstr "Chyba (uživatelní): {userErrorMessage}"
 
-#: src/components/generic/FileDropzone.js:207
+#: src/components/generic/FileDropzone.js:206
 msgid "Error: Incorrect file type. Please check and try again."
 msgstr "Chyba: Špatný typ souboru. Prosím, zkontroluj a zkus to znovu."
 
-#: src/components/club/ClubView.js:262
-#: src/components/event/EventView.js:591
+#: src/components/club/ClubView.js:269
+#: src/components/event/EventView.js:609
 #: src/components/event/MapView.js:605
-#: src/components/home/HomeView.js:188
-#: src/components/user/UserView.js:149
+#: src/components/home/HomeView.js:187
+#: src/components/user/UserView.js:154
 msgid "Error: {errorMessage}"
 msgstr "Chyba: {errorMessage}"
 
-#: src/components/auth/Authenticate.js:39
+#: src/components/auth/Authenticate.js:45
 msgid "Error: {errorMessage} Please try again."
 msgstr "Chyba: {errorMessage} Prosím, zopakuj"
 
@@ -508,7 +508,7 @@ msgstr "Chyba: {errorMessage} Prosím, zopakuj"
 msgid "Event List"
 msgstr "Seznam závodů"
 
-#: src/components/event/EventDetails.js:250
+#: src/components/event/EventDetails.js:249
 msgid "Event details"
 msgstr "Detaily závodu"
 
@@ -524,17 +524,17 @@ msgstr "Místo (zeměpisná šířka)"
 msgid "Event location (longitude)"
 msgstr "Místo (zeměpisná délka)"
 
-#: src/components/event/EventHeader.js:62
+#: src/components/event/EventHeader.js:63
 msgid "Event tags"
 msgstr "Označení závodu"
 
-#: src/components/event/EventDetails.js:223
+#: src/components/event/EventDetails.js:222
 msgid "Event website"
 msgstr "Webová stránka závodu"
 
-#: src/components/Header.js:183
-#: src/components/Header.js:195
-#: src/components/club/ClubEvents.js:42
+#: src/components/Header.js:185
+#: src/components/Header.js:197
+#: src/components/club/ClubEvents.tsx:25
 #: src/components/user/UserEvents.js:43
 msgid "Events"
 msgstr "Závody"
@@ -551,7 +551,7 @@ msgstr "Obsažené závody"
 msgid "Field size"
 msgstr "Počet běžců"
 
-#: src/components/event/EventHeader.js:60
+#: src/components/event/EventHeader.js:61
 msgid "Filter by tag"
 msgstr "Filtrovat podle označení"
 
@@ -559,18 +559,22 @@ msgstr "Filtrovat podle označení"
 msgid "Filter table"
 msgstr "Filtrovat položky tabulky"
 
-#: src/components/club/ClubEdit.js:99
+#: src/components/club/ClubEdit.tsx:52
 #: src/components/user/UserEdit.js:146
 msgid "Full name"
 msgstr "Celé jméno"
 
-#: src/components/club/ClubEdit.js:104
+#: src/components/club/ClubEdit.tsx:54
 msgid "Full name of club"
 msgstr "Celé jméno oddílu"
 
 #: src/components/user/UserEdit.js:151
 msgid "Full name of user"
 msgstr "Celé jméno uživatele"
+
+#: src/components/event/EventMapViewer.tsx:149
+msgid "Geo (beta)"
+msgstr ""
 
 #: src/components/event/EventEdit.js:684
 msgid "Groups of other events that this event is linked to"
@@ -608,11 +612,11 @@ msgstr "Odkaz spojuje tyto závody:"
 msgid "It's now time to add some maps! Click the big \"Add or Delete maps\" button at the top, which enables you to upload both a course map and a route map (i.e. the same map with the route drawn on). You can also give the map a title, which will be shown if you add a different map for the same event later, for example if the course was in two parts. For the course map, you are given the option to add a border. This makes it easier to work with QuickRoute, which outputs images bigger than the original when you have added a route; without the border switching between course and route would not be smooth. If you do not have a route to upload, or you drew it on the course map with a different tool, you can ignore this option."
 msgstr "Teď přišel čas přidat mapy! Klikni na velké tlačítko \"Přidat nebo Smazat mapy\", které ti umožňuje nahrát mapu trati i mapu s postupy (tj. jedna mapa, která má na sobě nakreslenou i postupy). Můžeš mapu také pojmenovat, nadpis bude viditelný pokud přidáš i další mapu ze stejného závodu, například pokud byla trať rozdělena na dvě části. Po přidání mapy s tratí máš možnost mapu ohraničit. Tato možnost zjednodušuje práci s QuickRoute, který po přidání trasy vytváří obrázky větší než je originál; bez ohraničení by přepínání mezi tratí a trasou nefungovalo tak hladce. Pokud nemáš trasu k nahrání nebo je nakreslena na mapu jiným programem, tak můžeš tuto možnost ignorovat."
 
-#: src/components/user/UserDetails.js:134
+#: src/components/user/UserDetails.js:131
 msgid "Joined: {0}"
 msgstr "Uživatelem od: {0}"
 
-#: src/components/club/ClubDetails.js:57
+#: src/components/club/ClubDetails.tsx:36
 #: src/components/event/EventDetails.js:98
 #: src/components/user/UserDetails.js:54
 msgid "Last updated: {0}"
@@ -638,7 +642,7 @@ msgstr "Propojené závody: {displayName}"
 msgid "Linked to"
 msgstr "Propojené s"
 
-#: src/components/club/ClubDetails.js:23
+#: src/components/club/ClubDetails.tsx:13
 msgid "Loading club details..."
 msgstr "Načítám detaily oddílu..."
 
@@ -676,23 +680,23 @@ msgstr "Místo závodu (zeměpisná šířka/délka)"
 msgid "Locations of map corners (four latitude/longitude pairs)"
 msgstr "Rohy mapy (čtyřkrát zeměpisná šířka/délka)"
 
-#: src/components/Header.js:271
+#: src/components/Header.js:273
 msgid "Log In"
 msgstr "Přihlásit se"
 
-#: src/components/Header.js:250
+#: src/components/Header.js:252
 msgid "Log Out"
 msgstr "Odhlásit se"
 
-#: src/components/auth/Authenticate.js:56
+#: src/components/auth/Authenticate.js:59
 msgid "Log in"
 msgstr "Přihlásit se"
 
-#: src/components/auth/Authenticate.js:123
+#: src/components/auth/Authenticate.js:121
 msgid "Log in to MapOholic"
 msgstr "Přihlásit se na MapOholic"
 
-#: src/components/auth/Logout.js:21
+#: src/components/auth/Logout.tsx:15
 msgid "Logged out"
 msgstr "Odhlášen"
 
@@ -705,10 +709,11 @@ msgid "Manage linked events"
 msgstr "Spravovat propojené závody"
 
 #: src/components/event/EventListItem.js:73
+#: src/components/event/EventMapViewer.tsx:159
 msgid "Map"
 msgstr "Mapa"
 
-#: src/components/event/EventMapViewer.js:302
+#: src/components/event/EventMapViewer.tsx:229
 msgid "Map Viewer"
 msgstr "Prohlížeč map"
 
@@ -716,7 +721,7 @@ msgstr "Prohlížeč map"
 msgid "Map name"
 msgstr "Název mapy"
 
-#: src/components/event/EventMapViewerEdit.js:242
+#: src/components/event/EventMapViewerEdit.js:252
 msgid "Map title"
 msgstr "Nadpis mapy"
 
@@ -728,12 +733,12 @@ msgstr "MapOholic vytvořil a nadále vylepšuje {linkMark}. Jsem britský orien
 msgid "Member of"
 msgstr "Člen"
 
-#: src/components/club/ClubMembers.js:90
+#: src/components/club/ClubMembers.tsx:57
 msgid "Members"
 msgstr "Členové"
 
-#: src/components/Header.js:203
-#: src/components/Header.js:215
+#: src/components/Header.js:205
+#: src/components/Header.js:217
 msgid "My Maps"
 msgstr "Moje mapy"
 
@@ -793,7 +798,7 @@ msgstr "Poznámka: Závod může běžný uživatel vymazat pouze v případě, 
 #~ msgid "Note: The overlays will only be aligned properly if the course map they were drawn on is exactly the same."
 #~ msgstr "Poznámka: Zakreslené trasy (“overlays”) budou zarovnáne pouze v případě, že mapa na kterou byly zakresleny, je úplně stejná."
 
-#: src/components/event/EventMapViewer.js:289
+#: src/components/event/EventMapViewer.tsx:218
 msgid "Note: The overlays will only be perfectly aligned if they were drawn on the same course map."
 msgstr "Poznámka: Zakreslené trasy (“overlays”) budou zarovnáne pouze v případě, že mapa na kterou byly zakresleny, je úplně stejná."
 
@@ -805,7 +810,7 @@ msgstr "Počet kontrol"
 msgid "Number of controls on course"
 msgstr "Počet kontrol na trati"
 
-#: src/components/club/ClubDetails.js:49
+#: src/components/club/ClubDetails.tsx:28
 #: src/components/user/UserDetails.js:52
 msgid "ORIS ID: {orisId}"
 msgstr "ORIS ID: {orisId}"
@@ -818,12 +823,12 @@ msgstr "Poté co vytvoříš záznam závodu nebo pokud si prohlížíš detaily
 msgid "Organised by"
 msgstr "Pořadatel"
 
-#: src/components/club/ClubEdit.js:154
+#: src/components/club/ClubEdit.tsx:85
 #: src/components/event/EventEdit.js:702
 msgid "Owner"
 msgstr "Vlastník"
 
-#: src/components/club/ClubEdit.js:159
+#: src/components/club/ClubEdit.tsx:87
 msgid "Owner of club record in this database"
 msgstr "Vlastník záznamu o oddílu v této databázi"
 
@@ -831,7 +836,7 @@ msgstr "Vlastník záznamu o oddílu v této databázi"
 msgid "Owner of event record in this database"
 msgstr "Vlastník záznamu o závodě v této databázi"
 
-#: src/components/club/ClubDetails.js:47
+#: src/components/club/ClubDetails.tsx:26
 #: src/components/event/EventDetails.js:88
 msgid "Owner: {0}"
 msgstr "Vlastník: {0}"
@@ -840,11 +845,11 @@ msgstr "Vlastník: {0}"
 msgid "Page"
 msgstr "Strana"
 
-#: src/components/auth/Authenticate.js:78
+#: src/components/auth/Authenticate.js:81
 msgid "Password"
 msgstr "Heslo"
 
-#: src/components/event/EventHeader.js:67
+#: src/components/event/EventHeader.js:68
 msgid "Personal tags"
 msgstr "Vlastní označení"
 
@@ -885,8 +890,8 @@ msgstr "Viditelnost profilu: {visibility}"
 msgid "Recent activity"
 msgstr "Nedávné změny"
 
-#: src/components/club/ClubHeader.js:48
-#: src/components/event/EventHeader.js:108
+#: src/components/club/ClubHeader.tsx:24
+#: src/components/event/EventHeader.js:110
 #: src/components/user/UserHeader.js:35
 msgid "Refresh list"
 msgstr "Obnovit seznam"
@@ -907,13 +912,13 @@ msgstr "Registrační číslo"
 msgid "Result: <0>{time}</0>"
 msgstr "Výsledek: <0>{time}</0>"
 
-#: src/components/event/EventDetails.js:235
+#: src/components/event/EventDetails.js:234
 #: src/components/event/EventEdit.js:644
 #: src/components/event/EventResults.js:386
 msgid "Results"
 msgstr "Výsledky"
 
-#: src/components/event/EventMapViewer.js:179
+#: src/components/event/EventMapViewer.tsx:141
 msgid "Return to map view"
 msgstr "Návrat do mapového náhledu"
 
@@ -921,7 +926,7 @@ msgstr "Návrat do mapového náhledu"
 msgid "Role"
 msgstr "Role"
 
-#: src/components/event/EventMapViewerEdit.js:354
+#: src/components/event/EventMapViewerEdit.js:370
 msgid "Route"
 msgstr "Postup"
 
@@ -929,7 +934,7 @@ msgstr "Postup"
 msgid "Runner details"
 msgstr "Detaily běžce"
 
-#: src/components/event/EventRunners.js:97
+#: src/components/event/EventRunners.js:99
 msgid "Runners at event (select one to see their maps)"
 msgstr "Běžci na závodě (vyber jednoho abyste zobrazili jeho mapy)"
 
@@ -963,15 +968,15 @@ msgstr "Vyhledej závod, ve kterém jsi běžel: pokud se najde, skvělé, pokud
 msgid "See below for detailed results ({0} runners)"
 msgstr "Viz níže pro podrobné výsledky ({0} běžců)"
 
-#: src/components/club/ClubView.js:163
+#: src/components/club/ClubView.js:169
 msgid "Select a club from the list to show further details here"
 msgstr "Pro více informaci, vyberte zde oddíl ze seznamu"
 
-#: src/components/event/MapView.js:290
+#: src/components/event/MapView.js:289
 msgid "Select a runner from the list to show further details here"
 msgstr "Pro více informaci, vyberte zde běžce ze seznamu"
 
-#: src/components/user/UserView.js:411
+#: src/components/user/UserView.js:418
 msgid "Select a user from the list to show further details here"
 msgstr "Pro více informaci, vyberte zde uživatele ze seznamu"
 
@@ -979,7 +984,7 @@ msgstr "Pro více informaci, vyberte zde uživatele ze seznamu"
 msgid "Select your JSON or CSV results file (drag and drop or click to open file dialogue)."
 msgstr "Vyber soubor s výsledyů ve formátu CSV nebo JSON (přetažením nebo kliknutím, což otevře dialog pro otevření souboru)."
 
-#: src/components/event/EventMapViewerEdit.js:293
+#: src/components/event/EventMapViewerEdit.js:304
 msgid "Select your course map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Vyber soubor mapy trati (přetažením nebo kliknutím, což otevře dialog pro otevření souboru). Soubor musí být typu  JPEG nebo PNG, maximální velikost 5MB."
 
@@ -987,7 +992,7 @@ msgstr "Vyber soubor mapy trati (přetažením nebo kliknutím, což otevře dia
 msgid "Select your file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 1MB."
 msgstr "Vyber soubor (přetažením nebo kliknutím, což otevře dialog pro otevření souboru). Soubor musí být obrázkek typu JPEG nebo PNG, maximální velikost 1MB."
 
-#: src/components/event/EventMapViewerEdit.js:301
+#: src/components/event/EventMapViewerEdit.js:312
 msgid "Select your route map file (drag and drop or click to open file dialogue). The file must be a JPEG or PNG image, maximum size 5MB."
 msgstr "Vyber soubor mapy postupů (přetažením nebo kliknutím, což otevře dialog pro otevření souboru). Soubor musí být obrázekek typu JPEG nebo PNG, maximální velikost 5MB."
 
@@ -999,19 +1004,19 @@ msgstr "Nastav a edituj pozici rohů mapy"
 msgid "Show event link list"
 msgstr "Zobrazit seznam odkazů na závody"
 
-#: src/components/event/EventMapViewer.js:284
+#: src/components/event/EventMapViewer.tsx:213
 msgid "Show routes as highlighted overlays:"
 msgstr "Zobrazit zvýrazněně postupy"
 
-#: src/components/Header.js:267
+#: src/components/Header.js:269
 msgid "Sign Up"
 msgstr "Zaregistrovat se"
 
-#: src/components/auth/Authenticate.js:55
+#: src/components/auth/Authenticate.js:59
 msgid "Sign up"
 msgstr "Zaregistrovat se"
 
-#: src/components/auth/Authenticate.js:122
+#: src/components/auth/Authenticate.js:120
 msgid "Sign up for MapOholic"
 msgstr "Zaregistrovat se na MapOholic"
 
@@ -1031,12 +1036,12 @@ msgstr "Takže účet je vytvořen a poprvé jsi se přihlásil(a). Co teď? Př
 #~ msgid "So, you’ve created an account and logged in for the first time. What do you do next? I’ll assume that you already have some scanned maps ready to upload."
 #~ msgstr "Takže účet je vytvořen a poprvé jsi se přihlásil. Co teď? Předpokládám, že už máš nějaké naskenované mapy připravené k nahrání."
 
-#: src/components/auth/Logout.js:22
+#: src/components/auth/Logout.tsx:16
 msgid "Sorry to see you leave, come back again soon!"
 msgstr "Je nám líto, že nás opouštíš, vrať se brzy!"
 
-#: src/components/event/EventView.js:386
-#: src/components/event/MapView.js:369
+#: src/components/event/EventView.js:403
+#: src/components/event/MapView.js:368
 msgid "Sorry, no event is selected."
 msgstr "Je nám líto, ale není vybraný žádný závod."
 
@@ -1060,7 +1065,7 @@ msgstr "Je nám líto, ale něco je rozbité{0}."
 msgid "Sorry, there are no maps to display."
 msgstr "Je nám líto, ale žádná taková mapa nebyla nalezena."
 
-#: src/components/club/ClubList.js:20
+#: src/components/club/ClubList.tsx:12
 msgid "Sorry, there aren't any matching clubs to display!"
 msgstr "Je nám líto, ale žádný takový oddíl nebyl nalezen!"
 
@@ -1072,7 +1077,7 @@ msgstr "Je nám líto, ale žádný takový závod nebyl nalezen!"
 msgid "Sorry, there aren't any matching users to display!"
 msgstr "Je nám líto, ale žádný uživatel nebyl nalezen!"
 
-#: src/components/club/ClubEdit.js:88
+#: src/components/club/ClubEdit.tsx:44
 msgid "Standard abbreviation for club"
 msgstr "Standardní zkratka oddílu"
 
@@ -1145,7 +1150,7 @@ msgstr "To by se MapOholic mohl hodit i Tobě!"
 msgid "There has been no recent activity."
 msgstr "Nebyla žádná nedávná aktivita."
 
-#: src/components/club/ClubDelete.js:17
+#: src/components/club/ClubDelete.tsx:12
 msgid "This will delete all records relating to this club, including connections with users (as members) and events (as organisers)."
 msgstr "Tímto se vymažou všechny detaily spojené s tímto oddílem, včetně propojení s uživately (členi) a se závody (pořadatelé)"
 
@@ -1166,7 +1171,7 @@ msgstr "Ztráta na vítěze"
 msgid "Time taken"
 msgstr "Čas"
 
-#: src/components/event/EventMapViewerEdit.js:248
+#: src/components/event/EventMapViewerEdit.js:258
 msgid "Title for map (e.g. \"Part 1\")"
 msgstr "Název mapy (např. \"1. Část\")"
 
@@ -1182,6 +1187,10 @@ msgstr "K editaci výsledků je třeba je stáhnout (ve formátu CSV nebo JSON),
 msgid "Total number of runners"
 msgstr "Počet běžců"
 
+#: src/components/event/EventMapViewer.tsx:152
+msgid "Tracks (beta)"
+msgstr "Postupy (beta)"
+
 #: src/components/event/EventEdit.js:591
 msgid "Type of event"
 msgstr "Disciplína"
@@ -1194,16 +1203,16 @@ msgstr "Disciplíny"
 msgid "Unknown actionType {actionType}"
 msgstr "Neznámý actionType {actionType}"
 
-#: src/components/club/ClubEdit.js:60
-#: src/components/event/EventEdit.js:160
+#: src/components/club/ClubEdit.tsx:19
+#: src/components/event/EventEdit.js:162
 #: src/components/event/EventLinkedEdit.js:52
 #: src/components/event/EventRunnerEdit.js:232
-#: src/components/user/UserEdit.js:272
+#: src/components/user/UserEdit.js:271
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: src/components/event/EventMapViewerEdit.js:341
-#: src/components/event/EventMapViewerEdit.js:372
+#: src/components/event/EventMapViewerEdit.js:357
+#: src/components/event/EventMapViewerEdit.js:388
 #: src/components/user/UserEditProfileImage.js:63
 msgid "Upload selected"
 msgstr "Nahrát vyběr"
@@ -1212,12 +1221,12 @@ msgstr "Nahrát vyběr"
 msgid "User list"
 msgstr "Seznam Uživatelů"
 
-#: src/components/auth/Authenticate.js:97
+#: src/components/auth/Authenticate.js:98
 #: src/components/user/UserEdit.js:135
 msgid "User name"
 msgstr "Jméno uživatele"
 
-#: src/components/user/UserDetails.js:140
+#: src/components/user/UserDetails.js:137
 msgid "User profile"
 msgstr "Profil uživatele"
 
@@ -1229,7 +1238,7 @@ msgstr "Filtr pro hledání uživatele"
 msgid "User type: {role}"
 msgstr "Druh užvatele: {role}"
 
-#: src/components/Header.js:240
+#: src/components/Header.js:242
 msgid "Users"
 msgstr "Uživatelé"
 
@@ -1241,8 +1250,8 @@ msgstr "Viditelnost"
 msgid "Visibility of your maps from this event to others"
 msgstr "Viditelnost tvých map z tohoto závodu ostatním"
 
-#: src/components/club/ClubDetails.js:97
-#: src/components/club/ClubEdit.js:136
+#: src/components/club/ClubDetails.tsx:69
+#: src/components/club/ClubEdit.tsx:74
 #: src/components/event/EventEdit.js:628
 msgid "Website"
 msgstr "Webová stránka"
@@ -1275,7 +1284,7 @@ msgstr "Zde můžeš nahrát výsledky své kategorie v CSV (exportované z tabu
 msgid "You have already uploaded {uploadedMapsText} from {attendedEventsText}. You can browse or search for them either {myEventsListLink} or {myEventsMapLink}."
 msgstr "Už jsi nahrál(a) {uploadedMapsText} ze závodu {attendedEventsText}. Můžeš je prohlížet a hledat přes náhled přes seznam {myEventsListLink} nebo náhled přes mapu {myEventsMapLink}."
 
-#: src/components/user/UserView.js:345
+#: src/components/user/UserView.js:350
 msgid "You have not added any events yet."
 msgstr "Dosud jsi nepřidal(a) žadné závody."
 
@@ -1295,7 +1304,7 @@ msgstr "Vaše vlastní heslo"
 msgid "Your own recent activity"
 msgstr "Tvoje vlastní nedávná aktivita"
 
-#: src/components/event/EventRunners.js:55
+#: src/components/event/EventRunners.js:54
 msgid "[unknown course]"
 msgstr "[neznámá trať]"
 
@@ -1312,12 +1321,12 @@ msgstr "klienta"
 msgid "log in"
 msgstr "přihlasit se"
 
-#: src/components/event/EventMapViewerEdit.js:215
-#: src/components/event/EventMapViewerEdit.js:234
+#: src/components/event/EventMapViewerEdit.js:225
+#: src/components/event/EventMapViewerEdit.js:244
 msgid "no map yet"
 msgstr "ještě není mapa"
 
-#: src/components/event/EventMapViewer.js:214
+#: src/components/event/EventMapViewer.tsx:167
 msgid "no maps found"
 msgstr "žádné mapy nenalezeny"
 
@@ -1360,14 +1369,14 @@ msgid "themselves"
 msgstr "pro sebe"
 
 #: src/components/event/EventMapViewer.js:207
-msgid "untitled"
-msgstr "bez titulu"
+#~ msgid "untitled"
+#~ msgstr "bez titulu"
 
 #: src/components/event/EventCommentsList.js:28
 msgid "{0, plural, one {# comment} other {# comments}}"
 msgstr "{0, plural, one {# komentář} few {# komentáře} many {# komentáře} other {# komentářů}}"
 
-#: src/components/club/ClubMembers.js:53
+#: src/components/club/ClubMembers.tsx:38
 msgid "{0, plural, one {# map} other {# maps}}"
 msgstr "{0, plural, one {# mapa} few {# mapy} many {# mapy} other {# map}}"
 

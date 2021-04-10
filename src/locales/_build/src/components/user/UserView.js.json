@@ -3,7 +3,7 @@
     "origin": [
       [
         "src/components/user/UserView.js",
-        149
+        154
       ]
     ]
   },
@@ -11,7 +11,7 @@
     "origin": [
       [
         "src/components/user/UserView.js",
-        345
+        350
       ]
     ]
   },
@@ -19,7 +19,7 @@
     "origin": [
       [
         "src/components/user/UserView.js",
-        411
+        418
       ]
     ]
   }
