@@ -310,7 +310,7 @@ select, optgroup {
 }
 /* settings for EventMapViewerCanvas */
 .event-map-viewer__container {
-  height: 640px;
+  height: 600px;
   width: 100%;
   overflow: hidden;
 }
@@ -367,6 +367,9 @@ select, optgroup {
 .event-map-viewer-geo {
   padding: 10px;
 }
+.event-map-viewer-geo-right-panel {
+  margin-top: 10px;
+}
 /* settings for EventMapViewerTracks */
 .event-map-viewer-tracks {
   padding: 10px;
@@ -396,6 +399,10 @@ select, optgroup {
   border: none;
   float: right;
   margin-bottom: 1em;
+}
+.event-viewer-geo-map {
+  margin-top: 10px;
+  height: 590px !important;
 }
 
 /* Home components */

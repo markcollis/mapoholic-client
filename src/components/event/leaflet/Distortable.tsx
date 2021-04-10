@@ -16,7 +16,7 @@ import {
 
 interface IDistortableProps {
   url: string;
-  initialCorners?: L.LatLng[];
+  initialCorners: L.LatLng[];
   triggerSelect: number;
   triggerUpdateCorners: number;
   triggerResetCorners: number;
@@ -40,6 +40,7 @@ const Distortable: FunctionComponent<IDistortableProps> = (props) => {
   useEffect(() => {
     console.log('url/initialCorners in Distortable useEffect setup', url, initialCorners);
     const options = {
+      corners: initialCorners,
       actions: [
         // @ts-ignore
         L.DragAction,
@@ -57,8 +58,6 @@ const Distortable: FunctionComponent<IDistortableProps> = (props) => {
         L.StackAction,
       ],
     };
-    // @ts-ignore
-    if (initialCorners) options.corners = initialCorners;
     // @ts-ignore
     const distortableImageLayer = L.distortableImageOverlay(url, options);
     distortableRef.current = distortableImageLayer;

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   MapContainer,
   TileLayer,
@@ -38,44 +38,31 @@ const getDistortableCornersFromInitialBounds = (bounds: OEventPosition[]): LatLn
 interface EventViewerGeoMapProps {
   runnerId: string;
   selectedEvent: OEvent;
+  triggerSelect: number;
+  triggerUpdateCorners: number;
+  triggerResetCorners: number;
+  updateCorners: (corners: L.LatLng[]) => void;
 }
 
 // simple map to show the location of a single event
 const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
   runnerId,
   selectedEvent,
+  triggerSelect,
+  triggerUpdateCorners,
+  triggerResetCorners,
+  updateCorners,
 }) => {
   const {
     locLat,
     locLong,
   } = selectedEvent;
-  const [triggerSelect, setTriggerSelect] = useState(0);
-  const [triggerUpdateCorners, setTriggerUpdateCorners] = useState(0);
-  const [triggerResetCorners, setTriggerResetCorners] = useState(0);
-  const [corners, setCorners] = useState<LatLng[]>([]);
-  console.log('corners in EvGeoMap', corners);
 
   if (!locLat || !locLong) return <p>Sorry, we don&apos;t know where this event is...</p>;
   const initialMapBounds: OEventPosition[] = [
     [locLat - 0.01, locLong - 0.01],
     [locLat + 0.01, locLong + 0.01],
   ];
-
-  const handleTriggerSelect = () => {
-    setTriggerSelect(triggerSelect + 1);
-  };
-
-  const handleTriggerUpdateCorners = () => {
-    setTriggerUpdateCorners(triggerUpdateCorners + 1);
-  };
-
-  const handleTriggerResetCorners = () => {
-    setTriggerResetCorners(triggerResetCorners + 1);
-  };
-
-  const handleUpdateCorners = (updatedCorners: LatLng[]): void => {
-    setCorners(updatedCorners);
-  };
 
   const polygonBounds = derivePolygonBoundsFromEvent(selectedEvent, runnerId);
   // eslint-disable-next-line
@@ -115,7 +102,7 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
           triggerSelect={triggerSelect}
           triggerUpdateCorners={triggerUpdateCorners}
           triggerResetCorners={triggerResetCorners}
-          updateCorners={handleUpdateCorners}
+          updateCorners={updateCorners}
         />
       );
     }
@@ -127,7 +114,7 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
           triggerSelect={triggerSelect}
           triggerUpdateCorners={triggerUpdateCorners}
           triggerResetCorners={triggerResetCorners}
-          updateCorners={handleUpdateCorners}
+          updateCorners={updateCorners}
         />
       );
     }
@@ -138,29 +125,22 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
         triggerSelect={triggerSelect}
         triggerUpdateCorners={triggerUpdateCorners}
         triggerResetCorners={triggerResetCorners}
-        updateCorners={handleUpdateCorners}
+        updateCorners={updateCorners}
       />
     );
   });
 
   return (
-    <div>
-      <MapContainer
-        id="EventViewerGeoMap"
-        className="event-viewer-geo-map"
-        bounds={initialMapBounds} // this prop will not reset map if selected event changes
-      >
-        <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
-        {/* {polygon} */}
-        {route}
-        {mapImages.length && mapImages[0]}
-      </MapContainer>
-      <button type="button" onClick={handleTriggerSelect}>select</button>
-      <button type="button" onClick={handleTriggerUpdateCorners}>update corners</button>
-      <button type="button" onClick={handleTriggerResetCorners}>reset corners</button>
-      <p>Corners:</p>
-      <p>{JSON.stringify(corners)}</p>
-    </div>
+    <MapContainer
+      id="EventViewerGeoMap"
+      className="event-viewer-geo-map"
+      bounds={initialMapBounds} // this prop will not reset map if selected event changes
+    >
+      <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
+      {/* {polygon} */}
+      {route}
+      {mapImages.length && mapImages[0]}
+    </MapContainer>
   );
 };
 
