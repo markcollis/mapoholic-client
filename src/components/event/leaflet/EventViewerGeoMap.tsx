@@ -4,16 +4,22 @@ import {
   MapContainer,
   TileLayer,
   Polygon,
-  // ImageOverlay,
 } from 'react-leaflet';
 import { LatLng } from 'leaflet';
-import Distortable from './Distortable';
 
+import Distortable from './Distortable';
 import TrackWaypoints from './TrackWaypoints';
 
 import { MAP_TILES, MAP_CREDIT } from '../../../config';
-import { OEvent, OEventPosition, OEventCorners } from '../../../types/event';
 import { derivePolygonBoundsFromEvent } from './getPolygonBounds';
+import {
+  OEvent,
+  OEventMap,
+  OEventPosition,
+  OEventCorners,
+} from '../../../types/event';
+
+export type GeoMapState<T> = { [mapId: string]: T };
 
 // array of L.latLng objects in NW, NE, SW, SE order (in a "Z" shape)
 const getDistortableCorners = (corners: OEventCorners): LatLng[] => ([
@@ -36,21 +42,25 @@ const getDistortableCornersFromInitialBounds = (bounds: OEventPosition[]): LatLn
 ]);
 
 interface EventViewerGeoMapProps {
-  runnerId: string;
+  language: string;
+  matchingMaps: OEventMap[];
   selectedEvent: OEvent;
-  triggerSelect: number;
-  triggerUpdateCorners: number;
-  triggerResetCorners: number;
-  updateCorners: (corners: L.LatLng[]) => void;
+  selectedRunner: string;
+  triggerResetCorners: GeoMapState<number>;
+  triggerSelect: GeoMapState<number>;
+  triggerUpdateCorners: GeoMapState<number>;
+  updateCorners: (mapId: string) => (corners: L.LatLng[]) => void;
 }
 
-// simple map to show the location of a single event
+// map showing the imported map images and tracks overlaid on OSM
 const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
-  runnerId,
+  language,
+  matchingMaps,
   selectedEvent,
+  selectedRunner,
+  triggerResetCorners,
   triggerSelect,
   triggerUpdateCorners,
-  triggerResetCorners,
   updateCorners,
 }) => {
   const {
@@ -60,11 +70,11 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
 
   if (!locLat || !locLong) return <p>Sorry, we don&apos;t know where this event is...</p>;
   const initialMapBounds: OEventPosition[] = [
-    [locLat - 0.01, locLong - 0.01],
-    [locLat + 0.01, locLong + 0.01],
+    [locLat - 0.01, locLong - 0.02],
+    [locLat + 0.01, locLong + 0.02],
   ];
 
-  const polygonBounds = derivePolygonBoundsFromEvent(selectedEvent, runnerId);
+  const polygonBounds = derivePolygonBoundsFromEvent(selectedEvent, selectedRunner);
   // eslint-disable-next-line
   const polygon = ( // not currently used
     <Polygon
@@ -72,9 +82,6 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
       pathOptions={{ color: 'blue' }}
     />
   );
-
-  const matchingRunner = selectedEvent.runners.find(({ user: { _id } }) => _id === runnerId);
-  const matchingMaps = (matchingRunner && matchingRunner.maps) || [];
 
   const trackData = matchingMaps
     .map((map) => ((map.geo && map.geo.track) ? map.geo.track : []))
@@ -90,42 +97,26 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
     );
   });
 
-  console.log('matchingMaps', matchingMaps);
   const mapsWithImages = matchingMaps.filter((map) => map.course); // want course not route
   const mapImages = mapsWithImages.map((map) => {
-    if (map.geo && map.geo.imageCorners) {
-      return (
-        <Distortable
-          key={map.course}
-          url={map.course}
-          initialCorners={getDistortableCorners(map.geo.imageCorners)}
-          triggerSelect={triggerSelect}
-          triggerUpdateCorners={triggerUpdateCorners}
-          triggerResetCorners={triggerResetCorners}
-          updateCorners={updateCorners}
-        />
-      );
-    }
+    const { _id } = map;
+    let initialCorners = getDistortableCornersFromInitialBounds(initialMapBounds);
     if (polygonBounds.length === 4) {
-      return (
-        <Distortable
-          url={map.course}
-          initialCorners={getDistortableCornersFromPolygonBounds(polygonBounds)}
-          triggerSelect={triggerSelect}
-          triggerUpdateCorners={triggerUpdateCorners}
-          triggerResetCorners={triggerResetCorners}
-          updateCorners={updateCorners}
-        />
-      );
+      initialCorners = getDistortableCornersFromPolygonBounds(polygonBounds);
+    }
+    if (map.geo && map.geo.imageCorners) {
+      initialCorners = getDistortableCorners(map.geo.imageCorners);
     }
     return (
       <Distortable
+        key={_id}
+        initialCorners={initialCorners}
+        language={language}
+        triggerResetCorners={triggerResetCorners[_id] || 0}
+        triggerSelect={triggerSelect[_id] || 0}
+        triggerUpdateCorners={triggerUpdateCorners[_id] || 0}
+        updateCorners={updateCorners(_id)}
         url={map.course}
-        initialCorners={getDistortableCornersFromInitialBounds(initialMapBounds)}
-        triggerSelect={triggerSelect}
-        triggerUpdateCorners={triggerUpdateCorners}
-        triggerResetCorners={triggerResetCorners}
-        updateCorners={updateCorners}
       />
     );
   });
@@ -139,7 +130,7 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
       <TileLayer attribution={MAP_CREDIT} url={MAP_TILES} />
       {/* {polygon} */}
       {route}
-      {mapImages.length && mapImages[0]}
+      {mapImages}
     </MapContainer>
   );
 };

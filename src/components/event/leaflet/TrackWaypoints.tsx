@@ -29,7 +29,7 @@ interface TrackWaypointProps {
 }
 
 const DEFAULT_PATH_OPTIONS = {
-  color: 'red',
+  color: 'blue',
 };
 
 // simple approximation of distance (in metres) for waypoints that are close together

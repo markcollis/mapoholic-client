@@ -523,6 +523,7 @@ class MapView extends Component {
   // render EventMapViewer component (self-contained with add/replace/delete maps)
   renderEventMapViewer = () => {
     const {
+      config,
       oevent,
       user,
       deleteMap,
@@ -540,6 +541,7 @@ class MapView extends Component {
       selectedMap,
     } = oevent;
     const { current } = user;
+    const { language } = config;
 
     const selectedEvent = this.getSelectedEvent(details, selectedEventIdMapView, errorMessage);
     const canEdit = this.getCanEditRunner(current, selectedRunner);
@@ -547,12 +549,13 @@ class MapView extends Component {
     return (
       <EventMapViewer
         canEdit={canEdit} // derived
-        selectedEvent={selectedEvent} // derived
-        selectedRunner={selectedRunner} // prop (oevent)
-        selectedMap={selectedMap} // prop (oevent)
         deleteMap={deleteMap} // prop
+        language={language} // prop
         mapViewParameters={mapViewParameters} // prop (oevent)
         postMap={postMap} // prop
+        selectedEvent={selectedEvent} // derived
+        selectedMap={selectedMap} // prop (oevent)
+        selectedRunner={selectedRunner} // prop (oevent)
         selectMapToDisplay={selectMapToDisplay} // prop
         setMapViewParameters={setMapViewParameters} // prop
         updateEventRunner={updateEventRunner} // prop

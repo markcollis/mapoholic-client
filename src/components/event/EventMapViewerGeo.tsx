@@ -1,68 +1,115 @@
-/* eslint-disable react/prop-types */
 import React, { FunctionComponent, useState } from 'react';
 import { LatLng } from 'leaflet';
+import { Trans } from '@lingui/macro';
 
-import EventViewerGeoMap from './leaflet/EventViewerGeoMap';
-import { OEvent } from '../../types/event';
+import EventViewerGeoMap, { GeoMapState } from './leaflet/EventViewerGeoMap';
+import { OEvent, OEventMap } from '../../types/event';
 
 interface EventMapViewerGeoProps {
+  language: string;
   selectedEvent: OEvent;
   selectedRunner: string;
+  updateEventRunner: (eventId: string, userId: string, maps: OEventMap[]) => void;
 }
 
 const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
+  language,
   selectedEvent,
   selectedRunner,
+  // updateEventRunner,
 }) => {
-  const [triggerSelect, setTriggerSelect] = useState(0);
-  const [triggerUpdateCorners, setTriggerUpdateCorners] = useState(0);
-  const [triggerResetCorners, setTriggerResetCorners] = useState(0);
-  const [corners, setCorners] = useState<LatLng[]>([]);
-  console.log('corners in EvGeoMap', corners);
+  const [triggerSelect, setTriggerSelect] = useState<GeoMapState<number>>({});
+  const [triggerUpdateCorners, setTriggerUpdateCorners] = useState<GeoMapState<number>>({});
+  const [triggerResetCorners, setTriggerResetCorners] = useState<GeoMapState<number>>({});
+  const [corners, setCorners] = useState<GeoMapState<LatLng[]>>({});
 
-  const handleTriggerSelect = () => {
-    setTriggerSelect(triggerSelect + 1);
+  const handleTriggerSelect = (mapId: string) => {
+    setTriggerSelect({
+      ...triggerSelect,
+      [mapId]: triggerSelect[mapId] ? triggerSelect[mapId] + 1 : 1,
+    });
   };
 
-  const handleTriggerUpdateCorners = () => {
-    setTriggerUpdateCorners(triggerUpdateCorners + 1);
+  const handleTriggerUpdateCorners = (mapId: string) => {
+    setTriggerUpdateCorners({
+      ...triggerUpdateCorners,
+      [mapId]: triggerUpdateCorners[mapId] ? triggerUpdateCorners[mapId] + 1 : 1,
+    });
   };
 
-  const handleTriggerResetCorners = () => {
-    setTriggerResetCorners(triggerResetCorners + 1);
+  const handleTriggerResetCorners = (mapId: string) => {
+    setTriggerResetCorners({
+      ...triggerResetCorners,
+      [mapId]: triggerResetCorners[mapId] ? triggerResetCorners[mapId] + 1 : 1,
+    });
   };
 
-  const handleUpdateCorners = (updatedCorners: LatLng[]): void => {
-    setCorners(updatedCorners);
+  const handleUpdateCorners = (mapId: string) => (updatedCorners: LatLng[]): void => {
+    setCorners({
+      ...corners,
+      [mapId]: updatedCorners,
+    });
   };
+
+  const matchingRunner = selectedEvent.runners.find(({ user: { _id } }) => _id === selectedRunner);
+  const matchingMaps = (matchingRunner && matchingRunner.maps) || [];
+
+  const mapList = matchingMaps.map((map) => (
+    <div key={map.title}>
+      <p>{map.title}</p>
+      <button
+        type="button"
+        className="ui button tiny"
+        onClick={() => handleTriggerSelect(map._id)}
+      >
+        <Trans>Select</Trans>
+      </button>
+      <button
+        type="button"
+        className="ui button tiny"
+        onClick={() => handleTriggerUpdateCorners(map._id)}
+      >
+        <Trans>Update corners</Trans>
+      </button>
+      <button
+        type="button"
+        className="ui button tiny"
+        onClick={() => handleTriggerResetCorners(map._id)}
+      >
+        <Trans>Reset</Trans>
+      </button>
+      <p>Corners:</p>
+      <p>{JSON.stringify(corners[map._id])}</p>
+    </div>
+  ));
 
   return (
     <div className="event-map-viewer-geo ui grid">
-      <div className="eight wide column">
+      <div className="ten wide column">
         <EventViewerGeoMap
+          language={language}
+          matchingMaps={matchingMaps}
           selectedEvent={selectedEvent}
-          runnerId={selectedRunner}
+          selectedRunner={selectedRunner}
+          triggerResetCorners={triggerResetCorners}
           triggerSelect={triggerSelect}
           triggerUpdateCorners={triggerUpdateCorners}
-          triggerResetCorners={triggerResetCorners}
           updateCorners={handleUpdateCorners}
         />
       </div>
-      <div className="event-map-viewer-geo-right-panel eight wide column">
-        <h3>{selectedEvent.name}</h3>
-        <p>{selectedRunner}</p>
-        <button type="button" onClick={handleTriggerSelect}>select</button>
-        <button type="button" onClick={handleTriggerUpdateCorners}>update corners</button>
-        <button type="button" onClick={handleTriggerResetCorners}>reset corners</button>
-        <p>Corners:</p>
-        <p>{JSON.stringify(corners)}</p>
-
+      <div className="event-map-viewer-geo-right-panel six wide column">
+        <p><Trans>Course maps uploaded</Trans></p>
+        {mapList}
+        <hr />
         <p>Features to add</p>
         <ul>
-          <li>Overlay all scanned maps on Leaflet/OSM</li>
-          <li>Simple distortion (corners) for best fit - use imageCorners as is?</li>
-          <li>Display tracks (hotlines, configurable)</li>
-          <li>Choose which of several maps/tracks are shown</li>
+          <li>Overlay all scanned maps on Leaflet/OSM - done</li>
+          <li>Simple distortion (corners) for best fit - done</li>
+          <li>Display tracks (hotlines where there is data) - done</li>
+          <li>Choose which of several maps/tracks are shown - can select/bring to front</li>
+          <li>Allow map record to be updated</li>
+          <li>Limit editing to admin/current user</li>
+          <li>Sort out scroll when lots of maps</li>
         </ul>
       </div>
     </div>

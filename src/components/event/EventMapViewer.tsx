@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Trans } from '@lingui/macro';
 import memoize from 'memoize-one';
+
 import EventMapViewerCanvas from './EventMapViewerCanvas';
 import EventMapViewerDetails from './EventMapViewerDetails';
 import EventMapViewerGeo from './EventMapViewerGeo';
@@ -45,6 +46,7 @@ type MapViewParams = {
 interface EventMapViewerProps {
   canEdit?: boolean;
   deleteMap: (params: MapParams) => void;
+  language: string;
   mapViewParameters: { [key: string]: MapViewParams },
   postMap: (params: MapParams, mapToUpload: any, callback: (onSuccess: boolean) => void) => void;
   selectedEvent?: OEvent;
@@ -218,6 +220,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
     const {
       canEdit,
       deleteMap,
+      language,
       mapViewParameters,
       postMap,
       selectedEvent,
@@ -297,8 +300,10 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
     const renderGeo = selectedEvent && selectedRunner && selectedMap === 'geo'
       ? (
         <EventMapViewerGeo
+          language={language}
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
+          updateEventRunner={updateEventRunner}
         />
       )
       : null;
