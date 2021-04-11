@@ -12,6 +12,7 @@ import {
 } from '../../types/event';
 
 interface EventMapViewerGeoProps {
+  canEdit: boolean;
   language: string;
   selectedEvent: OEvent;
   selectedRunner: string;
@@ -24,6 +25,7 @@ interface EventMapViewerGeoProps {
 }
 
 const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
+  canEdit,
   language,
   selectedEvent,
   selectedRunner,
@@ -156,7 +158,7 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
   };
   const mapList = matchingMaps.map((map) => (
     <div key={map.title}>
-      <p>{map.title}</p>
+      {map.title && <p>{map.title}</p>}
       <button
         type="button"
         className="ui button tiny"
@@ -184,7 +186,17 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
 
   const enableUpload = matchingMaps.length > 0
     && Object.values(haveCornersChanged).some((changed) => changed);
-
+  const uploadButton = canEdit
+    ? (
+      <button
+        type="button"
+        className="ui button tiny primary"
+        disabled={!enableUpload}
+        onClick={handleUploadCorners}
+      >
+        <Trans>Upload new corners</Trans>
+      </button>
+    ) : null;
   return (
     <div className="event-map-viewer-geo ui grid">
       <div className="ten wide column">
@@ -200,16 +212,8 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
         />
       </div>
       <div className="event-map-viewer-geo-right-panel six wide column">
-        <p><Trans>Course maps uploaded</Trans></p>
         {mapList}
-        <button
-          type="button"
-          className="ui button tiny primary"
-          disabled={!enableUpload}
-          onClick={handleUploadCorners}
-        >
-          <Trans>Upload new corners</Trans>
-        </button>
+        {uploadButton}
         <hr />
         <p>Features to add</p>
         <ul>

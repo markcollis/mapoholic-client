@@ -305,6 +305,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
     const renderGeo = selectedEvent && selectedRunner && selectedMap === 'geo'
       ? (
         <EventMapViewerGeo
+          canEdit={canEdit || false}
           language={language}
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
