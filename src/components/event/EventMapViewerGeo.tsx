@@ -140,18 +140,20 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
     return (
       <div>
         <table>
-          <tr>
-            <td><strong><Trans>NW</Trans></strong></td>
-            <td>{formattedCoords(cornersToDisplay.nw)}</td>
-            <td><strong><Trans>NE</Trans></strong></td>
-            <td>{formattedCoords(cornersToDisplay.ne)}</td>
-          </tr>
-          <tr>
-            <td><strong><Trans>SW</Trans></strong></td>
-            <td>{formattedCoords(cornersToDisplay.sw)}</td>
-            <td><strong><Trans>SE</Trans></strong></td>
-            <td>{formattedCoords(cornersToDisplay.se)}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td><strong><Trans>NW</Trans></strong></td>
+              <td>{formattedCoords(cornersToDisplay.nw)}</td>
+              <td><strong><Trans>NE</Trans></strong></td>
+              <td>{formattedCoords(cornersToDisplay.ne)}</td>
+            </tr>
+            <tr>
+              <td><strong><Trans>SW</Trans></strong></td>
+              <td>{formattedCoords(cornersToDisplay.sw)}</td>
+              <td><strong><Trans>SE</Trans></strong></td>
+              <td>{formattedCoords(cornersToDisplay.se)}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     );
