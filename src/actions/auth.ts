@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { createAction } from 'typesafe-actions';
 import { Dispatch } from 'redux';
 
 import {
@@ -10,12 +9,15 @@ import { MAPOHOLIC_SERVER } from '../config';
 
 // Local Actions
 // log out current user
-export const logoutAction = createAction(AUTH_USER, () => {
+export const logoutAction = () => (dispatch: Dispatch) => {
+  dispatch({ type: AUTH_USER, payload: null });
   localStorage.removeItem('mapoholic-auth-token');
-  return null;
-});
+};
+
 // cancel a displayed error message
-export const cancelAuthErrorAction = createAction(AUTH_ERROR, () => '');
+export const cancelAuthErrorAction = () => (dispatch: Dispatch) => {
+  dispatch({ type: AUTH_ERROR, payload: '' });
+};
 
 // *** Helper functions ***
 // handle errors consistently, for all routes except login
