@@ -54,6 +54,11 @@ interface EventMapViewerProps {
   selectedRunner?: string;
   selectMapToDisplay: (mapId: string) => void;
   setMapViewParameters: (mapViewParams: MapViewParams) => void;
+  updateEvent: (
+    eventId: string,
+    payload: Partial<OEvent>,
+    callback: (didSucceed: boolean) => void,
+  ) => void;
   updateEventRunner: (
     eventId: string,
     userId: string,
@@ -232,6 +237,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
       selectedMap,
       selectedRunner,
       setMapViewParameters,
+      updateEvent,
       updateEventRunner,
     } = this.props;
     const mapImageArray = selectedEvent && selectedRunner
@@ -309,6 +315,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
           language={language}
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
+          updateEvent={updateEvent}
           updateEventRunner={updateEventRunner}
         />
       )

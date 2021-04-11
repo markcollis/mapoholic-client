@@ -8,6 +8,7 @@ import {
   OEventCoordinates,
   OEventCorners,
   OEventMap,
+  OEventPosition,
   OEventRunner,
 } from '../../types/event';
 
@@ -16,6 +17,11 @@ interface EventMapViewerGeoProps {
   language: string;
   selectedEvent: OEvent;
   selectedRunner: string;
+  updateEvent: (
+    eventId: string,
+    payload: Partial<OEvent>,
+    callback: (didSucceed: boolean) => void,
+  ) => void;
   updateEventRunner: (
     eventId: string,
     userId: string,
@@ -29,6 +35,7 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
   language,
   selectedEvent,
   selectedRunner,
+  updateEvent,
   updateEventRunner,
 }) => {
   const matchingRunner = selectedEvent.runners.find(({ user: { _id } }) => _id === selectedRunner);
@@ -49,14 +56,14 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
     });
   }, []);
 
-  // const {
-  //   locCornerNE,
-  //   locCornerNW,
-  //   locCornerSE,
-  //   locCornerSW,
-  // } = selectedEvent;
-  // const shouldUpdateEventCorners = locCornerNE.length < 2 || locCornerNW.length < 2
-  //   || locCornerSE.length < 2 || locCornerSW.length < 2;
+  const {
+    locCornerNE,
+    locCornerNW,
+    locCornerSE,
+    locCornerSW,
+  } = selectedEvent;
+  const shouldUpdateEventCorners = locCornerNE.length < 2 || locCornerNW.length < 2
+    || locCornerSE.length < 2 || locCornerSW.length < 2;
 
   const handleTriggerSelect = (mapId: string) => {
     setTriggerSelect({
@@ -108,13 +115,22 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
         // console.error('Error updating map corners');
       }
     });
-    // if (shouldUpdateEventCorners) {
-    //   const newEventCorners = {
-    //     locCornerNE: ...
-    //   };
-    //   console.log('newEventCorners to add', newEventCorners);
-    // }
-    // then call updateEvent
+    if (shouldUpdateEventCorners) {
+      const firstMapCorners = corners[matchingMaps[0]._id];
+      const newEventCorners: { [key: string]: OEventPosition } = {
+        locCornerNE: [firstMapCorners.ne.lat, firstMapCorners.ne.long],
+        locCornerNW: [firstMapCorners.nw.lat, firstMapCorners.nw.long],
+        locCornerSE: [firstMapCorners.se.lat, firstMapCorners.se.long],
+        locCornerSW: [firstMapCorners.sw.lat, firstMapCorners.sw.long],
+      };
+      updateEvent(eventId, newEventCorners, (successful: boolean): void => {
+        if (successful) {
+          // console.log('Successfully added new event corners');
+        } else {
+          // console.error('Error adding event corners');
+        }
+      });
+    }
   };
 
   const renderCorners = (cornersToDisplay: OEventCorners): React.ReactNode => {
@@ -132,11 +148,6 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
         }}
       </I18n>
     );
-    // const formatCoords = (coords: OEventCoordinates): string => {
-    //   const lat = `${Math.abs(coords.lat).toFixed(3)}${coords.lat > 0 ? 'N' : 'S'}`;
-    //   const long = `${Math.abs(coords.long).toFixed(3)}${coords.long > 0 ? 'E' : 'W'}`;
-    //   return `${lat}, ${long}`;
-    // };
     return (
       <div>
         <table>
@@ -222,9 +233,9 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
           <li>Overlay all scanned maps on Leaflet/OSM - done</li>
           <li>Simple distortion (corners) for best fit - done</li>
           <li>Display tracks (hotlines where there is data) - done</li>
+          <li>Limit editing to admin/current user - done</li>
+          <li>Allow map record to be updated (if no known corners) - done</li>
           <li>Choose which of several maps/tracks are shown - can select/bring to front</li>
-          <li>Allow map record to be updated</li>
-          <li>Limit editing to admin/current user</li>
           <li>Sort out scroll when lots of maps</li>
         </ul>
       </div>

@@ -530,6 +530,7 @@ class MapView extends Component {
       postMap,
       selectMapToDisplay,
       setMapViewParameters,
+      updateEvent,
       updateEventRunner,
     } = this.props;
     const {
@@ -558,6 +559,7 @@ class MapView extends Component {
         selectedRunner={selectedRunner} // prop (oevent)
         selectMapToDisplay={selectMapToDisplay} // prop
         setMapViewParameters={setMapViewParameters} // prop
+        updateEvent={updateEvent} // prop
         updateEventRunner={updateEventRunner} // prop
       />
     );
