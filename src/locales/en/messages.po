@@ -256,6 +256,10 @@ msgstr "Course climb"
 msgid "Course length"
 msgstr "Course length"
 
+#: src/components/event/EventMapViewerGeo.tsx:123
+msgid "Course maps uploaded"
+msgstr "Course maps uploaded"
+
 #: src/components/event/EventRunnerEdit.js:62
 msgid "Course title"
 msgstr "Course title"
@@ -395,6 +399,10 @@ msgstr "Download results template: {downloadCSV} {downloadJSON}"
 msgid "Duplicate map title"
 msgstr "Duplicate map title"
 
+#: src/components/event/EventMapViewerGeo.tsx:75
+msgid "E"
+msgstr "E"
+
 #: src/components/event/EventCommentsItem.js:115
 #: src/components/event/EventLinkedList.js:75
 msgid "Edit"
@@ -490,7 +498,7 @@ msgstr "Error: Incorrect file type. Please check and try again."
 
 #: src/components/club/ClubView.js:269
 #: src/components/event/EventView.js:609
-#: src/components/event/MapView.js:605
+#: src/components/event/MapView.js:608
 #: src/components/home/HomeView.js:187
 #: src/components/user/UserView.js:154
 msgid "Error: {errorMessage}"
@@ -738,13 +746,19 @@ msgstr "Members"
 msgid "My Maps"
 msgstr "My Maps"
 
+#: src/components/event/EventMapViewerGeo.tsx:72
+msgid "N"
+msgstr "N"
+
 #: src/components/event/EventEdit.js:474
 #: src/components/event/EventEdit.js:491
+#: src/components/event/EventMapViewerGeo.tsx:90
 msgid "NE"
 msgstr "NE"
 
 #: src/components/event/EventEdit.js:440
 #: src/components/event/EventEdit.js:457
+#: src/components/event/EventMapViewerGeo.tsx:88
 msgid "NW"
 msgstr "NW"
 
@@ -900,6 +914,10 @@ msgstr "Region(s) associated with event"
 msgid "Registration number"
 msgstr "Registration number"
 
+#: src/components/event/EventMapViewerGeo.tsx:112
+msgid "Reset"
+msgstr "Reset"
+
 #: src/components/event/EventRunnerDetails.js:142
 msgid "Result: <0>{time}</0>"
 msgstr "Result: <0>{time}</0>"
@@ -930,13 +948,19 @@ msgstr "Runner details"
 msgid "Runners at event (select one to see their maps)"
 msgstr "Runners at event (select one to see their maps)"
 
+#: src/components/event/EventMapViewerGeo.tsx:72
+msgid "S"
+msgstr "S"
+
 #: src/components/event/EventEdit.js:545
 #: src/components/event/EventEdit.js:562
+#: src/components/event/EventMapViewerGeo.tsx:97
 msgid "SE"
 msgstr "SE"
 
 #: src/components/event/EventEdit.js:511
 #: src/components/event/EventEdit.js:528
+#: src/components/event/EventMapViewerGeo.tsx:95
 msgid "SW"
 msgstr "SW"
 
@@ -959,6 +983,10 @@ msgstr "Search for the event you ran at: if it's there, great; if not you can ad
 #: src/components/event/EventRunnerDetails.js:170
 msgid "See below for detailed results ({0} runners)"
 msgstr "See below for detailed results ({0} runners)"
+
+#: src/components/event/EventMapViewerGeo.tsx:106
+msgid "Select"
+msgstr "Select"
 
 #: src/components/club/ClubView.js:169
 msgid "Select a club from the list to show further details here"
@@ -1195,6 +1223,14 @@ msgstr "Unknown actionType {actionType}"
 msgid "Update"
 msgstr "Update"
 
+#: src/components/event/EventMapViewerGeo.tsx:109
+msgid "Update corners"
+msgstr "Update corners"
+
+#: src/components/event/EventMapViewerGeo.tsx:126
+msgid "Upload new corners"
+msgstr "Upload new corners"
+
 #: src/components/event/EventMapViewerEdit.js:357
 #: src/components/event/EventMapViewerEdit.js:388
 #: src/components/user/UserEditProfileImage.js:63
@@ -1233,6 +1269,10 @@ msgstr "Visibility"
 #: src/components/event/EventRunnerEdit.js:215
 msgid "Visibility of your maps from this event to others"
 msgstr "Visibility of your maps from this event to others"
+
+#: src/components/event/EventMapViewerGeo.tsx:75
+msgid "W"
+msgstr "W"
 
 #: src/components/club/ClubDetails.tsx:69
 #: src/components/club/ClubEdit.tsx:74

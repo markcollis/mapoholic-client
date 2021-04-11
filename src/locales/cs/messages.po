@@ -260,6 +260,10 @@ msgstr "Převýšení tratě"
 msgid "Course length"
 msgstr "Délka tratě"
 
+#: src/components/event/EventMapViewerGeo.tsx:123
+msgid "Course maps uploaded"
+msgstr ""
+
 #: src/components/event/EventRunnerEdit.js:62
 msgid "Course title"
 msgstr "Název tratě"
@@ -399,6 +403,10 @@ msgstr "Stáhnout výsledkovou šablonu"
 msgid "Duplicate map title"
 msgstr "Duplikuj název mapy"
 
+#: src/components/event/EventMapViewerGeo.tsx:75
+msgid "E"
+msgstr "V"
+
 #: src/components/event/EventCommentsItem.js:115
 #: src/components/event/EventLinkedList.js:75
 msgid "Edit"
@@ -494,7 +502,7 @@ msgstr "Chyba: Špatný typ souboru. Prosím, zkontroluj a zkus to znovu."
 
 #: src/components/club/ClubView.js:269
 #: src/components/event/EventView.js:609
-#: src/components/event/MapView.js:605
+#: src/components/event/MapView.js:608
 #: src/components/home/HomeView.js:187
 #: src/components/user/UserView.js:154
 msgid "Error: {errorMessage}"
@@ -742,13 +750,19 @@ msgstr "Členové"
 msgid "My Maps"
 msgstr "Moje mapy"
 
+#: src/components/event/EventMapViewerGeo.tsx:72
+msgid "N"
+msgstr "S"
+
 #: src/components/event/EventEdit.js:474
 #: src/components/event/EventEdit.js:491
+#: src/components/event/EventMapViewerGeo.tsx:90
 msgid "NE"
 msgstr "SV"
 
 #: src/components/event/EventEdit.js:440
 #: src/components/event/EventEdit.js:457
+#: src/components/event/EventMapViewerGeo.tsx:88
 msgid "NW"
 msgstr "SZ"
 
@@ -908,6 +922,10 @@ msgstr "Regiony spojené se závodem"
 msgid "Registration number"
 msgstr "Registrační číslo"
 
+#: src/components/event/EventMapViewerGeo.tsx:112
+msgid "Reset"
+msgstr ""
+
 #: src/components/event/EventRunnerDetails.js:142
 msgid "Result: <0>{time}</0>"
 msgstr "Výsledek: <0>{time}</0>"
@@ -938,13 +956,19 @@ msgstr "Detaily běžce"
 msgid "Runners at event (select one to see their maps)"
 msgstr "Běžci na závodě (vyber jednoho abyste zobrazili jeho mapy)"
 
+#: src/components/event/EventMapViewerGeo.tsx:72
+msgid "S"
+msgstr "J"
+
 #: src/components/event/EventEdit.js:545
 #: src/components/event/EventEdit.js:562
+#: src/components/event/EventMapViewerGeo.tsx:97
 msgid "SE"
 msgstr "JV"
 
 #: src/components/event/EventEdit.js:511
 #: src/components/event/EventEdit.js:528
+#: src/components/event/EventMapViewerGeo.tsx:95
 msgid "SW"
 msgstr "JZ"
 
@@ -967,6 +991,10 @@ msgstr "Vyhledej závod, ve kterém jsi běžel: pokud se najde, skvělé, pokud
 #: src/components/event/EventRunnerDetails.js:170
 msgid "See below for detailed results ({0} runners)"
 msgstr "Viz níže pro podrobné výsledky ({0} běžců)"
+
+#: src/components/event/EventMapViewerGeo.tsx:106
+msgid "Select"
+msgstr "Vyberte"
 
 #: src/components/club/ClubView.js:169
 msgid "Select a club from the list to show further details here"
@@ -1211,6 +1239,14 @@ msgstr "Neznámý actionType {actionType}"
 msgid "Update"
 msgstr "Aktualizovat"
 
+#: src/components/event/EventMapViewerGeo.tsx:109
+msgid "Update corners"
+msgstr ""
+
+#: src/components/event/EventMapViewerGeo.tsx:126
+msgid "Upload new corners"
+msgstr ""
+
 #: src/components/event/EventMapViewerEdit.js:357
 #: src/components/event/EventMapViewerEdit.js:388
 #: src/components/user/UserEditProfileImage.js:63
@@ -1249,6 +1285,10 @@ msgstr "Viditelnost"
 #: src/components/event/EventRunnerEdit.js:215
 msgid "Visibility of your maps from this event to others"
 msgstr "Viditelnost tvých map z tohoto závodu ostatním"
+
+#: src/components/event/EventMapViewerGeo.tsx:75
+msgid "W"
+msgstr "Z"
 
 #: src/components/club/ClubDetails.tsx:69
 #: src/components/club/ClubEdit.tsx:74

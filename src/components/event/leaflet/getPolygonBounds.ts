@@ -125,7 +125,7 @@ export const derivePolygonBoundsFromEvent = (
 ): OEventPosition[] => {
   const defaultPolygonBounds = derivePolygonBoundsFromCorners(event);
   const mapCorners = getMapCorners(event, runnerId);
-  if (mapCorners.length < 2) return defaultPolygonBounds;
+  if (!mapCorners.length) return defaultPolygonBounds;
   const mapCornerPositions = mapCorners.map((corners) => [
     [corners.nw.lat, corners.nw.long],
     [corners.ne.lat, corners.ne.long],

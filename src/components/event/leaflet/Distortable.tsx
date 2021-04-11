@@ -78,7 +78,7 @@ const Distortable: FunctionComponent<IDistortableProps> = (props) => {
 
   /* eslint-disable consistent-return */
   useEffect(() => {
-    console.log('url/initialCorners in Distortable useEffect setup', url, initialCorners);
+    // console.log('url/initialCorners in Distortable useEffect setup', url, initialCorners);
     const options = {
       corners: initialCorners,
       actions: [
@@ -123,7 +123,7 @@ const Distortable: FunctionComponent<IDistortableProps> = (props) => {
   }, [triggerResetCorners]);
 
   useEffect(() => {
-    console.log('updateCornerstriggered', triggerUpdateCorners, isLoaded);
+    // console.log('updateCornerstriggered', triggerUpdateCorners, isLoaded);
     if (distortableRef.current) {
       // @ts-ignore
       const currentCorners = distortableRef.current.getCorners() as L.LatLng[];

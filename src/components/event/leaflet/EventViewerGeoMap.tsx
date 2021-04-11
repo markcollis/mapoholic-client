@@ -22,12 +22,18 @@ import {
 export type GeoMapState<T> = { [mapId: string]: T };
 
 // array of L.latLng objects in NW, NE, SW, SE order (in a "Z" shape)
-const getDistortableCorners = (corners: OEventCorners): LatLng[] => ([
+const getDistortableCornersFromEventCorners = (corners: OEventCorners): LatLng[] => ([
   new LatLng(corners.nw.lat, corners.nw.long),
   new LatLng(corners.ne.lat, corners.ne.long),
   new LatLng(corners.sw.lat, corners.sw.long),
   new LatLng(corners.se.lat, corners.se.long),
 ]);
+const getEventCornersFromDistortableCorners = (corners: LatLng[]): OEventCorners => ({
+  nw: { lat: corners[0].lat, long: corners[0].lng },
+  ne: { lat: corners[1].lat, long: corners[1].lng },
+  sw: { lat: corners[2].lat, long: corners[2].lng },
+  se: { lat: corners[3].lat, long: corners[3].lng },
+});
 const getDistortableCornersFromPolygonBounds = (bounds: OEventPosition[]): LatLng[] => ([
   new LatLng(bounds[0][0], bounds[0][1]),
   new LatLng(bounds[1][0], bounds[1][1]),
@@ -49,7 +55,7 @@ interface EventViewerGeoMapProps {
   triggerResetCorners: GeoMapState<number>;
   triggerSelect: GeoMapState<number>;
   triggerUpdateCorners: GeoMapState<number>;
-  updateCorners: (mapId: string) => (corners: L.LatLng[]) => void;
+  updateCorners: (mapId: string) => (corners: OEventCorners) => void;
 }
 
 // map showing the imported map images and tracks overlaid on OSM
@@ -105,8 +111,11 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
       initialCorners = getDistortableCornersFromPolygonBounds(polygonBounds);
     }
     if (map.geo && map.geo.imageCorners) {
-      initialCorners = getDistortableCorners(map.geo.imageCorners);
+      initialCorners = getDistortableCornersFromEventCorners(map.geo.imageCorners);
     }
+    const updateDistortableCorners = (corners: LatLng[]): void => {
+      updateCorners(_id)(getEventCornersFromDistortableCorners(corners));
+    };
     return (
       <Distortable
         key={_id}
@@ -115,7 +124,7 @@ const EventViewerGeoMap: FunctionComponent<EventViewerGeoMapProps> = ({
         triggerResetCorners={triggerResetCorners[_id] || 0}
         triggerSelect={triggerSelect[_id] || 0}
         triggerUpdateCorners={triggerUpdateCorners[_id] || 0}
-        updateCorners={updateCorners(_id)}
+        updateCorners={updateDistortableCorners}
         url={map.course}
       />
     );

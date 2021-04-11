@@ -7,7 +7,7 @@ import EventMapViewerDetails from './EventMapViewerDetails';
 import EventMapViewerGeo from './EventMapViewerGeo';
 import EventMapViewerTracks from './EventMapViewerTracks';
 
-import { OEvent, OEventMap } from '../../types/event';
+import { OEvent, OEventRunner } from '../../types/event';
 
 type MapOverlay = {
   userId: string;
@@ -54,7 +54,12 @@ interface EventMapViewerProps {
   selectedRunner?: string;
   selectMapToDisplay: (mapId: string) => void;
   setMapViewParameters: (mapViewParams: MapViewParams) => void;
-  updateEventRunner: (eventId: string, userId: string, maps: OEventMap[]) => void;
+  updateEventRunner: (
+    eventId: string,
+    userId: string,
+    payload: Partial<OEventRunner>,
+    callback: (didSucceed: boolean) => void,
+  ) => void;
 }
 
 interface EventMapViewerState {

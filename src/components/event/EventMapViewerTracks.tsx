@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, { FunctionComponent } from 'react';
 
-import { OEvent, OEventMap } from '../../types/event';
+import { OEvent, OEventRunner } from '../../types/event';
 
 interface EventMapViewerTracksProps {
   selectedEvent: OEvent;
   selectedRunner: string;
-  updateEventRunner: (eventId: string, userId: string, maps: OEventMap[]) => void;
+  updateEventRunner: (
+    eventId: string,
+    userId: string,
+    payload: Partial<OEventRunner>,
+    callback: (didSucceed: boolean) => void,
+  ) => void;
 }
 
 const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({

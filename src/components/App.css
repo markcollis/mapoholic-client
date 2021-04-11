@@ -510,9 +510,7 @@ select, optgroup {
           transform: rotate(45deg);
 }
 /* L.Toolbar.Control */
-.leaflet-control-toolbar {
-  /* Secondary Toolbar */
-}
+/* Secondary Toolbar */
 .leaflet-control-toolbar > li > .leaflet-toolbar-icon {
   border-bottom: 1px solid #ccc;
 }
