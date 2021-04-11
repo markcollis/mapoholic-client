@@ -34,12 +34,10 @@ const HomeRecent = ({
   let title = <Trans>Recent activity</Trans>;
   if (isAll) title = <Trans>All recent activity</Trans>;
   if (isOwn) title = <Trans>Your own recent activity</Trans>;
-
   const renderActivityList = activityList.map((activity) => {
-    const { timestamp } = activity;
     return (
       <HomeRecentListItem
-        key={timestamp}
+        key={activity._id}
         activity={activity}
         language={language}
         userList={userList}
