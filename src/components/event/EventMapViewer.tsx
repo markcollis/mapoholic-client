@@ -323,6 +323,7 @@ class EventMapViewer extends Component<EventMapViewerProps, EventMapViewerState>
     const renderTracks = selectedEvent && selectedRunner && selectedMap === 'tracks'
       ? (
         <EventMapViewerTracks
+          canEdit={canEdit || false}
           selectedEvent={selectedEvent}
           selectedRunner={selectedRunner}
           updateEventRunner={updateEventRunner}

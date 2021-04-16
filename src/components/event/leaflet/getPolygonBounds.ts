@@ -66,7 +66,7 @@ export const getMapCorners = (event: OEvent | OEventSummary, runnerId: string) =
 };
 
 // simple approximation of distance (in metres) for coordinates that are close together
-const calculateDistance = (a: OEventPosition, b: OEventPosition): number => {
+export const calculateDistance = (a: OEventPosition, b: OEventPosition): number => {
   if (!a || !b) throw new Error('can not calculate distance, invalid positions');
   const [aLatDegrees, aLongDegrees] = a;
   const [bLatDegrees, bLongDegrees] = b;

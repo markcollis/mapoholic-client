@@ -234,9 +234,10 @@ const EventMapViewerGeo: FunctionComponent<EventMapViewerGeoProps> = ({
           <li>Simple distortion (corners) for best fit - done</li>
           <li>Display tracks (hotlines where there is data) - done</li>
           <li>Limit editing to admin/current user - done</li>
-          <li>Allow map record to be updated (if no known corners) - done</li>
-          <li>Choose which of several maps/tracks are shown - can select/bring to front</li>
-          <li>Sort out scroll when lots of maps</li>
+          <li>Update event corners (if no known corners) - done</li>
+          <li>Choose which of several maps/tracks are shown - sort of: select/bring to front</li>
+          <li>Sort out scroll when lots of maps (e.g. Janarky has 5...)</li>
+          <li>button to show/hide corner dialog?</li>
         </ul>
       </div>
     </div>
