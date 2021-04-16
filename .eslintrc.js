@@ -9,6 +9,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error'],
     'no-shadow': [0],
     '@typescript-eslint/no-shadow': ['error'],
+    indent: [0],
+    '@typescript-eslint/indent': ['error', 2],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/static-property-placement': [0],
     'react/state-in-constructor': [0],
