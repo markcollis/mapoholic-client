@@ -67,6 +67,30 @@ const getFormattedTrackClimb = (track: OEventTrackDetailed): string => {
   return `${Math.floor(getTrackClimb(track))} m`;
 };
 
+const getFormattedAltitudeRange = (track: OEventTrackDetailed): string => {
+  const altitudes = track
+    .map((waypoint) => waypoint.altitude)
+    .filter((altitude) => !!altitude) as number[];
+  return `${Math.floor(Math.min(...altitudes))}-${Math.floor(Math.max(...altitudes))} m`;
+};
+
+// const getFormattedMinimumAltitude = (track: OEventTrackDetailed): string => {
+//   const min = Math.min(...track.map((waypoint) => waypoint.altitude || Infinity));
+//   return `${Math.floor(min)} m`;
+// };
+
+// const getFormattedMaximumAltitude = (track: OEventTrackDetailed): string => {
+//   const max = Math.max(...track.map((waypoint) => waypoint.altitude || -Infinity));
+//   return `${Math.floor(max)} m`;
+// };
+
+const getFormattedHeartRateRange = (track: OEventTrackDetailed): string => {
+  const heartRates = track
+    .map((waypoint) => waypoint.heartRate)
+    .filter((heartRate) => !!heartRate) as number[];
+  return `${Math.floor(Math.min(...heartRates))}-${Math.floor(Math.max(...heartRates))}`;
+};
+
 type IdentifiedTrack = {
   id: string;
   title: string;
@@ -112,8 +136,20 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
         <td>{track.length}</td>
         <td>{getFormattedTrackDistance(track)}</td>
         <td>{hasAltitude ? getFormattedTrackClimb(track as OEventTrackDetailed) : '-'}</td>
-        <td>{hasAltitude ? TICK : CROSS}</td>
-        <td>{hasHeartRate ? TICK : CROSS}</td>
+        {hasAltitude
+          ? (
+            <>
+              <td>{TICK}</td>
+              <td>{getFormattedAltitudeRange(track as OEventTrackDetailed)}</td>
+            </>
+          ) : <td colSpan={2}>{CROSS}</td>}
+        {hasHeartRate
+          ? (
+            <>
+              <td>{TICK}</td>
+              <td>{getFormattedHeartRateRange(track as OEventTrackDetailed)}</td>
+            </>
+          ) : <td colSpan={2}>{CROSS}</td>}
       </tr>
     );
   });
@@ -125,8 +161,8 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
           <th>Points</th>
           <th>Length (km)</th>
           <th>Climb (m)</th>
-          <th>Altitude data?</th>
-          <th>Heart rate data?</th>
+          <th colSpan={2}>Altitude data?</th>
+          <th colSpan={2}>Heart rate data?</th>
         </tr>
       </thead>
       <tbody>
