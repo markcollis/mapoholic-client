@@ -42,17 +42,13 @@ const EventTrackViewer: FunctionComponent<EventTrackViewerProps> = ({ map }) => 
     <div className="event-track-viewer ui grid">
       <div className="twelve wide column">
         <ParentSize>
-          {({ width, height }) => {
-            const MAX_HEIGHT = 400; // avoid infinite loop if not defined
-            const limitedHeight = Math.min(height, MAX_HEIGHT);
-            return (
-              <EventTrackBrushChart
-                width={width}
-                height={limitedHeight}
-                data={getChartData(track as OEventTrackDetailed)}
-              />
-            );
-          }}
+          {({ width }) => (
+            <EventTrackBrushChart
+              width={width}
+              height={400}
+              data={getChartData(track as OEventTrackDetailed)}
+            />
+          )}
         </ParentSize>
       </div>
       <div className="four wide column">

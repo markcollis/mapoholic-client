@@ -15,13 +15,6 @@ export interface XYDatum {
   y: number;
 }
 
-const formatDuration = (seconds: number): string => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-};
-const durationTickFormatter: TickFormatter<number> = ((value) => formatDuration(value));
-
 const getXValue = (d: XYDatum) => d.x;
 const getYValue = (d: XYDatum) => d.y;
 
@@ -31,6 +24,7 @@ interface EventTrackAreaChartProps {
   gradientColor: string;
   xScale: AxisScale<number>;
   yScale: AxisScale<number>;
+  yAxisTickFormatter: TickFormatter<number>;
   width: number;
   yMax: number;
   margin: { top: number; right: number; bottom: number; left: number };
@@ -50,6 +44,7 @@ const EventTrackAreaChart: FunctionComponent<EventTrackAreaChartProps> = ({
   margin,
   xScale,
   yScale,
+  yAxisTickFormatter,
   hideBottomAxis = false,
   hideLeftAxis = false,
   top,
@@ -99,7 +94,7 @@ const EventTrackAreaChart: FunctionComponent<EventTrackAreaChartProps> = ({
           stroke={axisColor}
           tickStroke={axisColor}
           tickLabelProps={() => axisBottomTickLabelProps}
-          tickFormat={durationTickFormatter}
+          tickFormat={yAxisTickFormatter}
         />
       )}
       {!hideLeftAxis && (

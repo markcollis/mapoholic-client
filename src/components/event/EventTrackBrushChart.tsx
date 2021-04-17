@@ -4,15 +4,39 @@ import React, {
   useState,
   useMemo,
   useEffect,
+  useCallback,
 } from 'react';
 import { scaleLinear } from '@visx/scale';
 import { Brush } from '@visx/brush';
 import { Bounds } from '@visx/brush/lib/types';
 import BaseBrush from '@visx/brush/lib/BaseBrush';
 import { PatternLines } from '@visx/pattern';
-import { max, min } from 'd3-array';
+import { Bar, Line } from '@visx/shape';
+import { max, min, bisector } from 'd3-array';
+import {
+  useTooltip,
+  Tooltip,
+  TooltipWithBounds,
+  defaultStyles,
+} from '@visx/tooltip';
+import { localPoint } from '@visx/event';
+import { TickFormatter } from '@visx/axis';
 
 import AreaChart, { XYDatum } from './EventTrackAreaChart';
+
+const formatDuration = (seconds: number): string => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+const durationTickFormatter: TickFormatter<number> = ((value) => formatDuration(value));
+
+const tooltipStyles = {
+  ...defaultStyles,
+  background: '#3b6978',
+  border: '1px solid white',
+  color: 'white',
+};
 
 // Initialize some variables
 const brushMargin = {
@@ -32,6 +56,7 @@ const selectedBrushStyle = {
 
 const getXValue = (d: XYDatum) => d.x;
 const getYValue = (d: XYDatum) => d.y;
+const bisectX = bisector<XYDatum, number>(getXValue).left;
 
 interface EventTrackBrushChartProps {
   width: number;
@@ -62,6 +87,14 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
       brushRef.current.reset();
     }
   }, [data.length]);
+  const {
+    tooltipData,
+    tooltipLeft,
+    tooltipTop,
+    // tooltipOpen,
+    showTooltip,
+    hideTooltip,
+  } = useTooltip();
 
   const onBrushChange = (domain: Bounds | null) => {
     if (!domain) return;
@@ -122,6 +155,28 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
     [yBrushMax, data],
   );
 
+  // tooltip handler
+  const handleTooltip = useCallback(
+    (event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>) => {
+      const { x } = localPoint(event) || { x: 0 };
+      const index = bisectX(filteredData, xScale.invert(x - margin.left));
+      const d0 = filteredData[index - 1];
+      const x0 = d0 && xScale(getXValue(d0)) + margin.left;
+      const d1 = filteredData[index];
+      const x1 = d1 && xScale(getXValue(d1)) + margin.left;
+      const nearerD0 = (d0 && !d1) || (x - x0 < x1 - x);
+      const d = nearerD0 ? d0 : d1;
+      const top = margin.top + (d0 ? yScale(getYValue(d0)) : yScale(getYValue(d1)))
+        + (d0 && d1 ? (yScale(getYValue(d1)) - yScale(getYValue(d0))) * ((x - x0) / (x1 - x0)) : 0);
+      showTooltip({
+        tooltipData: d,
+        tooltipLeft: x,
+        tooltipTop: top,
+      });
+    },
+    [showTooltip, xScale, yScale],
+  );
+
   const initialBrushPosition = useMemo(
     () => ({
       start: { x: brushXScale(getXValue(data[50])) },
@@ -162,6 +217,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
           yMax={yMax}
           xScale={xScale}
           yScale={yScale}
+          yAxisTickFormatter={durationTickFormatter}
           axisColor={CHART_LABEL_COLOR}
           gradientColor={CHART_FILL_COLOR}
         />
@@ -173,6 +229,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
           yMax={yBrushMax}
           xScale={brushXScale}
           yScale={brushYScale}
+          yAxisTickFormatter={durationTickFormatter}
           margin={brushMargin}
           top={topChartHeight + topChartBottomMargin + margin.top}
           axisColor={CHART_LABEL_COLOR}
@@ -202,7 +259,62 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
             selectedBoxStyle={selectedBrushStyle}
           />
         </AreaChart>
+        <Bar
+          x={margin.left}
+          y={margin.top}
+          width={width - margin.left - margin.right}
+          height={topChartHeight}
+          fill="transparent"
+          rx={1}
+          onTouchStart={handleTooltip}
+          onTouchMove={handleTooltip}
+          onMouseMove={handleTooltip}
+          onMouseLeave={() => hideTooltip()}
+        />
+        {tooltipData && (
+          <g>
+            <Line
+              from={{ x: tooltipLeft, y: margin.top }}
+              to={{ x: tooltipLeft, y: topChartHeight + margin.top }}
+              stroke={CHART_LABEL_COLOR}
+              strokeWidth={2}
+              pointerEvents="none"
+              strokeDasharray="5,2"
+            />
+            <circle
+              cx={tooltipLeft}
+              cy={tooltipTop}
+              r={4}
+              fill={CHART_LABEL_COLOR}
+              pointerEvents="none"
+            />
+          </g>
+        )}
       </svg>
+      {tooltipData && (
+        <div>
+          <TooltipWithBounds
+            key={Math.random()}
+            top={(tooltipTop || 100) - 12}
+            left={(tooltipLeft || 0) + 12}
+            style={tooltipStyles}
+          >
+            {getYValue(tooltipData as XYDatum)}
+          </TooltipWithBounds>
+          <Tooltip
+            top={topChartHeight + margin.top + 8}
+            left={tooltipLeft}
+            style={{
+              ...defaultStyles,
+              minWidth: 72,
+              textAlign: 'center',
+              transform: 'translateX(-50%)',
+            }}
+          >
+            {formatDuration(getXValue(tooltipData as XYDatum))}
+          </Tooltip>
+        </div>
+      )}
     </div>
   );
 };
