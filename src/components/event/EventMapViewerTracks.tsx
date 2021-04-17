@@ -80,6 +80,19 @@ const getFormattedHeartRateRange = (track: OEventTrackDetailed): string => {
   return `${Math.floor(Math.min(...heartRates))}-${Math.floor(Math.max(...heartRates))}`;
 };
 
+const formatDuration = (seconds: number): string => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+
+const getFormattedTrackDuration = (track: OEventTrackDetailed): string => {
+  const startTime = track[0].timestamp;
+  const endTime = track[track.length - 1].timestamp;
+  const duration = Math.floor((endTime - startTime) / 1000); // ms to seconds
+  return formatDuration(duration);
+};
+
 interface EventMapViewerTracksProps {
   canEdit: boolean;
   selectedEvent: OEvent;
@@ -141,23 +154,24 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
           />
         </td>
         {matchingMaps.length > 1 && <td>{map.title}</td>}
-        <td>{track.length}</td>
-        <td>{getFormattedTrackDistance(track)}</td>
-        <td>{hasAltitude ? getFormattedTrackClimb(track as OEventTrackDetailed) : '-'}</td>
+        <td className="right aligned">{track.length}</td>
+        <td className="right aligned">{getFormattedTrackDistance(track)}</td>
+        <td className="right aligned">{hasAltitude ? getFormattedTrackClimb(track as OEventTrackDetailed) : '-'}</td>
+        <td className="right aligned">{isDetailedTrack(track) ? getFormattedTrackDuration(track) : '-'}</td>
         {hasAltitude
           ? (
             <>
-              <td>{TICK}</td>
-              <td>{getFormattedAltitudeRange(track as OEventTrackDetailed)}</td>
+              <td className="center aligned">{TICK}</td>
+              <td className="center aligned">{getFormattedAltitudeRange(track as OEventTrackDetailed)}</td>
             </>
-          ) : <td colSpan={2}>{CROSS}</td>}
+          ) : <td colSpan={2} className="center aligned">{CROSS}</td>}
         {hasHeartRate
           ? (
             <>
-              <td>{TICK}</td>
-              <td>{getFormattedHeartRateRange(track as OEventTrackDetailed)}</td>
+              <td className="center aligned">{TICK}</td>
+              <td className="center aligned">{getFormattedHeartRateRange(track as OEventTrackDetailed)}</td>
             </>
-          ) : <td colSpan={2}>{CROSS}</td>}
+          ) : <td colSpan={2} className="center aligned">{CROSS}</td>}
       </tr>
     );
   });
@@ -168,8 +182,9 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
           <th aria-label="select" />
           {matchingMaps.length > 1 && <th>Map</th>}
           <th>Points</th>
-          <th>Length (km)</th>
-          <th>Climb (m)</th>
+          <th>Length</th>
+          <th>Climb</th>
+          <th>Duration</th>
           <th colSpan={2}>Altitude data?</th>
           <th colSpan={2}>Heart rate data?</th>
         </tr>
