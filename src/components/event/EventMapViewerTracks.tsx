@@ -1,4 +1,9 @@
-import React, { FunctionComponent, ChangeEventHandler, useState } from 'react';
+import React, {
+  FunctionComponent,
+  ChangeEventHandler,
+  MouseEventHandler,
+  useState,
+} from 'react';
 import { Trans } from '@lingui/macro';
 
 import EventTrackViewer from './EventTrackViewer';
@@ -130,14 +135,77 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
     setSelectedMapId(newMapId);
   };
 
+  const handleAddTrackButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    console.log(`Clicked on add track to ${(e.target as HTMLButtonElement).id}. Nothing happens yet.`);
+  };
+  const handleReplaceTrackButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    console.log(`Clicked on replace track for ${(e.target as HTMLButtonElement).id}. Nothing happens yet.`);
+  };
+  const handleDeleteTrackButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    console.log(`Clicked on delete track for ${(e.target as HTMLButtonElement).id}. Nothing happens yet.`);
+  };
+
+  const tracksTableHeaderRow = (
+    <tr>
+      <th aria-label="select" />
+      {matchingMaps.length > 1 && <th>Map</th>}
+      <th className="right aligned">Points</th>
+      <th className="right aligned">Length</th>
+      <th className="right aligned">Climb</th>
+      <th className="right aligned">Duration</th>
+      <th colSpan={2} className="center aligned">Altitude data?</th>
+      <th colSpan={2} className="center aligned">Heart rate data?</th>
+      <th className="center aligned">Actions</th>
+    </tr>
+  );
   const tracksTableRows = matchingMaps.map((map) => {
     const track = (map.geo && map.geo.track) || [];
     const hasTrack = track.length > 0;
+    const mapSelectCheckbox = (
+      <input
+        id={map._id}
+        type="checkbox"
+        checked={selectedMapId === map._id}
+        onChange={handleSelectMapCheckboxChange}
+      />
+    );
+    const trackActions = hasTrack
+      ? (
+        <>
+          <button
+            id={map._id}
+            className="ui tiny button primary"
+            type="button"
+            onClick={handleReplaceTrackButtonClick}
+          >
+            <Trans>Replace</Trans>
+          </button>
+          <button
+            id={map._id}
+            className="ui tiny button negative"
+            type="button"
+            onClick={handleDeleteTrackButtonClick}
+          >
+            <Trans>Delete</Trans>
+          </button>
+        </>
+      ) : (
+        <button
+          id={map._id}
+          className="ui tiny button primary"
+          type="button"
+          onClick={handleAddTrackButtonClick}
+        >
+          <Trans>Add</Trans>
+        </button>
+      );
     if (!hasTrack) {
       return (
         <tr key={map._id}>
+          <td />
           {matchingMaps.length > 1 && <td>{map.title}</td>}
-          <td colSpan={7}><Trans>No track found</Trans></td>
+          <td colSpan={8}><Trans>No track found</Trans></td>
+          <td className="center aligned">{trackActions}</td>
         </tr>
       );
     }
@@ -145,14 +213,7 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
     const hasHeartRate = isDetailedTrack(track) && track[0].heartRate;
     return (
       <tr key={map._id}>
-        <td className="center aligned">
-          <input
-            id={map._id}
-            type="checkbox"
-            checked={selectedMapId === map._id}
-            onChange={handleSelectMapCheckboxChange}
-          />
-        </td>
+        <td className="center aligned">{mapSelectCheckbox}</td>
         {matchingMaps.length > 1 && <td>{map.title}</td>}
         <td className="right aligned">{track.length}</td>
         <td className="right aligned">{getFormattedTrackDistance(track)}</td>
@@ -172,26 +233,14 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
               <td className="center aligned">{getFormattedHeartRateRange(track as OEventTrackDetailed)}</td>
             </>
           ) : <td colSpan={2} className="center aligned">{CROSS}</td>}
+        <td className="center aligned">{trackActions}</td>
       </tr>
     );
   });
   const tracksTable = (
     <table className="ui celled sortable unstackable compact small definition table">
-      <thead>
-        <tr>
-          <th aria-label="select" />
-          {matchingMaps.length > 1 && <th>Map</th>}
-          <th>Points</th>
-          <th>Length</th>
-          <th>Climb</th>
-          <th>Duration</th>
-          <th colSpan={2}>Altitude data?</th>
-          <th colSpan={2}>Heart rate data?</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tracksTableRows}
-      </tbody>
+      <thead>{tracksTableHeaderRow}</thead>
+      <tbody>{tracksTableRows}</tbody>
     </table>
   );
   return (
@@ -204,8 +253,8 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
       <p>Features to add</p>
       <ul>
         <li>List maps/tracks with basic stats (type, length, waypoint count) - done</li>
-        <li>Support upload (GPX)</li>
-        <li>Trim or delete existing tracks?</li>
+        <li>Support upload (GPX) - placeholder button added</li>
+        <li>Trim or delete existing tracks? - placeholder button added for replace/delete</li>
         <li>Charts - speed, HR, etc. with either distance or time as X axis</li>
         <li>Add/edit split times (will need data model extension) - is ORIS import possible?</li>
         <li>Exploit split times: e.g. min/km column, distance and climb per leg</li>
