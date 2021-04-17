@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { FunctionComponent } from 'react';
+import { Trans } from '@lingui/macro';
 
 import {
   OEvent,
@@ -15,8 +16,6 @@ import { calculateDistance } from './leaflet/getPolygonBounds';
 
 const TICK = String.fromCodePoint(0x2713);
 const CROSS = String.fromCodePoint(0x2715);
-
-const isIdentifiedTrack = (test: IdentifiedTrack | undefined): test is IdentifiedTrack => !!test;
 
 const isDetailedTrack = (
   test: OEventTrackDetailed | OEventTrackPositions,
@@ -74,27 +73,11 @@ const getFormattedAltitudeRange = (track: OEventTrackDetailed): string => {
   return `${Math.floor(Math.min(...altitudes))}-${Math.floor(Math.max(...altitudes))} m`;
 };
 
-// const getFormattedMinimumAltitude = (track: OEventTrackDetailed): string => {
-//   const min = Math.min(...track.map((waypoint) => waypoint.altitude || Infinity));
-//   return `${Math.floor(min)} m`;
-// };
-
-// const getFormattedMaximumAltitude = (track: OEventTrackDetailed): string => {
-//   const max = Math.max(...track.map((waypoint) => waypoint.altitude || -Infinity));
-//   return `${Math.floor(max)} m`;
-// };
-
 const getFormattedHeartRateRange = (track: OEventTrackDetailed): string => {
   const heartRates = track
     .map((waypoint) => waypoint.heartRate)
     .filter((heartRate) => !!heartRate) as number[];
   return `${Math.floor(Math.min(...heartRates))}-${Math.floor(Math.max(...heartRates))}`;
-};
-
-type IdentifiedTrack = {
-  id: string;
-  title: string;
-  track: OEventTrack;
 };
 
 interface EventMapViewerTracksProps {
@@ -117,22 +100,23 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
 }) => {
   const matchingRunner = selectedEvent.runners.find(({ user: { _id } }) => _id === selectedRunner);
   const matchingMaps = (matchingRunner && matchingRunner.maps) || [];
-  const matchingTracks = matchingMaps
-    .map((map) => {
-      if (map.geo && map.geo.track && map.geo.track.length) {
-        return { id: map._id, title: map.title, track: map.geo.track };
-      }
-      return undefined;
-    })
-    .filter(isIdentifiedTrack);
-  console.log('matchingTracks', matchingTracks);
 
-  const tracksTableRows = matchingTracks.map(({ id, title, track }) => {
+  const tracksTableRows = matchingMaps.map((map) => {
+    const track = (map.geo && map.geo.track) || [];
+    const hasTrack = track.length > 0;
+    if (!hasTrack) {
+      return (
+        <tr key={map._id}>
+          {matchingMaps.length > 1 && <td>{map.title}</td>}
+          <td colSpan={7}><Trans>No track found</Trans></td>
+        </tr>
+      );
+    }
     const hasAltitude = isDetailedTrack(track) && track[0].altitude;
     const hasHeartRate = isDetailedTrack(track) && track[0].heartRate;
     return (
-      <tr key={id}>
-        {matchingTracks.length > 1 && <td>{title}</td>}
+      <tr key={map._id}>
+        {matchingMaps.length > 1 && <td>{map.title}</td>}
         <td>{track.length}</td>
         <td>{getFormattedTrackDistance(track)}</td>
         <td>{hasAltitude ? getFormattedTrackClimb(track as OEventTrackDetailed) : '-'}</td>
@@ -157,7 +141,7 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
     <table className="ui celled sortable unstackable compact small table">
       <thead>
         <tr>
-          {matchingTracks.length > 1 && <th>Map</th>}
+          {matchingMaps.length > 1 && <th>Map</th>}
           <th>Points</th>
           <th>Length (km)</th>
           <th>Climb (m)</th>
@@ -177,7 +161,7 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
       <hr />
       <p>Features to add</p>
       <ul>
-        <li>List maps/tracks with basic stats (type, length, waypoint count)</li>
+        <li>List maps/tracks with basic stats (type, length, waypoint count) - done</li>
         <li>Support upload (GPX)</li>
         <li>Trim or delete existing tracks?</li>
         <li>Charts - speed, HR, etc. with either distance or time as X axis</li>
