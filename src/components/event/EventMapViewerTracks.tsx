@@ -132,19 +132,15 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
     const hasHeartRate = isDetailedTrack(track) && track[0].heartRate;
     return (
       <tr key={map._id}>
-        {matchingMaps.length > 1 && (
-          <td>
-            <p>
-              <input
-                id={map._id}
-                type="checkbox"
-                checked={selectedMapId === map._id}
-                onChange={handleSelectMapCheckboxChange}
-              />
-              <span style={{ paddingLeft: 10 }}>{map.title}</span>
-            </p>
-          </td>
-        )}
+        <td className="center aligned">
+          <input
+            id={map._id}
+            type="checkbox"
+            checked={selectedMapId === map._id}
+            onChange={handleSelectMapCheckboxChange}
+          />
+        </td>
+        {matchingMaps.length > 1 && <td>{map.title}</td>}
         <td>{track.length}</td>
         <td>{getFormattedTrackDistance(track)}</td>
         <td>{hasAltitude ? getFormattedTrackClimb(track as OEventTrackDetailed) : '-'}</td>
@@ -166,9 +162,10 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
     );
   });
   const tracksTable = (
-    <table className="ui celled sortable unstackable compact small table">
+    <table className="ui celled sortable unstackable compact small definition table">
       <thead>
         <tr>
+          <th aria-label="select" />
           {matchingMaps.length > 1 && <th>Map</th>}
           <th>Points</th>
           <th>Length (km)</th>
