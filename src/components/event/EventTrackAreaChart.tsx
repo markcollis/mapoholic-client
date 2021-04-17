@@ -1,7 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { Group } from '@visx/group';
 import { AreaClosed } from '@visx/shape';
-import { AxisLeft, AxisBottom, AxisScale } from '@visx/axis';
+import {
+  AxisLeft,
+  AxisBottom,
+  AxisScale,
+  TickFormatter,
+} from '@visx/axis';
 import { LinearGradient } from '@visx/gradient';
 import { curveMonotoneX } from '@visx/curve';
 
@@ -9,6 +14,13 @@ export interface XYDatum {
   x: number;
   y: number;
 }
+
+const formatDuration = (seconds: number): string => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+const durationTickFormatter: TickFormatter<number> = ((value) => formatDuration(value));
 
 const getXValue = (d: XYDatum) => d.x;
 const getYValue = (d: XYDatum) => d.y;
@@ -87,6 +99,7 @@ const EventTrackAreaChart: FunctionComponent<EventTrackAreaChartProps> = ({
           stroke={axisColor}
           tickStroke={axisColor}
           tickLabelProps={() => axisBottomTickLabelProps}
+          tickFormat={durationTickFormatter}
         />
       )}
       {!hideLeftAxis && (

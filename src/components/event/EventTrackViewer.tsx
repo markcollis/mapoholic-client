@@ -25,8 +25,10 @@ const EventTrackViewer: FunctionComponent<EventTrackViewerProps> = ({ map }) => 
   const track = (map.geo && map.geo.track) || [];
 
   const getChartData = (trackData: OEventTrackDetailed): XYDatum[] => {
+    if (!trackData.length) return [];
+    const startTimestamp = trackData[0].timestamp;
     return trackData.map((waypoint) => ({
-      x: waypoint.timestamp,
+      x: (waypoint.timestamp - startTimestamp) / 1000,
       y: waypoint.altitude || 0,
     }));
   };

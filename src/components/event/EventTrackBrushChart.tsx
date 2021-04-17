@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useEffect,
 } from 'react';
-import { scaleTime, scaleLinear } from '@visx/scale';
+import { scaleLinear } from '@visx/scale';
 import { Brush } from '@visx/brush';
 import { Bounds } from '@visx/brush/lib/types';
 import BaseBrush from '@visx/brush/lib/BaseBrush';
@@ -92,7 +92,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
 
   // scales
   const xScale = useMemo(
-    () => scaleTime<number>({
+    () => scaleLinear<number>({
       range: [0, xMax],
       domain: [min(filteredData, getXValue) || 0, max(filteredData, getXValue) || 0],
     }),
@@ -107,7 +107,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
     [yMax, filteredData],
   );
   const brushXScale = useMemo(
-    () => scaleTime<number>({
+    () => scaleLinear<number>({
       range: [0, xBrushMax],
       domain: [min(data, getXValue) || 0, max(data, getXValue) || 0],
     }),
@@ -140,6 +140,19 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
 
   return (
     <div>
+      <button
+        type="button"
+        onClick={handleClearClick}
+        style={{
+          position: 'absolute',
+          top: height - 50,
+          border: 'none',
+          color: 'white',
+          background: CHART_FILL_COLOR,
+        }}
+      >
+        X
+      </button>
       <svg width={width} height={height}>
         <AreaChart
           hideBottomAxis={compact}
@@ -190,13 +203,6 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
           />
         </AreaChart>
       </svg>
-      <button
-        type="button"
-        onClick={handleClearClick}
-        style={{ position: 'absolute', marginLeft: -50, marginTop: 10 }}
-      >
-        X
-      </button>
     </div>
   );
 };
