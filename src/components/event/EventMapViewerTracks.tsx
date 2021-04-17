@@ -1,6 +1,8 @@
-/* eslint-disable react/prop-types */
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ChangeEventHandler, useState } from 'react';
 import { Trans } from '@lingui/macro';
+
+import EventTrackViewer from './EventTrackViewer';
+import { calculateDistance } from './leaflet/getPolygonBounds';
 
 import {
   OEvent,
@@ -11,8 +13,6 @@ import {
   OEventTrackPositions,
   OEventWaypoint,
 } from '../../types/event';
-
-import { calculateDistance } from './leaflet/getPolygonBounds';
 
 const TICK = String.fromCodePoint(0x2713);
 const CROSS = String.fromCodePoint(0x2715);
@@ -98,8 +98,24 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
   selectedRunner,
   // updateEventRunner, // hopefully this can update geo.tracks? need to check API
 }) => {
+  const [selectedMapId, setSelectedMapId] = useState<string | null>(null);
+
   const matchingRunner = selectedEvent.runners.find(({ user: { _id } }) => _id === selectedRunner);
-  const matchingMaps = (matchingRunner && matchingRunner.maps) || [];
+  const matchingMaps = (matchingRunner && matchingRunner.maps);
+  if (!matchingMaps || !matchingMaps.length) {
+    return (
+      <div className="event-map-viewer-tracks">
+        <h3>{selectedEvent.name}</h3>
+        <p><Trans>Please add a map to associate a track with.</Trans></p>
+      </div>
+    );
+  }
+  const selectedMap = matchingMaps.find((map) => map._id === selectedMapId);
+
+  const handleSelectMapCheckboxChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const newMapId = e.target.checked ? e.target.id : null;
+    setSelectedMapId(newMapId);
+  };
 
   const tracksTableRows = matchingMaps.map((map) => {
     const track = (map.geo && map.geo.track) || [];
@@ -116,7 +132,19 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
     const hasHeartRate = isDetailedTrack(track) && track[0].heartRate;
     return (
       <tr key={map._id}>
-        {matchingMaps.length > 1 && <td>{map.title}</td>}
+        {matchingMaps.length > 1 && (
+          <td>
+            <p>
+              <input
+                id={map._id}
+                type="checkbox"
+                checked={selectedMapId === map._id}
+                onChange={handleSelectMapCheckboxChange}
+              />
+              <span style={{ paddingLeft: 10 }}>{map.title}</span>
+            </p>
+          </td>
+        )}
         <td>{track.length}</td>
         <td>{getFormattedTrackDistance(track)}</td>
         <td>{hasAltitude ? getFormattedTrackClimb(track as OEventTrackDetailed) : '-'}</td>
@@ -158,6 +186,8 @@ const EventMapViewerTracks: FunctionComponent<EventMapViewerTracksProps> = ({
     <div className="event-map-viewer-tracks">
       <h3>{selectedEvent.name}</h3>
       {tracksTable}
+      <hr />
+      {selectedMap && <EventTrackViewer map={selectedMap} />}
       <hr />
       <p>Features to add</p>
       <ul>
