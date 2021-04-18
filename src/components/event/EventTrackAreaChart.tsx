@@ -8,7 +8,7 @@ import {
   TickFormatter,
 } from '@visx/axis';
 import { LinearGradient } from '@visx/gradient';
-import { curveMonotoneX } from '@visx/curve';
+// import { curveMonotoneX } from '@visx/curve';
 
 export interface XYDatum {
   x: number;
@@ -84,7 +84,7 @@ const EventTrackAreaChart: FunctionComponent<EventTrackAreaChartProps> = ({
         strokeWidth={1}
         stroke="url(#gradient)"
         fill="url(#gradient)"
-        curve={curveMonotoneX}
+        // curve={curveMonotoneX}
       />
       {!hideBottomAxis && (
         <AxisBottom

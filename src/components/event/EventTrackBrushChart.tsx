@@ -95,6 +95,7 @@ const getYValue = (d: XYDatum) => d.y;
 const bisectX = bisector<XYDatum, number>(getXValue).left;
 
 interface EventTrackBrushChartProps {
+  mapId: string;
   width: number;
   height: number;
   data: XYDatum[];
@@ -105,6 +106,7 @@ interface EventTrackBrushChartProps {
 }
 
 const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
+  mapId,
   compact = false,
   width,
   height,
@@ -126,7 +128,8 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
       setFilteredData(data);
       brushRef.current.reset();
     }
-  }, [data.length]);
+  }, [mapId, xAxisType]);
+
   const {
     tooltipData,
     tooltipLeft,
@@ -194,6 +197,19 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
     [yBrushMax, data],
   );
 
+  useEffect(() => {
+    if (brushRef?.current) {
+      const { x0, x1 } = brushRef.current.state.extent;
+      if (x0 > 0 && x1 > 0) {
+        const dataCopy = data.filter((d) => {
+          const x = brushXScale(getXValue(d));
+          return x > x0 && x < x1;
+        });
+        setFilteredData(dataCopy);
+      }
+    }
+  }, [yAxisType]);
+
   // tooltip handler
   const handleTooltip = useCallback(
     (event: React.TouchEvent<SVGRectElement> | React.MouseEvent<SVGRectElement>) => {
@@ -214,14 +230,6 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
       });
     },
     [showTooltip, xScale, yScale],
-  );
-
-  const initialBrushPosition = useMemo(
-    () => ({
-      start: { x: brushXScale(getXValue(data[50])) },
-      end: { x: brushXScale(getXValue(data[100])) },
-    }),
-    [brushXScale, data],
   );
 
   // event handlers
@@ -292,7 +300,6 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
             innerRef={brushRef}
             resizeTriggerAreas={['left', 'right']}
             brushDirection="horizontal"
-            initialBrushPosition={initialBrushPosition}
             onChange={onBrushChange}
             onClick={() => setFilteredData(data)}
             selectedBoxStyle={selectedBrushStyle}
@@ -301,7 +308,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
         <Bar
           x={margin.left}
           y={margin.top}
-          width={width - margin.left - margin.right}
+          width={Math.max(width - margin.left - margin.right, 0)}
           height={topChartHeight}
           fill="transparent"
           rx={1}

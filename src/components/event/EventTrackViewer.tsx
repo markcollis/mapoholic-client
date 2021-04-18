@@ -39,7 +39,7 @@ const getChartData = ({
   yAxisType?: YAxisType,
 }): XYDatum[] => {
   if (!trackData.length) return [];
-  console.log('generate chart data for', xAxisType, 'vs', yAxisType);
+  // console.log('generate chart data for', xAxisType, 'vs', yAxisType);
   const startTimestamp = trackData[0].timestamp;
   const getPosition = (waypoint: OEventWaypoint): OEventPosition => [waypoint.lat, waypoint.long];
   let distance = 0;
@@ -66,7 +66,7 @@ const getChartData = ({
     distance += stepDistance;
     const stepDuration = (waypoint.timestamp - previousWaypoint.timestamp) / 1000;
     const speed = stepDistance / stepDuration;
-    const pace = stepDistance > 0 ? (stepDuration / 60) / (stepDistance / 1000) : undefined;
+    const rawPace = stepDistance > 0 ? (stepDuration / 60) / (stepDistance / 1000) : undefined;
     return {
       distance,
       duration,
@@ -74,16 +74,14 @@ const getChartData = ({
       stepDuration,
       altitude,
       heartRate,
-      pace,
+      pace: (rawPace && rawPace < 20) ? rawPace : undefined, // filter out extremes when not moving
       speed,
     };
   });
-  console.log('track stats', stats);
   const data = stats.map((waypointStats) => ({
     x: waypointStats[xAxisType],
     y: waypointStats[yAxisType],
   })).filter(isXYDatum);
-  console.log('data', data);
   return data;
 };
 
@@ -111,6 +109,7 @@ const EventTrackViewer: FunctionComponent<EventTrackViewerProps> = ({ map }) => 
         <ParentSize>
           {({ width }) => (
             <EventTrackBrushChart
+              mapId={map._id}
               width={width}
               height={400}
               data={getChartData({
@@ -133,8 +132,8 @@ const EventTrackViewer: FunctionComponent<EventTrackViewerProps> = ({ map }) => 
         </select>
         <h4>Y axis</h4>
         <select className="ui dropdown" onChange={handleSelectYAxis}>
-          <option value={YAxisType.altitude}>Altitude</option>
-          <option value={YAxisType.heartRate}>Heart Rate</option>
+          {trackData[0].altitude && <option value={YAxisType.altitude}>Altitude</option>}
+          {trackData[0].heartRate && <option value={YAxisType.heartRate}>Heart Rate</option>}
           <option value={YAxisType.pace}>Pace</option>
           <option value={YAxisType.speed}>Speed</option>
         </select>
