@@ -10,11 +10,19 @@ import {
   OEventTrackPositions,
   OEventWaypoint,
 } from '../../types/event';
+import { calculateDistance } from './leaflet/getPolygonBounds';
 
 const isDetailedTrack = (
   test: OEventTrackDetailed | OEventTrackPositions,
 ): test is OEventTrackDetailed => {
   return test.some((point: OEventWaypoint | OEventPosition) => !Array.isArray(point));
+};
+
+const isXYDatum = (test: XYDatum | object): test is XYDatum => {
+  if (!('x' in test)) return false;
+  if (!('y' in test)) return false;
+  if (typeof test.x !== 'number') return false;
+  return (typeof test.y === 'number');
 };
 
 interface EventTrackViewerProps {
@@ -33,10 +41,50 @@ const getChartData = ({
   if (!trackData.length) return [];
   console.log('generate chart data for', xAxisType, 'vs', yAxisType);
   const startTimestamp = trackData[0].timestamp;
-  return trackData.map((waypoint) => ({
-    x: (waypoint.timestamp - startTimestamp) / 1000,
-    y: waypoint.altitude || 0,
-  }));
+  const getPosition = (waypoint: OEventWaypoint): OEventPosition => [waypoint.lat, waypoint.long];
+  let distance = 0;
+  const stats = trackData.map((waypoint, index, array) => {
+    // simple
+    const duration = (waypoint.timestamp - startTimestamp) / 1000;
+    const altitude = waypoint.altitude || 0;
+    const heartRate = waypoint.heartRate || 0;
+    // based on previous
+    if (index === 0) {
+      return {
+        distance,
+        duration,
+        stepDistance: 0,
+        stepDuration: 0,
+        altitude,
+        heartRate,
+        pace: undefined, // will filter out later
+        speed: 0,
+      };
+    }
+    const previousWaypoint = array[index - 1];
+    const stepDistance = calculateDistance(getPosition(waypoint), getPosition(previousWaypoint));
+    distance += stepDistance;
+    const stepDuration = (waypoint.timestamp - previousWaypoint.timestamp) / 1000;
+    const speed = stepDistance / stepDuration;
+    const pace = stepDistance > 0 ? (stepDuration / 60) / (stepDistance / 1000) : undefined;
+    return {
+      distance,
+      duration,
+      stepDistance,
+      stepDuration,
+      altitude,
+      heartRate,
+      pace,
+      speed,
+    };
+  });
+  console.log('track stats', stats);
+  const data = stats.map((waypointStats) => ({
+    x: waypointStats[xAxisType],
+    y: waypointStats[yAxisType],
+  })).filter(isXYDatum);
+  console.log('data', data);
+  return data;
 };
 
 const EventTrackViewer: FunctionComponent<EventTrackViewerProps> = ({ map }) => {
