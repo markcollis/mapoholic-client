@@ -24,7 +24,7 @@ interface EventTrackAreaChartProps {
   gradientColor: string;
   xScale: AxisScale<number>;
   yScale: AxisScale<number>;
-  yAxisTickFormatter: TickFormatter<number>;
+  xAxisTickFormatter: TickFormatter<number>;
   width: number;
   yMax: number;
   margin: { top: number; right: number; bottom: number; left: number };
@@ -44,7 +44,7 @@ const EventTrackAreaChart: FunctionComponent<EventTrackAreaChartProps> = ({
   margin,
   xScale,
   yScale,
-  yAxisTickFormatter,
+  xAxisTickFormatter,
   hideBottomAxis = false,
   hideLeftAxis = false,
   top,
@@ -94,7 +94,7 @@ const EventTrackAreaChart: FunctionComponent<EventTrackAreaChartProps> = ({
           stroke={axisColor}
           tickStroke={axisColor}
           tickLabelProps={() => axisBottomTickLabelProps}
-          tickFormat={yAxisTickFormatter}
+          tickFormat={xAxisTickFormatter}
         />
       )}
       {!hideLeftAxis && (

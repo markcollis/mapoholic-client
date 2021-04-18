@@ -24,12 +24,48 @@ import { TickFormatter } from '@visx/axis';
 
 import AreaChart, { XYDatum } from './EventTrackAreaChart';
 
+export enum XAxisType { // both number, but display differently
+  duration = 'duration', // seconds
+  distance = 'distance', // metres
+}
+export enum YAxisType { // all numbers, but display differently
+  altitude = 'altitude', // metres
+  heartRate = 'heartRate', // bpm
+  pace = 'pace', // min/km
+  speed = 'speed', // m/s
+}
+
+// s => MM:SS
 const formatDuration = (seconds: number): string => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
   return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
-const durationTickFormatter: TickFormatter<number> = ((value) => formatDuration(value));
+// m => x.x km
+const formatDistanceKm = (metres: number): string => `${(metres / 1000).toFixed(1)} km`;
+// m => x m
+const formatDistanceM = (metres: number): string => `${Math.floor(metres)} m`;
+// bpm => x bpm
+const formatHeartRate = (heartRate: number): string => `${Math.floor(heartRate)} bpm`;
+// min/km => x min/km
+const formatPace = (pace: number): string => `${pace.toFixed(1)} min/km`;
+// m/s => x m/s
+const formatSpeed = (speed: number): string => `${speed.toFixed(1)} m/s`;
+const durationTickFormatter: TickFormatter<number> = (value) => formatDuration(value);
+const distanceKmTickFormatter: TickFormatter<number> = (value) => formatDistanceKm(value);
+
+const valueFormatters = {
+  [XAxisType.distance]: formatDistanceKm,
+  [XAxisType.duration]: formatDuration,
+  [YAxisType.altitude]: formatDistanceM,
+  [YAxisType.heartRate]: formatHeartRate,
+  [YAxisType.pace]: formatPace,
+  [YAxisType.speed]: formatSpeed,
+};
+const tickFormatters = {
+  [XAxisType.distance]: distanceKmTickFormatter,
+  [XAxisType.duration]: durationTickFormatter,
+};
 
 const tooltipStyles = {
   ...defaultStyles,
@@ -62,6 +98,8 @@ interface EventTrackBrushChartProps {
   width: number;
   height: number;
   data: XYDatum[];
+  xAxisType?: XAxisType;
+  yAxisType?: YAxisType;
   margin?: { top: number; right: number; bottom: number; left: number };
   compact?: boolean;
 }
@@ -71,6 +109,8 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
   width,
   height,
   data,
+  xAxisType = XAxisType.duration,
+  yAxisType = YAxisType.altitude,
   margin = {
     top: 20,
     left: 50,
@@ -91,7 +131,6 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
     tooltipData,
     tooltipLeft,
     tooltipTop,
-    // tooltipOpen,
     showTooltip,
     hideTooltip,
   } = useTooltip();
@@ -217,7 +256,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
           yMax={yMax}
           xScale={xScale}
           yScale={yScale}
-          yAxisTickFormatter={durationTickFormatter}
+          xAxisTickFormatter={tickFormatters[xAxisType]}
           axisColor={CHART_LABEL_COLOR}
           gradientColor={CHART_FILL_COLOR}
         />
@@ -229,7 +268,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
           yMax={yBrushMax}
           xScale={brushXScale}
           yScale={brushYScale}
-          yAxisTickFormatter={durationTickFormatter}
+          xAxisTickFormatter={tickFormatters[xAxisType]}
           margin={brushMargin}
           top={topChartHeight + topChartBottomMargin + margin.top}
           axisColor={CHART_LABEL_COLOR}
@@ -299,7 +338,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
             left={(tooltipLeft || 0) + 12}
             style={tooltipStyles}
           >
-            {getYValue(tooltipData as XYDatum)}
+            {valueFormatters[yAxisType](getYValue(tooltipData as XYDatum))}
           </TooltipWithBounds>
           <Tooltip
             top={topChartHeight + margin.top + 8}
@@ -311,7 +350,7 @@ const EventTrackBrushChart: FunctionComponent<EventTrackBrushChartProps> = ({
               transform: 'translateX(-50%)',
             }}
           >
-            {formatDuration(getXValue(tooltipData as XYDatum))}
+            {valueFormatters[xAxisType](getXValue(tooltipData as XYDatum))}
           </Tooltip>
         </div>
       )}
